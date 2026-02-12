@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）">
+<title>CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</title>
+
+<link rel='canonical' href='https://wintery.net/en/post/conan/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency">
+<meta property='og:description' content="2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）">
+<meta property='og:url' content='https://wintery.net/en/post/conan/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-05-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-27T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/conan/media/bg.png' />
+<meta name="twitter:title" content="CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency">
+<meta name="twitter:description" content="2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://wintery.net/post/conan/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="https://wintery.net/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#research-background">Research background</a>
+      <ol>
+        <li><a href="#research-questions">Research questions</a></li>
+        <li><a href="#apt-detection-three-stage-model">APT detection three-stage model</a></li>
+        <li><a href="#track-suspicious-code-execution">Track suspicious code execution</a></li>
+      </ol>
+    </li>
+    <li><a href="#method-overview">Method overview</a>
+      <ol>
+        <li><a href="#semantic-recognition">Semantic recognition</a></li>
+        <li><a href="#data-structure">Data structure</a></li>
+        <li><a href="#state-transfer">State transfer</a></li>
+        <li><a href="#malicious-status">Malicious status</a></li>
+        <li><a href="#attack-reconstruction">Attack reconstruction</a></li>
+      </ol>
+    </li>
+    <li><a href="#experimental-evaluation">Experimental evaluation</a></li>
+    <li><a href="#summary-discussion">Summary discussion</a></li>
+    <li><a href="#literature-comparison">Literature comparison</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/post/conan/">
+                <img src="/post/conan/media/bg_hu_b46da57ab4a3f70b.png"
+                        srcset="/post/conan/media/bg_hu_b46da57ab4a3f70b.png 800w, /post/conan/media/bg_hu_d03a1d68f3785cea.png 1600w"
+                        width="800" 
+                        height="270" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/post/conan/">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 27, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    28 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    5793 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://wintery.net/post/conan/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="summary">
+    <a href="#summary" class="header-anchor">#</a>
+    Summary
+</h2><p>Advanced persistent threat (APT) attacks have caused serious security threats and economic losses worldwide. Various real-time detection mechanisms combining contextual information and source graphs have been proposed to defend against APT attacks. However, existing real-time APT detection mechanisms face accuracy and efficiency issues due to inaccurate detection models and increasing source map sizes. To address the accuracy issue, we propose a novel and accurate APT detection model that eliminates unnecessary stages and focuses on the remaining stages with improved definitions. To address the efficiency issue, we propose a state-based framework where events are consumed as streams and each entity is represented in an FSA-like structure without storing historical data. Furthermore, we reconstruct the attack scenario by storing only one thousandth of the events in the database. Finally, we implemented our design CONAN on Windows and conducted comprehensive experiments in real-world scenarios to show that CONAN can accurately and effectively detect all attacks within the scope of our evaluation. CONAN&rsquo;s memory usage and CPU efficiency remain constant over time (1-10 MB of memory, hundreds of times faster than data generation), making CONAN a practical design for detecting known and unknown APT attacks in real-world scenarios.</p>
+<h2 id="research-background">
+    <a href="#research-background" class="header-anchor">#</a>
+    Research background
+</h2><p>Traditional intrusion detection methods can be divided into two categories: offline and online. One of the most well-known offline detection methods is the sandbox method, which deploys the target program into an isolated environment for individual analysis. Additionally, multiple logging and provenance tracking systems are built to monitor the system&rsquo;s activity, and then provenance graphs are built to detect or analyze attacks. Although these methods can clearly see the attack, considering the lag of offline detection, people began to use online detection methods to detect attacks in real time. These methods include network traffic-based analysis, software static feature detection and hook technology. However, existing research mainly focuses on a specific stage of APT, and the intrinsic mechanism and attack vector of APT are still poorly understood.</p>
+<p>Recent work has demonstrated the effectiveness of context-based detection. Real-time detection systems using context methods have been proposed in recent years. StreamSpot analyzes streaming information flow graphs to detect anomalous activity by extracting local graph features and vectorizing them for classification. Learning-based detection methods can only provide malicious scores or classification results, but cannot interpret these results. Additionally, these detection systems cannot detect attacks without false positives. Therefore, in practice, learning-based approaches are not suitable for enterprise scenarios. Sleuth then proposed a label-based detection method based on the provenance graph, but this method mainly focused on suspicious access to confidential files and reduced false positives by adding domain whitelisting. To better understand APT attacks, analysts decouple the APT life cycle into multiple stages and then use the characteristics corresponding to each stage to match suspicious behavior. APT attacks are divided into seven or eleven stages. The multi-stage kill chain model approach is adopted by many researchers. Holmes has made substantial progress in stage-based detection by building models that detect each stage based on simple rules and calculate a suspicious score. However, not all of these stages are necessary in an APT attack (e.g., credential access), and some of them (e.g., detection of remote code execution vulnerabilities) are often detected with prior knowledge and tend to change over time.</p>
+<p>Furthermore, real-time context work often preserves context information in the source graph. However, as the graph grows over time, APT can persist for months or even years, making these methods inevitably encounter efficiency and memory issues when the system runs for a long time, especially for real-time detection. Therefore, most detection methods rely on short time windows.</p>
+<p>To address these challenges, especially in terms of accuracy and efficiency, this paper proposes a model for accurate APT detection. Furthermore, it proposes a novel state-based detection framework, where each process and file is represented as a carefully designed data structure for real-time, long-term detection.</p>
+<p>To detect unknown APTs with high accuracy, we leverage control flow (i.e., why a process or code is executed) and data flow (i.e., how data is delivered), rather than focusing on unnecessary, undetectable, and easily changeable stages of an APT attack. between objects) to explain contextual behavior. We identified the following three basic attack stages: 1) deploy and execute the attacker&rsquo;s code, 2) collect sensitive information or cause damage, and 3) communicate with the C&amp;C server or exfiltrate sensitive data. We mainly focus on accurately detecting these stages and combining them to distinguish malicious from benign behavior. This approach facilitates accurate detection of unknown APTs compared to more complex stage-based modules.</p>
+<p>In order to perform context detection efficiently in real time, we propose a novel state-based tracking and detection framework and corresponding data structures based on the idea of ​​forensic analysis. In this design, all semantics are stored as state, and the framework only retains the current state of all processes and files for instrumentation. The state is updated by events and related states of other entities, similar to Finite State Automata (FSA), which we call FSA-like structures. Therefore, the framework does not need to store historical data and memory usage remains consistent. Status changes over time. Once a process becomes malicious, it will be detected no matter how long the attack lasts. Using this framework, we can monitor hosts over long periods of time to automatically detect APTs with high accuracy and low overhead.</p>
+<p>Furthermore, our detection method based on this framework can detect attacks and provide explanations. Specifically, detection results are generated through reconstructed attack graphs, which illustrate how these attacks occur and facilitate subsequent analysis.</p>
+<p>Main contributions:</p>
+<ol>
+<li>Propose a new APT detection model that focuses on three constant steps of APT, and we propose a set of designs to accurately track and detect these steps, including detecting memory-based attacks and suspicious process behavior.</li>
+<li>A novel and efficient state-based detection framework is proposed, where each process and file is represented as an FSA-like structure. The framework helps detect APTs that have constant and limited memory usage (1-10 MB) and are efficient (hundreds of times faster than data generation).</li>
+<li>Implemented as an APT attack detection system, which can detect unknown advanced attacks in real time with high accuracy and quickly recover the attack chain. We tested our system on real-world datasets and determined that it performed better than previous methods, especially in terms of efficiency and accuracy.</li>
+</ol>
+<h3 id="research-questions">
+    <a href="#research-questions" class="header-anchor">#</a>
+    Research questions
+</h3><p>The letter A in APT represents the advanced techniques used in these attacks. Traditional detection systems, including malware detection, vulnerability detection and threat intelligence, only focus on a single stage of the APT attack chain, and the attack techniques used in these stages are easily changed; therefore, APT attackers can easily circumvent these traditional detection methods. MITER ATT&amp;CK introduced the eleven-stage APT attack model to describe the tactics, techniques, and procedures (TTPs) used in APT attacks.</p>
+<p>However, overly complex multiphase models can only be used to better understand APTs, not to detect them. For example, the authors of <a class="link" href="https://wintery.social/post/holmes/"  target="_blank" rel="noopener"
+    >Holmes</a> developed a system to detect techniques within each strategy (stage) and connect these stages as an attack chain through information flow (including data flow and control flow). In each attack chain, the more stages detected, the more likely the attack is. However, there are three main problems.</p>
+<ol>
+<li>Hundreds of techniques are used at each stage. The system must detect hundreds of technologies, which is difficult to implement and results in high detection overhead.</li>
+<li>Still consider the detection points of traditional methods, such as vulnerabilities. In order to detect these stages, prior knowledge is required.</li>
+<li>The techniques used in attacks change easily, making it difficult to detect unknown attacks.</li>
+</ol>
+<p>Finally, the authors believe that although they were unable to accurately detect all stages, as a subset of all stages, the detected stages were sufficient to distinguish attacks from benign activities. In other words, it is not necessary to detect all phases. Furthermore, introducing some common and unnecessary stages increases the false positive rate.</p>
+<p>A large number of phases cannot indicate an attack, and a small number of phases cannot prove its legitimacy. For example, a newly installed browser can trigger 6 stages of the MITER ATT&amp;CK eleven-stage model (initial access, execution, persistence, credential access, discovery, and exfiltration) and will trigger error alerts [22]. Meanwhile, advanced attackers gain access to machines and download malware via zero-day vulnerabilities. It then uses unknown methods to achieve persistence (or in some cases where persistence is not desired, such as on a server that never shuts down). It logs keystrokes and exfiltrate data through command and control channels, which can be difficult to detect. Finally, the only detectable stages in this attack are execution and collection, so they cannot be considered attacks.</p>
+<h3 id="apt-detection-three-stage-model">
+    <a href="#apt-detection-three-stage-model" class="header-anchor">#</a>
+    APT detection three-stage model
+</h3><p>To detect unknown APT attacks, we first find their invariant parts. In other words, we try to answer the question: what causes these active &ldquo;attacks&rdquo;. After studying hundreds of APT attacks, it can first be observed that the attacker must first deploy their code onto the victim. The difference is that malware can be customized or executed solely in memory to evade traditional static file-based detection systems. The second observation is that the attackers’ end goal has remained the same over the years. Since 2006, APT1 has introduced attacks that have stolen hundreds of terabytes of data from at least 141 organizations. Today, APT38 is focused on similar tasks. These behaviors are similar to permissions in Android and can lead to privacy leaks or corruption. The final observation is that the attacker will communicate with the C&amp;C server and steal confidential data, and the malicious program should always have the ability to access the network.</p>
+<ol>
+<li>**Deploy and execute the attacker&rsquo;s code. ** Any process behavior is the result of code execution. An attacker must first deploy code to a victim to achieve their goal. To detect this stage, we monitor data flows from external sources, including networks and portable devices, which we refer to as untrusted data flows. Having an untrusted data flow is necessary to launch an attack, regardless of what vulnerabilities or techniques attackers use to deploy their code. This design may result in more false positives, but the techniques described in subsequent chapters will help resolve this issue. In another case, an attacker may use legitimate processes to achieve his goals. For example, an attacker could use the preinstalled Windows SnappingTool to capture the screen. This is where untrusted control flow can help. If a process or thread is started by a suspicious thread, the process or thread is also marked as suspicious. Code deployment is always necessary unless the attacker can gain authorized access to the victim through other means (for example, by logging in remotely using a password). This type of attack can be prevented through IP whitelisting and detected through anomaly detection, which is beyond the scope of this article.</li>
+</ol>
+<blockquote>
+<p>Monitor data flows from outside? Does it mean that the data source is not just log data? But in the form of traffic + logs?</p>
+</blockquote>
+<ol start="2">
+<li>
+<p>**Collect sensitive information or cause damage. ** Attackers are usually trying to steal confidential data or damage the victim&rsquo;s data or machine, which is why attackers carry out attacks and why victims want to avoid this outcome. We do not consider intrusions that reach the victim but do not result in harmful behavior to be true attacks. Theft of confidential data from files can be detected by monitoring data streams from confidential targets as confidential data streams. **Other suspicious behavior is detected by signatures predefined by the author. **</p>
+</li>
+<li>
+<p>**Communicate with C&amp;C servers or leak sensitive data. ** Both of these actions are required in the APT, without which the attack cannot be completed. While there are many ways to achieve this (e.g., removable disks), a typical real-world attack method is over a network connection.</p>
+</li>
+</ol>
+<p>These three stages are simple and necessary for most APT attacks. Therefore, we try to detect processes that execute suspicious code for malicious behavior. Additionally, we provide additional features to illustrate different attack scenarios. Unlike previous work, we do not assign scores or simple labels; instead, we use more detailed descriptions to describe the components of the attack for better understanding and further analysis without additional overhead.</p>
+<h3 id="track-suspicious-code-execution">
+    <a href="#track-suspicious-code-execution" class="header-anchor">#</a>
+    Track suspicious code execution
+</h3><p>Memory-based attacks, including injection and fileless attacks, can help attackers execute code in the memory of benign applications. These attacks are increasingly used because traditional detection systems are blind to them. Although existing research treats processes as entities that store contextual information, they are vulnerable to memory-based attacks. Detection techniques used in memory-based attacks can be helpful, but there are multiple ways to implement these attacks, making detection difficult. Therefore, in this section, a method is proposed to detect suspicious code execution by tracing the suspicious data flow and examining the execution call stack, ignoring the technique used in the attack.</p>
+<p>If an attacker wants to perform malicious behavior, he must 1) execute malicious code directly or 2) do so with the help of a benign process. The main challenge in detection is determining **1) what code was executed, 2) where it came from, and 3) how it was executed. ** Although taint tracking is very helpful when tracking fine-grained data flows, this method cannot be used in real-time due to its high overhead. To solve the first challenge, we employ a call stack. The call stack is a stack data structure used to store information about the active subroutine when an event is generated. The addresses in the call stack are return addresses belonging to different blocks of code (eg images). If all addresses in a call stack come from trusted code blocks, we say that the thread executes trusted code. Since benign processes can easily be forced to execute external code, we divide the process into subunits (threads) based on code execution. As shown in Figure 1, these threads executing unknown or suspicious code are separate from completely benign threads. We consider the following scenario:</p>
+<p><img src="/media%5cimage-20240527171703536.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 2: Suspicious threads (red) executing unsigned code (red) separated from completely benign threads. This feature is important for detecting suspicious code execution, including unsigned images and in-memory attacks. "
+	
+	
+></p>
+<p>(1) Image loading and memory execution. Image loading is the basic operation by which a process loads an executable file into its memory. An attacker can replace a benign image file with a malicious image file, or force a benign application to load a malicious image and then perform the attack under the guise of a benign process. Additionally, an attacker could write malicious code directly into another process&rsquo;s memory space, or load an image from memory instead of disk without triggering a system event. The former is called process injection and is commonly used in attacks, and the latter is a technique called reflective loading that has been used in recent advanced attacks. Our system monitors dynamic events for loading images and stores the base address and size of memory allocated by each process. When the memory address of an unsigned image or allocated memory appears in the call stack, it means that some unknown code is executed in this thread; therefore, this thread should be separated from other threads. To reduce the overhead in parsing the full call stack, we perform low-frequency sample checks per thread.</p>
+<p>(2) Script execution. Script-based attacks have become common in recent years because the host process is entirely benign and the process reads and executes code (such as PowerShell and VBscript) instead of loading it. Detecting such attacks is challenging. Our system enumerates most common script hosts and handles them separately from normal processes.</p>
+<p>To address the second challenge, we track suspicious data through coarse-grained data flow-based inference. For example, if a process has a network connection, any files written by the process may contain data from the network.</p>
+<p>To address the third challenge, we trace control flow (especially processes created by suspicious threads). Although they may be benign processes, they can be used to achieve attackers&rsquo; goals, such as screen scraping and exfiltration of sensitive data.</p>
+<h2 id="method-overview">
+    <a href="#method-overview" class="header-anchor">#</a>
+    Method overview
+</h2><p><img src="/media%5cbg.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 1: Conan’s overview. The data collector is deployed on the client side and it attempts to collect traces from multiple layers with low overhead. These traces are preprocessed on the client side to reduce the data size and then sent to the detector on the server side. The detector builds a main memory structure that maintains the state of processes and files through predefined rules. Status and necessary events are synchronized to the database. Once an alert is raised, the attack chain can be reconstructed from the database. "
+	
+	
+></p>
+<p>As shown in Figure 2, this paper develops a fast and stable multi-level data collector on the host to collect audit trails, call stacks and other data. This data is then sent to the instrumentation server, extracted as high-level semantics and stored in memory structures as process and file state. At the same time, all event logs are processed according to predefined rules to change the status of processes and files. These events and status are stored in a database for later reconstruction by attacks. Whenever a process enters a malicious state, an alert is triggered along with a reconstructed attack graph. The detection model we propose here enables the system to accurately detect APTs, and the state-based framework makes it possible to detect APTs efficiently.</p>
+<p>The detection model proposed here enables the system to accurately detect APT, and the state-based framework makes it possible to detect APT efficiently.</p>
+<p>The letter P in APT stands for Persistence, which means the attacker can lie dormant for a long time until he gets what he wants. This is different from the same term introduced in the attack chain model, which represents techniques that enable malware to launch automatically after an operating system restarts. Techniques for detecting persistence are not practical. For one thing, there are 59 known persistence technologies, and detecting all of them can be expensive. On the other hand, even if a process is detected to be persistent, it cannot be considered malware. An attacker can lie dormant for a long time without appearing to behave suspiciously. Additionally, malicious files may be opened days after being downloaded. Therefore, it is difficult to detect attacks based on contextual information.</p>
+<h3 id="semantic-recognition">
+    <a href="#semantic-recognition" class="header-anchor">#</a>
+    Semantic recognition
+</h3><p>Semantic state definitions are inspired by forensic analysis; we automatically identify high-level semantics for data flow, control flow, and process behavior. These semantics represent the basic evidence used in context-based detection. We call this semantics Atomic Suspicious Indicator (ASI).</p>
+<p>ASI includes one of the following types of semantics and is detected or inferred through the corresponding traces:</p>
+<ol>
+<li>Actions performed by an attacker to achieve their goals. Typically detected by API or inferred from confidential data streams.</li>
+<li>The origin of the suspicious code, in other words, the reason why the process is able to perform such behavior; inferred from untrusted data flows.</li>
+<li>The ability to infer external communications through network activity.</li>
+<li>Infer the cause of process execution through untrusted control flow.</li>
+<li>Describe additional characteristics of the attack.</li>
+</ol>
+<p>Each ASI can be described as a triplet $&lt;N_o;T_y;D_e&gt;$. Each ASI is assigned a unique number $N_o$, which represents its position in the bitmap of the recorded state. $T_y$ represents categories, including the following categories: 1) Suspicious code sources, tracking potential untrusted code execution; 2) Suspicious behaviors; 3) Network connections; 4) Features, which are additional features that illustrate different attack scenarios. $D_e$ represents a description used to interpret detection results in human-readable semantics.</p>
+<p>These ASIs are identified by extraction directly from the source data or by inference from rules. A new ASI that can help detect APTs should be declared if: 1) it has different semantics than an existing ASI, or 2) there are multiple ways to identify the same semantics with varying accuracy.</p>
+<p><img src="/media%5cimage-20240527190243776.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 1 ASI Featured List"
+	
+	
+></p>
+<p>The first column is the ASI number of the process (P) or file (F). ASI is classified by type: Code Source (CS), Behavior (Beh.), Features (Fea.) and Network (Net.)</p>
+<p>The combination of different ASIs can ultimately describe different attack scenarios. The following detection steps are based on these ASIs, data flows, and control flows.</p>
+<p>Some ASIs can be easily detected or generated through inference based on system event logs. Although the actions commonly performed by attackers are among the most important ASIs, there are currently no proven methods to detect them.</p>
+<p>In order to efficiently match these topology API signatures in real time, we convert these topologies into FSA to match the signatures with streaming data, and these APIs should be matched within a window to reduce false alarms. In practical applications, we use a 6-second time window. We do not use system calls because they are too low level to reflect the semantics.</p>
+<p>API calls are usually recorded through sandboxed API hooking, which cannot be used in real-time detection systems due to its poor performance and stability. We use ETW kernel call stack traces to recover API calls. ETW can capture kernel events (including SysCallEnter events, which represent calls to system calls) and their call stacks. We effectively restore the API from the call stack. However, this process is not our main contribution and we do not describe it in detail here.</p>
+<h3 id="data-structure">
+    <a href="#data-structure" class="header-anchor">#</a>
+    Data structure
+</h3><p>To support real-time analysis and long-term monitoring, we propose a main-memory FSA-like structure to record the status of each process and file that may be involved in the attack. Note that we do not need to store any historical events to perform detection, but for the additional goal of reconstructing the attack, we only keep a small set of events that caused state changes to the database.</p>
+<p>As shown in Figure 3, when each process and file is in a specific state, we save their basic information and status in memory.</p>
+<p><img src="/media%5cimage-20240527193337712.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 3 Data structure and operations. Tags P1, P10, P15, F1. F2 is the state described in Table 1. R1, R2 and R15 are the rules described in Table 2. This example records the process of a drive-by download attack. "
+	
+	
+></p>
+<p>All inactive processes and files are removed from memory to the database to ensure constant memory. It will only be restored if the file is manipulated by another process.</p>
+<h3 id="state-transfer">
+    <a href="#state-transfer" class="header-anchor">#</a>
+    State transfer
+</h3><p>Events of the same type have different high-level semantics depending on the differences between the subjects and objects involved. For example, reading a downloaded file is different from reading a file that exists in your personal directory. The former involves accessing unknown data sources, which may lead to untrusted code execution, while the latter involves accessing personal data, which may ultimately lead to user data leakage. The purpose of this section is to track confidential data flows, untrusted data flows, and untrusted control flows.</p>
+<p>In order to automatically distinguish these events and record semantics, a set of predefined rules was created to assign more detailed semantics to events, and a selected set of rules can be found in Table 2 .</p>
+<p><img src="/media%5cimage-20240527193717084.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 2 List of selected rules"
+	
+	
+></p>
+<p>Each rule is a six-tuple: $&lt;N_o;S_s;E_v;S_o;D_i;D_e&gt;$. $N_o$ is the sequence number of the rule, which is used in the edge to indicate how this operation is generated. $S_s$ represents a specific state of the agent, which is always a process in our design. $S_o$ represents the specific state of an object, which is a process, a file or an IP. $E_v$ is an event performed by the subject on the object. $D_i$, forward or backward, indicates the direction in which one entity affects another entity. When a subject is in a certain state and performs an event on an object, the state of the object undergoes what we call a positive change, where the subject and object are the source and destination respectively. On the contrary, if the subject is affected by the object, we call it backward; in this case, the subject is the destination. Note that when $S_s$ and $S_o$ are used as sources, they can both be in one or more states. $D_e$ is a description of the purpose of the rule, used to explain the reconstructed attack chain.</p>
+<p>Each entity (i.e. subject or object) in the system is like an FSA and can be described as a five-tuple: $&lt;S;\Sigma;\delta;S_0;F&gt;$.</p>
+<p>S: state set. The bit combination in $S_t$ represents the current status of the process and file.</p>
+<p>$\Sigma$: Enter the alphabet. Consists of system events $E_v$.</p>
+<p>$\delta$: state transition function.</p>
+<p>$S_0$: initial state. As soon as a new process or file appears in our system, we create a corresponding instance in memory. All bits in $S_t$ are set to false. Only files that may contain confidential data are initialized with status F5.</p>
+<p>F: Final state set. Once a process enters one of these states, an alert is triggered.</p>
+<p>However, in order to reconstruct the attack for better understanding and further analysis, we store the events leading to the state change into a database. The event store has four attributes: <strong>Rule number, timestamp, source and destination</strong>. The rule number represents the reason for the status change. Events are like edges in an origin graph, but the sources and destinations of operations are the bits in the bitmap used to record state, rather than processes or files.</p>
+<h3 id="malicious-status">
+    <a href="#malicious-status" class="header-anchor">#</a>
+    Malicious status
+</h3><p>Malicious states are various combinations of individual states indicating contextual information required for detection. ASIs can be divided into 4 different types: <strong>Suspicious Code Sources, Network Connections, and Suspicious Behaviors and Characteristics</strong> . We say a process enters a malicious state if it contains at least one ASI from each of the first three categories (excluding signatures). Each malicious state illustrates a different attack scenario. For example, if a process loads an unsigned image downloaded from the network, performs malicious behavior, and connects to the network, we identify it as a &ldquo;download and execute&rdquo; attack and understand the attacker&rsquo;s goals based on the malicious behavior it performs. If an unsigned image already exists on the host, it can be identified as &ldquo;existing malware&rdquo;. Therefore, we do not need to assume that all stages of the attack occur after CONAN starts monitoring the system, which we consider to be an improvement over existing work by CONAN.</p>
+<p>As soon as a process enters one of these malicious states, our system will sound an alert. In other words, all detection progress can be expressed by checking the status of a process. For example, such a check could reveal whether a process is executing unsigned code from the network. We don&rsquo;t need to know the exact origin of the code, as this information is of little help for detection. Furthermore, since our system only checks process status, it has much lower overhead than graph-based detection mechanisms but achieves almost the same effect.</p>
+<p>We also leverage several common features to identify different attack scenarios. For example, the &ldquo;human-computer interaction&rdquo; feature reflects whether the process runs automatically, and the &ldquo;no visible window&rdquo; feature indicates whether the user can clearly identify the existence of the process. The more features, the higher the confidence of malicious behavior, representing different attack scenarios. The use of more features will help system administrators analyze attacks and reduce false positives. Please note that we do not use any whitelisting of files, processes or domains other than code authentication. Malware installed before our systems are deployed can also be detected as special attack scenarios.</p>
+<h3 id="attack-reconstruction">
+    <a href="#attack-reconstruction" class="header-anchor">#</a>
+    Attack reconstruction
+</h3><p>Source analysis greatly aids in understanding and detecting attacks. Therefore, we not only detect these malicious attacks, but also try to reconstruct them semantically, similar to the functionality of source analysis. Such reconstructions help greatly improve attack analysis, further reducing false positives and helping to protect hosts from future attacks.</p>
+<p>Due to the special nature of our data structures, these tasks can be performed efficiently. Because we aggregate all evidence of the target process into state, the basic idea of ​​the reconstruction attack is to explain why the process is classified as malicious, specifically, by backtracking to the source of the ASI in the process. Because our system keeps the source of each ASI in the database as edges between states, the source of the attack can be found in linear time through edge backtracking. For forward analysis, suspicious processes cause little additional impact since our system can detect malicious processes immediately; therefore, there is no dependency explosion with forward tracing.</p>
+<p>In practice, reconstructed graphs with dependency explosion contribute less to further analysis. To obtain this graph, we reconstruct only enough evidence to prove that this is an attack, rather than trying to reconstruct the entire attack, since tracking attacks on coarse-grained data flows is an unsolved research problem that has been studied for many years.</p>
+<h2 id="experimental-evaluation">
+    <a href="#experimental-evaluation" class="header-anchor">#</a>
+    Experimental evaluation
+</h2><p>Three different environment long runs were used to evaluate CONAN on Windows. The results show that CONAN can detect multiple types of attacks with high accuracy and low overhead.</p>
+<p>Since nearly 99.9% of system events are related to benign activities, it is important to reduce irrelevant data to maintain the efficiency and accuracy of CONAN. As mentioned above, we use predefined rules to identify the high-level semantics of system events. Table 3 shows the number of events between different process steps: original events (O), matching rules (M), and rules that caused a status change and were stored in the database (R). The numbers in column M are similar to the numbers in column O, which means that CONAN tracked most of the original events. The number in column M means that less than 1% of the data is stored for reconstruction. Duplicate read events are pre-filtered.</p>
+<p><img src="/media%5cimage-20240527202838551.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 3 Reducing events between different process steps: original events (O), events matched by rules (M), and events that cause state changes and are stored in the database (R)"
+	
+	
+></p>
+<h2 id="summary-discussion">
+    <a href="#summary-discussion" class="header-anchor">#</a>
+    Summary discussion
+</h2><p>How an attacker on a CONAN system attempts to evade detection mechanisms.</p>
+<p>In-memory attack. The address in the call stack is the entry point for the next command. To avoid suspicious addresses in the call stack, malicious code cannot call any APIs that cause kernel events (such as reading/writing files, system calls, and memory operations). But in our experience, without these APIs, attackers cannot achieve their goals. Another possible approach is to hook or insert malicious code into benign images; these attacks will also be logged at the outset due to memory manipulation. Furthermore, it describes a research problem called memory authentication. Another type of attack that CONAN cannot detect is a ROP attack.</p>
+<p>System expansion. There is more than one way to achieve suspicious behavior, which means we should develop corresponding signatures for each implementation. For example, existing research describes three methods for taking screenshots on Windows, and there are a few others. However, the total number of implementations is limited by the operating system itself and is far less than the number of attacks. Therefore, monitoring other behaviors and their implementation is feasible and worthwhile. Additionally, our system relies primarily on tracing the flow of information to determine why code was executed and where sensitive information went. Our system can be easily expanded by adding more data sources and corresponding rules to cover more information flows.</p>
+<p>System recovery. Since our detection method is state-based, it is important to recover the state when the system crashes or reboots. Since all state is stored in the database, it can be recovered from a crash. When an entity&rsquo;s state changes, it is synchronized to the database. When an entity is deleted, it is marked as having no data in the database. So when our system restarts, it restores the in-memory state from the database and the system is able to continue its work.</p>
+<p>Whitelist. Our whitelisting mechanism based on code certification works well in DARPA engagement and in our labs, i.e. zero false positives. However, we will receive some false positives in real-life scenarios. To further reduce these false positives, we can combine existing whitelisting mechanisms with process and/or IP whitelisting mechanisms, which have been shown to be effective in the literature.</p>
+<p>Figure reconstruction. Because CONAN only retains the first event that causes a state change, it misses subsequent events that have the same impact on the entity. Therefore, the reconstructed graph may be incomplete. We consider this approach because the main purpose of our system is to detect attacks accurately and efficiently, and the reconstructed graph is only used to understand why the detection signal is generated. Another option is to delete duplicate events as they are inserted into the database. In this case, duplicate means that both the source and destination of the event, and the matching rules are the same. In order to determine whether an event is repeated, we must store and search it, which requires both memory storage and CPU calculations. In our method, we only need to check the state of an entity to decide whether to store the event. It is much lighter weight.</p>
+<h2 id="literature-comparison">
+    <a href="#literature-comparison" class="header-anchor">#</a>
+    Literature comparison
+</h2><p>Host intrusion detection techniques can be divided into three detector types: misuse, anomaly, or hybrid.</p>
+<p>Misuse detection mainly relies on known attack patterns; the raw data collected is converted into an established format and then passed to the detection module, which makes a decision. Unfortunately, misuse detection techniques have difficulty detecting unknown attacks (i.e., zero-day attacks). Knowledge-based methods rely on attack signature databases that need to be updated regularly, while machine learning-based methods often lack generalization capabilities. Anomaly detection is used to detect unknown attacks. Behavioral profiles of benign programs are stored and updated frequently. Any deviation from the configuration file will be flagged as a potential attack. The advantage of anomaly-based techniques is that they can detect zero-day attacks, but these methods result in many false positives because misuse detection and anomaly detection cannot account for both false positives and false positives. Considering the shortcomings of the above two methods, a hybrid technique is proposed.</p>
+<p>In addition to combining misuse detection and anomaly detection techniques, hybrid techniques also involve specific strategies. Policy-based approaches are well designed, as exemplified by SLEUTH and HOLMES. SLEUTH utilizes trust tags and confidentiality tags to define code and data. HOLMES builds custom strategies to exploit the semantics of each step in the APT attack chain. The above works rarely discuss the essential intent of the attack lifecycle, resulting in some false alarms or false negatives remaining.</p>
+<p>Conan is very different from previous designs. This article proposes a detection model that summarizes the three basic stages present in APT attacks. With this model, the entire attack chain can be revealed and potential hazards accurately detected.</p>
+<p>Provenance tracing is designed to discover the complete attack path in complex contexts. Backtracing is a common solution used in previous work and was inspired by the seminal work BackTracker. PriorTracker has since optimized the process proposed in and enabled forward tracking capabilities for timely attack causality analysis. During the forward/backward search process, a provenance graph is constructed to record system object/topic dependencies. Research exploits system call data to track information flow. In order to improve accuracy, new research collects fine-grained data, but blindly increasing the amount of data results in increased overhead. SLEUTH innovates by using tags for efficient event storage and analysis, but the proposed strategy has inherent limitations. While SLEUTH maintains a whitelist of internal IP addresses that are not tagged untrusted sources (DNS lookups, etc.), which requires frequent maintenance to reduce false positives, the tag-based approach is essentially a graph-based storage method and is difficult to deal with long-term APT attacks. Since SLEUTH takes a long time to process the dependencies of large amounts of data, it is difficult to guarantee real-time performance. The amount of data is directly proportional to memory consumption, and growing data can cause memory explosion.</p>
+<p>Unlike previous work, CONAN makes good use of the concept of provenance graphs for real-time detection. CONAN adopts a novel state-based framework with constant memory usage and low overhead. Our system is context-sensitive and introduces an FSM-like structure to automatically transfer state. Additionally, we can analyze audit data, perform state transitions, and generate alerts in real-time regardless of how long the APT attack lasts.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Graph embedding analysis</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/nodlink/">
+        
+        
+            <div class="article-image">
+                <img src="/post/nodlink/media/bg.ad0551fe5265eeb356743aab29fbab26_hu_79bf8c7b3fc3924d.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation"
+                        
+                        data-hash="md5-rQVR/lJl7rNWdDqrKfurJg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/conan/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 11 篇文章 · 共 41.587k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

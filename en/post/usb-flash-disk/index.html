@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="U disk infection virus analysis\n**Behaviour analysis of virus infection in USB disk. **\nThe program obtains the registry value (part of the process of obtaining commands and modifying the registry is as follows)\nThe purpose of obtaining TSAppCompat is to identify the server running the service in application mode.\nObtain the server and Microsoft settings during boot auto-start to prevent DLL hijacking vulnerabilities.\nThe value of SafeDllSearchMode.\n">
+<title>U disk virus</title>
+
+<link rel='canonical' href='https://wintery.net/en/post/usb-flash-disk/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="U disk virus">
+<meta property='og:description' content="U disk infection virus analysis\n**Behaviour analysis of virus infection in USB disk. **\nThe program obtains the registry value (part of the process of obtaining commands and modifying the registry is as follows)\nThe purpose of obtaining TSAppCompat is to identify the server running the service in application mode.\nObtain the server and Microsoft settings during boot auto-start to prevent DLL hijacking vulnerabilities.\nThe value of SafeDllSearchMode.\n">
+<meta property='og:url' content='https://wintery.net/en/post/usb-flash-disk/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2022-05-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-10T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/usb-flash-disk/media/bg.png' />
+<meta name="twitter:title" content="U disk virus">
+<meta name="twitter:description" content="U disk infection virus analysis\n**Behaviour analysis of virus infection in USB disk. **\nThe program obtains the registry value (part of the process of obtaining commands and modifying the registry is as follows)\nThe purpose of obtaining TSAppCompat is to identify the server running the service in application mode.\nObtain the server and Microsoft settings during boot auto-start to prevent DLL hijacking vulnerabilities.\nThe value of SafeDllSearchMode.\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://wintery.net/post/usb-flash-disk/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="https://wintery.net/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/post/usb-flash-disk/">
+                <img src="/post/usb-flash-disk/media/bg_hu_61059f1ce9f986f0.png"
+                        srcset="/post/usb-flash-disk/media/bg_hu_61059f1ce9f986f0.png 800w, /post/usb-flash-disk/media/bg_hu_84b1bb2f7a1b2ea9.png 1600w"
+                        width="800" 
+                        height="291" 
+                        loading="lazy"
+                        alt="Featured image of post U disk virus" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/post/usb-flash-disk/">U disk virus</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 10, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    836 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://wintery.net/post/usb-flash-disk/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><strong>U disk infection virus analysis</strong></p>
+<ol>
+<li>
+<p>**Behaviour analysis of virus infection in USB disk. **</p>
+</li>
+<li>
+<p>The program obtains the registry value (part of the process of obtaining commands and modifying the registry is as follows)</p>
+</li>
+</ol>
+<p>The purpose of obtaining TSAppCompat is to identify the server running the service in application mode.<br>
+Obtain the server and Microsoft settings during boot auto-start to prevent DLL hijacking vulnerabilities.<br>
+The value of SafeDllSearchMode.</p>
+<p><img src="/post/usb-flash-disk/media/f325fdd88301172d14ce72d972c87697.png"
+	width="1896"
+	height="44"
+	srcset="/post/usb-flash-disk/media/f325fdd88301172d14ce72d972c87697_hu_39b9f79c4f132f03.png 480w, /post/usb-flash-disk/media/f325fdd88301172d14ce72d972c87697_hu_6e221aac0c3f721a.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="4309"
+		data-flex-basis="10341px"
+	
+></p>
+<p>transparentEnable, obtains the NAT function settings of the server group</p>
+<p><img src="/post/usb-flash-disk/media/2e4280cc2893b966286c2e192f9ec8db.png"
+	width="1696"
+	height="78"
+	srcset="/post/usb-flash-disk/media/2e4280cc2893b966286c2e192f9ec8db_hu_1749f234535c766d.png 480w, /post/usb-flash-disk/media/2e4280cc2893b966286c2e192f9ec8db_hu_44ee5ae228422983.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2174"
+		data-flex-basis="5218px"
+	
+></p>
+<p>DisableMetaFiles, used to disable original file processing (valid when 1)</p>
+<p><img src="/post/usb-flash-disk/media/619fc1cae76787297934759746694065.png"
+	width="1647"
+	height="47"
+	srcset="/post/usb-flash-disk/media/619fc1cae76787297934759746694065_hu_9ce9e53a7bd5342a.png 480w, /post/usb-flash-disk/media/619fc1cae76787297934759746694065_hu_3e8009231b32482b.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="3504"
+		data-flex-basis="8410px"
+	
+></p>
+<p>AppInit_Dlls, any file using user32.dll will read this place</p>
+<p><img src="/post/usb-flash-disk/media/3c909e6fb4ee2489f60b8ac3b59dc7ea.png"
+	width="1632"
+	height="72"
+	srcset="/post/usb-flash-disk/media/3c909e6fb4ee2489f60b8ac3b59dc7ea_hu_1f52dfe5ad8cb10.png 480w, /post/usb-flash-disk/media/3c909e6fb4ee2489f60b8ac3b59dc7ea_hu_3a314b672618b7ea.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2266"
+		data-flex-basis="5440px"
+	
+></p>
+<p>TSUserEnabled, whether to allow remote use</p>
+<p><img src="/post/usb-flash-disk/media/6cd4e04e61b7c9c526a163ef34abbfe7.png"
+	width="1766"
+	height="72"
+	srcset="/post/usb-flash-disk/media/6cd4e04e61b7c9c526a163ef34abbfe7_hu_e2585aa1c68b15d1.png 480w, /post/usb-flash-disk/media/6cd4e04e61b7c9c526a163ef34abbfe7_hu_85393d316195111e.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2452"
+		data-flex-basis="5886px"
+	
+></p>
+<p>Modified registry key settings:<br>
+The value of HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\msfsa can realize the self-starting of the specified exe file (=”GHD.EXE”)</p>
+<p><img src="/post/usb-flash-disk/media/3d640f27fbf53c062b18c7e5950d239e.png"
+	width="1915"
+	height="63"
+	srcset="/post/usb-flash-disk/media/3d640f27fbf53c062b18c7e5950d239e_hu_836e2fa0fb563c61.png 480w, /post/usb-flash-disk/media/3d640f27fbf53c062b18c7e5950d239e_hu_4b388ebdf1bd9a26.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="3039"
+		data-flex-basis="7295px"
+	
+></p>
+<p>Set the original file cannot be modified</p>
+<ol start="2">
+<li>File operations:</li>
+</ol>
+<p>It can be observed that the system intercepted avb.exe, wrote data to it, and modified the data. It has been speculated that avb.exe is the real-time infected program.</p>
+<p>Intercepted:</p>
+<p><img src="/post/usb-flash-disk/media/41c5f9f10f483082d89e121f6d7c3c0d.png"
+	width="1543"
+	height="193"
+	srcset="/post/usb-flash-disk/media/41c5f9f10f483082d89e121f6d7c3c0d_hu_319877a1cd93f5c1.png 480w, /post/usb-flash-disk/media/41c5f9f10f483082d89e121f6d7c3c0d_hu_7e82ef9788ec8460.png 1024w"
+	loading="lazy"
+	
+		alt="Text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="799"
+		data-flex-basis="1918px"
+	
+></p>
+<p>Modify avb data</p>
+<p><img src="/post/usb-flash-disk/media/d8fdc01c84c7554fb927b24279d308a4.png"
+	width="1274"
+	height="647"
+	srcset="/post/usb-flash-disk/media/d8fdc01c84c7554fb927b24279d308a4_hu_cd794db13cce6af3.png 480w, /post/usb-flash-disk/media/d8fdc01c84c7554fb927b24279d308a4_hu_70a276a72dffe461.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="196"
+		data-flex-basis="472px"
+	
+></p>
+<p>Also modified javasc</p>
+<p><img src="/post/usb-flash-disk/media/bee795e77e59e57492d88f8fe9c9d0ff.png"
+	width="1448"
+	height="521"
+	srcset="/post/usb-flash-disk/media/bee795e77e59e57492d88f8fe9c9d0ff_hu_d193be292eb69ee8.png 480w, /post/usb-flash-disk/media/bee795e77e59e57492d88f8fe9c9d0ff_hu_61e177fa0cf4e6f4.png 1024w"
+	loading="lazy"
+	
+		alt="Text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="277"
+		data-flex-basis="667px"
+	
+></p>
+<ol>
+<li>
+<p><strong>IDA analysis function</strong></p>
+</li>
+<li>
+<p>Packing check</p>
+</li>
+</ol>
+<p>Shell checking using PEID</p>
+<p>The test results are as follows:</p>
+<p><img src="/post/usb-flash-disk/media/ab33ae6195159fb5fd274fcf464d778f.png"
+	width="419"
+	height="283"
+	srcset="/post/usb-flash-disk/media/ab33ae6195159fb5fd274fcf464d778f_hu_781585732059db7.png 480w, /post/usb-flash-disk/media/ab33ae6195159fb5fd274fcf464d778f_hu_1cf46c8656f40d69.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="148"
+		data-flex-basis="355px"
+	
+></p>
+<p>Instructions are written in Delphi language, without shell.</p>
+<ol start="2">
+<li>IDA analysis function</li>
+</ol>
+<p>Open it using IDA and find that 5 functions are called</p>
+<p><img src="/post/usb-flash-disk/media/e485c06bbe507f143a5f26ee39288524.png"
+	width="1323"
+	height="482"
+	srcset="/post/usb-flash-disk/media/e485c06bbe507f143a5f26ee39288524_hu_edb08ef9e2527e29.png 480w, /post/usb-flash-disk/media/e485c06bbe507f143a5f26ee39288524_hu_6b2603d85ca7c64c.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application, email description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="274"
+		data-flex-basis="658px"
+	
+></p>
+<p>From the function names given by IDA, we can know that the first function is to initialize the exe file, the fourth function is the system run Run function, and the fourth function is the Halt0 function to exit the program. You can&rsquo;t tell much about the second and third functions from their names.</p>
+<p>Use the shortcut key alt+t in IDA to find the string &ldquo;avb.exe&rdquo;:</p>
+<p><img src="/post/usb-flash-disk/media/c7f11586d8d4ddcc7ac888e23a655d02.png"
+	width="427"
+	height="273"
+	srcset="/post/usb-flash-disk/media/c7f11586d8d4ddcc7ac888e23a655d02_hu_8cae1398c4f39f51.png 480w, /post/usb-flash-disk/media/c7f11586d8d4ddcc7ac888e23a655d02_hu_d8621de2c8d6e846.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="156"
+		data-flex-basis="375px"
+	
+></p>
+<p>According to the found location, locate the _TForm1_FormCreate function:</p>
+<p>e<img src="/post/usb-flash-disk/media/98f2b53c30d360a19a41740dd79fbc38.png"
+	width="816"
+	height="681"
+	srcset="/post/usb-flash-disk/media/98f2b53c30d360a19a41740dd79fbc38_hu_5f01c983b81e5d43.png 480w, /post/usb-flash-disk/media/98f2b53c30d360a19a41740dd79fbc38_hu_5c5cfbecd7b6c96b.png 1024w"
+	loading="lazy"
+	
+		alt="Table description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="119"
+		data-flex-basis="287px"
+	
+></p>
+<p>Next, analyze the function of this function.</p>
+<p>This function internally calls the ParamStr(int) function to obtain the process name and other information, and then calls the ExtraFileName() function to extract the file name. After uniformly converting it to uppercase, it performs string comparison with &ldquo;javasc.exe&rdquo;.</p>
+<p>e<img src="/post/usb-flash-disk/media/011aeff855c8b49284f9d79b9f3c8269.png"
+	width="1205"
+	height="511"
+	srcset="/post/usb-flash-disk/media/011aeff855c8b49284f9d79b9f3c8269_hu_a3fb264ed786920d.png 480w, /post/usb-flash-disk/media/011aeff855c8b49284f9d79b9f3c8269_hu_6c08f67c78033499.png 1024w"
+	loading="lazy"
+	
+		alt="Image contains text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="235"
+		data-flex-basis="565px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/5101cb52cf1fce612420523bd8fc5d39.png"
+	width="1078"
+	height="192"
+	srcset="/post/usb-flash-disk/media/5101cb52cf1fce612420523bd8fc5d39_hu_5c7738e371651a13.png 480w, /post/usb-flash-disk/media/5101cb52cf1fce612420523bd8fc5d39_hu_1eac6a8650e69981.png 1024w"
+	loading="lazy"
+	
+		alt="Text low-confidence description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="561"
+		data-flex-basis="1347px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/70bcf13892ad4f676de381df35c56ebf.png"
+	width="840"
+	height="159"
+	srcset="/post/usb-flash-disk/media/70bcf13892ad4f676de381df35c56ebf_hu_77e1558f80cefde7.png 480w, /post/usb-flash-disk/media/70bcf13892ad4f676de381df35c56ebf_hu_cbada9a4a71f4ce9.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="528"
+		data-flex-basis="1267px"
+	
+></p>
+<p>If the process name is not javasc.exe, if not go to:</p>
+<p><img src="/post/usb-flash-disk/media/f4613df188122dea76f148465660ebe6.png"
+	width="1146"
+	height="356"
+	srcset="/post/usb-flash-disk/media/f4613df188122dea76f148465660ebe6_hu_5f14d92a5f04bef8.png 480w, /post/usb-flash-disk/media/f4613df188122dea76f148465660ebe6_hu_fa024154fa9a78cc.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="321"
+		data-flex-basis="772px"
+	
+></p>
+<p>This module copies the process and renames the file to sdafdf.exe stored under C:\\windows. After completion, call the shellexecute function to run the program.</p>
+<p>If the process is javasc.exe, then the jump module is as follows:</p>
+<p><img src="/post/usb-flash-disk/media/3f33d818a1560c3145a7de82ab35a10c.png"
+	width="1198"
+	height="622"
+	srcset="/post/usb-flash-disk/media/3f33d818a1560c3145a7de82ab35a10c_hu_1cb3a6d8257fbead.png 480w, /post/usb-flash-disk/media/3f33d818a1560c3145a7de82ab35a10c_hu_93fb69fe68a68f2a.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application, email description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="462px"
+	
+></p>
+<p>This module will first obtain the path where the file is located. After obtaining the file name, it will concatenate the current path and the file name to obtain the complete path information. Compare the existence of the javasc.exe file (DirectoryExists) in the current directory. If it exists:</p>
+<p><img src="/post/usb-flash-disk/media/449d28c67a52beb162f9b7c36f70e7da.png"
+	width="1196"
+	height="634"
+	srcset="/post/usb-flash-disk/media/449d28c67a52beb162f9b7c36f70e7da_hu_44f813671e5bfd49.png 480w, /post/usb-flash-disk/media/449d28c67a52beb162f9b7c36f70e7da_hu_9434da3db28f3eda.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="188"
+		data-flex-basis="452px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/b71b6a6991b674913c62fd0cb089ca3e.png"
+	width="1154"
+	height="97"
+	srcset="/post/usb-flash-disk/media/b71b6a6991b674913c62fd0cb089ca3e_hu_2b1b3dab2d26bc7c.png 480w, /post/usb-flash-disk/media/b71b6a6991b674913c62fd0cb089ca3e_hu_f715e5e25963d173.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1189"
+		data-flex-basis="2855px"
+	
+></p>
+<p>Finally, ShellExecute will be called to expand the folder.</p>
+<p>The next step is to determine whether avb.exe exists. If it does not exist:</p>
+<p><img src="/post/usb-flash-disk/media/fa429d6645c6a9ef9ad5b179bad7468e.png"
+	width="1208"
+	height="647"
+	srcset="/post/usb-flash-disk/media/fa429d6645c6a9ef9ad5b179bad7468e_hu_544e88cfcf454c2f.png 480w, /post/usb-flash-disk/media/fa429d6645c6a9ef9ad5b179bad7468e_hu_352785138c6a7d40.png 1024w"
+	loading="lazy"
+	
+		alt="Text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="186"
+		data-flex-basis="448px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/35604b708022a2ab8d8d5575466e3397.png"
+	width="1270"
+	height="201"
+	srcset="/post/usb-flash-disk/media/35604b708022a2ab8d8d5575466e3397_hu_93b33e083078da1b.png 480w, /post/usb-flash-disk/media/35604b708022a2ab8d8d5575466e3397_hu_1121e09655ba66db.png 1024w"
+	loading="lazy"
+	
+		alt="Text description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="631"
+		data-flex-basis="1516px"
+	
+></p>
+<p>Among them, the function of sub_44F3A0 function is to modify the registry:</p>
+<p><img src="/post/usb-flash-disk/media/3f7dbcf592a249ac7eb1ee417476493f.png"
+	width="1250"
+	height="656"
+	srcset="/post/usb-flash-disk/media/3f7dbcf592a249ac7eb1ee417476493f_hu_f1d410b1f1ae60ef.png 480w, /post/usb-flash-disk/media/3f7dbcf592a249ac7eb1ee417476493f_hu_7c008858a83aefde.png 1024w"
+	loading="lazy"
+	
+		alt="Text medium confidence description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="190"
+		data-flex-basis="457px"
+	
+></p>
+<p>Then copy the javasc.exe file and avb.exe file, register the service in the registry and write information to the registry.</p>
+<p>The next step is to determine whether the process name is avb.exe. If so, copy the mscb.exe file, call and execute the function and exit normally. If not, exit the _TForm1_FormCreate function directly.</p>
+<p><img src="/post/usb-flash-disk/media/53420b089a8197885df03cbcd3070a80.png"
+	width="1083"
+	height="616"
+	srcset="/post/usb-flash-disk/media/53420b089a8197885df03cbcd3070a80_hu_6b2e72b71332e6dd.png 480w, /post/usb-flash-disk/media/53420b089a8197885df03cbcd3070a80_hu_667a6b6a805bca9b.png 1024w"
+	loading="lazy"
+	
+		alt="GUI low-confidence description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/32ab133ad1ed0f14ec4c0a43301f6bbc.png"
+	width="1185"
+	height="685"
+	srcset="/post/usb-flash-disk/media/32ab133ad1ed0f14ec4c0a43301f6bbc_hu_252fb027ac7e127b.png 480w, /post/usb-flash-disk/media/32ab133ad1ed0f14ec4c0a43301f6bbc_hu_fd016c20487019e6.png 1024w"
+	loading="lazy"
+	
+		alt="Image contains GUI description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="172"
+		data-flex-basis="415px"
+	
+></p>
+<p>Summary: The main purpose of this function is to copy files to the system directory for execution and modify registry values.</p>
+<p><strong>3. Analysis of response process (IDA analysis)</strong></p>
+<p>Search for the keyword &ldquo;timer&rdquo; in the left column of IDA and obtain four response processes.</p>
+<p><img src="/post/usb-flash-disk/media/cc786772a86a1b1305f2946c46c685a2.png"
+	width="594"
+	height="215"
+	srcset="/post/usb-flash-disk/media/cc786772a86a1b1305f2946c46c685a2_hu_1cc71f7e43be3cd9.png 480w, /post/usb-flash-disk/media/cc786772a86a1b1305f2946c46c685a2_hu_170deb00fd1e819d.png 1024w"
+	loading="lazy"
+	
+		alt="Table description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="276"
+		data-flex-basis="663px"
+	
+></p>
+<ol>
+<li>
+<p>Should_TForm1_Timer1Timer</p>
+<p><img src="/post/usb-flash-disk/media/22ad1dac903ac5fabe05497d1cf31fe2.png"
+	width="527"
+	height="278"
+	srcset="/post/usb-flash-disk/media/22ad1dac903ac5fabe05497d1cf31fe2_hu_5394799ae142e047.png 480w, /post/usb-flash-disk/media/22ad1dac903ac5fabe05497d1cf31fe2_hu_4b545ad37af8b.png 1024w"
+	loading="lazy"
+	
+		alt="Text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="189"
+		data-flex-basis="454px"
+	
+></p>
+</li>
+</ol>
+<p>1.1 Enter the function sub_44EF94() to analyze the function function</p>
+<p><img src="/post/usb-flash-disk/media/457e35841f95b12ccced662179a0750b.png"
+	width="1005"
+	height="789"
+	srcset="/post/usb-flash-disk/media/457e35841f95b12ccced662179a0750b_hu_5e3b584998a90f75.png 480w, /post/usb-flash-disk/media/457e35841f95b12ccced662179a0750b_hu_b4e2f0352eec55c7.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application, email description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="127"
+		data-flex-basis="305px"
+	
+></p>
+<p>1.2 Enter the function sub_44E9FC(&amp;v12,a1) to analyze the function function</p>
+<p>As you can see in the while loop in the figure below, the function of this function is to traverse directory files.</p>
+<p><img src="/post/usb-flash-disk/media/639a763b9fec58eb921494fdc3cdb401.png"
+	width="661"
+	height="770"
+	srcset="/post/usb-flash-disk/media/639a763b9fec58eb921494fdc3cdb401_hu_51673ebabed6e9cf.png 480w, /post/usb-flash-disk/media/639a763b9fec58eb921494fdc3cdb401_hu_d5eef06d0ddace08.png 1024w"
+	loading="lazy"
+	
+		alt="Text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="85"
+		data-flex-basis="206px"
+	
+></p>
+<p>1.3 Enter function sub_44EEBC (v11) to analyze function functions</p>
+<p><img src="/post/usb-flash-disk/media/c57b331215dd9c70804bcdad59e9b5dc.png"
+	width="1234"
+	height="864"
+	srcset="/post/usb-flash-disk/media/c57b331215dd9c70804bcdad59e9b5dc_hu_596b4738925ef7c3.png 480w, /post/usb-flash-disk/media/c57b331215dd9c70804bcdad59e9b5dc_hu_507be16d83d858a0.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="142"
+		data-flex-basis="342px"
+	
+></p>
+<p>1.4 Enter function sub_44EAA4(v10,(int)&amp;v11) to analyze function functions</p>
+<p>As shown in the figure below, first find the first invalid file through FindFirst and record its creation time FatTime, and then find all files under this creation time based on the creation time.</p>
+<p><img src="/post/usb-flash-disk/media/a3731538e8394e2bd488df46537cce2f.png"
+	width="911"
+	height="863"
+	srcset="/post/usb-flash-disk/media/a3731538e8394e2bd488df46537cce2f_hu_8a564c2e0b7f9a9a.png 480w, /post/usb-flash-disk/media/a3731538e8394e2bd488df46537cce2f_hu_f8de1df022771286.png 1024w"
+	loading="lazy"
+	
+		alt="Graphical user interface, text, application Medium confidence description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="105"
+		data-flex-basis="253px"
+	
+></p>
+<p>1.5 Enter function sub_44EC88((int)v12, v9) to analyze function functions</p>
+<p>This function copies the virus file through the CopyFileA function in the loop</p>
+<p><img src="/post/usb-flash-disk/media/8e1bb7ba93c06a0203ff1aeb903ce0ba.png"
+	width="819"
+	height="679"
+	srcset="/post/usb-flash-disk/media/8e1bb7ba93c06a0203ff1aeb903ce0ba_hu_3d555d701a2f6172.png 480w, /post/usb-flash-disk/media/8e1bb7ba93c06a0203ff1aeb903ce0ba_hu_1866947d4062ca30.png 1024w"
+	loading="lazy"
+	
+		alt="Text description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="120"
+		data-flex-basis="289px"
+	
+></p>
+<p>The first response process is to traverse the files in the directory, then find the invalid files and copy the virus.</p>
+<p>2.Response_TForm1_Timer2Timer</p>
+<p><img src="/post/usb-flash-disk/media/1b7241d9d9fd5c8479427feecb0d0208.png"
+	width="958"
+	height="549"
+	srcset="/post/usb-flash-disk/media/1b7241d9d9fd5c8479427feecb0d0208_hu_efa27b30f0fc6f49.png 480w, /post/usb-flash-disk/media/1b7241d9d9fd5c8479427feecb0d0208_hu_c98b46f3716d91eb.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, text, application, email description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="174"
+		data-flex-basis="418px"
+	
+></p>
+<p>v15 is the day of the obtained system time. If the system time is greater than 2009 and the date is 1, 10, 21, or 29, the infection event will be triggered.</p>
+<p>3.Response_TForm1_Timer3Timer</p>
+<p><img src="/post/usb-flash-disk/media/fa8fd418522031235a8767eac2fa9bd6.png"
+	width="575"
+	height="249"
+	srcset="/post/usb-flash-disk/media/fa8fd418522031235a8767eac2fa9bd6_hu_abe4b91f2c17a317.png 480w, /post/usb-flash-disk/media/fa8fd418522031235a8767eac2fa9bd6_hu_af25bd1cc0be82ca.png 1024w"
+	loading="lazy"
+	
+		alt="GUI, Text, Application, Word description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="230"
+		data-flex-basis="554px"
+	
+></p>
+<p>Enter the function sub_44F3A0 (v2, v3, v4) to analyze the function function</p>
+<p>As shown in the figure below, you can see that its main function is to modify the registry</p>
+<p><img src="/post/usb-flash-disk/media/8afb5161debe7f9d7f9931fcfbc9eac5.png"
+	width="842"
+	height="625"
+	srcset="/post/usb-flash-disk/media/8afb5161debe7f9d7f9931fcfbc9eac5_hu_9b2d7efa40907ce7.png 480w, /post/usb-flash-disk/media/8afb5161debe7f9d7f9931fcfbc9eac5_hu_babfe617f9d2a4c1.png 1024w"
+	loading="lazy"
+	
+		alt="Text description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="134"
+		data-flex-basis="323px"
+	
+></p>
+<p>4.Response_TForm1_Timer3Timer</p>
+<p>As shown below, in step 1, find the exefile file in the memory and free it, and then call the nasm.exe program through ShellExecuteA.</p>
+<p><img src="/post/usb-flash-disk/media/d4bd439a896bbf86394a07767fbba3fb.png"
+	width="734"
+	height="532"
+	srcset="/post/usb-flash-disk/media/d4bd439a896bbf86394a07767fbba3fb_hu_4750d1d57e47f30c.png 480w, /post/usb-flash-disk/media/d4bd439a896bbf86394a07767fbba3fb_hu_5e903478ccf31999.png 1024w"
+	loading="lazy"
+	
+		alt="Text, schedule description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="137"
+		data-flex-basis="331px"
+	
+></p>
+<p><strong>4. Antivirus process</strong></p>
+<p>First delete the generated corresponding file.</p>
+<p><img src="/post/usb-flash-disk/media/74181b1c6f7f0af512ed3467eb9357c5.png"
+	width="542"
+	height="115"
+	srcset="/post/usb-flash-disk/media/74181b1c6f7f0af512ed3467eb9357c5_hu_9ce7f5f4fa8d1e1b.png 480w, /post/usb-flash-disk/media/74181b1c6f7f0af512ed3467eb9357c5_hu_3ae3bc2aef384e81.png 1024w"
+	loading="lazy"
+	
+		alt="Text low-confidence description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="471"
+		data-flex-basis="1131px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/cdf74810d325949bd188a6d08f065324.png"
+	width="586"
+	height="114"
+	srcset="/post/usb-flash-disk/media/cdf74810d325949bd188a6d08f065324_hu_a9e7411e88f516d9.png 480w, /post/usb-flash-disk/media/cdf74810d325949bd188a6d08f065324_hu_192cf276738db588.png 1024w"
+	loading="lazy"
+	
+		alt="Image contains GUI description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="514"
+		data-flex-basis="1233px"
+	
+></p>
+<p>Here GHO generates javasc and avb. All need to be deleted. Since the program hides some files, we need to modify the registry values ​​first.</p>
+<p><img src="/post/usb-flash-disk/media/5b9382d2b3916873f23e445c94aa2a31.png"
+	width="258"
+	height="92"
+	srcset="/post/usb-flash-disk/media/5b9382d2b3916873f23e445c94aa2a31_hu_b3d2fc3cb0d33b6c.png 480w, /post/usb-flash-disk/media/5b9382d2b3916873f23e445c94aa2a31_hu_7100136cd2394c7.png 1024w"
+	loading="lazy"
+	
+		alt="Graphical user interface, application description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="280"
+		data-flex-basis="673px"
+	
+></p>
+<p><img src="/post/usb-flash-disk/media/373e7a38e76cb91e7e6558bf8281da87.png"
+	width="249"
+	height="92"
+	srcset="/post/usb-flash-disk/media/373e7a38e76cb91e7e6558bf8281da87_hu_35c6154aae4e8be0.png 480w, /post/usb-flash-disk/media/373e7a38e76cb91e7e6558bf8281da87_hu_8d6669f404dacb57.png 1024w"
+	loading="lazy"
+	
+		alt="Graphical user interface, application, Teams description automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="270"
+		data-flex-basis="649px"
+	
+></p>
+<p>Delete the autostart hijacking registry key.</p>
+<p><img src="/post/usb-flash-disk/media/3b6f98d6b8aab7e3d435ea3ac105313f.png"
+	width="858"
+	height="127"
+	srcset="/post/usb-flash-disk/media/3b6f98d6b8aab7e3d435ea3ac105313f_hu_d862625995e4193d.png 480w, /post/usb-flash-disk/media/3b6f98d6b8aab7e3d435ea3ac105313f_hu_328f7278f4345917.png 1024w"
+	loading="lazy"
+	
+		alt="Text description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="675"
+		data-flex-basis="1621px"
+	
+></p>
+<p>RunOnce will run every time it is started, so it can be self-started.</p>
+<p><img src="/post/usb-flash-disk/media/db0df3258a4ecf4a35047062e5c47752.png"
+	width="754"
+	height="123"
+	srcset="/post/usb-flash-disk/media/db0df3258a4ecf4a35047062e5c47752_hu_60329c9c341050c4.png 480w, /post/usb-flash-disk/media/db0df3258a4ecf4a35047062e5c47752_hu_8613b4d4c457395c.png 1024w"
+	loading="lazy"
+	
+		alt="Table description has been automatically generated"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="613"
+		data-flex-basis="1471px"
+	
+></p>
+<p>Delete this registry key.</p>
+<p>Antivirus completed.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Graph embedding analysis</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/usb-flash-disk/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 11 篇文章 · 共 41.587k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=61314&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Coursework">
+<title>Use python to crawl JD platform comments and pictures and analyze them</title>
+
+<link rel='canonical' href='http://localhost:61314/en/post/spider/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="Use python to crawl JD platform comments and pictures and analyze them">
+<meta property='og:description' content="Coursework">
+<meta property='og:url' content='http://localhost:61314/en/post/spider/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2021-06-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-06-28T00:00:00&#43;00:00'/><meta property='og:image' content='https://ts1.cn.mm.bing.net/th/id/R-C.5129758a88795267ee2511cd48810885?rik=Zg%2bT8tlhjYhGwg&amp;riu=http%3a%2f%2fcache.yisu.com%2fupload%2fadmin%2fcustomer_case_img%2f2019-08-08%2f1565261709.jpg&amp;ehk=cYRv1UJv5kN%2f61vA1PeuI07mvna4uFyysepAk9pDM%2fE%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1' />
+<meta name="twitter:title" content="Use python to crawl JD platform comments and pictures and analyze them">
+<meta name="twitter:description" content="Coursework"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://ts1.cn.mm.bing.net/th/id/R-C.5129758a88795267ee2511cd48810885?rik=Zg%2bT8tlhjYhGwg&amp;riu=http%3a%2f%2fcache.yisu.com%2fupload%2fadmin%2fcustomer_case_img%2f2019-08-08%2f1565261709.jpg&amp;ehk=cYRv1UJv5kN%2f61vA1PeuI07mvna4uFyysepAk9pDM%2fE%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:61314/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#design-report-content">Design report content</a>
+      <ol>
+        <li><a href="#topic-selection-background">Topic selection background</a></li>
+        <li><a href="#design-basis">Design basis</a></li>
+        <li><a href="#design-originality">Design originality</a></li>
+      </ol>
+    </li>
+    <li><a href="#introduction-to-analysis-development-and-testing-process">Introduction to analysis, development and testing process</a>
+      <ol>
+        <li><a href="#analyze">analyze</a></li>
+        <li><a href="#development">Development</a></li>
+        <li><a href="#test">test</a></li>
+      </ol>
+    </li>
+    <li><a href="#self-evaluation">Self-evaluation</a>
+      <ol>
+        <li><a href="#self-evaluation-1">Self-evaluation</a></li>
+      </ol>
+    </li>
+    <li><a href="#course-summary-criticism-and-suggestions-for-the-course">Course summary, criticism and suggestions for the course</a>
+      <ol>
+        <li><a href="#course-summary">Course Summary</a></li>
+        <li><a href="#criticisms-and-suggestions-for-the-course">Criticisms and suggestions for the course</a></li>
+      </ol>
+    </li>
+    <li><a href="#appendix">appendix</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/post/spider/">
+                
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.5129758a88795267ee2511cd48810885?rik=Zg%2bT8tlhjYhGwg&amp;riu=http%3a%2f%2fcache.yisu.com%2fupload%2fadmin%2fcustomer_case_img%2f2019-08-08%2f1565261709.jpg&amp;ehk=cYRv1UJv5kN%2f61vA1PeuI07mvna4uFyysepAk9pDM%2fE%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1" loading="lazy" alt="Featured image of post Use python to crawl JD platform comments and pictures and analyze them" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/post/spider/">Use python to crawl JD platform comments and pictures and analyze them</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Coursework
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 28, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    14 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    2897 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:61314/post/spider/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="design-report-content">
+    <a href="#design-report-content" class="header-anchor">#</a>
+    Design report content
+</h2><h3 id="topic-selection-background">
+    <a href="#topic-selection-background" class="header-anchor">#</a>
+    Topic selection background
+</h3><p>Shopping on online platforms such as Taobao and JD.com has gradually become a popular shopping method. However, counterfeit and shoddy products seriously harm consumers’ shopping experience on this intangible shopping platform. Even if we can protect our legitimate rights and interests by returning and refunding products without any reason within seven days, this wastes a lot of manpower and financial resources.</p>
+<p>We hope to be able to purchase the desired product through the Internet at one time. In fact, before purchasing the product, we can check the shopping experience and product evaluation of previous buyers in the corresponding product store, and judge whether the product is worth buying through the product evaluation.</p>
+<p>But this is not the case. In order to attract customers to buy goods, some merchants on online shopping platforms often deceive buyers by writing fake reviews. At the same time, there are also a large number of consumers attracted by the &ldquo;cashback for good reviews&rdquo; who inject a lot of fake reviews.</p>
+<p>Although buyers are often able to screen out most of these reviews, manual screening is cumbersome and complicated. In fact, a good program for filtering reviews and reconstructing reviews can provide consumers with more authentic product information.</p>
+<h3 id="design-basis">
+    <a href="#design-basis" class="header-anchor">#</a>
+    Design basis
+</h3><ol>
+<li>Crawl and learn from Taobao comments</li>
+</ol>
+<p>blog.csdn.net/qq_40946921/article/details/99684483</p>
+<ol start="2">
+<li>Crawling JD.com pictures for learning</li>
+</ol>
+<p>blog.csdn.net/dexing07/article/details/77938902</p>
+<ol start="3">
+<li>Create word cloud learning</li>
+</ol>
+<p>&ldquo;Python Programming Fundamentals&rdquo; 2nd Edition - 13.6 Creating a Word Cloud</p>
+<h3 id="design-originality">
+    <a href="#design-originality" class="header-anchor">#</a>
+    Design originality
+</h3><ol>
+<li>
+<p>Overall original design</p>
+</li>
+<li>
+<p>Partly due to the modification of three items in 1.2 Design Basis</p>
+</li>
+</ol>
+<h2 id="introduction-to-analysis-development-and-testing-process">
+    <a href="#introduction-to-analysis-development-and-testing-process" class="header-anchor">#</a>
+    Introduction to analysis, development and testing process
+</h2><h3 id="analyze">
+    <a href="#analyze" class="header-anchor">#</a>
+    analyze
+</h3><p>Through data collection and analysis, we learned that the Taobao platform is more resistant to crawling than the JD platform. Therefore, in this design, we crawled comments and pictures from the JD.com platform for analysis, reconstruction, and creation of cloud images.</p>
+<p>That is, the user enters a JD product link, the program analyzes and extracts the ID number in the chain, generates the URL of the product review through link splicing, extracts the lastpage (the last page of the review) from the review, divides the 0 to lastpage pages into two parts and assigns them to two threads for crawling, and crawls to obtain product reviews and product photos.</p>
+<p>Filter the crawled comments, namely:</p>
+<ol>
+<li>Count each comment word by word. If a certain character appears repeatedly and abnormally in the comment (more than 30% of the total number of comments), it will be judged as a spamming comment;</li>
+</ol>
+<p>(1) For example, when commenting: &ldquo;This dress is particularly beautiful&hellip;&rdquo;, the user enters the symbol &rsquo; multiple times. &lsquo;Complete some kind of praise cashback task assigned by the merchant or the platform&rsquo;s evaluation task, resulting in the character&rsquo;. &lsquo;The recurrence rate is as high as 30%; (due to the excessive number of certain characters and the large denominator, the proportion is greater than 30%)</p>
+<p>(2) For example, for a comment: &ldquo;Good-looking&rdquo;, the user only inputs two characters (the number of characters is less than 4) as a comment, which has little reference value, resulting in the recurrence rate of the characters &ldquo;good&rdquo; and &ldquo;look&rdquo; as high as 30%; (the total number of characters is too small, and the numerator is too small, resulting in a proportion greater than 30%)</p>
+<ol start="2">
+<li>Perform a second screening on the comments retained in the first screening. Given some common words as praise keywords, count the number of praises for each comment. If the number of praises in a comment is more than 5, it is judged as too many praises;</li>
+</ol>
+<p>Customized praise keywords: GoodComment={&lsquo;recommended&rsquo;,&rsquo;easy to use&rsquo;,&lsquo;satisfied&rsquo;,&lsquo;comfortable&rsquo;,&rsquo;like&rsquo;,&lsquo;buy it&rsquo;,&lsquo;discount&rsquo;,&lsquo;very worth&rsquo;,&rsquo;like&rsquo;,&rsquo;exquisite&rsquo;,&lsquo;repurchase&rsquo;,&lsquo;beautiful&rsquo;,&lsquo;good-looking&rsquo;,&lsquo;good&rsquo;,&rsquo;new style&rsquo;,&lsquo;affordable&rsquo;,&rsquo; &lsquo;Fast&rsquo;, &lsquo;Good effect&rsquo;, &lsquo;Very comfortable&rsquo;, &lsquo;Very soft&rsquo;, &lsquo;Very good fit&rsquo;, &lsquo;It really works&rsquo;, &lsquo;Good&rsquo;, &lsquo;Continue to buy&rsquo;, &lsquo;Very good&rsquo;, &lsquo;Very good&rsquo;, &lsquo;Good quality&rsquo;, &lsquo;Pretty good&rsquo;, &lsquo;Continue to buy&rsquo;, &lsquo;Exceptionally good&rsquo;, &lsquo;Pretty good&rsquo;, &lsquo;Always very satisfied&rsquo;, &lsquo;Exceptionally good-looking&rsquo;}</p>
+<p>The number of positive reviews is recorded twice for absolute positive reviews. For example, the positive review keywords {&lsquo;satisfied&rsquo;, &lsquo;very satisfied&rsquo;} appear twice in the comment &ldquo;very satisfied&rdquo;, but appear only once in the review &ldquo;relatively satisfied&rdquo;, that is, certain screening is given to absolute positive reviews.</p>
+<ol start="3">
+<li>If the total number of a single comment is less than 30 characters, the number of positive comments in a valid comment must not exceed 20% of the total number of characters in the comment; if the total number of a single comment is greater than 30 characters, the number of positive comments in a valid comment must not exceed 10% of the total number of characters in the comment and the repetition rate of a single character must not be higher than 20%;</li>
+</ol>
+<p>(1) For example, a comment: &ldquo;The clothes are good-looking, I am very satisfied with them, and they are very comfortable. Buy them.&rdquo; The number of positive comments appears up to 5 times, and the total number of characters is 17. It is determined to be a fake review. (Due to too many positive reviews and the denominator being too large, the proportion is greater than 20%)</p>
+<p>(2) For example, if the comment is &ldquo;good-looking&rdquo;, the total number of characters in the comment is 2, and the number of positive comments is 1, it is judged to be a fake comment. The user is completing a certain positive cashback task assigned by the merchant or an evaluation task on the platform, which is a task-type comment. (The total number of characters is too small, and the numerator is too small, causing the proportion to be greater than 20%)</p>
+<h3 id="development">
+    <a href="#development" class="header-anchor">#</a>
+    Development
+</h3><ol>
+<li>The first stage - crawling from Taobao to JD.com</li>
+</ol>
+<p>For the first half of the experiment, I have been investing in crawling Taobao reviews and found that errors often occur in the second recent crawl of Taobao reviews after crawling a large amount of data. I spent a lot of time discovering errors caused by Taobao&rsquo;s anti-crawling and researching how to bypass Taobao&rsquo;s anti-crawling measures, and tried many different methods.</p>
+<p>By searching for information, I accidentally discovered that crawling JD.com was easier than Taobao, so I finally gave up crawling Taobao reviews and turned to crawling JD reviews.</p>
+<ol start="2">
+<li>The second stage - from low-speed crawling to high-speed crawling</li>
+</ol>
+<p>For crawling a large number of comments on the JD platform, the speed is slow and the crawling time is long. In order to improve the crawling speed, multi-threading is used for crawling. However, it was found through testing that multi-threaded crawling can easily trigger JD.com’s anti-crawling mechanism.</p>
+<p>The JD review page only displays the last 100 pages. After repeated testing, it was found that turning on dual threads can improve the crawling speed and can crawl a large amount of data without triggering the platform&rsquo;s anti-crawling measures.</p>
+<ol start="3">
+<li>The third stage - screening effective comments and visualizing them</li>
+</ol>
+<p>Filter the product reviews crawled by the Jingdong platform, store the valid comments in the result list, store the eliminated comments in the reason list, and output them visually to an excel document. At the same time, the product pictures are stored according to user ID classification, and the effective comments and eliminated comments are made into word clouds and output for comparison.</p>
+<ol start="4">
+<li>The fourth stage - perfecting the design</li>
+</ol>
+<p>Improve the design and write a design report;</p>
+<p>The files NEW comments.xlsx and eliminated comments.xlsx are excel files that store valid comments and eliminated comments. The stop_words.txt file is a stop word file downloaded from GitHub. all_word.png and comment_word.png are word cloud diagrams made of all comments and valid comments respectively. The photo folder is a picture of the crawled comments, and the subfolder is named after the ID number of the buyer who posted the comment.</p>
+<h3 id="test">
+    <a href="#test" class="header-anchor">#</a>
+    test
+</h3><ol>
+<li>Conduct a crawling test on a certain JD product. The link is <a class="link" href="https://item.jd.com/10902370587.html"  target="_blank" rel="noopener"
+    >https://item.jd.com/10902370587.html</a>. The product review link after extracting the ID is: <a class="link" href="https://club.jd.com/comment/productPageCommen"  target="_blank" rel="noopener"
+    >https://club.jd.com/comment/productPageCommen</a> ts.action?callback=fetchJSON_comment98&amp;productId=10902370587&amp;score=0&amp;sortType=5&amp;page=0&amp;pageSize=10&amp;isShadowSku=0&amp;fold=1;</li>
+</ol>
+<p><img src="/media%5cclip_image002.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<ol start="2">
+<li>Store valid comments in (NEW comments.xlsx), and record the ID number, comment time, and comment content of each comment; store eliminated comments in (Elimination Comments.xlsx), and record the ID number, comment time, comment content, and reason for elimination of each comment;</li>
+</ol>
+<p><img src="/media%5cclip_image004.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>Some valid comments (NEW comments.xlsx)</p>
+<p><img src="/media%5cclip_image006.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>Partial elimination of comments (elimination of comments.xlsx)</p>
+<p><img src="/media%5cclip_image008.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<ol start="3">
+<li>Make a cloud image</li>
+</ol>
+<p>Make a cloud chart of the filtered comment set and the filtered comment set</p>
+<p>All comments generate cloud image (all_word.png)</p>
+<p><img src="/media%5cclip_image010.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="all_word"
+	
+	
+></p>
+<p>Effective comments generate cloud image (comment_word.png)</p>
+<p><img src="/media%5cclip_image012.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="comment_word"
+	
+	
+></p>
+<ol start="4">
+<li>Comments and pictures are placed in the folder eliminate.py in the same folder as /photos/</li>
+</ol>
+<p><img src="/media%5cclip_image014.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<h2 id="self-evaluation">
+    <a href="#self-evaluation" class="header-anchor">#</a>
+    Self-evaluation
+</h2><h3 id="self-evaluation-1">
+    <a href="#self-evaluation-1" class="header-anchor">#</a>
+    Self-evaluation
+</h3><ol>
+<li>
+<p>Use a web crawler to crawl the comment information and pictures of the shopping platform, filter and classify the crawled comments and store them in two excel files (NEW comments.xlsx and eliminated comments.xlsx);</p>
+</li>
+<li>
+<p>Check the saved eliminated comments.xlsx file and find that the filtered comments are indeed water-filled comments or false comments;</p>
+</li>
+<li>
+<p>Compare all crawled comments and filtered comments into a word cloud, and find that the word cloud after filtering can better reflect the product situation;</p>
+</li>
+<li>
+<p>The praise keywords are some words that I summarized during the test experiment, but the number is far from enough. By increasing the number of praise keywords, the review screening effect can be accurately improved. However, due to limited time, we did not achieve a large number of praise keywords;</p>
+</li>
+<li>
+<p>Most of the favorable keywords are favorable keywords for shoes and clothing products. In order to highlight the function of the design program, I have deliberately crawled shoe products, but the screening effect in other product categories (such as mobile phones) is not good. The main reason is that the favorable keyword vocabulary is not complete enough;</p>
+</li>
+<li>
+<p>Regarding the screening mechanism, I am quite satisfied with its overall screening mechanism, but there are some flaws. The ratio parameters of the number of positive comments to the number of words in comments, the number of positive comments parameters, and the ratio of single character repetitions set by this program need to be adjusted. When it reaches the optimal parameters, it can better ensure that water-filled comments and false comments are filtered out, while valid comments can be retained;</p>
+</li>
+<li>
+<p>The parameters of this program are some parameters that I have summarized through repeated testing and running, but they have not reached the optimal level. I can definitely optimize the parameters through deep learning, but the implementation is complicated and the learning data set is difficult to obtain.</p>
+</li>
+</ol>
+<h2 id="course-summary-criticism-and-suggestions-for-the-course">
+    <a href="#course-summary-criticism-and-suggestions-for-the-course" class="header-anchor">#</a>
+    Course summary, criticism and suggestions for the course
+</h2><h3 id="course-summary">
+    <a href="#course-summary" class="header-anchor">#</a>
+    Course Summary
+</h3><p>By learning python programming, I am convinced that python is simpler and more flexible than the C language I learned before. For many functions that are difficult to achieve in C language that require a lot of code, python can be completed through direct calls.</p>
+<p>Through this course design, I learned professional course knowledge such as crawlers and information processing, and gained a certain understanding of the role of Python in reality and what Python can do.</p>
+<p>In the course design, I personally have my own solutions to the anti-crawling problems encountered during the crawling process. I personally made my own program using Python, which made me more interested in this course and gave me a full sense of accomplishment.</p>
+<h3 id="criticisms-and-suggestions-for-the-course">
+    <a href="#criticisms-and-suggestions-for-the-course" class="header-anchor">#</a>
+    Criticisms and suggestions for the course
+</h3><p>It is definitely difficult for me to choose topics independently without any prompts. For me, most of the time I spend thinking about what needs to be done, rather than how to do it. For beginners of python, although the teacher gave everyone time to search the information to find out the direction of the python course, because they learned too little theoretical knowledge when looking for the direction of the course, I believe that most students were confused about what python could do at that time (at least I was like this). As the course progressed, there was huge pressure to gradually find the direction of their own course.</p>
+<p>If teachers can give more suggestions in the course design, I believe that in the subsequent course design, everyone will not need to spend a lot of time looking for the direction of their own course design, and thus save a lot of time on course design, so that everyone can better complete their own course design, and may be able to improve the quality of the course design.</p>
+<h2 id="appendix">
+    <a href="#appendix" class="header-anchor">#</a>
+    appendix
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- coding:utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">urllib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">threading</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span> 
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">jieba</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">wordcloud</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">myThread</span> <span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threadID</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">counter</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">threadID</span> <span class="o">=</span> <span class="n">threadID</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;Start thread:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_information</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;Exit thread:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Find the most words in the string str</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">max_letter_count</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count_max</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="n">count_max</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">max_char</span><span class="o">=</span><span class="n">i</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count_max</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">list</span><span class="o">=</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_char</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count_max</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_information</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">headers</span><span class="p">,</span><span class="n">start_page</span><span class="p">,</span><span class="n">end_page</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">reason</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#Some positive keywords currently compiled</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GoodComment</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;recommended&#39;</span><span class="p">,</span> <span class="s1">&#39;easy to use&#39;</span><span class="p">,</span> <span class="s1">&#39;satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;comfortable&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;buy it&#39;</span><span class="p">,</span> <span class="s1">&#39;discount&#39;</span><span class="p">,</span> <span class="s1">&#39;very good value&#39;</span><span class="p">,</span> <span class="s1">&#39;like&#39;</span><span class="p">,</span> <span class="s1">&#39;exquisite&#39;</span><span class="p">,</span> <span class="s1">&#39;repurchase&#39;</span><span class="p">,</span> <span class="s1">&#39;beautiful&#39;</span><span class="p">,</span> <span class="s1">&#39;good-looking&#39;</span><span class="p">,</span> <span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;new style&#39;</span><span class="p">,</span> <span class="s1">&#39;affordable&#39;</span><span class="p">,</span> <span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;Good effect&#39;</span><span class="p">,</span> <span class="s1">&#39;Very comfortable&#39;</span><span class="p">,</span> <span class="s1">&#39;Very soft&#39;</span><span class="p">,</span> <span class="s1">&#39;Very suitable&#39;</span><span class="p">,</span> <span class="s1">&#39;Really good&#39;</span><span class="p">,</span> <span class="s1">&#39;Continue buying&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Very good&#39;</span><span class="p">,</span> <span class="s1">&#39;Good quality&#39;</span><span class="p">,</span> <span class="s1">&#39;Pretty good&#39;</span><span class="p">,</span> <span class="s1">&#39;Continue buying&#39;</span><span class="p">,</span> <span class="s1">&#39;Exceptionally good&#39;</span><span class="p">,</span> <span class="s1">&#39;Pretty good&#39;</span><span class="p">,</span> <span class="s1">&#39;Always use&#39;</span><span class="p">,</span> <span class="s1">&#39;Very satisfied&#39;</span><span class="p">,</span> <span class="s1">&#39;Exceptionally good-looking&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#Output comments for each page</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_page</span><span class="p">,</span><span class="n">end_page</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Climbing the first page&#34;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">+</span><span class="s2">&#34;page&#34;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&amp;productId=&#39;</span><span class="o">+</span><span class="nb">id</span><span class="o">+</span><span class="s1">&#39;&amp;score=0&amp;sortType=5&amp;page=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;pageSize=10&amp;isShadowSku=0&amp;fold=1&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">):</span><span class="n">data</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#Filter useful comments</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;comments&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#crawl product review image</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">path</span><span class="o">=</span><span class="s1">&#39;photo/&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">()</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;/&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">image_url</span> <span class="ow">in</span> <span class="n">num</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="s1">&#39;.jpg&#39;</span> <span class="ow">in</span> <span class="n">image_url</span><span class="p">[</span><span class="s1">&#39;imgUrl&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;http:&#39;</span><span class="o">+</span><span class="n">image_url</span><span class="p">[</span><span class="s1">&#39;imgUrl&#39;</span><span class="p">],</span><span class="n">path</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.jpg&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;http:&#39;</span><span class="o">+</span><span class="n">image_url</span><span class="p">[</span><span class="s1">&#39;imgUrl&#39;</span><span class="p">],</span><span class="n">path</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#If the repetition rate of a certain word in a comment is as high as 30%, it will be judged as a spam comment from the buyer and will not be included in the comment.</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&gt;</span><span class="mf">0.3</span><span class="p">:</span> <span class="c1">#30% guarantees that the number of comments should not be less than 4</span>
+</span></span><span class="line"><span class="cl">                <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;Reason&#34;</span><span class="p">:</span><span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&#34;Recurrence rate is as high as 30%&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">GoodCommentNum</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">Comment</span> <span class="ow">in</span> <span class="n">GoodComment</span><span class="p">:</span> <span class="c1">#If the favorable keyword appears in the comment, add 1 to the record</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">Comment</span> <span class="ow">in</span> <span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">GoodCommentNum</span><span class="o">=</span><span class="n">GoodCommentNum</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="n">GoodCommentNum</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">:</span> <span class="c1">#If the number of good comments is greater than 5, it is judged as a false comment</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Reason&#34;</span><span class="p">:</span> <span class="s2">&#34;Too many positive reviews&#34;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&lt;</span><span class="mi">30</span><span class="p">:</span> <span class="c1">#The number of comments is less than 30 words</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">GoodCommentNum</span><span class="o">&lt;=</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">GoodCommentNum</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&lt;=</span><span class="mi">2</span><span class="o">/</span><span class="mi">10</span><span class="p">:</span> <span class="c1">#If every 10-word comment has less than 2 favorable keywords, save the comment</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;Reason&#34;</span><span class="p">:</span> <span class="s2">&#34;Too many positive reviews&#34;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span> <span class="c1">#The number of words in the comment is greater than 30 words</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&gt;</span><span class="mf">0.2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Reason&#34;</span><span class="p">:</span><span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&#34;Recurrence rate is as high as 20%&#34;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="n">GoodCommentNum</span><span class="o">&lt;=</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">GoodCommentNum</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">/</span><span class="mi">10</span><span class="p">:</span> <span class="c1">#If every 10-word comment has a favorable keyword less than 1, save the comment</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment time&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Comment content&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;Reason&#34;</span><span class="p">:</span> <span class="s2">&#34;Too many positive reviews&#34;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Completed crawling &#34;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">+</span><span class="s2">&#34;page&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">cloud_word</span><span class="p">(</span><span class="n">comment_word</span><span class="p">,</span><span class="n">name</span><span class="p">):</span> <span class="c1">#Generate word cloud</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stopwords</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;stop_words.txt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span> <span class="c1">#Load stop word list</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word</span><span class="o">=</span><span class="n">comment_word</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word</span><span class="o">=</span><span class="n">jieba</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">comment_word</span><span class="p">)</span> <span class="c1">#Word segmentation results without removing stop words</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word_spite</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">comment_word</span><span class="p">:</span> <span class="c1">#Remove the stop participle</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">comment_word_spite</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word_spite</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">comment_word_spite</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wc</span><span class="o">=</span><span class="n">wordcloud</span><span class="o">.</span><span class="n">WordCloud</span><span class="p">(</span> <span class="c1">#Create wordcloud object</span>
+</span></span><span class="line"><span class="cl">        <span class="sa">r</span><span class="s1">&#39;msyh.ttc&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">background_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span><span class="n">font_step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">prefer_horizontal</span><span class="o">=</span><span class="mf">0.9</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span><span class="o">=</span><span class="n">wc</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">comment_word_spite</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span><span class="o">.</span><span class="n">to_image</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#Browser access disguise</span>
+</span></span><span class="line"><span class="cl">    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">             <span class="s1">&#39;cookie&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s1">&#39;referer&#39;</span><span class="p">:</span><span class="s1">&#39;https://item.jd.com/&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s1">&#39;user-agent&#39;</span><span class="p">:</span><span class="s1">&#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.864.37&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">url_input</span><span class="o">=</span><span class="nb">input</span><span class="p">(</span><span class="s2">&#34;Please enter the JD product URL:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">=</span><span class="p">[]</span> <span class="c1">#filtered comments</span>
+</span></span><span class="line"><span class="cl">        <span class="n">reason</span><span class="o">=</span><span class="p">[]</span> <span class="c1">#Statistics on the reasons for elimination of each comment that was screened and eliminated.</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;com/(.*?)\.html&#39;</span><span class="p">,</span><span class="n">url_input</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&amp;productId=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;score=0&amp;sortType=5&amp;page=0&amp;pageSize=10&amp;isShadowSku=0&amp;fold=1&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">):</span><span class="n">data</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lastpage</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;maxPage&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;total&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">lastpage</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;page comments&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threads</span><span class="o">=</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">get_information</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">headers</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">lastpage</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">reason</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">get_information</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">headers</span><span class="p">,</span><span class="n">lastpage</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">lastpage</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">reason</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Start a new thread</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Wait for all threads to complete</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;Exit the main thread&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">         <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Error in extracting product URL information, please re-enter JD product URL:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="n">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create a new thread and divide it into 2 threads (too few will be slow, too fast will easily be blocked)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#Load the filtered comments into the file</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Valid comments have been loaded into the NEW comments.xlsx file&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The elimination comments have been loaded into the elimination comments.xlsx file&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NEW</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NEW</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;NEWComments.xlsx&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Eliminate</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Eliminate</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;Eliminate comments.xlsx&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_comment</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">comment_word</span><span class="o">+=</span><span class="n">_comment</span><span class="p">[</span><span class="s2">&#34;Comment content&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">all_word</span><span class="o">=</span><span class="n">comment_word</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cloud_word</span><span class="p">(</span><span class="n">comment_word</span><span class="p">,</span><span class="s1">&#39;comment_word&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;comment cloud chart production completed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_comment</span> <span class="ow">in</span> <span class="n">reason</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">all_word</span><span class="o">+=</span><span class="n">_comment</span><span class="p">[</span><span class="s2">&#34;Comment content&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cloud_word</span><span class="p">(</span><span class="n">all_word</span><span class="p">,</span><span class="s1">&#39;all_word&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;all_comment cloud image production completed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/post/mprof_use/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/xiaoai.webp" loading="lazy" data-key="" data-hash="/xiaoai.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Essay Writing Tips</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/cyber-security/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" loading="lazy" data-key="" data-hash="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Academic report notes organization 1</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/tools/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://memeprod.ap-south-1.linodeobjects.com/user-template/5f63a0d9d4d3dd395c9b508aac91d328.png" loading="lazy" data-key="" data-hash="https://memeprod.ap-south-1.linodeobjects.com/user-template/5f63a0d9d4d3dd395c9b508aac91d328.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Toolbox maintenance records</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 22 篇文章 · 共 48.083k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

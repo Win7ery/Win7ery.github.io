@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=61314&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="课程大作业">
+<title>利用python爬取京东平台评论及图片并进行分析</title>
+
+<link rel='canonical' href='http://localhost:61314/post/spider/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="利用python爬取京东平台评论及图片并进行分析">
+<meta property='og:description' content="课程大作业">
+<meta property='og:url' content='http://localhost:61314/post/spider/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2021-06-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-06-28T00:00:00&#43;00:00'/><meta property='og:image' content='https://ts1.cn.mm.bing.net/th/id/R-C.5129758a88795267ee2511cd48810885?rik=Zg%2bT8tlhjYhGwg&amp;riu=http%3a%2f%2fcache.yisu.com%2fupload%2fadmin%2fcustomer_case_img%2f2019-08-08%2f1565261709.jpg&amp;ehk=cYRv1UJv5kN%2f61vA1PeuI07mvna4uFyysepAk9pDM%2fE%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1' />
+<meta name="twitter:title" content="利用python爬取京东平台评论及图片并进行分析">
+<meta name="twitter:description" content="课程大作业"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://ts1.cn.mm.bing.net/th/id/R-C.5129758a88795267ee2511cd48810885?rik=Zg%2bT8tlhjYhGwg&amp;riu=http%3a%2f%2fcache.yisu.com%2fupload%2fadmin%2fcustomer_case_img%2f2019-08-08%2f1565261709.jpg&amp;ehk=cYRv1UJv5kN%2f61vA1PeuI07mvna4uFyysepAk9pDM%2fE%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:61314/en/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#设计报告内容">设计报告内容</a>
+      <ol>
+        <li><a href="#选题背景">选题背景</a></li>
+        <li><a href="#设计依据">设计依据</a></li>
+        <li><a href="#设计原创性">设计原创性</a></li>
+      </ol>
+    </li>
+    <li><a href="#分析开发测试过程介绍">分析、开发、测试过程介绍</a>
+      <ol>
+        <li><a href="#分析">分析</a></li>
+        <li><a href="#开发">开发</a></li>
+        <li><a href="#测试">测试</a></li>
+      </ol>
+    </li>
+    <li><a href="#自我评价">自我评价</a>
+      <ol>
+        <li><a href="#自我评价-1">自我评价</a></li>
+      </ol>
+    </li>
+    <li><a href="#课程总结对课程的批评和建议">课程总结、对课程的批评和建议</a>
+      <ol>
+        <li><a href="#课程总结">课程总结</a></li>
+        <li><a href="#对课程的批评和建议">对课程的批评和建议</a></li>
+      </ol>
+    </li>
+    <li><a href="#附件">附件</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/spider/">
+                
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.5129758a88795267ee2511cd48810885?rik=Zg%2bT8tlhjYhGwg&amp;riu=http%3a%2f%2fcache.yisu.com%2fupload%2fadmin%2fcustomer_case_img%2f2019-08-08%2f1565261709.jpg&amp;ehk=cYRv1UJv5kN%2f61vA1PeuI07mvna4uFyysepAk9pDM%2fE%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0&amp;sres=1&amp;sresct=1" loading="lazy" alt="Featured image of post 利用python爬取京东平台评论及图片并进行分析" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/spider/">利用python爬取京东平台评论及图片并进行分析</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            课程大作业
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 28, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 14 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    6763 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:61314/en/post/spider/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="设计报告内容">
+    <a href="#%e8%ae%be%e8%ae%a1%e6%8a%a5%e5%91%8a%e5%86%85%e5%ae%b9" class="header-anchor">#</a>
+    设计报告内容
+</h2><h3 id="选题背景">
+    <a href="#%e9%80%89%e9%a2%98%e8%83%8c%e6%99%af" class="header-anchor">#</a>
+    选题背景
+</h3><p>在淘宝、京东等网络平台上购物，逐渐成为大众化的购物方式。但假冒伪劣产品在这个摸不着实物的购物平台严重危害着消费者的购物体验，即使我们可以通过七天无理由退货退款来维护我们的合法权益，但是这样浪费大量的人力和财力。</p>
+<p>我们希望能够一次性通过网络购买到心怡的商品，其实我们可以在购买商品之前在对应商品店铺下查看以往买家的购物体验和商品评价，通过商品评价判断该商品是否值得购买。</p>
+<p>但是事实并非如此，网络购物平台的一些商家为了吸引顾客购买商品，往往会通过刷假评论诱骗买家，同时也有一大批被‘好评返现’吸引的消费者注入大量注水评论。</p>
+<p>虽然往往买家都能够筛选出大部分这样的评论，但人工筛查繁琐、复杂。其实一个好的筛选评论、重构评论的程序能够为消费者提供更真实的商品信息。</p>
+<h3 id="设计依据">
+    <a href="#%e8%ae%be%e8%ae%a1%e4%be%9d%e6%8d%ae" class="header-anchor">#</a>
+    设计依据
+</h3><p>1、爬取淘宝评论学习</p>
+<p>blog.csdn.net/qq_40946921/article/details/99684483</p>
+<p>2、爬取京东图片学习</p>
+<p>blog.csdn.net/dexing07/article/details/77938902</p>
+<p>3、创建词云学习</p>
+<p>《python程序设计基础》第2版——13.6 创建词云</p>
+<h3 id="设计原创性">
+    <a href="#%e8%ae%be%e8%ae%a1%e5%8e%9f%e5%88%9b%e6%80%a7" class="header-anchor">#</a>
+    设计原创性
+</h3><p>1、设计整体原创</p>
+<p>2、部分源于1.2设计依据中三项的修改</p>
+<h2 id="分析开发测试过程介绍">
+    <a href="#%e5%88%86%e6%9e%90%e5%bc%80%e5%8f%91%e6%b5%8b%e8%af%95%e8%bf%87%e7%a8%8b%e4%bb%8b%e7%bb%8d" class="header-anchor">#</a>
+    分析、开发、测试过程介绍
+</h2><h3 id="分析">
+    <a href="#%e5%88%86%e6%9e%90" class="header-anchor">#</a>
+    分析
+</h3><p>通过搜集资料分析得知淘宝平台相对于京东平台，其反爬性更强。因此，本次设计从京东平台爬取评论、评论晒图进行分析重构制作云图。</p>
+<p>即用户输入京东商品链接，程序分析提取出链中的id号，通过链接拼接生成该商品评论的url，从评论中提取出lastpage（评论最后一页），将0到lastpage页分成两部分分给两个线程进行爬取，爬取获得商品评论和商品晒图。</p>
+<p>对爬取得到的评论进行筛选，即：</p>
+<p>1、对每条评论进行逐字统计，若该评论中某字符反复不正常出现（多于该评论总数的30%）即判定为注水评论；</p>
+<p>（1）如评论：“这个衣服特别好看。。。。。。。。”，用户通过多次输入符号‘。’完成商家下达的某种好评返现任务或平台的评价任务，导致字符‘。’反复出现率高达30%；（由于某字符数量过多，分母过大导致比例大于30%）</p>
+<p>（2）如评论：“好看”，用户仅输入两个字符（字符数少于4）作为评论，其参考价值不大，导致其字符‘好’和字符‘看’字反复出现率高达30%；（总字符数量过少，分子过小导致比例大于30%）</p>
+<p>2、对于第一次筛选保留下的评论进行第二次筛选。给定出部分常见词作为好评关键字，统计每条评论的好评次数，若一条评论中好评次数高于5次判定为好评过多；</p>
+<p>自定义的好评关键字：GoodComment={&lsquo;推荐&rsquo;,&lsquo;好用&rsquo;,&lsquo;满意&rsquo;,&lsquo;舒服&rsquo;,&lsquo;喜欢&rsquo;,&lsquo;买它&rsquo;,&lsquo;优惠&rsquo;,&lsquo;很值&rsquo;,&lsquo;赞&rsquo;,&lsquo;精美&rsquo;,&lsquo;回购&rsquo;,&lsquo;漂亮&rsquo;,&lsquo;好看&rsquo;,&lsquo;不错&rsquo;,&lsquo;新款&rsquo;,&lsquo;实惠&rsquo;,&lsquo;速度快&rsquo;,&lsquo;效果好&rsquo;,&lsquo;很舒适&rsquo;,&lsquo;很柔软&rsquo;,&lsquo;很合身&rsquo;,&lsquo;真在用&rsquo;,&lsquo;好&rsquo;,&lsquo;继续买&rsquo;,&lsquo;非常好&rsquo;,&lsquo;很好&rsquo;,&lsquo;质量不错&rsquo;,&lsquo;挺好的&rsquo;,&lsquo;继续购买&rsquo;,&lsquo;特别好&rsquo;,&lsquo;蛮好&rsquo;,&lsquo;一直非常满意&rsquo;,&lsquo;特别好看&rsquo;}</p>
+<p>对绝对好评记两次好评数量，如好评关键字{&lsquo;满意&rsquo;,&lsquo;非常满意&rsquo;}在评论‘非常满意’中出现两次，而在评论‘比较满意’中只出现一次，即对绝对好评给予一定的筛选。</p>
+<p>3、若单条评论总数少于30字，要求有效评论的好评数不得高于评论总字符数的20%；若单条评论总数大于30字，要求有效评论的好评数不得高于评论总字符数的10%且其单个字符重复出现率不得高于20%；</p>
+<p>（1）如评论：“衣服好看，非常满意，还很舒服，买它”，出现好评次数高达5次，而其字符总数为17，判定为刷假评。（由于好评次数过多，分母过大导致比例大于20%）</p>
+<p>（2）如评论：“好看”，评论总字符为2，好评次数为1，判定为假评论，用户为完成商家下达的某种好评返现任务或平台的评价任务，任务式的评论。（总字符数量过少，分子过小导致比例大于20%）</p>
+<h3 id="开发">
+    <a href="#%e5%bc%80%e5%8f%91" class="header-anchor">#</a>
+    开发
+</h3><p>1、第一阶段——从淘宝爬取到京东爬取</p>
+<p>对于实验前半阶段，一直投入于淘宝评论爬取，发现往往对淘宝评论进行一次大量数据爬取后的第二次近时间爬取都会出现报错现象。在发现因淘宝反爬造成的错误和研究如何绕过淘宝反爬措施上花费了大量的时间，尝试过多种不同的方法。</p>
+<p>通过查找资料偶然发现京东爬取相对于淘宝较简单，最终放弃淘宝评论爬取，转向京东评论爬取。</p>
+<p>2、第二阶段——从低速爬取到高速爬取</p>
+<p>对于京东平台大量评论的爬取，其速度较慢，爬取时间较长。为了提高爬取速度，采用多线程进行爬取。但是通过测试发现，多线程爬取容易触发京东反爬机制。</p>
+<p>京东评论页仅显示最近100页，对此进行反复测试后发现开启双线程可以在提升爬取速度且可在爬取大量数据时不触发平台反爬措施。</p>
+<p>3、第三阶段——筛选有效评论并使其可视化</p>
+<p>对京东平台爬取到商品评论进行筛选，将有效评论存入result列表中，将淘汰评论存入reason列表中，并将其可视化输出到excel文档中，同时对商品晒图按照用户ID分类进行存储，将有效评论和淘汰评论制作成词云图输出，进行对比。</p>
+<p>4、第四阶段——完善设计</p>
+<p>对设计进行完善，撰写设计报告；</p>
+<p>其中文件NEW评论.xlsx和淘汰评论.xlsx为excel文件存储有效评论和淘汰评论，stop_words.txt文件为GitHub中下载的断停词文件，all_word.png和comment_word.png分别为全部评论和有效评论制作成的词云图，photo文件夹为爬取的评论晒图，其中子文件夹的命名为晒图评论买家的id号。</p>
+<h3 id="测试">
+    <a href="#%e6%b5%8b%e8%af%95" class="header-anchor">#</a>
+    测试
+</h3><p>1、对京东某商品进行爬取测试，其链接为https://item.jd.com/10902370587.html，对其id提取后拼接的商品评论链接为：https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&amp;productId=10902370587&amp;score=0&amp;sortType=5&amp;page=0&amp;pageSize=10&amp;isShadowSku=0&amp;fold=1；</p>
+<p><img src="/media%5cclip_image002.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>2、将有效评论存入（NEW评论.xlsx）中，对每条评论的ID号、评论时间、评论内容进行记录；淘汰评论存入（淘汰评论.xlsx）中，对每条评论的ID号、评论时间、评论内容以及淘汰理由进行记录；</p>
+<p><img src="/media%5cclip_image004.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>部分有效评论（NEW评论.xlsx）</p>
+<p><img src="/media%5cclip_image006.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>部分淘汰评论（淘汰评论.xlsx）</p>
+<p><img src="/media%5cclip_image008.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>3、制作云图</p>
+<p>对筛选的评论集合和筛选后的评论集合制成云图</p>
+<p>所有评论生成云图（all_word.png）</p>
+<p><img src="/media%5cclip_image010.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="all_word"
+	
+	
+></p>
+<p>有效评论生成云图（comment_word.png）</p>
+<p><img src="/media%5cclip_image012.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="comment_word"
+	
+	
+></p>
+<p>4、评论晒图放置在文件夹eliminate.py同文件夹/photos/文件夹中</p>
+<p><img src="/media%5cclip_image014.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<h2 id="自我评价">
+    <a href="#%e8%87%aa%e6%88%91%e8%af%84%e4%bb%b7" class="header-anchor">#</a>
+    自我评价
+</h2><h3 id="自我评价-1">
+    <a href="#%e8%87%aa%e6%88%91%e8%af%84%e4%bb%b7-1" class="header-anchor">#</a>
+    自我评价
+</h3><p>1、通过学习网络爬虫爬取购物平台的评论信息和图片，对爬取的评论进行筛选分类处理后存入两个excel文件中（NEW评论.xlsx和淘汰评论.xlsx）；</p>
+<p>2、对存入的淘汰评论.xlsx文件进行查看，发现其筛选出的评论确实属于注水评论或虚假评论；</p>
+<p>3、对爬的取所有评论和筛选评论制作成词云进行对比，发现其通过筛选处理后的词云能更好的反映出商品情况；</p>
+<p>4、对于好评关键词都是本人在测试实验时总结的一些词语，但其数量远远不够，通过增加好评关键词的数目能够精准的提升评论筛选效果，但由于时间有限没有做到大量好评关键词；</p>
+<p>5、好评关键词大多为鞋服类商品的好评关键字，为彰显设计程序的功能，本人有特意的爬取鞋子类商品，而在其他商品类（如手机类）的筛选效果就显得不佳，其主要原因还是好评关键字词库不够完善；</p>
+<p>6、对于筛选机制，本人对其整体的筛选机制还是比较满意，但是也有些许缺陷，本程序设置的好评数与评论字数的比例参数、好评数目参数、单个字符重复比例参数均有待调整，当其达到最优参数时能够更好的保证注水评论和虚假评论被筛选出，而有效评论能够保留；</p>
+<p>7、本程序的参数是本人通过反复测试运行总结出的一些参数，但其未达到最优，本人绝对可以通过深度学习使参数达到最优，但其实现复杂，学习的数据集也较难获得。</p>
+<h2 id="课程总结对课程的批评和建议">
+    <a href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93%e5%af%b9%e8%af%be%e7%a8%8b%e7%9a%84%e6%89%b9%e8%af%84%e5%92%8c%e5%bb%ba%e8%ae%ae" class="header-anchor">#</a>
+    课程总结、对课程的批评和建议
+</h2><h3 id="课程总结">
+    <a href="#%e8%af%be%e7%a8%8b%e6%80%bb%e7%bb%93" class="header-anchor">#</a>
+    课程总结
+</h3><p>通过学习python程序设计，本人绝对python相对于之前学习的C语言，其更加简便、灵活，对于很多C语言需要大量代码都难以实现的功能，python能够通过直接调用完成。</p>
+<p>通过本次课程设计学会了爬虫、信息处理等专业课程知识，对python在现实中的作用和python能够干什么有一定的了解。</p>
+<p>在课设中，个人对爬虫过程中遇到的反爬问题有自己的解决方法，个人通过使用python做出自己的程序让我对本课程更感兴趣，有满满的成就感。</p>
+<h3 id="对课程的批评和建议">
+    <a href="#%e5%af%b9%e8%af%be%e7%a8%8b%e7%9a%84%e6%89%b9%e8%af%84%e5%92%8c%e5%bb%ba%e8%ae%ae" class="header-anchor">#</a>
+    对课程的批评和建议
+</h3><p>我个人绝对在没有任何提示的情况独立选择课题还是比较难的，对于我而言，在大部分时间中都是在思考需要做什么，而不是怎么做。对于python的初学者而言，虽然老师有给时间让大家自己查资料找出python课设的方向，但由于在找课设方向时所学的理论知识过少，相信大多数同学当时对python能做什么比较迷茫（至少我是这样的），而随着课程的进行，伴随着巨大压力逐渐找到自己课设的方向。</p>
+<p>如果在课设中，老师能够给出更多的建议，相信在后续的课设中，大家就不需要花费大量时间寻找自己课设方向，进而节约大量时间去做课程设计，使大家能够更好的完成自己的课设，可能能够提高课设的质量。</p>
+<h2 id="附件">
+    <a href="#%e9%99%84%e4%bb%b6" class="header-anchor">#</a>
+    附件
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># -*- coding:utf-8 -*-</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">urllib</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">threading</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span> 
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">jieba</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">wordcloud</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">myThread</span> <span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threadID</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">counter</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">threadID</span> <span class="o">=</span> <span class="n">threadID</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;开始线程：&#34;</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_information</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;退出线程：&#34;</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#找出字符串str中最多的字</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">max_letter_count</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">count_max</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="n">count_max</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">max_char</span><span class="o">=</span><span class="n">i</span>
+</span></span><span class="line"><span class="cl">            <span class="n">count_max</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">list</span><span class="o">=</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_char</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">count_max</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">list</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_information</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">headers</span><span class="p">,</span><span class="n">start_page</span><span class="p">,</span><span class="n">end_page</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">reason</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#目前整理的一些好评关键词</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GoodComment</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;推荐&#39;</span><span class="p">,</span><span class="s1">&#39;好用&#39;</span><span class="p">,</span><span class="s1">&#39;满意&#39;</span><span class="p">,</span><span class="s1">&#39;舒服&#39;</span><span class="p">,</span><span class="s1">&#39;喜欢&#39;</span><span class="p">,</span><span class="s1">&#39;买它&#39;</span><span class="p">,</span><span class="s1">&#39;优惠&#39;</span><span class="p">,</span><span class="s1">&#39;很值&#39;</span><span class="p">,</span><span class="s1">&#39;赞&#39;</span><span class="p">,</span><span class="s1">&#39;精美&#39;</span><span class="p">,</span><span class="s1">&#39;回购&#39;</span><span class="p">,</span><span class="s1">&#39;漂亮&#39;</span><span class="p">,</span><span class="s1">&#39;好看&#39;</span><span class="p">,</span><span class="s1">&#39;不错&#39;</span><span class="p">,</span><span class="s1">&#39;新款&#39;</span><span class="p">,</span><span class="s1">&#39;实惠&#39;</span><span class="p">,</span><span class="s1">&#39;速度快&#39;</span><span class="p">,</span><span class="s1">&#39;效果好&#39;</span><span class="p">,</span><span class="s1">&#39;很舒适&#39;</span><span class="p">,</span><span class="s1">&#39;很柔软&#39;</span><span class="p">,</span><span class="s1">&#39;很合身&#39;</span><span class="p">,</span><span class="s1">&#39;真好&#39;</span><span class="p">,</span><span class="s1">&#39;继续买&#39;</span><span class="p">,</span><span class="s1">&#39;非常好&#39;</span><span class="p">,</span><span class="s1">&#39;很好&#39;</span><span class="p">,</span><span class="s1">&#39;质量不错&#39;</span><span class="p">,</span><span class="s1">&#39;挺好的&#39;</span><span class="p">,</span><span class="s1">&#39;继续购买&#39;</span><span class="p">,</span><span class="s1">&#39;特别好&#39;</span><span class="p">,</span><span class="s1">&#39;蛮好&#39;</span><span class="p">,</span><span class="s1">&#39;一直在用&#39;</span><span class="p">,</span><span class="s1">&#39;非常满意&#39;</span><span class="p">,</span><span class="s1">&#39;特别好看&#39;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#输出每一页的评论</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_page</span><span class="p">,</span><span class="n">end_page</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;正在爬第&#34;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">+</span><span class="s2">&#34;页&#34;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&amp;productId=&#39;</span><span class="o">+</span><span class="nb">id</span><span class="o">+</span><span class="s1">&#39;&amp;score=0&amp;sortType=5&amp;page=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;pageSize=10&amp;isShadowSku=0&amp;fold=1&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">):</span><span class="n">data</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">#筛选出有用评论</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;comments&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#爬取商品评论图</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">path</span><span class="o">=</span><span class="s1">&#39;photo/&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">()</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;/&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">image_url</span> <span class="ow">in</span> <span class="n">num</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="s1">&#39;.jpg&#39;</span> <span class="ow">in</span> <span class="n">image_url</span><span class="p">[</span><span class="s1">&#39;imgUrl&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;http:&#39;</span><span class="o">+</span><span class="n">image_url</span><span class="p">[</span><span class="s1">&#39;imgUrl&#39;</span><span class="p">],</span><span class="n">path</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.jpg&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="s1">&#39;http:&#39;</span><span class="o">+</span><span class="n">image_url</span><span class="p">[</span><span class="s1">&#39;imgUrl&#39;</span><span class="p">],</span><span class="n">path</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;-&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#如果在某一个评论中某个字重复出现率高达30%，判断为买家的垃圾评论,不写入评论中</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&gt;</span><span class="mf">0.3</span><span class="p">:</span>    <span class="c1">#30%保证了评论字数不得低于4个</span>
+</span></span><span class="line"><span class="cl">                <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;理由&#34;</span><span class="p">:</span><span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&#34;重复出现率高达30%&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">GoodCommentNum</span><span class="o">=</span><span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">Comment</span> <span class="ow">in</span> <span class="n">GoodComment</span><span class="p">:</span>               <span class="c1">#如果评论中出现好评关键字，记录加1</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">Comment</span> <span class="ow">in</span> <span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">GoodCommentNum</span><span class="o">=</span><span class="n">GoodCommentNum</span><span class="o">+</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="n">GoodCommentNum</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">:</span>              <span class="c1">#如果好评数量大于5，判断为虚假评论</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;理由&#34;</span><span class="p">:</span><span class="s2">&#34;好评过多&#34;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&lt;</span><span class="mi">30</span><span class="p">:</span>                    <span class="c1">#评论字数少于30字</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">GoodCommentNum</span><span class="o">&lt;=</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">GoodCommentNum</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&lt;=</span><span class="mi">2</span><span class="o">/</span><span class="mi">10</span><span class="p">:</span>    <span class="c1">#如果每10字评论有好评关键字小于2,存入评论</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;理由&#34;</span><span class="p">:</span><span class="s2">&#34;好评过多&#34;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>                                         <span class="c1">#评论字数大于30字</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&gt;</span><span class="mf">0.2</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;理由&#34;</span><span class="p">:</span><span class="n">max_letter_count</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s2">&#34;重复出现率高达20%&#34;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="n">GoodCommentNum</span><span class="o">&lt;=</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">GoodCommentNum</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">/</span><span class="mi">10</span><span class="p">:</span>    <span class="c1">#如果每10字评论有好评关键字小于1,存入评论</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">reason</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;ID&#34;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论时间&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;creationTime&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;评论内容&#34;</span><span class="p">:</span><span class="n">num</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                            <span class="s2">&#34;理由&#34;</span><span class="p">:</span><span class="s2">&#34;好评过多&#34;</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">爬完第&#34;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">+</span><span class="s2">&#34;页&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">cloud_word</span><span class="p">(</span><span class="n">comment_word</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>      <span class="c1">#生成词云</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stopwords</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;stop_words.txt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>    <span class="c1">#加载停用词表</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word</span><span class="o">=</span><span class="n">comment_word</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word</span><span class="o">=</span><span class="n">jieba</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">comment_word</span><span class="p">)</span>     <span class="c1">#未去掉停用词的分词结果</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word_spite</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">comment_word</span><span class="p">:</span>                <span class="c1">#去掉停分词</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">comment_word_spite</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word_spite</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">comment_word_spite</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wc</span><span class="o">=</span><span class="n">wordcloud</span><span class="o">.</span><span class="n">WordCloud</span><span class="p">(</span>           <span class="c1">#创建wordcloud对象</span>
+</span></span><span class="line"><span class="cl">        <span class="sa">r</span><span class="s1">&#39;msyh.ttc&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">background_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span><span class="n">font_step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">random_state</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">prefer_horizontal</span><span class="o">=</span><span class="mf">0.9</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span><span class="o">=</span><span class="n">wc</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">comment_word_spite</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">t</span><span class="o">.</span><span class="n">to_image</span><span class="p">()</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;.png&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#浏览器访问伪装</span>
+</span></span><span class="line"><span class="cl">    <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">             <span class="s1">&#39;cookie&#39;</span><span class="p">:</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s1">&#39;referer&#39;</span><span class="p">:</span><span class="s1">&#39;https://item.jd.com/&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s1">&#39;user-agent&#39;</span><span class="p">:</span><span class="s1">&#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36 Edg/91.0.864.37&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">url_input</span><span class="o">=</span><span class="nb">input</span><span class="p">(</span><span class="s2">&#34;请输入京东商品网址：&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span><span class="o">=</span><span class="p">[]</span>    <span class="c1">#筛选过后的评论</span>
+</span></span><span class="line"><span class="cl">        <span class="n">reason</span><span class="o">=</span><span class="p">[]</span>    <span class="c1">#统计每个被筛选淘汰的评论的淘汰理由</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;com/(.*?)\.html&#39;</span><span class="p">,</span><span class="n">url_input</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98&amp;productId=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;&amp;score=0&amp;sortType=5&amp;page=0&amp;pageSize=10&amp;isShadowSku=0&amp;fold=1&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">):</span><span class="n">data</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lastpage</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;maxPage&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;共有&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">lastpage</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;页评论&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threads</span><span class="o">=</span><span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">get_information</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">headers</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">lastpage</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">reason</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">get_information</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span><span class="n">headers</span><span class="p">,</span><span class="n">lastpage</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">lastpage</span><span class="p">,</span><span class="n">result</span><span class="p">,</span><span class="n">reason</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 开启新线程</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 等待所有线程完成</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span> <span class="p">(</span><span class="s2">&#34;退出主线程&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">         <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;提取商品网址信息出错，请重新输入京东商品网址：&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">         <span class="n">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 创建新线程,分2个线程（太少了速度慢，太快了容易被封）</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#将筛选后的评论装入文件</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;有效评论已装入NEW评论.xlsx文件&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;淘汰评论已装入淘汰评论.xlsx文件&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NEW</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">NEW</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;NEW评论.xlsx&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Eliminate</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reason</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Eliminate</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;淘汰评论.xlsx&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">comment_word</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_comment</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">comment_word</span><span class="o">+=</span><span class="n">_comment</span><span class="p">[</span><span class="s2">&#34;评论内容&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">all_word</span><span class="o">=</span><span class="n">comment_word</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cloud_word</span><span class="p">(</span><span class="n">comment_word</span><span class="p">,</span><span class="s1">&#39;comment_word&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;comment云图制作完成&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_comment</span> <span class="ow">in</span> <span class="n">reason</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">all_word</span><span class="o">+=</span><span class="n">_comment</span><span class="p">[</span><span class="s2">&#34;评论内容&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cloud_word</span><span class="p">(</span><span class="n">all_word</span><span class="p">,</span><span class="s1">&#39;all_word&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;all_comment云图制作完成&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/cyber-security/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" loading="lazy" data-key="" data-hash="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">学术报告笔记整理1</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/tools/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://memeprod.ap-south-1.linodeobjects.com/user-template/5f63a0d9d4d3dd395c9b508aac91d328.png" loading="lazy" data-key="" data-hash="https://memeprod.ap-south-1.linodeobjects.com/user-template/5f63a0d9d4d3dd395c9b508aac91d328.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">工具箱维护记录</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 21 篇文章 · 共 92.319k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

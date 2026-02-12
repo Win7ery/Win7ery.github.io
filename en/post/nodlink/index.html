@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Network and Distributed System Security (NDSS) Symposium 2024">
+<title>NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation</title>
+
+<link rel='canonical' href='https://wintery.net/en/post/nodlink/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation">
+<meta property='og:description' content="Network and Distributed System Security (NDSS) Symposium 2024">
+<meta property='og:url' content='https://wintery.net/en/post/nodlink/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-05-25T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-25T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/nodlink/media/bg.png' />
+<meta name="twitter:title" content="NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation">
+<meta name="twitter:description" content="Network and Distributed System Security (NDSS) Symposium 2024"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://wintery.net/post/nodlink/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="https://wintery.net/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#research-team-introduction">Research team introduction</a></li>
+    <li><a href="#background-introduction">Background introduction</a>
+      <ol>
+        <li><a href="#apt-threat-detection">APT Threat Detection</a></li>
+        <li><a href="#limitations-of-existing-technology">Limitations of existing technology</a></li>
+        <li><a href="#online-stp">Online STP</a></li>
+      </ol>
+    </li>
+    <li><a href="#method-overview">Method overview</a>
+      <ol>
+        <li><a href="#anomaly-detection-method">Anomaly detection method:</a></li>
+        <li><a href="#memory-cache">Memory cache</a></li>
+        <li><a href="#terminal-identification">Terminal identification</a>
+          <ol>
+            <li><a href="#function">Function</a></li>
+            <li><a href="#method">method</a></li>
+          </ol>
+        </li>
+        <li><a href="#hopset-build">Hopset build</a>
+          <ol>
+            <li><a href="#function-1">Function</a></li>
+            <li><a href="#method-1">method</a></li>
+          </ol>
+        </li>
+        <li><a href="#comprehensive-detection">Comprehensive detection</a>
+          <ol>
+            <li><a href="#function-2">Function</a></li>
+            <li><a href="#method-2">method</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#experimental-evaluation">Experimental evaluation</a>
+      <ol>
+        <li><a href="#dataset">Dataset</a></li>
+        <li><a href="#graph-granularity-accuracy">Graph granularity accuracy</a></li>
+        <li><a href="#node-granularity-accuracy">Node granularity accuracy</a></li>
+        <li><a href="#operating-efficiency">Operating efficiency</a></li>
+        <li><a href="#efficiency-ablation-experiment">Efficiency ablation experiment</a></li>
+        <li><a href="#other-experiments">Other experiments</a></li>
+      </ol>
+    </li>
+    <li><a href="#related-work">Related work</a></li>
+    <li><a href="#summarize">Summarize</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/post/nodlink/">
+                <img src="/post/nodlink/media/bg_hu_5049383425510260.png"
+                        srcset="/post/nodlink/media/bg_hu_5049383425510260.png 800w, /post/nodlink/media/bg_hu_db65b42843dd37a3.png 1600w"
+                        width="800" 
+                        height="401" 
+                        loading="lazy"
+                        alt="Featured image of post NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/post/nodlink/">NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Network and Distributed System Security (NDSS) Symposium 2024
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 25, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    31 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    6473 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://wintery.net/post/nodlink/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="summary">
+    <a href="#summary" class="header-anchor">#</a>
+    Summary
+</h2><p>Advanced persistent threat (APT) attacks continue to plague modern enterprises, causing significant financial losses. To combat these attacks, researchers have proposed techniques to capture complex and covert scenarios of APT attacks by modeling system entities and their dependencies using provenance graphs. In particular, in order to speed up attack detection and reduce economic losses, there is an urgent need for an online traceability detection system that can detect and investigate APT attacks under the constraints of timeliness and limited resources. Unfortunately, existing online systems often sacrifice detection granularity to reduce computational complexity and generate provenance graphs exceeding 100,000 nodes, which creates challenges for security administrators in interpreting detection results. In this paper, we design and implement NODLINK, the first online detection system that maintains high detection accuracy without sacrificing detection granularity. Our insight is that the APT attack detection process in online provenance-based detection systems can be modeled as a Steiner Tree Problem (STP), which has an efficient online approximation algorithm that can recover concise attack-related provenance graphs with theoretically bounded errors. To leverage the framework of the STP approximation algorithm for APT attack detection, we propose a novel memory cache design, an efficient attack screening method, and a new STP approximation algorithm that is more efficient than traditional algorithms in APT attack detection while maintaining the same complexity. We evaluate NODLINK in a production environment. Open-world experiments show that NODLINK achieves higher detection and investigation accuracy with the same or higher throughput, outperforming two state-of-the-art (SOTA) online traceability analysis systems.</p>
+<h2 id="research-team-introduction">
+    <a href="#research-team-introduction" class="header-anchor">#</a>
+    Research team introduction
+</h2><p>Shaofei Li, Xiangqun Chen, <strong><a class="link" href="https://yaoguopku.github.io/"  target="_blank" rel="noopener"
+    >Yao Guo</a></strong> ,<a class="link" href="https://marapapman.github.io/"  target="_blank" rel="noopener"
+    ><strong>Ding Li</strong></a>: Key Laboratory of High Trust Software Technology, Ministry of Education, School of Computer Science, Peking University</p>
+<p>Feng Dong, Haoyu Wang: Huazhong University of Science and Technology, majoring in software analysis, privacy and security, electronic crime, Internet/system measurement and AI security</p>
+<p>Jiedong Chen: Convinced</p>
+<p><a class="link" href="https://xusheng-xiao.github.io/"  target="_blank" rel="noopener"
+    >Xusheng Xiao</a>: Arizona State University, focusing on mobile application analysis, network threat detection and investigation, blockchain/smart contract security, and software testing and debugging</p>
+<p>Fei Shao: Case Western Reserve University</p>
+<p>Representative work: <strong>Are we there yet? An Industrial Viewpoint on Provenance-based Endpoint Detection and Response Tools.</strong> (CCS'23)</p>
+<h2 id="background-introduction">
+    <a href="#background-introduction" class="header-anchor">#</a>
+    Background introduction
+</h2><h3 id="apt-threat-detection">
+    <a href="#apt-threat-detection" class="header-anchor">#</a>
+    APT Threat Detection
+</h3><p>Advanced persistent threat (APT) attacks have become a major threat to modern enterprises. These enterprises&rsquo; existing endpoint detection and response (EDR) systems have difficulty responding to APT attacks due to a lack of ability to recover complex causal relationships between APT attack steps. As a result, practitioners and researchers now analyze system audit events in traceability data to recover APT attack scenarios. Unfortunately, most existing provenance analysis systems only support post-mortem analysis of EDR system alerts, which can delay accurate detection of APT attacks by a week and cause significant financial losses. A recent study showed that businesses lose approximately $32,000 per day when attackers have a persistent presence on their networks.</p>
+<p>To this end, researchers built an online detection system based on traceability that can simultaneously detect and investigate APT attacks. Unlike post-mortem analysis systems, online detection systems based on traceability can detect and restore the logic of APT attacks within seconds after they occur, allowing security administrators to respond promptly and reduce potential losses. In addition, by comprehensively analyzing the entire APT attack activity instead of a single system event, the false positive rate of the traceability-based online detection system is much lower than that of the traditional EDR system, further improving the effectiveness and efficiency of APT attack investigation.</p>
+<p>Despite these promising early results, building accurate online detection systems remains conceptually challenging due to limited resource constraints and high expectations for timeliness. Recent studies indicate that operating costs are a major bottleneck in industry adoption of EDR systems. Therefore, it is very important to reduce the operating costs of traceability-based detection systems. At the same time, people still expect detection systems based on traceability to detect APT attacks online in a timely manner. Unfortunately, achieving high detection accuracy under the constraints of timeliness and limited resources is particularly challenging because provenance data are highly structured graphs (called provenance graphs). Existing graph processing algorithms, such as graph neural networks [38] or iterative message passing algorithms [41], cannot be directly applied due to low efficiency.</p>
+<p>To address these challenges, recent provenance-based online detection systems use low-dimensional data structures or manually formulated rules to oversimplify highly structured provenance graphs. These systems reduce computational complexity by sacrificing detection granularity, and they make detection results difficult to interpret. For example, given an APT attack captured in attribution data, UNICORN, one of SOTA&rsquo;s online detection systems, might generate an attribution graph with over 100,000 nodes. However, less than 100 nodes are associated with APT attacks. Therefore, identifying the attack steps represented by such a small number of nodes from the traceability graph is like &ldquo;finding a needle in a haystack&rdquo;, which is extremely difficult for security administrators.</p>
+<p>The workflow of APT detection based on traceability consists of three steps:</p>
+<ol>
+<li>Candidate attack detection, selecting indicators of compromise (IOC) or abnormal events;</li>
+<li>Traceability graph construction, using nodes representing system entities and edges representing entity interactions (such as reading/writing files) to construct a graph to reveal interactions between IOCs or exceptions;</li>
+<li>Comprehensive detection, detect APT attacks based on the traceability graph constructed in step 2.</li>
+</ol>
+<p>Among these three steps, the quality of the traceability map constructed in step 2 is the key to accurate and fine-grained detection. Unfortunately, it is challenging to construct the most concise and accurate traceability diagram that reveals the interactions between IOCs or anomalies. Existing methods use heuristics that either oversimplify the provenance graph, miss critical information, or are too burdensome for online detection systems. Therefore, they cannot be concise, efficient, and accurate at the same time.</p>
+<p>In this paper, we propose the FIRST online detection system, which achieves fine-grained detection under the constraints of timeliness and limited resources while maintaining detection accuracy. Existing methods cannot achieve the simplicity, efficiency, and accuracy of APT detection simultaneously because they suffer from a fundamental limitation: the lack of a formal model for APT detection of multiple targets. Therefore, to address this fundamental limitation, we propose to model provenance graph construction (step 2 of provenance detection) as an STP (Steiner Tree Problem), which can efficiently model multiple targets and has efficient online capabilities for approximate solutions with theoretically bounded errors. Think of IOCs or exceptions as a predefined set of nodes (i.e. terminals) in STP and assign the same non-negative weight to every interaction between system entities. Then, building the provenance graph can be modeled as an online STP, which searches for subgraphs that link all anomalies with a minimum number of edges. By doing this, we can design an approximation algorithm that ensures that the subgraph has a minimal edge within a theoretically bounded error in polynomial time.</p>
+<p>While this sounds promising, there are three main challenges in solving the problem of STP-based APT attack detection.</p>
+<ol>
+<li>The first one is how to detect long term attacks? STP requires understanding the entire source picture in advance. However, keeping all source data in memory is not possible due to data size, and storing it in a disk database is impractical due to I/O bottlenecks. The straightforward approach of using a time window where only the latest data is saved does not always work, as the attacker may need more time than the window allows. To address this issue, we propose a novel memory cache design that employs a scoring approach to prioritize events that may lead to APT attacks and capture long-running attacks within the STP&rsquo;s time window.</li>
+<li>The second challenge is how to efficiently identify terminals in STP? Existing detection methods rely on dense random walks and message passing on the source graph, which is not suitable for online systems. To address this problem, we design an IDF-weighted three-layer variational autoencoder (VAE) that requires minimal computation.</li>
+<li>The third challenge is that the current STP approximation algorithm is still not efficient enough for APT attack detection. Existing methods require finding the shortest path between two nodes, which is too costly for online APT attack detection. To address this problem, we develop an importance-oriented greedy algorithm for online STP optimization that achieves low computational complexity with a limited competitive ratio.</li>
+</ol>
+<p>Main contributions:</p>
+<ol>
+<li>We model APT detection as online STP, which provides a new perspective for online APT detection.</li>
+<li>We designed and implemented the online APT detection system NODLINK, which implements timely and fine-grained detection of limited resources based on STP.</li>
+<li>We evaluate NODLINK in a real production environment. To the best of our knowledge, this is the first open-world evaluation of source-based APT attack detection.</li>
+</ol>
+<p><img src="/media%5cbg.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 1: Example of APT29’s source map. NODLINK is able to pinpoint attacks in a concise alert source graph containing approximately 200 nodes. The main part of the alert source graph is marked with a red dashed line. Key attack steps are highlighted with red shaded rectangles. "
+	
+	
+></p>
+<h3 id="limitations-of-existing-technology">
+    <a href="#limitations-of-existing-technology" class="header-anchor">#</a>
+    Limitations of existing technology
+</h3><p>Existing source-based detection systems can be divided into two categories: rule-based systems and learning-based systems. Many examples in both groups demonstrate the ability to achieve practical graphics-level accuracy. However, existing systems cannot achieve sufficient node-level precision and node-level recall simultaneously.</p>
+<p>Rule-based systems have lower node-level accuracy due to incomplete rule sets. For example, HOLMES, one of the SOTA rule-based systems, cannot detect the attack steps in the blue dotted box in Figure 1. The reason is that HOLMES&rsquo;s rules are initiated from an external untrusted IP, and the mail process does not have a direct connection to the external IP address. Therefore, the HOLMES output plot of the attack in Figure 1 is fragmented. The attack steps on HOST2 cannot be linked to the attack steps on HOST1, which brings challenges to root cause analysis. Furthermore, rule-based systems produce many false positives at the node level because rules cannot model all characteristics of dynamic systems well.</p>
+<p>On the other hand, learning-based systems suffer from lower node-level accuracy due to over-approximation. To support online detection, existing learning-based methods project source graphs into low-dimensional data structures to reduce computational complexity, leading to over-approximation. For example, UNICORN, an online detection method based on SOTA learning, converts source graphs into hash vectors. Therefore, UNICORN is unable to pinpoint attack-related nodes in Figure 1 (shown in red dashed boxes) from benign data (shown in green dashed boxes), resulting in low node-level accuracy (&lt;1%).</p>
+<h3 id="online-stp">
+    <a href="#online-stp" class="header-anchor">#</a>
+    Online STP
+</h3><p><a class="link" href="https://zhuanlan.zhihu.com/p/684571642"  target="_blank" rel="noopener"
+    >Online STP</a> is a combinatorial optimization problem determined to be an NP-complete problem with bounded approximation. Given an undirected graph G = (V, E) with non-negative edge weights, we display for each edge e ∈ E and a series of online vertices (called terminals) T = {t1, t2,&hellip; , tk}, which outputs a subgraph Si of G spanning {t1, t2,&hellip; , ti}. The goal is to minimize the total cost of $c(\bigcup_i^kS_i)$.</p>
+<p>The general framework of the online STP optimization algorithm is shown in Algorithm 1. For each arriving new terminal ti, we choose the set Si of unselected edges connecting ti to the current solution of the algorithm. The set Si is chosen as the cheapest one with the smallest weighted edge among all possible sets connecting ti to existing terminals. To find this set, it uses a greedy approach: it computes the shortest path Pj between ti and each previous terminal tj (where j &lt; i), and then selects the cheapest path as Si. We add Si to the solution and repeat this process until all terminals are reached. The final solution is the union of all sets Si.</p>
+<p><img src="/media%5cimage-20240522150026142.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Algorithm 1"
+	
+	
+></p>
+<h2 id="method-overview">
+    <a href="#method-overview" class="header-anchor">#</a>
+    Method overview
+</h2><h3 id="anomaly-detection-method">
+    <a href="#anomaly-detection-method" class="header-anchor">#</a>
+    Anomaly detection method:
+</h3><ol>
+<li><strong>Memory cache design</strong>: Design the memory cache to maintain the latest abnormal nodes, support the tracking of long-term attacks and maintain algorithm performance.</li>
+<li><strong>Terminal Identification</strong>: Identify suspicious process nodes as terminals by analyzing system audit events and using machine learning models (such as VAE).</li>
+<li><strong>Hope set construction algorithm</strong>: Construct a Hope set based on a search algorithm guided by the importance score, which takes into account the node&rsquo;s anomaly score and the distance from the terminal.</li>
+<li><strong>Importance score calculation</strong>: Calculate the importance score of each node, which combines the node&rsquo;s anomaly score, distance from the terminal and FANOUT factor.</li>
+<li><strong>Graph Anomaly Score</strong>: Each Hopp set is assigned a graph anomaly score (HAS), which is the sum of the anomaly scores of all nodes in the Hopp set.</li>
+<li><strong>Comprehensive detection</strong>: Merge the Hope sets constructed within the time window, and use statistical methods such as Grubbs test to detect abnormally high-scoring Hope sets to identify APT attacks.</li>
+<li><strong>Theoretical Analysis</strong>: Conduct a theoretical analysis on the complexity and competition ratio of the algorithm to ensure the effectiveness and efficiency of the approximate algorithm.</li>
+</ol>
+<p>Generally speaking, NODLINK is an online APT attack detection system. It accepts an event stream of system-sourced events collected from an agent installed on the monitored host. The output of NODLINK is a concise alert source graph containing key attack steps, Figure 1 shows an example of an alert source graph (marked by a red dotted box, which contains approximately 200 events).</p>
+<p>Algorithm 2 shows the high-level workflow of NODLINK, which is similar to existing detection systems. Our NODLINK algorithm detects anomalies every Δ (Δ = 10 in our implementation) seconds through four stages:</p>
+<ol>
+<li>In-memory cache build (line 6)</li>
+<li>Terminal identification (line 7)</li>
+<li>Hopset construction (line 8)</li>
+<li>Comprehensive detection (line 9)</li>
+</ol>
+<p>We obtain events and store them in cache, allowing NODLINK to track the cause and effect of long-running attack events in memory without suffering from the performance bottlenecks caused by slow I/O. Identifies suspicious processes and assigns an anomaly score based on local characteristics such as command line, process name, and files accessed. A Hopset is built for each terminal to connect topologically close event-level anomalies. Finally, we merge the hopset with the cache and report any subgraph with a biased anomaly score as an alert to reduce false positives.</p>
+<p><img src="/media%5cimage-20240522152706323.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Algorithm 2"
+	
+	
+></p>
+<p>The key novelty of our approach lies in the third stage of Hopset. Existing methods either use heavy graph learning algorithms or error-prone heuristics. In our approach, we propose an online STP-based approach that ensures simplicity, accuracy, and efficiency. To model APT attack detection on the origin graph as STP, we treat the attack-related processes as terminals and convert the directed graph into an undirected graph with each edge having equal non-negative weight w, which for simplicity, w = 1. It helps us model terminals that have no direct causal relationship but have dependencies on the same node. Therefore, the purpose of APT detection is to first identify the terminal set T and find the edge set S that can connect all attack-related nodes and have the smallest total weight $c(S)=\sum_{(u,v)\in S}W_{uv}$, that is, it is a standard STP formula. Our system then issues an alert if the aggregate anomaly score of a node in the Steiner tree is greater than a threshold.</p>
+<h3 id="memory-cache">
+    <a href="#memory-cache" class="header-anchor">#</a>
+    Memory cache
+</h3><p>The time window of NODLINK is designed as a memory cache to solve long-running attacks and maintain the efficiency of the online STP optimization algorithm. It maintains the latest abnormal nodes in memory and evicts outdated benign nodes to disk.</p>
+<p>In our design, the memory cache contains the edges of the origin graph in the form &lt;srcid, dstid, attr&gt;, where srcid and dstid are the IDs of the edge&rsquo;s source and destination respectively, and attr is the edge&rsquo;s ID. Edge properties, including operation type and timestamp. Table 1 lists the edge types and their available operation types. NODLINK also stores the necessary attributes of the nodes in the directed graph, namely processes, files and IP addresses. For processes, NODLINK stores their command line, process name, pid, and uid. For files and IPs, NODLINK stores their paths and IPs and ports respectively.</p>
+<p><img src="/media%5cimage-20240525122056345.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 1: System traceability event analysis"
+	
+	
+></p>
+<p>Cache updates: Normally, the in-memory cache buffers subgraphs</p>
+<ol>
+<li>Have a high anomaly score and</li>
+<li>Actively evolving.</li>
+</ol>
+<p>An in-memory cache updates the solution for the STP in the current time window every time window of length Δ, and NODLINK leverages the in-memory cache to achieve global STP solutions and false positive reduction.</p>
+<p>NODLINK organizes subgraphs in the cache into hopsets and provides a hopset anomaly score (HAS) for each hopset. At a high level, a skip set is a subset of the origin graph that contains local contextual information for a set of event-level anomalies. HAS represents the abnormality degree of each hopset.</p>
+<h3 id="terminal-identification">
+    <a href="#terminal-identification" class="header-anchor">#</a>
+    Terminal identification
+</h3><p>In terminal identification, NODLINK scans the memory cache and identifies suspicious process nodes as terminals based on their node-level characteristics. Note that while NODLINK&rsquo;s output only includes anomalous processes, it does take into account anomalous files and IP addresses. NODLINK merges unusual files and IP addresses into the processes accessing them. The logic behind this design decision is that malicious files and IPs cannot take effect until they are accessed by a process. Therefore, focusing on anomalous processes can reduce duplicate alerts on files and IPs without losing node-level accuracy. NODLINK analyzes three types of node-level characteristics: the command line that starts the process (command line), the files accessed by the process (file), and the IP address accessed by the process (network). Terminal identification consists of two steps: first, it embeds process nodes into numerical vectors based on node-level features. Second, it uses machine learning models to detect anomalies.</p>
+<p><strong>Offline model training:</strong> Although NODLINK is an online detection framework, it requires offline training of FastText models, VAE models, SV models, and thresholds for proposing anomalies from historical data. NODLINK trains FastText models on command lines, file paths, and IP addresses in historical data. NODLINK then uses the trained embedding vectors to further train the VAE model. NODLINK calculates SV offline by periodically running the DBSCAN algorithm on historical data. It first classifies process embedding vectors into different groups. The process name and its cluster number are then stored in an in-memory hash table for online anomaly score calculation.</p>
+<h4 id="function">
+    <a href="#function" class="header-anchor">#</a>
+    Function
+</h4><ol>
+<li><strong>Identify attack entry points</strong>: The purpose of terminal detection is to identify abnormal or suspicious nodes that may indicate the start of an APT attack. These nodes can be regarded as the &ldquo;entry points&rdquo; or &ldquo;terminals&rdquo; of the attack.</li>
+<li><strong>Identify attack-related entities</strong>: By detecting abnormal behaviors or characteristics, terminal detection helps determine system entities directly related to APT attacks, such as malicious processes, files, or network connections.</li>
+<li><strong>Reduce False Positives</strong>: Accurately identifying attack-related terminals can reduce false positives, as these detection results will be used in subsequent Hope set construction and attack graph generation to focus on the events most relevant to the attack.</li>
+<li><strong>Improve detection accuracy</strong>: Terminal detection recovers APT attack scenarios by analyzing system audit events, improving the detection accuracy of attack steps.</li>
+<li><strong>Support rapid response</strong>: Quickly and accurately identify attacking terminals allowing security administrators to respond promptly and take measures to curb the spread of attacks and reduce potential losses.</li>
+<li><strong>Basics for building attack graphs</strong>: Terminal detection provides basic nodes for building attack graphs. These nodes are the key to subsequent construction of Hope sets and reconstruction of attack scenarios.</li>
+<li><strong>Optimize resource allocation</strong>: By identifying the most critical attack nodes, the system can more effectively allocate resources, such as computing and storage, to process the data most relevant to the attack.</li>
+<li><strong>Assisted attack investigation</strong>: The results of terminal detection can assist security analysts in understanding the origin, scope and potential impact of the attack, so as to conduct attack investigation and post-event analysis more effectively.</li>
+</ol>
+<h4 id="method">
+    <a href="#method" class="header-anchor">#</a>
+    method
+</h4><ol>
+<li><strong>Embedding Based on Node-Level Features</strong>:
+<ul>
+<li>NODLINK first embeds node-level features such as command lines, accessed files and IP addresses of process nodes into numerical vectors. This step uses natural language processing (NLP) technology to convert command lines, file paths, and IP addresses into natural language sentences, and then uses document embedding tools such as FastText to convert the sentences into numerical vectors.</li>
+</ul>
+</li>
+<li><strong>Anomaly Score Calculation</strong>:
+<ul>
+<li>Use a variational autoencoder (VAE) model to calculate anomaly scores for each process node. The VAE model takes an embedding vector as input and outputs a reconstructed input vector. If the reconstructed vector is significantly different from the original embedding vector, the node is more likely to be an anomaly.</li>
+</ul>
+</li>
+<li><strong>Stability Score</strong>:
+<ul>
+<li>To reduce false positives caused by unstable processes (such as those that frequently access random files or IP addresses), NODLINK introduces a Stability Score (SV), which is based on the number of clusters of processes with the same name in historical data.</li>
+</ul>
+</li>
+<li><strong>Comprehensive Anomaly Score</strong>:
+<ul>
+<li>NODLINK combines the reconstruction error (given by the VAE model) and the stability score to calculate a comprehensive anomaly score for each process node. The anomaly score is calculated as: $AS(p) = \log\left(\frac{RE(p)}{SV(p)}\right)$ where 𝑝 is the embedding vector of the process, 𝑅𝐸 is the reconstruction error given by the VAE model, and 𝑆𝑉 is the stability score of process 𝑝.</li>
+</ul>
+</li>
+<li><strong>Terminal Determination</strong>:
+<ul>
+<li>A process node is marked as anomaly (terminal) if its combined anomaly score is higher than the 90th percentile of anomaly scores in historical data. This threshold is commonly used in VAE basic anomaly detection to ensure the generalization ability of the method.</li>
+</ul>
+</li>
+<li><strong>Offline Model-Training</strong>:
+<ul>
+<li>Although NODLINK is an online detection framework, it requires offline training of FastText model, VAE model, SV model and threshold for determining anomaly scores on historical data.</li>
+</ul>
+</li>
+</ol>
+<h3 id="hopset-build">
+    <a href="#hopset-build" class="header-anchor">#</a>
+    Hopset build
+</h3><p>After detecting a terminal in terminal identification, NODLINK runs Hopset Construction to resolve STPs within the current time window. The hop set within a certain time window is the neighbor context of each terminal, which includes bounded neighbor nodes and paths to these nodes. NODLINK utilizes a greedy algorithm, which we call the Importance Score Guided Search (ISG) algorithm, to construct hop sets based on local information (such as AS and node degree). Hopset Construction outputs an STP approximate solution with low complexity and finite competition ratio.</p>
+<p><strong>Graph Anomaly Score Calculation:</strong> The final step in Hopset construction is to assign the anomaly score HAS to each hopset. We define the HAS of a hopset as the sum of all anomaly scores $has(H_i)=\sum_{n\in H_i}AS(n)$ for all nodes in the hopset. Note that since NODLINK already excludes unimportant nodes based on IV, nodes in the hopset may be relevant to the attack. Therefore, the sum of ASs only includes nodes that are most likely to be relevant to the attack. This design helps improve the node-level accuracy and graph-level accuracy defined in terminal identification by avoiding events unrelated to attacks.</p>
+<h4 id="function-1">
+    <a href="#function-1" class="header-anchor">#</a>
+    Function
+</h4><ol>
+<li><strong>Local context capture</strong>: The Hope set contains the neighbor context of each terminal (i.e., the abnormal node related to the attack), which includes bounded neighbor nodes and paths to these nodes. Through the Hope set, the system can capture the local details of the attack behavior.</li>
+<li><strong>Anomaly Detection and Identification</strong>: Hopeset helps the system identify attack steps by connecting event-level anomalies, thereby enabling fine-grained detection of APT attacks.</li>
+<li><strong>Reduce False Positives</strong>: By focusing on abnormal nodes related to the attack, the Hope set helps reduce the interference of benign events unrelated to the attack, thereby reducing false positives.</li>
+<li><strong>Support rapid detection</strong>: The Hope set is constructed to be combined with the online STP approximation algorithm to quickly respond to new attack evidence and achieve real-time detection.</li>
+<li><strong>Attack Scenario Reconstruction</strong>: The Hop set provides logical connections between attack steps, which is crucial for reconstructing a complete attack scenario.</li>
+</ol>
+<h4 id="method-1">
+    <a href="#method-1" class="header-anchor">#</a>
+    method
+</h4><ol>
+<li><strong>Importance score-based search</strong>: NODLINK uses an indicator called the importance score (Importance Score, IV) to guide the search process. This score takes into account the node&rsquo;s anomaly score and distance from the terminal.</li>
+<li><strong>Greedy Search Algorithm</strong>: Hope set construction adopts a greedy search algorithm, which starts from each terminal and explores neighbor nodes based on importance scores.</li>
+<li><strong>Node Selection</strong>: During the search process, NODLINK selects those nodes with higher importance scores to ensure that the Hope set contains the events most relevant to the attack.</li>
+<li><strong>Bounded search range</strong>: In order to control the size of the Hop set and improve efficiency, the search process will stop when the preset number of nodes (θ) is reached.</li>
+<li><strong>Merge overlapping Hopsets</strong>: During greedy search, if there are overlapping Hopsets, NODLINK will merge them to connect terminals efficiently.</li>
+<li><strong>Anomaly Score Assignment</strong>: Each Hop set will be assigned a Hop set anomaly score (HAS), which is the sum of the anomaly scores of all nodes in the Hop set and is used to evaluate the anomaly degree of the Hop set.</li>
+<li><strong>Update and Maintenance</strong>: In each time window, NODLINK will update the cached Hop set in memory and merge it with the Hop set built in the current time window to maintain the reflection of the current attack scenario.</li>
+</ol>
+<p>Through the construction of Hope sets, NODLINK can effectively identify and connect relevant events in APT attacks, achieving rapid and accurate detection of attack behaviors while maintaining a fine-grained understanding of attack scenarios.</p>
+<h3 id="comprehensive-detection">
+    <a href="#comprehensive-detection" class="header-anchor">#</a>
+    Comprehensive detection
+</h3><p>In order to conduct comprehensive detection, NODLINK first updates the cached hopset in memory with the hopset constructed in the current time window. If the hop set for the current time window has the same nodes as the hop set in the cache, NODLINK merges them. However, if we merge hopsets directly, in the worst case, long-running processes will be recognized as terminals and update θ different neighbors in each time window, which may lead to dependency explosion. To prevent this, we limit the number of hops per terminal to θ nodes and replace nodes with lower IV values ​​with nodes with higher IV values ​​when merging.</p>
+<p>After the hop sets are merged, NODLINK assigns the HAS to the updated hop sets. In this way, we can concatenate the STP solution for each time window with the global solution to reconstruct long-term attack activity. NODLINK then utilizes the Grubbs test to detect hopsets with unusually high HAS. Grubbs&rsquo; test detects whether the maximum value in a set of samples is an outlier. We choose the Grubbs test because it is non-parametric and robust to contaminated training data sets. NODLINK runs the Grubbs test on the memory cache for multiple rounds until no outliers are flagged. Finally, detected anomalies are identified as attack activity and alerts are issued.</p>
+<h4 id="function-2">
+    <a href="#function-2" class="header-anchor">#</a>
+    Function
+</h4><ol>
+<li><strong>Integrated detection results</strong>: Comprehensive detection is responsible for integrating the local detection results obtained through the Hope set construction in different time windows to form a global attack detection perspective.</li>
+<li><strong>Improve detection accuracy</strong>: By merging and analyzing each Hope set, comprehensive detection helps improve the detection accuracy of APT attacks and ensure that no attack steps are missed.</li>
+<li><strong>Reduce False Positives</strong>: Comprehensive detection identifies unusually high-scoring Hope sets by merging Hope sets and applying statistical tests, which helps distinguish true attacks from false positives.</li>
+<li><strong>Attack Scenario Reconstruction</strong>: Comprehensive detection helps reconstruct the complete APT attack scenario, which is crucial for understanding the full picture of the attack, the attacker&rsquo;s behavior, and the impact of the attack.</li>
+<li><strong>Timely Response</strong>: Comprehensive detection provides security administrators with timely attack detection results, allowing them to respond quickly and take measures to stop the attack.</li>
+<li><strong>Statistical Analysis</strong>: Comprehensive detection uses statistical methods (such as Grubbs test) to analyze the abnormal scores of the Hope set to further verify the existence of the attack.</li>
+</ol>
+<h4 id="method-2">
+    <a href="#method-2" class="header-anchor">#</a>
+    method
+</h4><ol>
+<li><strong>Update cached Hop set</strong>: At the end of each time window, NODLINK updates the cached Hop set in memory, merging the newly constructed Hop set with the cached Hop set.</li>
+<li><strong>Merge Hope Set</strong>: If the Hope set built in the current time window has the same nodes as the Hope set in the cache, NODLINK will merge them. When merging, the importance score (IV) is considered to decide which nodes to keep.</li>
+<li><strong>Limit Hope Set Size</strong>: To prevent dependency explosion, NODLINK limits the Hope set size of each terminal and replaces nodes with lower IV values ​​when merging.</li>
+<li><strong>Calculate graph anomaly score</strong>: Calculate a graph anomaly score (HAS) for each Hop set, which is the sum of the anomaly scores of all nodes in the Hop set.</li>
+<li><strong>Applied Statistical Tests</strong>: NODLINK uses statistical methods such as the Grubbs test to detect abnormally high HAS hope sets that may indicate attack activity.</li>
+<li><strong>Identification of attack activities</strong>: Through multiple rounds of Grubbs testing, NODLINK identifies abnormal Hop sets and marks them as attack activities, subsequently triggering alerts.</li>
+<li><strong>Generate attack graph</strong>: The results of comprehensive detection are used to generate an attack graph, which shows the steps of the APT attack and the dependencies between related entities.</li>
+</ol>
+<h2 id="experimental-evaluation">
+    <a href="#experimental-evaluation" class="header-anchor">#</a>
+    Experimental evaluation
+</h2><h3 id="dataset">
+    <a href="#dataset" class="header-anchor">#</a>
+    Dataset
+</h3><p><img src="/media%5cimage-20240525113702848.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 2: Summary of evaluation data set"
+	
+	
+></p>
+<h3 id="graph-granularity-accuracy">
+    <a href="#graph-granularity-accuracy" class="header-anchor">#</a>
+    Graph granularity accuracy
+</h3><p><img src="/media%5cimage-20240525110932727.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 3: Real situation of the data set and detection results. Precision and recall of UNICORN for CADETS and THEIA are from the original paper. ProvDetector was unable to report any alerts on the DARPA-CADETS dataset, and detection on the DARPA-TRACE dataset was not possible due to memory limitations. HOLMES cannot report any alerts on the open world dataset"
+	
+	
+></p>
+<p><strong>Close-World Result:</strong> As shown in Table 3, although these systems can detect all attacks, they report more false positives than NODLINK. Specifically, ProvDetector, UNICORN, and HOLMES generate 783, 14, and 416 GF Ps. In contrast, NODLINK reports only one false positive in these datasets.</p>
+<p>ProvDetector was unable to detect the attack in DARPA-CADETS and was also unable to detect it on DARPA-TRACE due to memory limitations. It also has the lowest graphics-level accuracy on DARPA-THEIA because it cannot handle browser activity that explodes dependencies. For example, ProvDetector incorrectly reported false alerts when Firefox connected to a new IP address. UNICORN has lower graph-level accuracy because it overapproximates the origin graph. UNICORN projects source images to numerical vectors for detection. This step reduces its graphics-level accuracy. HOLMES has more GF P because its rules are too conservative. For example, if a process runs a command-line utility after accessing an untrusted IP address, HOLMES&rsquo; command-line utility rules will flag the process as an anomaly. This rule can generate a large number of false positives for long-running processes such as Nginx: all shell command executions forked by the Nginx process will be marked as exceptions once the Nginx process receives a connection from an untrusted IP. While building more complex rules can improve the accuracy of HOLMES, taking into account the heterogeneity of the system and the number of different types of system activities is tedious.</p>
+<p><strong>Open-World Results:</strong> The results are consistent with those from the close-world experiment. NODLINK has lower node-level accuracy in open-world experiments because the signal-to-noise ratio is much lower in open-world experiments. NODLINK outperforms the baseline. In particular, HOLMES failed to detect any attacks in open-world experiments because its rule set lacked rules for detecting webshells and handling hijacking attacks. Unfortunately, the attacks in the open world experiment all leveraged webshell and related attacks to hijack running processes to remain invisible. Therefore, HOLMES failed to capture any of them.</p>
+<h3 id="node-granularity-accuracy">
+    <a href="#node-granularity-accuracy" class="header-anchor">#</a>
+    Node granularity accuracy
+</h3><p>![Table 4: Node-level accuracy of NODLINK and baseline. PI, HI and UI represent the improvements of NODLINK relative to ProvDetector, HOLMES and UNICORN respectively] (media\image-20240525111326024.png)</p>
+<p><img src="/media%5cimage-20240525111439169.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 5: Node-level recall of NODLINK and baseline. The higher the better. A value of 1 means that all attack actions are captured, while 0 means that all attack steps are missed"
+	
+	
+></p>
+<p>**Close-World Results: ** NODLINK’s node-level accuracy is comparable to the offline solution ProvDetector. For online solutions, NODLINK is one to two orders of magnitude better than HOLMES and two to three orders of magnitude better than UNICORN.</p>
+<p>For node-level recall, NODLINK captures most of the attack steps in its reported source graph. On average, NODLINK covers 98% of attack-related incidents. The missing steps are related to reconnaissance, such as running &ldquo;whoami&rdquo;, &ldquo;ipconfig&rdquo;, &ldquo;tasklist&rdquo; and &ldquo;systeminfo&rdquo; to gather information about the system. NODLINK captured all steps related to running attack payloads and lateral movement in our experiments. HOLMES has lower node-level recall because it lacks rules to detect multiple attack steps. For example, it cannot detect attack steps initiated by internal files.</p>
+<p>UNICORN&rsquo;s node-level recall cannot be measured because it simply reports all events in the source graph, regardless of whether the events are attack-related or not. Therefore, although UNICORN captures all attack steps in its reported source graph, its node-level accuracy is much lower than other methods. Furthermore, UNICORN is incompatible with other investigation techniques, as all investigation techniques require a suspicious node or edge of the IOC to initiate an investigation. UNICORN does not produce IOCs as a starting point for investigative techniques. Instead, it generates a source graph containing the attack. Therefore, we cannot combine UNICORN with a post-processing step to improve its node-level accuracy.</p>
+<p><strong>Open-World Results:</strong> Data from HOLMES was skipped because it failed to detect any attacks in the open-world experiment. Overall, the results are consistent with those from close-range experiments. NODLINK achieves the same node-level recall as UNICORN, but with two orders of magnitude better node-level precision.</p>
+<h3 id="operating-efficiency">
+    <a href="#operating-efficiency" class="header-anchor">#</a>
+    Operating efficiency
+</h3><p>Evaluate NODLINK&rsquo;s effectiveness in detecting APT attacks in a timely manner by measuring throughput, defined as how many system events it can process per second.</p>
+<p><strong>Time complexity theoretical analysis:</strong> ProvDetector first extracts all paths in the provenance graph and calculates the regularity score of each event. It then converts detection into finding the K longest paths on a directed acyclic graph, a problem solved by Epstein&rsquo;s algorithm with time complexity O(E + N log N ). HOLMES processes the source graph through a policy matching engine. Therefore, its time complexity is O(E), where E is the number of edges. UNICORN constructs graph histograms with complexity O(R * E) and generates graph sketches in real time using HistoSketch, where R is the number of hops and E is the number of edges, as claimed in the paper. Remember, the complexity of NODLINK is O(θN ). Therefore, our analysis predicts that NODLINK and HOLMES are significantly faster than ProvDetector and UNICORN.</p>
+<p><strong>Experimental analysis:</strong> As shown in Figure 2, the y-axis is the number of events processed per second in each data set. Overall, the throughput of NODLINK is comparable to that of HOLMES. NODLINK has higher throughput in DARPATHEIA and DARPA-TRACE, while HOLMES has higher throughput in In-lab Arena datasets and open-world experiments.</p>
+<p>HOLMES operates in two phases:</p>
+<p>(1) Matching strategies, techniques and procedures (TTP) to source data</p>
+<p>(2) Link TTP to high-level scene graph (HSG)</p>
+<p>However, HOLMES failed to match some key steps in both the in-lab and open-world datasets, as shown in Table 5. Failure of the first stage eliminates the need for the second stage, resulting in higher throughput performance of HOLMES in both datasets. ProvDetector shows the worst throughput since it requires calculating the regularity score for each event and finding the K longest paths. As listed in Table 2, the open world console generated an average of 40 events per second. In industrial environments, centrally based detection systems are expected to handle hundreds to thousands of hosts in a cluster. Assume there are 500 hosts and the system must handle 20,000 events per second. Therefore, the throughput of UNICORN and ProvDetector does not meet industrial requirements. Overall, NODLINK has throughput that is comparable to or higher than existing detection systems.</p>
+<p><img src="/media%5cimage-20240525112654497.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 2: Throughput of NODLINK and three baselines on different datasets. ProvDetector cannot run on DARPATRACE, so throughput cannot be obtained"
+	
+	
+></p>
+<h3 id="efficiency-ablation-experiment">
+    <a href="#efficiency-ablation-experiment" class="header-anchor">#</a>
+    Efficiency ablation experiment
+</h3><p>NODLINK designed memory cache and ISG to improve efficiency. In this section, we conduct an ablation study on their respective effects on efficiency using the DARPA dataset. To evaluate the caching design, we disabled caching and stored all source data and cached graphs in the graph database Neo4j. To evaluate the ISG algorithm, this paper uses the traditional Steiner tree approximation algorithm Kou and Mehlhorn, with each time window as the baseline. The results are shown in Table 6. Taking the throughput of NODLINK as a benchmark, the ratio between them is calculated. Overall, the design of the memory cache and ISG search algorithm greatly improves detection efficiency.</p>
+<p><img src="/media%5cimage-20240525114506540.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 6: Ablation study of NODLINK efficiency. “w/o Cache” disables memory caching. “w/Kou” replaces ISG with the Kou algorithm. “w/Mehlhorn” replaces ISG with the Mehlhorn algorithm. Take the throughput of NODLINK as the standard. "
+	
+	
+></p>
+<p>As shown in Table VI, when the memory cache design is disabled, the efficiency is 82.54 - 159.06 times slower than the original design. When replacing our algorithm with Kou, it is 8406.86 times slower on DARPACADETS. Due to the long processing time of the other two datasets, we were unable to obtain an accurate time for Kou. When replacing our algorithm with Mehlhorn, the efficiency is 3.08 - 111.21 times slower. The study found that the efficiency of these algorithms decreases with increasing data set size, which is a result of their high complexity.</p>
+<h3 id="other-experiments">
+    <a href="#other-experiments" class="header-anchor">#</a>
+    Other experiments
+</h3><p><strong>Experiment Cases:</strong> This article uses seven case studies to demonstrate how NODLINK detects real attacks in an open-world experiment. Overall, HOLMES fails to detect all these attacks because it lacks rules to detect webshell code injection. NODLINK and UNICORN can successfully detect them. NODLINK has higher node-level accuracy, which is always orders of magnitude greater than UNICORN.</p>
+<p><strong>Hyperparameter Experiments:</strong> This article uses the best experimental results on the DARPA dataset to select default hyperparameters. Overall, NODLINK is robust to parameter changes because we chose to use non-parametric learning techniques.</p>
+<h2 id="related-work">
+    <a href="#related-work" class="header-anchor">#</a>
+    Related work
+</h2><p>SLEUTH is the first source-based online APT detection system. Various offline post-attack investigation systems exist, using a large number of graph learning algorithms. However, these may delay detection, resulting in financial losses. Compared to these systems, NODLINK is the first online system to achieve high detection accuracy without losing detection granularity. There are also studies on traditional intrusion detection systems, however, these systems are orthogonal to NODLINK as they cannot support APT attack investigation. In the future, ideas from the latest advances in traditional intrusion detection systems can be borrowed to improve the accuracy of anomaly identification in terminal Identification.</p>
+<p>NODLINK is also related to traditional host-based intrusion detection techniques (HIDS). Log2vec embeds logs into vectors via graph embedding of random walks on heterogeneous graphs. Deeplog uses long short-term memory (LSTM) to model the sequential and contextual features of logs. These techniques are less effective at detecting APT attacks because they cannot link attack steps and reconstruct APT attack activity.</p>
+<h2 id="summarize">
+    <a href="#summarize" class="header-anchor">#</a>
+    Summarize
+</h2><p><strong>Attacking Attacks:</strong> NODLINK maintains secure parity with other score propagation-based techniques such as MORSE [46], PrioTracker [68] and NoDoze [41], providing efficient and accurate anomaly score calculations for source subgraphs. Despite its robustness, two potential attacks against NODLINK were discovered.</p>
+<ol>
+<li>An attacker can take advantage of the attenuation factor used in score propagation and use benign decoy events to reduce the abnormal score of the attack path. However, this theoretical threat is less problematic in practice, as creating benign nodes often leads to new anomalies and creates detectable anomalous path shapes.</li>
+<li>An attacker can try to evade detection by extending the time interval between each attack step, causing abnormal nodes to be purged from the cache. NODLINK counters this problem with a node retrieval mechanism that recovers evicted nodes from disk, preventing long-term attack evasion.</li>
+</ol>
+<p><strong>Robustness:</strong> Thanks to Grubbs&rsquo; test identification and VAE&rsquo;s robustness, NODLINK is resilient to training data sets containing minor attacks. We evaluate the robustness of NODLINK against contaminated training data using five closed-world datasets, to which we add one day of attack data. The results show that NODLINK&rsquo;s graph and node-level accuracy is not affected by the presence of some attack-related data in the training set. This is due to the design choice of this article to use <strong>VAE and non-parametric anomaly detection technology</strong>.</p>
+<p>Detection systems based on online sources are better suited for timely detection of APT attacks than post-event detection systems. However, due to limited resources and timeliness, existing systems sacrifice detection granularity for accuracy. We observe that existing systems fail to achieve fine-grained detection because they waste most of their limited resources on apparently benign events. To this end, we propose NODLINK, a source-based online detection system that can achieve fine-grained detection while meeting the constraints of limited resources and timeliness. The key idea of ​​NODLINK is to model the APT attack detection problem as STP, which has an efficient online approximation algorithm with limited theoretical error. Our experiments in a production environment show that NODLINK can achieve higher detection and investigation accuracy at the same or higher throughput compared to two SOTA online source analysis systems.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Graph embedding analysis</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/nodlink/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 11 篇文章 · 共 41.587k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

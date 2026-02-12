@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pages on Wintery</title>
+        <link>https://wintery.net/en/page/</link>
+        <description>Recent content in Pages on Wintery</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Wintery</copyright>
+        <lastBuildDate>Mon, 15 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://wintery.net/en/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Article</title>
+        <link>https://wintery.net/en/page/archives/</link>
+        <pubDate>Mon, 15 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://wintery.net/en/page/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Link</title>
+        <link>https://wintery.net/en/page/links/</link>
+        <pubDate>Mon, 15 Apr 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://wintery.net/en/page/links/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>About</title>
+        <link>https://wintery.net/en/page/about/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://wintery.net/en/page/about/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Search</title>
+        <link>https://wintery.net/en/page/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://wintery.net/en/page/search/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

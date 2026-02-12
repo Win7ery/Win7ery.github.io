@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2023 ICML">
+<title>Linkless Link Prediction via Relational Distillation</title>
+
+<link rel='canonical' href='https://wintery.net/post/link_predict/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="Linkless Link Prediction via Relational Distillation">
+<meta property='og:description' content="2023 ICML">
+<meta property='og:url' content='https://wintery.net/post/link_predict/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-07-08T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-07-08T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/link_predict/media/BG.png' />
+<meta name="twitter:title" content="Linkless Link Prediction via Relational Distillation">
+<meta name="twitter:description" content="2023 ICML"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://wintery.net/post/link_predict/media/BG.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="https://wintery.net/en/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#相关工作和背景">相关工作和背景</a></li>
+    <li><a href="#跨模型知识蒸馏用于链接预测">跨模型知识蒸馏用于链接预测</a>
+      <ol>
+        <li><a href="#直接方法">直接方法</a></li>
+        <li><a href="#关系蒸馏的链接预测">关系蒸馏的链接预测</a></li>
+        <li><a href="#无连接链接预测">无连接链接预测</a></li>
+      </ol>
+    </li>
+    <li><a href="#实验评估">实验评估</a>
+      <ol>
+        <li><a href="#实验设置">实验设置</a></li>
+        <li><a href="#链接预测结果">链接预测结果</a></li>
+        <li><a href="#推理速度">推理速度</a></li>
+        <li><a href="#冷启动节点的链接预测结果">冷启动节点的链接预测结果</a></li>
+        <li><a href="#大规模数据集上的链接预测结果">大规模数据集上的链接预测结果</a></li>
+        <li><a href="#消融实验">消融实验</a></li>
+      </ol>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/link_predict/">
+                <img src="/post/link_predict/media/BG_hu_47f7cefdfef0ad95.png"
+                        srcset="/post/link_predict/media/BG_hu_47f7cefdfef0ad95.png 800w, /post/link_predict/media/BG_hu_458dbc985ee211e7.png 1600w"
+                        width="800" 
+                        height="227" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/link_predict/">Linkless Link Prediction via Relational Distillation</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            2023 ICML
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 08, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 19 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    9257 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://wintery.net/en/post/link_predict/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="通过关系蒸馏进行无链接链路预测">
+    <a href="#%e9%80%9a%e8%bf%87%e5%85%b3%e7%b3%bb%e8%92%b8%e9%a6%8f%e8%bf%9b%e8%a1%8c%e6%97%a0%e9%93%be%e6%8e%a5%e9%93%be%e8%b7%af%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
+    通过关系蒸馏进行无链接链路预测
+</h1><p>图神经网络（GNN）在链路预测任务中表现出了卓越的性能。尽管图形神经网络非常有效，但其非三角邻域数据依赖性带来的高延迟限制了图形神经网络的实际部署。相反，由于缺乏关系知识，已知的高效 MLP 的效果远不如 GNN。在这项工作中，为了结合 GNN 和 MLP 的优势，我们首先探索了用于链接预测的直接知识提炼（KD）方法，即基于预测 logit 的匹配和基于节点表示的匹配。在观察到直接 KD 类似方法在链接预测中的表现不佳后，我们提出了一种关系 KD 框架，即无链接链接预测（LLP），以利用 MLP 对链接预测进行知识提炼。与匹配独立链接对数或节点表示的简单 KD 方法不同，LLP 将以每个（锚）节点为中心的关系知识提炼到学生 MLP 中。具体来说，我们提出了基于等级的匹配和基于分布的匹配策略，两者相辅相成。广泛的实验证明，LLP 显著提高了 MLP 的链接预测性能，甚至在 8 项基准测试中的 7 项测试中，LLP 的表现优于教师 GNN。在大规模 OGB 数据集上，LLP 的链接预测推理速度比 GNN 提高了 70.68 倍。</p>
+<h2 id="引言">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-anchor">#</a>
+    引言
+</h2><p>图神经网络（GNN）已被广泛用于图结构数据的机器学习（Kipf &amp; Welling、2016a; Hamilton 等人，2017）。它们在节点分类（Veliˇ ckovi ́ c 等人，2017 年；Chen 等人，2020 年）、图分类（Zhang 等人，2018 年）、图生成（You 等人，2018 年；Shiao &amp; Papalexakis，2021 年）和链接预测（Zhang &amp; Chen，2018 年；Shiao 等人，2023 年）等各种应用中表现出了显著的性能。</p>
+<p>其中，链接预测是图机器学习领域一个显著的关键问题，其目的是<strong>预测任意两个节点形成链接的可能性</strong>。它有着广泛的实际应用，如知识图谱的完成（Schlichtkrull 等人，2018；Nathani 等人，2019；Vashishth 等人，2020）、社交平台上的好友推荐（Sankar 等人，2021；Tang 等人，2022；Fan 等人，2022）以及服务和商务平台上的用户项目推荐（Koren 等人，2009；Ying 等人，2018a；He 等人，2020）。随着 GNN 的日益普及，<strong>最先进的链接预测方法采用了编码器-解码器式模型</strong>，其中编码器是 GNN，解码器直接应用于由 GNN 学习到的节点表示对（Kipf &amp; Welling, 2016b；Zhang &amp; Chen, 2018；Cai &amp; Ji, 2020；Zhao 等人，2022b）。</p>
+<p>GNN 的成功通常归功于<strong>明确使用了节点周围邻域的上下文信息</strong>（Zhang 等人，2020e）。然而，与多层感知器（MLP）等表格式模型相比，这导致了对邻域获取和聚合方案的严重依赖，特别是由于邻域爆炸，会导致<strong>训练和推理的时间成本很高</strong>（Zhang 等，2020b；Jia 等，2020；Zhang 等，2021b；Zeng 等，2019）。与 GNNs 相比，<strong>MLPs 不需要任何图拓扑信息</strong>，因此更适用于新节点或孤立节点（如冷启动设置），但通常会<strong>导致编码器的一般任务性能较差</strong>，这一点我们在第 4 节中也进行了实证验证。尽管如此，与 GNN 相比，没有图依赖性使得 MLP 的训练和推理时间可以忽略不计。因此，在需要快速实时推理的大规模应用中，MLP 仍然是一个主要选择（Zhang 等人，2021b；Covington 等人，2016；Gholami 等人，2021）。</p>
+<p>鉴于这些速度与性能的权衡，最近有几项研究提出利用知识蒸馏（KD）技术将所学知识从 GNN 转移到 MLP（Hinton et al., 2015; Zhang et al., 2021b; Zheng et al.,2021; Hu et al., 2021)）以利用 GNN 的性能优势和 MLP 的速度优势。具体来说，通过这种方式，学生 MLP 有可能从 GNN 教师那里获得通过 KD 传播的图语境知识，从而不仅在实践中表现更好，而且还能享受到与 GNN 相比的模型延迟优势，例如在生产推理设置中。不过，这些研究主要集中在节点或图层任务上。鉴于链接预测任务中的 KD 尚未得到探索，而推荐系统中存在大量的链接预测问题，我们的工作旨在弥补这一关键差距。具体来说，我们的问题是：</p>
+<p><strong>我们能否从 GNN 中有效地提炼出与 MLP 相关的链接预测知识？</strong></p>
+<p>在这项工作中，我们重点探索、借鉴并提出了针对链接预测设置的跨模型（GNN 到 MLP）提炼技术。我们首先探索了两种直接对齐学生和教师的 KD 方法：(i) 基于对数的链接存在概率预测匹配（Hinton 等人，2015 年），以及 (ii) 基于生成的潜在节点表征的表征匹配（Gou 等人，2021 年）。然而，根据经验，我们发现无论是基于对数的匹配还是基于表征的匹配都不足以提炼出足够的知识，使学生模型在链接预测任务中表现出色。我们假设，这两种 KD 方法表现不佳的原因是，链接预测与节点分类不同，在很大程度上依赖于关系图拓扑信息（Mart ́ınez 等人，2016；Zhang &amp; Chen，2018；Yun 等人，2021；Zhao 等人，2022b），而直接方法并不能很好地捕捉这些信息。</p>
+<p>为了解决这个问题，我们提出了一个关系 KD 框架，即 LLP：我们的主要直觉是，<strong>我们不关注单个节点对或节点表示的匹配，而是关注每个（锚）节点与图中其他（上下文）节点之间关系的匹配</strong>。鉴于以锚节点为中心的关系知识，即教师模型预测的锚节点与每个上下文节点之间的链接存在概率，LLP 通过两种匹配方法将其提炼到学生模型中：(i) 基于等级的匹配和 (ii) 基于分布的匹配。更具体地说，基于等级的匹配为学生模型提供了所有上下文节点相对于锚节点的等级损失，保留了与下游链接预测用例直接相关的关键等级信息，例如用户上下文好友推荐（Sankar 等，2021；Tang 等，2022）或项目推荐（Ying 等，2018a；He 等，2020）。另一方面，基于分布的匹配为学生模型提供了以锚节点为条件的上下文节点的链接概率分布。重要的是，基于分布的匹配是对基于等级的匹配的补充，因为它提供了关于概率相对值和差异大小的辅助信息。为了全面评估我们提出的 LLP 的有效性，我们在 8 个公共基准上进行了实验。除了图任务的标准转导设置外，我们还设计了一个更现实的设置，模仿链接预测的现实（在线）用例，我们称之为生产设置。在所有数据集上，LLP 在转导设置下平均比独立 MLP 高出 18.18 分，在生产设置下平均比独立 MLP 高出 12.01 分；在转导设置下，LLP 在 7/8 个数据集上的表现与教师 GNN 相当或更胜一筹。令人欣慰的是，在冷启动节点上，LLP 平均分别比教师 GNN 和独立 MLP 高出 25.29 和 9.42 Hits@20。最后，LLP 的推断速度大大快于 GNNs，例如在大型 Collab 数据集上快了 70.68 倍。</p>
+<h2 id="相关工作和背景">
+    <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c%e5%92%8c%e8%83%8c%e6%99%af" class="header-anchor">#</a>
+    相关工作和背景
+</h2><p>使用 GNN 进行链接预测。在这项工作中，我们将常用的编码器-解码器框架用于链接预测任务（Kipf &amp; Welling, 2016b；Berg 等人，2017；Schlichtkrull 等人，2018；Ying 等人，2018a；Davidson 等人，2018；Zhu 等人，2021；Yun 等人，2021；Zhao 等人，2022b），其中基于 GNN 的编码器学习节点表示，解码器预测链接存在概率。大多数 GNN 在消息传递框架下运行，模型通过获取邻居的信息迭代更新每个节点 i 的表示 hi。也就是说，节点在第 l 层的表示是通过聚合学习操作和更新操作：</p>
+<p><img src="/media%5cimage-20240707214436174.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707214436174"
+	
+	
+></p>
+<p>其中，AGGREGATE 组合或汇集本地邻居特征，UPDATE 是可学习的变换$h_i^0=x_i$。链接预测解码器利用上一层的节点表示，即 i∈V 的 hi，来预测节点对 i 和 j 之间的链接概率：</p>
+<p><img src="/media%5cimage-20240707214445298.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707214445298"
+	
+	
+></p>
+<p>其中 σ 表示Sigmoid运算。在这项工作中，根据大多数最先进的链接预测文献（Zhang 等人，2021a；Tsitsulin 等人，2018；Zhao 等人，2022b；Wang 等人，2021），我们将 Hadamard 乘积和 MLP 作为所有方法的链接预测 DECODER。</p>
+<p>GNN的知识蒸馏。知识蒸馏（KD）旨在将知识从高容量和高准确性的教师模型转移到轻量级学生模型，通常在资源受限的环境中使用。KD方法已显示出在显著降低模型复杂性的同时，几乎不会牺牲任务性能的潜力。由于GNNs因邻居聚合引起的数据依赖性而速度较慢，基于图的KD方法通常将GNNs蒸馏到MLPs上，后者由于其显著提高的效率和可扩展性，在大规模工业应用中得到广泛应用。例如，Zheng等人提出了一种基于KD的框架，重新发现MLPs缺失的图结构信息，这提高了模型在冷启动节点上的节点分类任务的泛化能力。现有的基于图数据的KD方法主要关注节点级别和图级别任务，而将KD应用于链接预测尚未被探索。我们的工作专注于从GNN教师向MLP学生中提取链接预测相关信息，并研究各种KD策略以对齐学生和教师的预测。</p>
+<h2 id="跨模型知识蒸馏用于链接预测">
+    <a href="#%e8%b7%a8%e6%a8%a1%e5%9e%8b%e7%9f%a5%e8%af%86%e8%92%b8%e9%a6%8f%e7%94%a8%e4%ba%8e%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
+    跨模型知识蒸馏用于链接预测
+</h2><p><img src="/media%5cBG.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="我们探讨了用于链接预测的 KD 方法，这些方法将知识从教师 GNN 提炼到学生 MLP 编码器，每个编码器都有自己的解码器。我们首先探讨了直接 KD 方法：表示匹配和 logit 匹配（第 3.1 节）。观察到它们无法提炼关系信息的缺点后，我们进一步提出了一个关系 KD 框架：LLP（第 3.3 节），它通过我们提出的基于等级的匹配和基于分布的匹配目标，为学生模型提供了每个（锚）节点与其他（上下文）节点之间关系的知识。"
+	
+	
+></p>
+<p>在本节中，我们提出并讨论了几种跨模型从教师GNN到学生MLP的知识蒸馏方法，用于链接预测的目的。在所有情况下，我们的目标是使用由GNN教师产生的工件来指导学生MLP，除了任何可用的训练标签（关于链接存在的ai,j）。我们首先采用两种直接的知识蒸馏（KD）方法：基于逻辑匹配和基于表示匹配，将它们适应到链接预测任务中；我们称这些方法为直接的，因为它们涉及直接匹配教师和学生之间的样本预测。接下来，我们提出并介绍了我们提出的关系KD框架，LLP（Linkless Link Prediction），并提出了两种匹配策略，以将额外的拓扑结构信息蒸馏到学生模型中。我们称这些方法为关系的，因为它们要求在教师和学生之间保持跨样本的关系（Park等人，2019）。图1总结了我们的提议。</p>
+<h3 id="直接方法">
+    <a href="#%e7%9b%b4%e6%8e%a5%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    直接方法
+</h3><p>逻辑匹配是一种直接的策略，用于从教师到学生的知识蒸馏，其中它直接旨在教导学生在下游任务上像教师一样概括。它由Hinton等人（2015）提出，并且仍然是各种任务中最广泛使用的KD方法之一。Phuong和Lampert（2019）以及Ji和Zhu（2020）从理论上分析了它的有效性。此外，它也被证明在图数据上的知识转移是有效的。例如，Zhang等人（2021b）使用教师GNN生成的软逻辑来指导学生MLP，并在节点分类任务上取得了强大的性能。类似地，我们为候选边（i, j）生成软分数yi,j，并训练学生使其预测ˆyi,j与此目标匹配：</p>
+<p><img src="/media%5cimage-20240707220636126.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707220636126"
+	
+	
+></p>
+<p>表示匹配是另一种直接的蒸馏方法，我们旨在对齐学生学到的潜在节点嵌入空间与教师的。由于这种KD训练信号只优化学生模型的编码器部分，所以它必须与Lsup一起使用，以便学生解码器也能接收梯度并被优化：</p>
+<p><img src="/media%5cimage-20240707220650001.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707220650001"
+	
+	
+></p>
+<h3 id="关系蒸馏的链接预测">
+    <a href="#%e5%85%b3%e7%b3%bb%e8%92%b8%e9%a6%8f%e7%9a%84%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
+    关系蒸馏的链接预测
+</h3><p>动机。上述直接方法要求学生模型直接匹配节点级或链接级的工件。然而，人们可能会问：对于链接预测任务来说，匹配这些是否足够？这在考虑大多数链接预测应用涉及任务的上下文中尤其相关，其中对源节点或锚点节点的候选目标进行排名是感兴趣的任务，即在用户-项目图中，预测器必须从用户的角度对一组候选项目进行排名。这些上下文涉及同时对多个关系或链接级样本进行推理，表明跨这些关系的匹配可能比直接的节点级或链接级方法更符合目标链接预测任务。</p>
+<p>此外，一些作品（Zhang &amp; Chen, 2018; Yun等人，2021）表明，图结构信息对链接预测任务至关重要。例如，启发式链接预测方法通常显示出与GNNs相比具有竞争力的性能，并且在神经图方法之前一直是准确链接预测的基石。大多数启发式方法仅基于图结构信息（例如，共同邻居和最短路径）来衡量目标节点对的分数。此外，一些最近的工作（Zhang &amp; Chen, 2017, 2018; Li等人，2020; Zhao等人，2022b）也表明，包含拓扑信息，如局部子图、与锚点节点的距离或增强链接，可以大幅提高GNNs在链接级任务上的性能。观察到大多数成功的链接预测方法都涉及使用关系信息而不仅仅是两个节点，我们也在蒸馏背景下采用这种直觉，并提出我们的关系KD用于链接预测。</p>
+<h3 id="无连接链接预测">
+    <a href="#%e6%97%a0%e8%bf%9e%e6%8e%a5%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
+    无连接链接预测
+</h3><p>根据我们关于保持关系知识的直观理解，我们提出了一个新的关系蒸馏框架，称为Linkless Link Prediction，或LLP。与专注于匹配单个节点对分数或节点表示不同，LLP专注于蒸馏每个节点在图中与其他节点的关系知识；我们将前者称为锚点节点，后者称为上下文节点。对于图中的每个节点，当它作为锚点节点时，我们的目标是为学生MLP模型提供其与一组上下文节点的关系知识。每个节点可以作为锚点节点，也可以作为其他锚点节点的上下文节点。</p>
+<p>设v表示锚点节点，Cv表示v对应的上下文节点集合。我们表示教师模型预测的v与Cv中每个节点之间的概率为Yv = {yv,i | i ∈ Cv}。同样，我们表示学生模型对这些的预测为Yv = {yv,i | i ∈ Cv}。为了有效地从Yv到Yv蒸馏关系知识，我们提出了两种关系匹配目标来训练LLP：基于排名的匹配和基于分布的匹配，我们将在下文中介绍。</p>
+<p>基于排名的匹配（Rank-based Matching）。如第3.2节所述，链接预测通常被视为一个排名任务，要求模型根据一个种子节点对相关候选项进行排名，例如在用户-项目图设置中，预测器必须从用户的角度对一组候选项目进行排名。因此，我们认为，与匹配独立的逻辑不同，匹配由教师引起的排名可以更直接地教会学生关于上下文节点相对于锚点节点的关系知识。例如，对于特定用户，项目A应该排在项目C之前，项目C应该排在项目B之前。为了将这种基于排名的直觉纳入训练目标，我们采用了修改后的基于边际的排名损失，用教师GNN的排名对数来训练学生。具体来说，我们枚举𝑌^𝑣<em>Y</em>^<em>v</em>中所有预测概率的对，并用𝑌𝑣<em>Y**v</em>中的相应对进行监督。即：</p>
+<p><img src="/media%5cimage-20240707222000233.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707222000233"
+	
+	
+></p>
+<p><em>δ</em>是边际超参数，通常是一个非常小的值（例如0.05）。注意，上述损失与传统的基于边际的排名损失不同，因为它在教师GNN给出相似概率的对数对上有一个𝑟=0<em>r</em>=0的条件（导致恒定损失），即∣𝑦𝑣,𝑖−𝑦𝑣,𝑗∣&lt;𝛿∣<em>y**v</em>,<em>i</em>−<em>y**v</em>,<em>j</em>∣&lt;<em>δ</em>。这种设计有效地防止了学生模型试图区分教师可能由于噪声而产生的微小概率差异；如果没有这个条件，损失将传递二元信息，而不考虑差异有多小。我们还通过表D.16的经验性地展示了这种设计的必要性。</p>
+<p>基于分布的匹配（Distribution-based Matching）。虽然基于排名的匹配可以有效地教会学生模型关系排名信息，我们观察到它并没有充分利用𝑌𝑣<em>Y**v</em>中的值信息。例如，对于特定用户，项目A应该比项目C排名高得多，项目C应该只比项目B略高。尽管第3.1节中介绍的逻辑匹配似乎适合这里，我们观察到它的链接级匹配策略只便于匹配分散的节点对上的信息，而不是集中在锚点节点上的上下文关系上——从经验上，我们也发现它的效果有限。因此，为了实现以锚点节点为中心的关系值匹配，我们进一步提出了一个基于分布的匹配方案，它利用教师预测𝑌𝑣<em>Y**v</em>和学生预测𝑌^𝑣<em>Y</em>^<em>v</em>之间的KL散度，以每个锚点节点𝑣<em>v</em>为中心。具体来说，我们定义它为：</p>
+<p><img src="/media%5cimage-20240707222817206.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707222817206"
+	
+	
+></p>
+<p>在训练 LLP 时，除了地面实况标签损失外，我们还联合优化了基于排名的匹配损失和基于分布的匹配损失。因此，LLP 对学生采用的总体训练损失为</p>
+<p><img src="/media%5cimage-20240707223304194.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707223304194"
+	
+	
+></p>
+<h2 id="实验评估">
+    <a href="#%e5%ae%9e%e9%aa%8c%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    实验评估
+</h2><h3 id="实验设置">
+    <a href="#%e5%ae%9e%e9%aa%8c%e8%ae%be%e7%bd%ae" class="header-anchor">#</a>
+    实验设置
+</h3><p><img src="/media%5cimage-20240707223512593.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240707223512593"
+	
+	
+></p>
+<p>评估设置。为了在链接预测任务中全面评估我们提出的 LLP 和基线方法，我们在转导和生产设置中进行了实验。对于转导设置，图中的所有节点都可以在训练集/验证集/测试集中观察到。根据之前的研究（Zhang &amp; Chen，2018；Chami 等人，2019；Cai 等人，2021），我们从图中随机抽取 5%/15% 的链接，这些链接的无边节点对数量与非 OGB 数据集上的验证集/测试集相同。验证/测试链接将从训练图中屏蔽掉。对于 OGB 数据集，我们遵循其官方的训练/验证/测试拆分方法（Wang 等人，2020a）。除了过渡性设置外，我们还设计了一种更现实的设置来模拟实际的链接预测用例，我们称之为生产设置。在生产环境中，新节点会出现在测试集中，而训练集和验证集只观察以前存在的节点。因此，在这种情况下，测试集中会出现三类节点对（边或无边）：现有-现有、现有-新、新-新，其中第一类类似于转导式设置中的测试边，后两类则类似于最近一些研究中使用的归纳式设置（Bojchevski &amp; G ̈ unnemann, 2017; Hao et al., 2020; Chen et al., 2021b）。然而，在实际应用案例中，例如社交网络或在线平台的增长，这三类边缘都会以不同的比例出现，因此我们对这三类边缘都进行了评估。请注意，我们只在非 OGB 数据集上进行生产环境实验，因为 OGB 数据集在其公开发布的版本中已经进行了时间分割。我们将在附录 C 中进一步阐述生产环境的细节。</p>
+<h3 id="链接预测结果">
+    <a href="#%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
+    链接预测结果
+</h3><p><strong>Transductive Setting（归纳设置）</strong></p>
+<ul>
+<li>这是链接预测中的一个标准设置，其中训练、验证和测试集中的所有节点在训练图上都是可见的，但是一部分正链接被遮蔽用于验证和测试集。</li>
+<li>在这种设置下，模型在训练期间可以看到整个图的结构，包括所有的节点和边，除了那些被明确遮蔽用于评估的链接。</li>
+</ul>
+<p>从表 2 中，我们还发现在某些数据集上，LLP 的性能比教师 GNN 有了显著提高。我们假设，导致这种改进的原因有两个。其一，当节点特征对链接预测具有足够的信息量时，学生 MLP 模型已经具备了显著的学习能力。例如，在 Cora 数据集上，MLP 已经可以产生比 GNN 更好的预测性能。另一个原因是关系 KD 提供了从 GNN 到 MLP 的关系结构知识，这为 MLP 提供了额外的有价值的知识。最近关于知识提炼的研究（Allen-Zhu &amp; Li，2020；Guo 等人，2022）也有类似的发现，即<strong>结合不同模型的不同观点有助于提高模型的性能</strong> 。</p>
+<p><img src="/media%5cimage-20240708112057303.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240708112057303"
+	
+	
+></p>
+<p><strong>Production Setting（生产设置）</strong></p>
+<ul>
+<li>这是一种更接近实际应用场景的设置，模拟了实际链接预测用例，例如社交网络平台上的用户好友推荐，其中新用户和好友关系会频繁出现。</li>
+<li>在生产设置中，测试集中可能会出现在训练阶段不可见的新节点和新边。这种设置考虑了三个类别的节点对：现有-现有、现有-新、新-新，分别对应于训练集中已经存在的节点对、至少一个新节点的节点对，以及完全由新节点组成的节点对。</li>
+</ul>
+<p><img src="/media%5cimage-20240708112106966.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240708112106966"
+	
+	
+></p>
+<h3 id="推理速度">
+    <a href="#%e6%8e%a8%e7%90%86%e9%80%9f%e5%ba%a6" class="header-anchor">#</a>
+    推理速度
+</h3><p>与其他常见的 GNN 推断加速方法相比，我们对 LLP 进行了评估，这些方法主要侧重于硬件和算法以减少计算消耗，例如剪枝（Zhou 等人，2021 年）和量化（Zhao 等人，2020 年；Tailor 等人，2020 年）。按照 Zhang 等人（2021b）的实验设置，我们测量了图中的归纳推理时间。我们针对 4 种常见的 GNN 推理加速方法进行了评估：(i) SAGE（Hamilton 等人，2017 年），(ii) 从 float32 到 int8 的量化 SAGE（QSAGE）（Zhao 等人，2020 年；Tailor 等人，2020 年），(iii) 去掉 50% 权重的 SAGE（PSAGE）（Zhou 等人，2021 年；Chen 等人，2021 年c），以及 (iv) 去掉 15 个扇出的邻居采样 SAGE。图 2 显示了大规模 OGB 数据集 Collab 的结果。我们可以看到，与 SAGE 相比，LLP 在 Collab 上的速度提高了 70.68 倍。与最佳加速方法 &ldquo;邻居采样&rdquo;（该方法可减少图依赖性，但不能像 LLP 那样消除图依赖性）相比，LLP 仍然实现了 15.05 倍的加速。这是因为所有这些推理加速方法仍然依赖于图结构。从图 2 的下图中，我们可以进一步观察到 LLP 的性能优于 GNN 和其他推理加速方法。</p>
+<p><img src="/media%5cimage-20240708113957795.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240708113957795"
+	
+	
+></p>
+<h3 id="冷启动节点的链接预测结果">
+    <a href="#%e5%86%b7%e5%90%af%e5%8a%a8%e8%8a%82%e7%82%b9%e7%9a%84%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
+    冷启动节点的链接预测结果
+</h3><p>处理冷启动节点（新出现的无边节点）是推荐和信息检索应用中的一个常见挑战（Li 等人，2019 年；Zheng 等人，2021 年；Ding 等人，2021 年）。如果没有这些边，GNNs 就不能很好地发挥作用，因为它们在很大程度上依赖于邻居信息。另一方面，不使用任何图拓扑信息的 MLP 可以说更适合。在这里，我们模拟了冷启动设置，即在生产设置的测试阶段移除所有新边缘，即所有新出现的节点都被隔离（更多详情见附录 C）。表 4 显示了 LLP、独立 MLP 和教师 GNN 在冷启动节点上的表现。我们观察到，在 Hits@20 上，LLP 的平均性能一直优于 GNN 和 MLP，分别为 25.29 和 9.42。我们还在附录 D.8 中进一步比较了 LLP 与冷启动节点的另一项相关研究。</p>
+<h3 id="大规模数据集上的链接预测结果">
+    <a href="#%e5%a4%a7%e8%a7%84%e6%a8%a1%e6%95%b0%e6%8d%ae%e9%9b%86%e4%b8%8a%e7%9a%84%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
+    大规模数据集上的链接预测结果
+</h3><p><img src="/media%5cimage-20240708114735522.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240708114735522"
+	
+	
+></p>
+<p>除了 Collab 之外，我们还在最近提出的三个大规模图基准上进行了实验：IGB-100K、IGB-1M（Khatua 等人，2023 年）和 Citation2（Wang 等人，2020a；Mikolov 等人，2013 年）。数据集统计和链接预测结果（Hits@200）如表 5 所示。在 IGB 数据集上，我们观察到 LLP 可以在这两个数据集上生成有竞争力的结果，这进一步证明了 LLP 有能力从大规模图中获取复杂的链接预测相关知识。另一方面，Citation2 的结果则显示出不同的模式。虽然 LLP 的表现明显优于 MLP，但与 GNN 相比，其性能仍有很大差距。</p>
+<p>我们假设，Citation2 上的不同性能模式是由于数据集的独特分布造成的。为了验证我们的假设，我们进一步在 Citation2 的采样版本（表 5 中的 &ldquo;Citation2-s &ldquo;列）上进行了实验。具体来说，我们对 Citation2 进行了缩减采样，以生成一个更小的版本（大小与 Collab 类似）。我们使用了基于随机漫步的抽样方法，事实证明这种方法能够保持原始图的属性（Leskovec &amp; Faloutsos, 2006）。从表 5 中，我们观察到 Citation2 和 Citation2-s 的性能模式非常相似，这验证了我们的假设，即 LLP 和 GNN 之间的性能差距是由数据集自身的分布造成的，而不是由图的大小等其他因素造成的。在比较表 2 中照片和 Collab 的结果时，我们也发现了类似的情况，但情况正好相反：在较大的数据集（Collab）上，LLP 的表现优于 GNN，但在较小的数据集（Photos）上，LLP 的表现略逊于 GNN。总之，在不同的数据集上，LLP 的有效性可能会有所不同，但对图形的大小并不敏感。</p>
+<h3 id="消融实验">
+    <a href="#%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
+    消融实验
+</h3><p>LLLP R 和 LLLP D 的有效性。由于我们提出的 LLP 包含两种匹配策略，即基于等级的匹配和基于分布的匹配，因此我们通过将它们从 LLP 中移除来评估它们的有效性。此外，我们还通过去除 Lsup 进行了进一步评估，即仅使用其中一种匹配损失作为 LLP 的总体损失。表 6 显示了这些设置与完全 LLP、独立 MLP 和教师 GNN 在 Pubmed 和 CS 数据集上的性能比较结果。我们注意到，基于等级的匹配和基于分布的匹配都对整体性能有很大贡献。在转导式设置中，两个损失项本身（最下面两行）的性能就已经超过了教师 GNN。</p>
+<p>在生产环境中，单独的匹配损失性能优于 MLP，并且在添加 Lsup 后可以达到与 GNN 相当的性能。总之，基于等级的匹配和基于分布的匹配都能有效地提炼关系知识，并通过互补达到最佳性能。</p>
+<p>图 3 显示了 LLP 在不同上下文节点样本数（p 局部样本和 q 随机样本）下，在 Pubmed 上的链接预测性能。为便于调整超参数，我们将 q 设为 p 的倍数，如图 3 的 x 轴所示。我们观察到，随机样本数量较少的 LLP 的链接预测性能较差，这表明保留全局关系对于所提议的关系 KD 是必要的。一般来说，热图显示了一个清晰的趋势，使最佳值易于定位。</p>
+<p><img src="/media%5cimage-20240708115406808.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240708115406808"
+	
+	
+></p>
+<p><img src="/media%5cimage-20240708115655024.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240708115655024"
+	
+	
+></p>
+<h2 id="总结">
+    <a href="#%e6%80%bb%e7%bb%93" class="header-anchor">#</a>
+    总结
+</h2><p>我们的工作是解决与大规模应用 GNN 进行链接预测有关的问题。我们注意到，由于非三维数据依赖性，这些模型在推理时具有较高的延迟。为此，我们探索了从教师 GNN 到学生 MLP 模型的跨模型提炼方法，这种方法在推理时间上具有优势。我们首先将两种直接对数匹配和表示匹配 KD 方法应用到链接预测中，并观察到它们的不适用性。作为回应，我们引入了关系 KD 框架 LLP，该框架提出了基于等级的匹配和基于分布的匹配目标，两者相辅相成，迫使学生保留锚节点间上下文关系的关键信息。我们的实验表明，LLP 实现了 MLP 级别的提速（比 GNN 高出 70.68 倍），同时在转导和生产设置中，链接预测性能比 MLP 分别提高了 18.18 和 12.01 个百分点，在转导设置中的 7/8 个数据集和生产设置中的 3/6 个数据集中，LLP 的性能与教师 GNN 相当或优于教师 GNN，并且对冷启动节点的 Hits@20 改进显著提高了 25.29 个百分点。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图嵌入分析</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/nodlink/">
+        
+        
+            <div class="article-image">
+                <img src="/post/nodlink/media/bg.ad0551fe5265eeb356743aab29fbab26_hu_79bf8c7b3fc3924d.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation"
+                        
+                        data-hash="md5-rQVR/lJl7rNWdDqrKfurJg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/link_predict/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 11 篇文章 · 共 80.326k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

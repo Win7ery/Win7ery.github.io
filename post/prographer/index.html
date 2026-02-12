@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="32nd USENIX Security Symposium (USENIX Security 23), 2023">
+<title>ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding</title>
+
+<link rel='canonical' href='https://wintery.net/post/prographer/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding">
+<meta property='og:description' content="32nd USENIX Security Symposium (USENIX Security 23), 2023">
+<meta property='og:url' content='https://wintery.net/post/prographer/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-05-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-15T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/prographer/media/bg.png' />
+<meta name="twitter:title" content="ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding">
+<meta name="twitter:description" content="32nd USENIX Security Symposium (USENIX Security 23), 2023"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://wintery.net/post/prographer/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="https://wintery.net/en/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#团队介绍">团队介绍</a>
+      <ol>
+        <li><a href="#本文作者">本文作者</a></li>
+        <li><a href="#领域内主要研究团队">领域内主要研究团队</a></li>
+      </ol>
+    </li>
+    <li><a href="#选题背景">选题背景</a>
+      <ol>
+        <li><a href="#用于攻击调查的数据溯源">用于攻击调查的数据溯源</a></li>
+        <li><a href="#基于学习的溯源图攻击检测">基于学习的溯源图攻击检测</a></li>
+        <li><a href="#图嵌入">图嵌入</a></li>
+      </ol>
+    </li>
+    <li><a href="#方法陈述">方法陈述</a>
+      <ol>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#快照构建器">快照构建器</a></li>
+        <li><a href="#编码器">编码器</a></li>
+        <li><a href="#异常检测器">异常检测器</a></li>
+        <li><a href="#关键指标生成器">关键指标生成器</a></li>
+      </ol>
+    </li>
+    <li><a href="#实验开展及结果">实验开展及结果</a>
+      <ol>
+        <li><a href="#数据集">数据集</a></li>
+        <li><a href="#有效性评估">有效性评估</a></li>
+        <li><a href="#生成指示器评估">生成指示器评估</a></li>
+        <li><a href="#运行性能评估">运行性能评估</a></li>
+        <li><a href="#其他实验">其他实验</a></li>
+      </ol>
+    </li>
+    <li><a href="#研究趋势">研究趋势</a></li>
+    <li><a href="#文献比对分析">文献比对分析</a>
+      <ol>
+        <li><a href="#基于学习的溯源分析">基于学习的溯源分析</a></li>
+        <li><a href="#基于启发式的溯源分析">基于启发式的溯源分析</a></li>
+        <li><a href="#日志异常检测">日志异常检测</a></li>
+      </ol>
+    </li>
+    <li><a href="#reference">reference</a></li>
+    <li><a href="#独创声明">独创声明</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/prographer/">
+                <img src="/post/prographer/media/bg_hu_53da454136f60be8.png"
+                        srcset="/post/prographer/media/bg_hu_53da454136f60be8.png 800w, /post/prographer/media/bg_hu_65eda9448650fc60.png 1600w"
+                        width="800" 
+                        height="421" 
+                        loading="lazy"
+                        alt="Featured image of post ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/prographer/">ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            32nd USENIX Security Symposium (USENIX Security 23), 2023
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 15, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 21 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    10427 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://wintery.net/en/post/prographer/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p>本文为本人UCAS的课程论文阅读报告，禁止转载！！！</p>
+<p>本文为本人UCAS的课程论文阅读报告，禁止转载！！！</p>
+<p>本文为本人UCAS的课程论文阅读报告，禁止转载！！！</p>
+</blockquote>
+<h2 id="团队介绍">
+    <a href="#%e5%9b%a2%e9%98%9f%e4%bb%8b%e7%bb%8d" class="header-anchor">#</a>
+    团队介绍
+</h2><h3 id="本文作者">
+    <a href="#%e6%9c%ac%e6%96%87%e4%bd%9c%e8%80%85" class="header-anchor">#</a>
+    本文作者
+</h3><p>Chunlin Xiong：中国科学院深圳先进技术研究院和深信服联培博士后，主要研究APT检测和取证分析，其作为第一作者曾在2022年TDSC期刊中发表论文<code>Conan: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</code></p>
+<p>Jiacen Xu和Zhou Li：加州大学，主要研究域名系统安全、基于日志的异常检测、隐私保护、机器学习安全和隐私</p>
+<p>Fan Yang和Kehuan Zhang：香港中文大学，主要研究二进制代码安全分析</p>
+<h3 id="领域内主要研究团队">
+    <a href="#%e9%a2%86%e5%9f%9f%e5%86%85%e4%b8%bb%e8%a6%81%e7%a0%94%e7%a9%b6%e5%9b%a2%e9%98%9f" class="header-anchor">#</a>
+    领域内主要研究团队
+</h3><p>在Provenance graph-based detectors for APTs（基于溯源图的APT威胁检测）领域内，主要有以下三个团队：</p>
+<ul>
+<li>
+<p>伊利诺伊大学芝加哥分校团队：该团队于USENIX’17提出的 <code>SLEUTH</code>，将溯源图应用于APT攻击检测领域。在2019年CCS会议上提出 <code>Poirot</code>，在S&amp;P’19上提出 <code>Holmes</code>，该方法融合了Kill Chain和ATT&amp;CK框架。此外，在2021年EurS&amp;P提出 <code>Extrator</code>，并引入外部知识。</p>
+</li>
+<li>
+<p>伊利诺伊大学香槟分校团队：该团队分别在NDSS’20提出了 <code>UNICORN</code> 和 <code>ProvDetector</code>，同时在2020年的S&amp;P上提出 <code>RapSheet</code>，它融合了ATT&amp;CK框架。</p>
+</li>
+<li>
+<p>普渡大学团队：该团队的核心成果包括NDSS’13提出的 <code>BEEP</code>，NDSS’16提出的 <code>ProTracer</code> 和USENIX’21提出的 <code>ATLAS</code>。</p>
+</li>
+</ul>
+<h2 id="选题背景">
+    <a href="#%e9%80%89%e9%a2%98%e8%83%8c%e6%99%af" class="header-anchor">#</a>
+    选题背景
+</h2><p>计算系统防御与攻击之间长期存在的战争不断演变，尽管入侵检测系统（IDS）和反恶意软件等防御措施已得到广泛部署，但以高级持续威胁（APT）为主题的复杂攻击仍然能够渗透组织网络，造成严重损害。抵御 APT 攻击失败的主要原因是：</p>
+<ol>
+<li>传统防御系统依赖于攻击者可以轻松更改的攻击特征</li>
+<li>传统防御系统没有充分利用计算系统或网络中不同实体之间的因果关系执行检测（例如，在系统日志上）。</li>
+</ol>
+<p>为了解决这两个基本问题，近期基于数据溯源的防御系统被开发出来。数据溯源将系统日志转化为图形表示，捕获了不同类型实体（例如，进程和文件）之间的时间和因果关系。在这个表示上，可以执行图遍历等图操作来检测正在进行的攻击或推理入侵的根本原因。有了数据溯源，由于日志中嵌入的丰富上下文信息得到了很好的利用，因此检测APT攻击成为可能。</p>
+<p>但是现有的所有基于溯源的系统都无法满足复杂生产环境中的所有基本部署要求，包括检测精度、运行时效率、“无签名”和细粒度。</p>
+<ol>
+<li>依赖签名、启发式或已知攻击痕迹的溯源系统（Atlas、RapSheet、Homles）在攻击者调整他们的模式后可以被规避。</li>
+<li>一些系统选择从日志中构建一个单一的溯源图并检测恶意实体和事件（Shadewatcher），但是当需要分析大量日志时，这种开销将变得过于昂贵，同时在这样的设置下也会生成大量的误报。</li>
+<li>少数系统以流式方式从日志中构建时间有序的快照，并试图检测异常快照（Unicorn），但由于分析师必须分析异常快照内的所有实体/交互，所以检测粒度过于粗糙。</li>
+</ol>
+<h3 id="用于攻击调查的数据溯源">
+    <a href="#%e7%94%a8%e4%ba%8e%e6%94%bb%e5%87%bb%e8%b0%83%e6%9f%a5%e7%9a%84%e6%95%b0%e6%8d%ae%e6%ba%af%e6%ba%90" class="header-anchor">#</a>
+    用于攻击调查的数据溯源
+</h3><p>为了实现攻击检测和取证，系统日志通常由系统级审计工具收集，例如 Windows ETW、Linux Audit和 FreeBSD Dtrace，它们描述了系统实体（如进程和进程）之间的交互。文件。在组织内的终端主机上收集的日志通常由安全信息和事件管理 (SIEM) 等中央服务进行分析，以检测复杂的跨机器攻击。</p>
+<p>除了系统日志之外，还提出了数据来源来检测和推理入侵，甚至包括多个阶段（例如侦察、安装、命令和控制以及横向移动）的长期高级持续威胁（APT）攻击可以检测到。本质上，数据溯源从系统日志构建依赖图来描述事件之间的关系，因此检测和调查可以转化为与图相关的操作。</p>
+<p>在所有与图相关的操作中，图遍历可能是最受欢迎的选择。一个突出的例子是回溯，安全分析师通过回溯查询带有兴趣点（POI）实体和时间窗口的来源图，并返回具有时间依赖性的事件。然而，这种简单的方法会遇到“依赖爆炸”，这可能是由在其生命周期内与许多主体/对象交互的长时间运行的进程引起的。</p>
+<h3 id="基于学习的溯源图攻击检测">
+    <a href="#%e5%9f%ba%e4%ba%8e%e5%ad%a6%e4%b9%a0%e7%9a%84%e6%ba%af%e6%ba%90%e5%9b%be%e6%94%bb%e5%87%bb%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
+    基于学习的溯源图攻击检测
+</h3><p>为了准确定位攻击事件，人们提出了大量基于规则的方法，这些方法利用已知攻击行为的知识来搜索溯源图。然而，编写规则需要分析师付出相当大的努力，并且可能会错过不可见模式下的攻击。因此，最近基于学习的方法，即训练具有正常系统行为（以及监督学习的恶意行为）的模型来检测异常系统执行，开始获得更多关注。尽管应用基于学习的方法来捕获网络攻击并不新鲜，但溯源图引入了利用图结构和应用新的图学习方法的新机会。现有的工作可以按照目标的粒度进行分类：边/节点、路径和图。</p>
+<h3 id="图嵌入">
+    <a href="#%e5%9b%be%e5%b5%8c%e5%85%a5" class="header-anchor">#</a>
+    图嵌入
+</h3><p>为了捕获溯源图的关键属性，溯源系统通常使用图嵌入。在社交网络、推荐系统和生命科学等其他领域，图嵌入在提高图分类、聚类和回归等下游任务的性能方面取得了显着的成功。本质上，图嵌入学习用低维向量来表示节点、边、子图或整个图，这些低维向量捕获图结构、点到点关系以及有关图的其他相关信息。溯源系统利用了两种类型的图嵌入技术：</p>
+<p><strong>节点嵌入</strong>将图的每个节点映射到一个低维向量，该向量保留其关键信息，例如节点的邻域信息、节点的结构角色和节点的状态。流行的节点嵌入模型包括 DeepWalk 、GCN 、GraphSage 等。可以执行与基于节点、边和路径的检测相关的节点分类和边分类等下游任务，通过计算节点嵌入的节点/边分数并将其与阈值进行比较。</p>
+<p><strong>全图嵌入</strong>用单个向量表示整个图，该向量聚合来自节点表示的信息。流行的全图嵌入模型包括DiffPool、graph2vec、graph sketching等。与基于图的检测相关的图分类和聚类等下游任务可以通过图向量的计算来执行。</p>
+<blockquote>
+<p>边缘嵌入也被提出用于社交网络中的推荐等应用，但目前还没有发现它被任何溯源系统使用</p>
+</blockquote>
+<h2 id="方法陈述">
+    <a href="#%e6%96%b9%e6%b3%95%e9%99%88%e8%bf%b0" class="header-anchor">#</a>
+    方法陈述
+</h2><p>在本文中，作者提出了 PROGRAPHER，一种新的基于来源的异常检测系统，它同时满足检测精度、运行时效率、“无签名”和细粒度的要求。PROGRAPHER在图粒度上进行检测，当日志被摄取时，PROGRAPHER 会提取快照以减少整个来源图的计算和内存成本。在每个快照上，PROGRAPHER 应用名为 graph2vec 的全图嵌入技术来生成有根子图（RSG）作为每个节点的低维表示，并通过最大化正常快照和正常RSGs共现可能性来学习图表示。为了捕获快照之间的时间动态，采用了名为 TextRCNN 的序列学习模型，因此可以预测未来快照的表示，并在偏离预测时检测到异常快照。以前的系统（如 Unicorn）停留在报告异常快照的阶段，但 PROGRAPHER 通过对 RSG 进行排名并将最可疑的实体报告为攻击指标来继续查明异常实体。</p>
+<h3 id="概述">
+    <a href="#%e6%a6%82%e8%bf%b0" class="header-anchor">#</a>
+    概述
+</h3><p>本文设想 PROGRAPHER 要实现三个的设计目标（G1 - G3）。值得注意的是，之前的方法都无法满足所有这些要求，本文将 PROGRAPHER 与表1中的其他代表性方法进行比较。</p>
+<center>表1：基于学习的溯源分析与其他相关方法的比较</center>
+<p><img src="/media%5cimage-20240514162544414.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="表1"
+	
+	
+></p>
+<p>G1：PROGRAPHER 应该从良性日志中学习正常行为模式，因此它增加了检测利用零日漏洞的攻击的机会。换句话说，PROGRAPHER 应该通过无监督学习来构建，而不需要任何攻击或事件标签的知识。</p>
+<p>G2：由于长时间处理溯源图非常消耗资源，PROGRAPHER应该能够处理整个起源图的由周期分隔的子图，并利用周期之间的时间动态进行检测。</p>
+<p>G3：PROGRAPHER应该能够准确识别活动异常的子图。此外，PROGRAPHER 应该指出与攻击直接相关的实体，从而缩小了调查范围。</p>
+<p>PROGRAPHER 由四个组件组成以满足 G1-G3：</p>
+<ol>
+<li>
+<p>快照构建器</p>
+</li>
+<li>
+<p>编码器</p>
+</li>
+<li>
+<p>异常检测器</p>
+</li>
+<li>
+<p>关键指标生成器</p>
+</li>
+</ol>
+<p>PROGRAPHER 的工作流程如图1所示，快照构建器首先从终端主机收集的审核日志中提取节点和边，然后根据时间戳将数据分割成快照。编码器生成嵌入在每个快照上的整个图，以捕获图的结构特征。异常检测器使用应该仅包含良性活动的快照的嵌入来训练预测模型，并检测异常快照。最后，关键指标生成器对异常快照包含的节点进行排序，并将排名靠前的节点报告给分析人员。</p>
+<img src="media\bg.png" alt="bg" style="zoom:80%;" />
+<center>图1：PROGRAPHER工作流概述</center>
+<h3 id="快照构建器">
+    <a href="#%e5%bf%ab%e7%85%a7%e6%9e%84%e5%bb%ba%e5%99%a8" class="header-anchor">#</a>
+    快照构建器
+</h3><p>本文考虑有关文件（例如文件创建、文件读取、文件写入）、进程（例如创建和权限更改）、网络套接字（例如网络连接）、主体（用户或帐户）等的日志事件。边由描述源实体对目标实体执行的操作的事件组成（例如，进程读取文件）。图 2 显示了一个示例。</p>
+<p><img src="/media%5cimage-20240514165844731.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514165844731"
+	
+	
+></p>
+<center>图2：包含四种类型实体的示例</center>
+<p>PROGRAPHER 考虑的节点类型和边类型的完整列表如表2 所示。</p>
+<center>表2：图形元素及其类型</center>
+<p><img src="/media%5cimage-20240514164616500.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="表2"
+	
+	
+></p>
+<p>为了有效地处理大量传入日志，PROGRAPHER 构建按时间排序的快照。当日志被摄取时，它会维护一个缓存图。对于每个传入日志，当事件源和目标不可见时，它们将作为节点添加到缓存图中，在这对新节点之间还会创建一条边，并将日志时间戳分配给这些节点。对于一对现有节点，它们的时间戳会被更新。当节点数达到n（也称为快照大小）时，所有n个节点和它们的边会被保存到第一个快照中。之后，PROGRAPHER 从传入日志中添加新节点，使用遗忘率(fr)淘汰 $n × fr$ 个最旧的节点，并在节点数量达到 $n × (1 + fr)$ 时将缓存图保存到新快照中。这样使得一对相邻的快照在节点中总是有  $n × (1 − fr) $重叠。</p>
+<p>重复这个过程来生成一系列快照${S_1,S_2,&hellip;, S_k}$。通过这样的设计，确保可以通过比较相邻快照来恢复时间动态，并且每个快照的大小受到控制。此外，快照中良性和恶意痕迹之间的比率预计将比整个溯源图小得多，从而解决数据不平衡问题。伪代码如算法1所示。</p>
+<img src="media\image-20240514171104613.png" alt="image-20240514171104613" style="zoom:80%;" />
+<h3 id="编码器">
+    <a href="#%e7%bc%96%e7%a0%81%e5%99%a8" class="header-anchor">#</a>
+    编码器
+</h3><p>(1) 枚举每个节点以提取不同度数的RSG，从而捕获节点的邻域信息。在graph2vec中，利用Weisfeiler-Lehman（WL）graph kernels来测试图同构性来实现这一目标。具体来说，对于节点 v，WL 内核将其标签及其连接的边和节点的标签作为输入标签，然后，为从输入标签聚合而来的 v 生成一个新标签，称为 RSG。整个过程在每个节点$ v ∈ V$ 上重复 d 次，以描述其深度为 $1, &hellip;, d$ 的邻域。</p>
+<p>为了适应起源图的格式，本文将节点和边类型视为标签（原始 WL 内核仅考虑节点类型）。此外，作者发现从大而密集的图生成的RSG可能有很多冗余标签，为了提高效率，本文只保留每个 RSG 的唯一标签。在算法2中描述了RSG生成的步骤。作为一个具体示例，图 2 中 d = 0, 1, 2 时节点“Process2”的 RSG 为：</p>
+<ul>
+<li>d = 0: [(Process)].</li>
+<li>d = 1: [(Process), (File), (Principal), LOAD, WRITE, CREATE, READ].</li>
+<li>d = 2: [(Process, File, Principal, LOAD, WRITE, CREATE, READ), (Process, Principal, LOAD, CREATE), (Process, File, READ, WRITE), (Process, Socket, CREATE, CONNECT, TERMINATE, ACCEPT), LOAD, WRITE, CREATE, READ].</li>
+</ul>
+<p><img src="/media%5cimage-20240514173629469.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514173629469"
+	
+	
+></p>
+<p>(2) 生成快照$S_i$的嵌入$E_{S_i}$。$E_{S_i}$被初始化为随机向量，然后通过最大化所有节点的 RSG 的对数似然来更新，这些节点也由嵌入表示。所有快照${S_1,S_2,&hellip;, S_k}$的嵌入E可以通过梯度下降一起更新。更新过程遵循doc2vec使用的skipgram模型。将目标函数定义为：</p>
+<p><img src="/media%5cimage-20240514174152941.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514174152941"
+	
+	
+></p>
+<p>为了训练效率，本文像基于无监督学习的先前工作一样应用负采样。在快照 $S_i$ 上，从整个子图集中随机选择 m 个 RSG $R ′ _i= {r_1, r_2, ··· , r_m}$ 作为负样本，使得 $R′_i\cap R_i \neq 0$。目标函数 J(E ) 将被调整以最大化 $R_i $的对数似然并同时最小化 $R′_i$ 的对数似然。由于$R′_i$ 是不存在的 RSG 的子集，因此减少了训练开销。算法3中总结了嵌入生成的整个过程。</p>
+<p><img src="/media%5cimage-20240514173556403.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514173556403"
+	
+	
+></p>
+<h3 id="异常检测器">
+    <a href="#%e5%bc%82%e5%b8%b8%e6%a3%80%e6%b5%8b%e5%99%a8" class="header-anchor">#</a>
+    异常检测器
+</h3><p>生成快照的表示后，PROGRAPHER 继续检测异常快照。将快照之间的变化视为检测的重要输入，并一起检查快照序列${S_1,S_2,&hellip;, S_k}$，该任务选择了已广泛用于文本分类的 TextRCNN 提出的双向循环结构和卷积神经网络模型。</p>
+<p>为了训练异常检测器，本文将一组快照序列及其相关的嵌入作为输入。使用循环结构和卷积网络来获得输入序列中每个快照$S_i$的潜在表示$y_i$，其定义如下：</p>
+<p><img src="/media%5cimage-20240514175807801.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514175807801"
+	
+	
+></p>
+<p>其中$x_i=[left(S_i);E(S_i);right(S_i)]$是左侧上下文向量、其自身的嵌入和右侧上下文向量的串联。 W 是权重矩阵，b 是偏差向量。左右上下文向量定义为：</p>
+<p><img src="/media%5cimage-20240514203916723.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514203916723"
+	
+	
+></p>
+<p>利用 maxpool 层和全连接层来获得每个快照序列的最终表示</p>
+<p><img src="/media%5cimage-20240514204028770.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514204028770"
+	
+	
+></p>
+<p>在训练阶段，给定一个快照序列${S_1,S_2,&hellip;, S_k}$，我们预测该序列与其后续快照 $S_{k+1}$ 相关的可能性有多大。将损失定义为 L2 距离的距离，如下所示：</p>
+<p><img src="/media%5cimage-20240514180150579.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514180150579"
+	
+	
+></p>
+<p>其中$E_{S_{k+1}}$是快照$S_{k+1}$的嵌入。在测试阶段，给定快照序列，将其预测嵌入与真实嵌入进行比较。如果它们之间的距离超过预先定义的阈值，则将其标记为异常。</p>
+<h3 id="关键指标生成器">
+    <a href="#%e5%85%b3%e9%94%ae%e6%8c%87%e6%a0%87%e7%94%9f%e6%88%90%e5%99%a8" class="header-anchor">#</a>
+    关键指标生成器
+</h3><p>检测到异常快照后，将生成恶意活动的关键指标。作者发现 Unicorn等其他作品缺失了这一步。因此，他们的检测结果是粗粒度的。但随着 graph2vec 的采用，PROGRAPHER 可以实现更细粒度的攻击归因。</p>
+<p>目标函数 J(E) 测量快照嵌入与每个 RSG 之间的共现概率，其值越小，共现概率越小。由于可能性是根据快照的每个 RSG 计算的，因此可以按 RSG 的概率对 RSG 进行排序，并从中选择关键指标。特别是，在测试阶段，给定快照$S_i$，将从 $S_i$ 生成的嵌入 $E_{S_i}$ 与从 k 个快照序列预测的嵌入$E&rsquo;_{S_i}$进行比较，并提取每个 RSG 的两个嵌入之间的差异。之后，根据损失差异对RSG进行排序，并选择前K个可疑RSG。 RSG 可以映射到多个节点，因为它只存储节点和边类型。因此，系统搜索快照以找到与 K 个可疑 RSG 匹配的所有节点，并将它们反馈给分析师。</p>
+<h2 id="实验开展及结果">
+    <a href="#%e5%ae%9e%e9%aa%8c%e5%bc%80%e5%b1%95%e5%8f%8a%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
+    实验开展及结果
+</h2><p>为了确保每个快照包含足够的信息来学习其表示，作者根据数据集的规模设置快照大小 n。对于节点数小于 10K 的小图（例如机器上软件的溯源图），n 设置为 300。对于节点超过10k的大图（例如操作系统的溯源图），n 设置为 900对于不同的数据集，L 配置为 32、128 和 176。在快照构建过程中，使用遗忘率 fr 设置为 1/3。对于编码器和异常检测器，本文通过网格搜索选择超参数，它们的最佳值如下表3 所述。</p>
+<center>表3：不同数据集的超参数</center>
+<p><img src="/media%5cimage-20240514210622348.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514210622348"
+	
+	
+></p>
+<p>训练和测试在一台配备 32 核 Intel E5-2640 处理器、256 GB 物理内存和 1 个 Nvidia GTX TITAN X GPU 的服务器上进行，操作系统是Ubuntu 14.04.6 LTS。</p>
+<h3 id="数据集">
+    <a href="#%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-anchor">#</a>
+    数据集
+</h3><p>本文使用两个具有模拟攻击的日志数据集（StreamSpot 和 ATLAS）和两个 DARPA 数据集（DARPA3 和 DARPA ENGAGEMENT）来评估 PROGRAPHER 的实际表现。此外，本文在生产环境中部署PROGRAPHER来分析商业EDR产品收集的系统日志。如下表4所示展示的数据集统计，“#Benign”和“#Attack”是良性图和攻击图的数量。大小是在预处理后的图表上测量的，而不是原始数据。每个数据集都通过训练、验证和测试分开，在实验中确保所有数据集都是不相交的，并且在测试集中所有的良性图都发生在训练和验证图之后。</p>
+<center>表4：数据集的统计</center>
+<p><img src="/media%5cimage-20240514212442533.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514212442533"
+	
+	
+></p>
+<h3 id="有效性评估">
+    <a href="#%e6%9c%89%e6%95%88%e6%80%a7%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    有效性评估
+</h3><p>表5展示了在100次重复实验情况下，Sreamspot-DS和DARPA3的实验结果，以Unicorn为baseline，本文的ProGrapher方法在精确率、召回率、准确率和F1值上具有更好的表现。</p>
+<blockquote>
+<p>Unicorn结果比论文上报告的结果更差，主要原因为：</p>
+<ol>
+<li>从Unicorn作者那里了解到，他们使用了 DARPA TC 下的非公开良性数据集进行训练，而本文作者无法访问该数据集。</li>
+<li>Unicorn实现并没有强制测试中的图在训练和验证之后发生，这是安全系统中的常见“数据窥探”问题[5]。</li>
+</ol>
+</blockquote>
+<center>表5：Sreamspot-DS和DARPA3的实验结果（100次运行的平均值）</center>
+<p><img src="/media%5cimage-20240514221458395.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514221458395"
+	
+	
+></p>
+<blockquote>
+<p>仅将 CLEARSCOPE 中的一个良性图错误地检测为异常。FP主要是由于训练集中的行为信息不足造成的，由于作者只保留同一对实体的最新事件，因此对于 CLEARSCOPE，每个实体对可以删除数百个事件。这种策略删除了可以区分良性和恶意行为的有用信息，这也解释了为什么预处理后CLEARSCOPE数据集的大小很小（只有2GB）。</p>
+</blockquote>
+<p>表 6 展示了ProGrapher在ATLAS-DS和 DARPA ENGAGEMENT数据集上的表现，ProGrapher系统成功检测到所有攻击并且不生成任何 FP，结果还表明PROGRAPHER可以处理不同类型的APT攻击。</p>
+<center>表6：ATLAS-DS和DARPA ENGAGEMENT的实验结果</center>
+<p><img src="/media%5cimage-20240514223305399.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514223305399"
+	
+	
+></p>
+<p>在Production EDR的实验结果。按端点从 180GB 日志中提取了大约 59K 个图表。从前 7 天开始，作者使用 51119 个良性图进行训练（良性图由分析师选择），并使用 2889 个良性图进行验证。在剩下的 2 天里，我们使用 4684 个良性图和 486 个攻击图进行测试。</p>
+<p>在图3中，作者绘制ROC曲线来说明TPR和FPR之间的关系，并与Unicorn进行比较。结果表明 PROGRAPHER 在生产环境中可以达到合理的精度，例如 94% TPR、14% FPR。 Unicorn 的检测精度明显降低，低于 PROGRAPHER，例如，在 20% FPR 时，TPR 低于 10%。 PROGRAPHER 的曲线下面积 (AUC) 几乎是 Unicorn 的两倍（0.943 vs. 0.542）。</p>
+<p><img src="/media%5cimage-20240514223936140.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514223936140"
+	
+	
+></p>
+<center>图3：Production EDR数据集的ROC曲线</center>
+<h3 id="生成指示器评估">
+    <a href="#%e7%94%9f%e6%88%90%e6%8c%87%e7%a4%ba%e5%99%a8%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    生成指示器评估
+</h3><p><strong>指示器的有效性。</strong> ProGrapher方法从异常快照中选择前K个RSG，并反馈与这些RSG匹配的所有节点。给定一个真实的攻击节点，我们认为 3 跳邻域中的节点是有效的，而所有其他节点是无效的。</p>
+<blockquote>
+<p>本文选择 3 跳邻域，因为本文中将小图的 WL 内核深度设置为 3（大图为4），因为在给出警报的情况下调查邻域实体是一种常见做法，如果指标中至少有一个节点属于攻击节点或有效邻居，则认为该指标有效。</p>
+</blockquote>
+<p>将有效率计算为有效指标与 PROGRAPHER 识别的所有指标之间的比率。表 7 显示了 3 个 DARPA3 子集的不同 K（从 1 到 5）的比率。可以看到，即使 K 值在 2 到 3 之间，有效率也已经相当高了（至少 0.94）。</p>
+<center>表7：DARPA3指标的有效率</center>
+<p><img src="/media%5cimage-20240514223148281.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514223148281"
+	
+	
+></p>
+<p>将覆盖率定义为正确识别的攻击节点与所有真实攻击节点之间的比率。表 8 显示了 K 范围为 1 到 5 的每个数据集的覆盖率，对于 THEIA 和 CLEARSCOPE 数据集，所有攻击节点均得到识别，对于 CADETS，当 K ≥ 4 时，仅丢失 1 个攻击节点。</p>
+<center>表8：DARPA3攻击节点覆盖率</center>
+<p><img src="/media%5cimage-20240514235531511.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514235531511"
+	
+	
+></p>
+<p>将缩减率定义为 1 − Covered/Total（“Covered”和“Total”是映射到所有指示器的节点数和异常快照中的所有节点数）。表 9 显示了 K = 4 时每个 DARPA3 数据集的工作量减少情况。平均而言，指标生成器将安全分析师的工作量减少了 58%。相比之下，基线系统Unicorn只告诉快照是否异常，分析人员必须调查所有包含的节点。我们将 Unicorn 所有警报快照的节点数量相加，并显示在表 10 中。Unicorn 待调查的节点数量为 41343 个，是 PROGRAPHER 的 7.1 倍。</p>
+<blockquote>
+<p>Unicorn的数值高于Total，因为Unicorn预测较大的快照为异常</p>
+</blockquote>
+<center>表9：DARPA3缩减率</center>
+<p><img src="/media%5cimage-20240515000108830.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240515000108830"
+	
+	
+></p>
+<h3 id="运行性能评估">
+    <a href="#%e8%bf%90%e8%a1%8c%e6%80%a7%e8%83%bd%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    运行性能评估
+</h3><p>表 10 中显示了每个组件的运行时开销，其结果是在不同 DARPA3 数据集上的重复运行结果的平均值。</p>
+<p><strong>数据处理和训练。</strong> 平均而言，PROGRAPHER 需要 8.4 分钟来处理来自一个数据集的一天日志，并需要 8.3 微秒来生成快照序列。 PROGRAPHER 需要 6.29 小时来训练编码器模型 100 个 epoch。对于异常检测器，训练大约需要 20.6 分钟。</p>
+<p><strong>推理和指示器生成。</strong> PROGRAPHER 平均花费 10.3 秒来预测异常快照，并花费 8.3 秒为每个异常快照生成排序的 RSG。</p>
+<blockquote>
+<p>表明 PROGRAPHER 能够近乎实时地进行异常检测</p>
+</blockquote>
+<center>表10：每个组件的开销</center>
+<p><img src="/media%5cimage-20240515001245467.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240515001245467"
+	
+	
+></p>
+<p><strong>可扩展性。</strong> 本文首先通过改变训练图的数量来测量内存消耗如何随着数据量的增长而增长。对于相同的数据大小，WL 内核的深度 (d) 影响最大，因此将其值从 2 更改为 4，图 4(a) 显示了数据量和内存消耗之间的关系。由于 PROGRAPHER 对快照而不是整个数据集执行训练和推理，因此内存消耗与数据量呈次线性关系。例如，即使在 d 设置为 4 的情况下处理 40 GB 数据，最大内存使用量也是 12.7 GB，其中 10.2 GB 用于训练和存储嵌入。在图 6(b) 中显示每个 epoch 的时耗，时耗与数据量呈线性关系，仅当 d = 4 并且数据大小超过 30GB 时，时耗增加得更快。</p>
+<p><img src="/media%5cimage-20240515001641917.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240515001641917"
+	
+	
+></p>
+<center>图4：PROGRAPHER的扩展性</center>
+<h3 id="其他实验">
+    <a href="#%e5%85%b6%e4%bb%96%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
+    其他实验
+</h3><p>本文使用相对较小数据集 StreamSpot-DS（8.3GB）来分析关键参数对 PROGRAPHER 有效性的影响。使用ATLAS-DS数据集，通过在攻击事件之前和之后插入许多随机事件模仿逃避攻击对 PROGRAPHER 进行鲁棒性测试。</p>
+<h2 id="研究趋势">
+    <a href="#%e7%a0%94%e7%a9%b6%e8%b6%8b%e5%8a%bf" class="header-anchor">#</a>
+    研究趋势
+</h2><p><strong>正常行为的改变。</strong> 由于 PROGRAPHER 被设计为溯源图上的异常检测系统，因此当观察到未见的行为时，它会发出警报。然而，正常行为的变化（例如，员工登录到新的内部服务器）可能被视为异常，这可能会引入误报。这个问题可以看作是概念漂移问题，可以通过使用更新的数据重新训练 PROGRAPHER 来部分缓解。检测概念漂移何时发生至关重要，这样就不需要频繁执行成本高昂的重新训练。</p>
+<p><strong>直推式和归纳式学习。</strong> PROGRAPHER当前的设计遵循直推式学习模式，假设测试阶段的所有RSG都已在训练阶段被看到。当遇到新的 RSG 时，PROGRAPHER 必须重新训练。尽管本文通过仅使用节点和边类型构建 RSG 来减少看到新 RSG 的机会，但在生产环境中仍然需要重新训练。这种限制也存在于现有的基于图学习的安全系统中，如 Euler 和 ShadeWatcher 中。为了解决这个问题，未来研究可以探索归纳式学习模式，该模式能够从其邻域动态生成新节点的嵌入，而无需重新训练。然而，在这种情况下，必须选择不同的编码器模型，例如 GraphSage。</p>
+<p><strong>更具适应性的攻击。</strong> 一种有效的对抗策略是注入重复事件来填充用于构建快照的缓存，本文实验中发现 CLEARSCOPE  数据集上的漏报是由事件聚合引起的，该问题存在于其他事件聚合的溯源系统中（例如 ShadeWatcher ）。一种可能的解决方案是在事件聚合后保留更多信息（例如，某些事件字段的分布）。</p>
+<h2 id="文献比对分析">
+    <a href="#%e6%96%87%e7%8c%ae%e6%af%94%e5%af%b9%e5%88%86%e6%9e%90" class="header-anchor">#</a>
+    文献比对分析
+</h2><h3 id="基于学习的溯源分析">
+    <a href="#%e5%9f%ba%e4%ba%8e%e5%ad%a6%e4%b9%a0%e7%9a%84%e6%ba%af%e6%ba%90%e5%88%86%e6%9e%90" class="header-anchor">#</a>
+    基于学习的溯源分析
+</h3><p>当目标是边/节点时，训练后的系统旨在判断一对实体之间的交互或实体本身是否是恶意的。 ShadeWatcher 根据系统日志构建知识图并使用基于图神经网络（GNN）的推荐系统来检测恶意交互。SIGL 利用节点嵌入和自动编码器模型来判断从软件安装图 (SIG) 生成的进程是否是恶意的。然而，当遇到大的溯源图时，实现基于边/节点的高精度检测是相当具有挑战性的。此外，检测结果不提供对于理解攻击活动有价值的上下文信息（例如，与检测到的边/节点相关的其他活动）。</p>
+<blockquote>
+<p>但是Flash一文中表示ShadeWatcher 是可以提供上下文相关信息的</p>
+<p>ShadeWatcher 实现了很高的检测精度，但它是针对小图进行评估的（大多数图只有数百个交互）</p>
+<p>SIGL 检查的 SIG 通常很小</p>
+</blockquote>
+<p>对于基于路径的检测，从来源图中选择符合某些模式（例如，与 POI 节点关联）的路径，并且经过训练的系统对路径进行分类。例如，ProvDetector 通过应用词嵌入将执行路径转换为向量，然后对它们进行聚类来识别隐蔽恶意软件。 Atlas应用词形还原和词嵌入来生成序列，并使用长短期记忆（LSTM）网络来预测序列是否与攻击相关。然而，这些方法首先依赖于启发式方法选择 POI 路径（ProvDetector 选择针对隐蔽恶意软件定制的罕见路径）或节点（ATLAS 假设一些恶意节点已知），然后应用基于学习的方法。</p>
+<p>对于基于图的检测，溯源图要么被分类为一个整体，要么被分解为一组子图，并在这些子图上执行分类。例如，Unicorn 通过滑动时间窗口对日志进行切片，并从中构造演化子图。对于每个子图，graph sketching将捕获结构特征的直方图转换为固定大小的向量。 ProvGem 提出多重嵌入来捕获节点的不同上下文，并以监督学习的方式对聚合节点嵌入上的图进行分类。基于图的检测的主要问题是其检测粒度太粗，分析人员仍然需要付出相当大的精力才能从可能包括数千个节点的图中查明恶意实体/事件。</p>
+<p>HERCULE 使用半监督社区检测算法来关联攻击事件并重建攻击。 Streamspot通过广度优先搜索(BFS)提取局部图特征并对快照进行聚类以检测异常特征。 P-Gaussian应用高斯分布原理来计算入侵行为及其变异体之间的相似度。 Log2vec 从日志构建异构图并应用图嵌入来检测异常活动。</p>
+<h3 id="基于启发式的溯源分析">
+    <a href="#%e5%9f%ba%e4%ba%8e%e5%90%af%e5%8f%91%e5%bc%8f%e7%9a%84%e6%ba%af%e6%ba%90%e5%88%86%e6%9e%90" class="header-anchor">#</a>
+    基于启发式的溯源分析
+</h3><p>基于启发式的起源分析。为了解决“依赖爆炸”问题，另一个方向是应用人工编写的规则来确定调查的优先级，许多先前的工作从 POI 事件中执行图遍历（例如，广度优先搜索），并根据规则选择可疑路径。例如，NoDoze 使用历史信息为溯源图中的警报分配威胁分数，然后识别异常路径。 PrioTracker 通过计算事件的稀有度分数来确定异常事件的优先级，从而加速前向跟踪 。 Padoga 考虑单个路径和整个溯源图的异常程度来识别入侵。 SLEUTH 和 Morse 使用基于标签的信息流技术来重建攻击场景 。</p>
+<p>分析人员使用攻击签名（例如妥协指标 (IoC)）查询溯源图，并分析类似的子图。 $\tau$-calculus 提出了一种新的领域特定语言（DSL），使威胁分析师的查询更加直观和高效。Poirot模型将该问题建模为图模式匹配（GPM）问题，并为其提出了一种新的图对齐方法。</p>
+<p>一些工作从细粒度的来源图中提取摘要图以简化调查。 RapSheet 和 Holmes 依靠对抗性策略、技术和程序 (TTP) 的知识库来构建摘要图。 DepComm 总结了基于以流程为中心的社区的溯源图，并提取了用于攻击调查的信息路径。</p>
+<h3 id="日志异常检测">
+    <a href="#%e6%97%a5%e5%bf%97%e5%bc%82%e5%b8%b8%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
+    日志异常检测
+</h3><p>PROGRAPHER 依赖于 graph2vec，它采用了 doc2vec 和 word2vec 等 NLP 技术来进行图嵌入。类似的NLP技术也被应用于检测异常日志。 Deeplog 将审计日志视为句子，并利用 LSTM 模型来检测异常事件。 LogAnomaly应用word2vec提取隐藏在日志模板中的语义信息来检测日志异常。 Attack2Vec 使用时间词嵌入来建模和跟踪攻击步骤的演变。</p>
+<h2 id="reference">
+    <a href="#reference" class="header-anchor">#</a>
+    reference
+</h2><blockquote>
+<p>本部分仅列出本人认为较为重要且与本文工作密切相关的参考文献</p>
+</blockquote>
+<p>[1] Abdulellah Alsaheel, Yuhong Nan, Shiqing Ma, Le Yu, Gregory Walkup, Z. Berkay Celik, Xiangyu Zhang, and Dongyan Xu. ATLAS: A sequence-based learning approach for attack investigation. In Michael Bailey and Rachel Greenstadt, editors, USENIX Security Symposium, pages 3005–3022. USENIX Association, 2021.</p>
+<p>[2] Xueyuan Han, Thomas F. J.-M. Pasquier, Adam Bates, James Mickens, and Margo I. Seltzer. UNICORN: runtime provenance-based detector for advanced persistent threats. CoRR, abs/2001.01525, 2020.</p>
+<p>[3] Qi Wang, Wajih Ul Hassan, Ding Li, Kangkook Jee, Xiao Yu, Kexuan Zou, Junghwan Rhee, Zhengzhang Chen, Wei Cheng, Carl A. Gunter, and Haifeng Chen. You are what you do: Hunting stealthy malware via data provenance analysis. In NDSS. The Internet Society, 2020.</p>
+<p>[4] J. Zeng, X. Wang, J. Liu, Y. Chen, Z. Liang, T. Chua, and Z. Chua. Shadewatcher: Recommendation-guided cyber threat analysis using system audit records. In 2022 IEEE Symposium on Security and Privacy (SP) (SP), 2022.</p>
+<p>[5] Daniel Arp, Erwin Quiring, Feargus Pendlebury, Alexander Warnecke, Fabio Pierazzi, Christian Wressnegger, Lorenzo Cavallaro, and Konrad Rieck. Dos and don’ts of machine learning in computer security. In Proc. of the USENIX Security Symposium, 2022.</p>
+<p>[6] Wajih Ul Hassan, Adam Bates, and Daniel Marino. Tactical provenance analysis for endpoint detection and response systems. In IEEE Symposium on Security and Privacy, pages 1172–1189. IEEE, 2020.</p>
+<p>[7] Sadegh Momeni Milajerdi, Rigel Gjomemo, Birhanu Eshete, R. Sekar, and V. N. Venkatakrishnan. HOLMES: real-time APT detection through correlation of suspicious information flows. In IEEE Symposium on Security and Privacy, pages 1137–1152. IEEE, 2019.</p>
+<p>[8] Z. Xu, P. Fang, C. Liu, X. Xiao, Y. Wen, and D. Meng. Depcomm: Graph summarization on system audit logs for attack investigation. In 2022 2022 IEEE Symposium on Security and Privacy (SP) (SP), 2022.</p>
+<h2 id="独创声明">
+    <a href="#%e7%8b%ac%e5%88%9b%e5%a3%b0%e6%98%8e" class="header-anchor">#</a>
+    独创声明
+</h2><blockquote>
+<p>本文为本人UCAS的课程论文阅读报告，禁止转载！！！</p>
+<p>本文为本人UCAS的课程论文阅读报告，禁止转载！！！</p>
+<p>本文为本人UCAS的课程论文阅读报告，禁止转载！！！</p>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图嵌入分析</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/prographer/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 11 篇文章 · 共 80.326k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

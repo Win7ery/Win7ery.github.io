@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="32nd USENIX Security Symposium (USENIX Security 23), 2023">
+<title>ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding</title>
+
+<link rel='canonical' href='https://wintery.net/en/post/prographer/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding">
+<meta property='og:description' content="32nd USENIX Security Symposium (USENIX Security 23), 2023">
+<meta property='og:url' content='https://wintery.net/en/post/prographer/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-05-15T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-15T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/prographer/media/bg.png' />
+<meta name="twitter:title" content="ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding">
+<meta name="twitter:description" content="32nd USENIX Security Symposium (USENIX Security 23), 2023"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://wintery.net/post/prographer/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="https://wintery.net/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#team-introduction">Team introduction</a>
+      <ol>
+        <li><a href="#author-of-this-article">Author of this article</a></li>
+        <li><a href="#main-research-teams-in-the-field">Main research teams in the field</a></li>
+      </ol>
+    </li>
+    <li><a href="#topic-selection-background">Topic selection background</a>
+      <ol>
+        <li><a href="#data-tracing-for-attack-investigation">Data tracing for attack investigation</a></li>
+        <li><a href="#learning-based-traceability-graph-attack-detection">Learning-based traceability graph attack detection</a></li>
+        <li><a href="#image-embedding">Image embedding</a></li>
+      </ol>
+    </li>
+    <li><a href="#method-statement">Method statement</a>
+      <ol>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#snapshot-builder">Snapshot Builder</a></li>
+        <li><a href="#encoder">Encoder</a></li>
+        <li><a href="#anomaly-detector">Anomaly Detector</a></li>
+        <li><a href="#key-indicator-generator">Key Indicator Generator</a></li>
+      </ol>
+    </li>
+    <li><a href="#experiment-development-and-results">Experiment development and results</a>
+      <ol>
+        <li><a href="#dataset">Dataset</a></li>
+        <li><a href="#effectiveness-evaluation">Effectiveness evaluation</a></li>
+        <li><a href="#generate-indicator-evaluation">Generate indicator evaluation</a></li>
+        <li><a href="#run-performance-evaluation">Run performance evaluation</a></li>
+        <li><a href="#other-experiments">Other experiments</a></li>
+      </ol>
+    </li>
+    <li><a href="#research-trends">Research trends</a></li>
+    <li><a href="#comparative-analysis-of-literature">Comparative analysis of literature</a>
+      <ol>
+        <li><a href="#learning-based-traceability-analysis">Learning-based traceability analysis</a></li>
+        <li><a href="#heuristic-based-traceability-analysis">Heuristic-based traceability analysis</a></li>
+        <li><a href="#log-anomaly-detection">Log anomaly detection</a></li>
+      </ol>
+    </li>
+    <li><a href="#reference">reference</a></li>
+    <li><a href="#original-statement">Original statement</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/en/post/prographer/">
+                <img src="/post/prographer/media/bg_hu_53da454136f60be8.png"
+                        srcset="/post/prographer/media/bg_hu_53da454136f60be8.png 800w, /post/prographer/media/bg_hu_65eda9448650fc60.png 1600w"
+                        width="800" 
+                        height="421" 
+                        loading="lazy"
+                        alt="Featured image of post ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/en/post/prographer/">ProGraPher: An Anomaly Detection System based on Provenance Graph Embedding</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            32nd USENIX Security Symposium (USENIX Security 23), 2023
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 15, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    26 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    5464 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="https://wintery.net/post/prographer/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p>This article is my UCAS course paper reading report and is not allowed to be reproduced! ! !</p>
+<p>This article is my UCAS course paper reading report and is not allowed to be reproduced! ! !</p>
+<p>This article is my UCAS course paper reading report and is not allowed to be reproduced! ! !</p>
+</blockquote>
+<h2 id="team-introduction">
+    <a href="#team-introduction" class="header-anchor">#</a>
+    Team introduction
+</h2><h3 id="author-of-this-article">
+    <a href="#author-of-this-article" class="header-anchor">#</a>
+    Author of this article
+</h3><p>Chunlin Xiong: Postdoctoral fellow at the Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences and Sangfor, mainly researching APT detection and forensic analysis. As the first author, he published a paper <code>Conan: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</code> in the TDSC journal in 2022</p>
+<p>Jiacen Xu and Zhou Li: University of California, focusing on domain name system security, log-based anomaly detection, privacy protection, machine learning security and privacy</p>
+<p>Fan Yang and Kehuan Zhang: Chinese University of Hong Kong, focusing on binary code security analysis</p>
+<h3 id="main-research-teams-in-the-field">
+    <a href="#main-research-teams-in-the-field" class="header-anchor">#</a>
+    Main research teams in the field
+</h3><p>In the field of Provenance graph-based detectors for APTs (APT threat detection based on traceability graphs), there are mainly three teams:</p>
+<ul>
+<li>
+<p>University of Illinois at Chicago team: This team proposed <code>SLEUTH</code> in USENIX’17, which applies traceability graphs to the field of APT attack detection. <code>Poirot</code> was proposed at the 2019 CCS conference and <code>Holmes</code> was proposed at S&amp;P'19. This method combines the Kill Chain and ATT&amp;CK frameworks. In addition, in 2021 EurS&amp;P proposes <code>Extrator</code> and introduces external knowledge.</p>
+</li>
+<li>
+<p>University of Illinois at Urbana-Champaign team: This team proposed <code>UNICORN</code> and <code>ProvDetector</code> respectively at NDSS’20, and also proposed <code>RapSheet</code> at S&amp;P in 2020, which integrates the ATT&amp;CK framework.</p>
+</li>
+</ul>
+<p>*Purdue University team: The core results of this team include <code>BEEP</code> proposed by NDSS'13, <code>ProTracer</code> proposed by NDSS'16 and <code>ATLAS</code> proposed by USENIX'21.</p>
+<h2 id="topic-selection-background">
+    <a href="#topic-selection-background" class="header-anchor">#</a>
+    Topic selection background
+</h2><p>The long-standing war between computing system defenses and attacks continues to evolve, and despite the widespread deployment of defenses such as intrusion detection systems (IDS) and anti-malware, sophisticated attacks themed around advanced persistent threats (APTs) are still able to penetrate organizational networks and cause serious damage. The main reasons for failure to defend against APT attacks are:</p>
+<ol>
+<li>Traditional defense systems rely on attack signatures that attackers can easily change</li>
+<li>Traditional defense systems do not fully exploit the causal relationships between different entities in a computing system or network to perform detection (e.g., on system logs).</li>
+</ol>
+<p>In order to solve these two basic problems, defense systems based on data traceability have recently been developed. Data provenance transforms system logs into graphical representations that capture temporal and causal relationships between different types of entities (e.g., processes and files). On this representation, graph operations such as graph traversal can be performed to detect ongoing attacks or reason about the root cause of an intrusion. With data provenance, it becomes possible to detect APT attacks as the rich contextual information embedded in logs is well utilized.</p>
+<p>But all existing traceability-based systems fail to meet all basic deployment requirements in complex production environments, including detection accuracy, runtime efficiency, &ldquo;signaturelessness&rdquo; and fine-grainedness.</p>
+<ol>
+<li>Attribution systems (Atlas, RapSheet, Homles) that rely on signatures, heuristics or known attack traces can be circumvented after attackers adapt their patterns.</li>
+<li>Some systems choose to build a single traceability graph from the logs and detect malicious entities and events (Shadewatcher), but when a large number of logs need to be analyzed, this overhead becomes too expensive, and a large number of false positives are also generated in such a setting.</li>
+<li>A few systems build time-ordered snapshots from logs in a streaming manner and try to detect abnormal snapshots (Unicorn), but since analysts must analyze all entities/interactions within the abnormal snapshot, the detection granularity is too rough.</li>
+</ol>
+<h3 id="data-tracing-for-attack-investigation">
+    <a href="#data-tracing-for-attack-investigation" class="header-anchor">#</a>
+    Data tracing for attack investigation
+</h3><p>To enable attack detection and forensics, system logs are typically collected by system-level auditing tools such as Windows ETW, Linux Audit, and FreeBSD Dtrace, which describe interactions between system entities such as processes and processes. document. Logs collected on end hosts within an organization are often analyzed by central services such as Security Information and Event Management (SIEM) to detect sophisticated cross-machine attacks.</p>
+<p>In addition to system logs, data sources have been proposed to detect and reason about intrusions, and even long-term Advanced Persistent Threat (APT) attacks involving multiple stages such as reconnaissance, installation, command and control, and lateral movement can be detected. Essentially, data provenance builds a dependency graph from system logs to describe the relationships between events, so detection and investigation can be transformed into graph-related operations.</p>
+<p>Of all graph-related operations, graph traversal is probably the most popular choice. A prominent example is backtracking, through which security analysts query a provenance graph with point-of-interest (POI) entities and time windows, and return events with time dependencies. However, this simple approach suffers from &ldquo;dependency explosion&rdquo;, which can be caused by long-running processes that interact with many principals/objects during their lifetime.</p>
+<h3 id="learning-based-traceability-graph-attack-detection">
+    <a href="#learning-based-traceability-graph-attack-detection" class="header-anchor">#</a>
+    Learning-based traceability graph attack detection
+</h3><p>In order to accurately locate attack events, a large number of rule-based methods have been proposed, which use the knowledge of known attack behaviors to search the traceability graph. However, writing rules requires considerable effort on the part of the analyst, and attacks in invisible modes may be missed. Therefore, learning-based approaches, which train models with normal system behavior (as well as malicious behavior with supervised learning) to detect anomalous system execution, have recently started to gain more attention. Although applying learning-based methods to capture cyber attacks is not new, provenance graphs introduce new opportunities to exploit graph structures and apply new graph learning methods. Existing work can be classified according to the granularity of the goals: edges/nodes, paths, and graphs.</p>
+<h3 id="image-embedding">
+    <a href="#image-embedding" class="header-anchor">#</a>
+    Image embedding
+</h3><p>To capture key properties of provenance graphs, provenance systems often use graph embeddings. In other fields such as social networks, recommender systems, and life sciences, graph embeddings have achieved significant success in improving the performance of downstream tasks such as graph classification, clustering, and regression. Essentially, graph embeddings learn to represent nodes, edges, subgraphs, or entire graphs with low-dimensional vectors that capture the graph structure, point-to-point relationships, and other relevant information about the graph. The provenance system utilizes two types of graph embedding techniques:</p>
+<p><strong>Node embedding</strong> maps each node of the graph to a low-dimensional vector that preserves its key information, such as the node’s neighborhood information, the node’s structural role, and the node’s state. Popular node embedding models include DeepWalk, GCN, GraphSage, etc. Downstream tasks such as node classification and edge classification related to node, edge and path based detection can be performed by calculating the node/edge score of the node embedding and comparing it to a threshold.</p>
+<p><strong>Full Graph Embedding</strong> represents the entire graph with a single vector that aggregates information from node representations. Popular full-graph embedding models include DiffPool, graph2vec, graph sketching, etc. Downstream tasks such as graph classification and clustering related to graph-based detection can be performed through the computation of graph vectors.</p>
+<blockquote>
+<p>Edge embedding has also been proposed for applications such as recommendation in social networks, but it has not been found to be used by any traceability system.</p>
+</blockquote>
+<h2 id="method-statement">
+    <a href="#method-statement" class="header-anchor">#</a>
+    Method statement
+</h2><p>In this paper, the authors propose PROGRAPHER, a new source-based anomaly detection system that simultaneously meets the requirements of detection accuracy, runtime efficiency, “signature-free”, and fine-grainedness. PROGRAPHER performs detection at graph granularity, and when logs are ingested, PROGRAPHER extracts snapshots to reduce the computational and memory costs of the entire source graph. On each snapshot, PROGRAPHER applies a full-graph embedding technique called graph2vec to generate rooted subgraphs (RSGs) as low-dimensional representations of each node, and learns the graph representation by maximizing the co-occurrence likelihood of normal snapshots and normal RSGs. To capture the temporal dynamics between snapshots, a sequence learning model called TextRCNN is employed, thus predicting the representation of future snapshots and detecting anomalous snapshots when they deviate from the prediction. Previous systems like Unicorn were stuck at reporting anomalous snapshots, but PROGRAPHER continues to pinpoint anomalous entities by ranking RSGs and reporting the most suspicious entities as attack indicators.</p>
+<h3 id="overview">
+    <a href="#overview" class="header-anchor">#</a>
+    Overview
+</h3><p>This article envisions PROGRAPHER to achieve three design goals (G1 - G3). It is worth noting that none of the previous methods can meet all these requirements, and we compare PROGRAPHER with other representative methods in Table 1.</p>
+<center>Table 1: Comparison between learning-based traceability analysis and other related methods</center>
+<p><img src="/media%5cimage-20240514162544414.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 1"
+	
+	
+></p>
+<p>G1: PROGRAPHER should learn normal behavior patterns from benign logs, so it increases the chance of detecting attacks that exploit zero-day vulnerabilities. In other words, PROGRAPHER should be built through unsupervised learning without any knowledge of attack or event labels.</p>
+<p>G2: Since processing the provenance graph for a long time is very resource-consuming, PROGRAPHER should be able to process subgraphs of the entire provenance graph separated by cycles and exploit the temporal dynamics between cycles for detection.</p>
+<p>G3: PROGRAPHER should be able to accurately identify subgraphs with abnormal activity. Additionally, PROGRAPHER should narrow the scope of the investigation by pointing out entities directly related to the attack.</p>
+<p>PROGRAPHER consists of four components to satisfy G1-G3:</p>
+<ol>
+<li>
+<p>Snapshot Builder</p>
+</li>
+<li>
+<p>Encoder</p>
+</li>
+<li>
+<p>Anomaly detector</p>
+</li>
+<li>
+<p>Key Indicator Generator</p>
+</li>
+</ol>
+<p>The workflow of PROGRAPHER is shown in Figure 1. The snapshot builder first extracts nodes and edges from the audit logs collected by the end host, and then splits the data into snapshots based on timestamps. The encoder generates the entire graph embedded on each snapshot to capture the structural features of the graph. Anomaly detectors train predictive models using embeddings of snapshots that are supposed to contain only benign activity, and detect anomalous snapshots. Finally, the key indicator generator ranks the nodes contained in the anomaly snapshot and reports the top-ranked nodes to analysts.</p>
+<img src="media\bg.png" alt="bg" style="zoom:80%;" />
+<center>Figure 1: PROGRAPHER workflow overview</center>
+<h3 id="snapshot-builder">
+    <a href="#snapshot-builder" class="header-anchor">#</a>
+    Snapshot Builder
+</h3><p>This article considers log events about files (e.g. file creation, file reading, file writing), processes (e.g. creation and permission changes), network sockets (e.g. network connections), principals (users or accounts), etc. An edge consists of events that describe actions performed by a source entity on a target entity (for example, a process reads a file). Figure 2 shows an example.</p>
+<p><img src="/media%5cimage-20240514165844731.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514165844731"
+	
+	
+></p>
+<center>Figure 2: Example containing four types of entities</center>
+<p>The complete list of node types and edge types considered by PROGRAPHER is shown in Table 2.</p>
+<center>Table 2: Graphic elements and their types</center>
+<p><img src="/media%5cimage-20240514164616500.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Table 2"
+	
+	
+></p>
+<p>To efficiently handle large amounts of incoming logs, PROGRAPHER builds time-ordered snapshots. As logs are ingested, it maintains a cached graph. For each incoming log, when the event source and target are not visible, they are added as nodes to the cache graph, an edge is also created between the pair of new nodes, and the log timestamp is assigned to these nodes. For an existing pair of nodes, their timestamps are updated. When the number of nodes reaches n (also called snapshot size), all n nodes and their edges are saved into the first snapshot. Afterwards, PROGRAPHER adds new nodes from the incoming log, uses the forgetting rate (fr) to evict the $n × fr$ oldest nodes, and saves the cached graph to a new snapshot when the number of nodes reaches $n × (1 + fr)$. This makes a pair of adjacent snapshots always have $n × (1 − fr) $overlapping in the node.</p>
+<p>Repeat this process to generate a series of snapshots ${S_1, S_2,&hellip;, S_k}$. With such a design, it is ensured that temporal dynamics can be recovered by comparing adjacent snapshots, and that the size of each snapshot is controlled. Furthermore, the ratio between benign and malicious traces in a snapshot is expected to be much smaller than the entire provenance graph, thus addressing the data imbalance problem. The pseudocode is shown in Algorithm 1.</p>
+<img src="media\image-20240514171104613.png" alt="image-20240514171104613" style="zoom:80%;" />
+<h3 id="encoder">
+    <a href="#encoder" class="header-anchor">#</a>
+    Encoder
+</h3><p>(1) Enumerate each node to extract RSGs of different degrees, thereby capturing the node’s neighborhood information. In graph2vec, this is achieved by utilizing Weisfeiler-Lehman (WL) graph kernels to test graph isomorphism. Specifically, for a node v, the WL kernel takes its label and the labels of its connected edges and nodes as input labels, and then, generates a new label for v aggregated from the input labels, called RSG. The entire process is repeated d times on each node $ v ∈ V $ to describe its neighborhood of depth $1, &hellip;, d $ .</p>
+<p>To adapt to the format of the provenance graph, this paper treats node and edge types as labels (the original WL kernel only considers node types). In addition, the authors found that RSGs generated from large and dense graphs may have many redundant labels. To improve efficiency, this paper only retains the unique labels of each RSG. The steps of RSG generation are described in Algorithm 2. As a specific example, the RSG of node &ldquo;Process2&rdquo; when d = 0, 1, 2 in Figure 2 is:</p>
+<ul>
+<li>d = 0: [(Process)].</li>
+<li>d = 1: [(Process), (File), (Principal), LOAD, WRITE, CREATE, READ].</li>
+<li>d = 2: [(Process, File, Principal, LOAD, WRITE, CREATE, READ), (Process, Principal, LOAD, CREATE), (Process, File, READ, WRITE), (Process, Socket, CREATE, CONNECT, TERMINATE, ACCEPT), LOAD, WRITE, CREATE, READ].</li>
+</ul>
+<p><img src="/media%5cimage-20240514173629469.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514173629469"
+	
+	
+></p>
+<p>(2) Generate embedding $E_{S_i}$ of snapshot $S_i$. $E_{S_i}$ is initialized as a random vector and then updated by maximizing the log-likelihood of the RSG of all nodes, which are also represented by embeddings. The embeddings E of all snapshots ${S_1, S_2,&hellip;, S_k}$ can be updated together via gradient descent. The update process follows the skipgram model used by doc2vec. Define the objective function as:</p>
+<p><img src="/media%5cimage-20240514174152941.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514174152941"
+	
+	
+></p>
+<p>For training efficiency, this paper applies negative sampling like previous work based on unsupervised learning. On snapshot $S_i$, m RSGs $R ′ _i= {r_1, r_2, ··· , r_m}$ are randomly selected from the entire sub-graph set as negative samples, such that $R′_i\cap R_i \neq 0$. The objective function J(E ) will be adjusted to maximize the log-likelihood of $R_i $ and simultaneously minimize the log-likelihood of $R′_i$ . Since $R′_i$ is a subset of non-existent RSG, the training overhead is reduced. The entire process of embedding generation is summarized in Algorithm 3.</p>
+<p><img src="/media%5cimage-20240514173556403.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514173556403"
+	
+	
+></p>
+<h3 id="anomaly-detector">
+    <a href="#anomaly-detector" class="header-anchor">#</a>
+    Anomaly Detector
+</h3><p>After generating a representation of the snapshot, PROGRAPHER proceeds to detect anomalous snapshots. Considering changes between snapshots as important inputs for detection, and examining the snapshot sequence ${S_1, S_2,&hellip;, S_k}$ together, the bidirectional recurrent structure and convolutional neural network model proposed by TextRCNN, which has been widely used for text classification, was selected for this task.</p>
+<p>To train an anomaly detector, we take as input a set of snapshot sequences and their associated embeddings. Use recurrent structures and convolutional networks to obtain the latent representation $y_i$ of each snapshot $S_i$ in the input sequence, which is defined as follows:</p>
+<p><img src="/media%5cimage-20240514175807801.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514175807801"
+	
+	
+></p>
+<p>where $x_i=[left(S_i);E(S_i);right(S_i)]$ is the concatenation of the left context vector, its own embedding and the right context vector. W is the weight matrix and b is the bias vector. The left and right context vectors are defined as:</p>
+<p><img src="/media%5cimage-20240514203916723.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514203916723"
+	
+	
+></p>
+<p>Utilize maxpool layer and fully connected layer to obtain the final representation of each snapshot sequence</p>
+<p><img src="/media%5cimage-20240514204028770.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514204028770"
+	
+	
+></p>
+<p>During the training phase, given a snapshot sequence ${S_1,S_2,&hellip;, S_k}$, we predict how likely it is that the sequence is related to its subsequent snapshot $S_{k+1}$. Define the loss as the distance of L2 distance as follows:</p>
+<p><img src="/media%5cimage-20240514180150579.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514180150579"
+	
+	
+></p>
+<p>where $E_{S_{k+1}}$ is the embedding of snapshot $S_{k+1}$. In the testing phase, given a sequence of snapshots, its predicted embedding is compared with the true embedding. If the distance between them exceeds a predefined threshold, they are marked as anomalies.</p>
+<h3 id="key-indicator-generator">
+    <a href="#key-indicator-generator" class="header-anchor">#</a>
+    Key Indicator Generator
+</h3><p>When an anomalous snapshot is detected, key indicators of malicious activity are generated. The author found that other works such as Unicorn were missing this step. Therefore, their detection results are coarse-grained. But with the adoption of graph2vec, PROGRAPHER can achieve more fine-grained attack attribution.</p>
+<p>The objective function J(E) measures the co-occurrence probability between the snapshot embedding and each RSG, and the smaller its value, the smaller the co-occurrence probability. Since the likelihood is calculated against each RSG of the snapshot, it is possible to sort the RSGs by their probability and select key indicators from them. In particular, during the testing phase, given a snapshot $S_i$, the embedding $E_{S_i}$ generated from $S_i$ is compared with the embedding $E&rsquo;_{S_i}$ predicted from a sequence of k snapshots, and the difference between the two embeddings for each RSG is extracted. After that, the RSGs are sorted according to the loss difference and the top K suspicious RSGs are selected. RSG can be mapped to multiple nodes because it only stores node and edge types. Therefore, the system searches the snapshot to find all nodes matching the K suspicious RSGs and feeds them back to the analyst.</p>
+<h2 id="experiment-development-and-results">
+    <a href="#experiment-development-and-results" class="header-anchor">#</a>
+    Experiment development and results
+</h2><p>To ensure that each snapshot contains enough information to learn its representation, the authors set the snapshot size n according to the size of the dataset. For small graphs with less than 10K nodes (such as a traceability graph for software on a machine), n is set to 300. For large graphs with more than 10k nodes (such as operating system provenance graphs), n is set to 900. For different datasets, L is configured as 32, 128, and 176. During snapshot construction, use the forgetting rate fr set to 1/3. For the encoder and anomaly detector, this paper selects hyperparameters through grid search, and their optimal values ​​are described in Table 3 below.</p>
+<center>Table 3: Hyperparameters of different data sets</center>
+<p><img src="/media%5cimage-20240514210622348.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514210622348"
+	
+	
+></p>
+<p>Training and testing are performed on a server equipped with a 32-core Intel E5-2640 processor, 256 GB physical memory and 1 Nvidia GTX TITAN X GPU, and the operating system is Ubuntu 14.04.6 LTS.</p>
+<h3 id="dataset">
+    <a href="#dataset" class="header-anchor">#</a>
+    Dataset
+</h3><p>This paper uses two log datasets with simulated attacks (StreamSpot and ATLAS) and two DARPA datasets (DARPA3 and DARPA ENGAGEMENT) to evaluate the real-world performance of PROGRAPHER. In addition, this article deploys PROGRAPHER in a production environment to analyze system logs collected by commercial EDR products. As shown in the data set statistics shown in Table 4 below, &ldquo;#Benign&rdquo; and &ldquo;#Attack&rdquo; are the number of benign graphs and attack graphs. Sizes are measured on preprocessed plots, not raw data. Each dataset is separated by training, validation and testing, and in the experiments it is ensured that all datasets are disjoint and that all benign plots in the test set occur after the training and validation plots.</p>
+<center>Table 4: Statistics of the data set</center>
+<p><img src="/media%5cimage-20240514212442533.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514212442533"
+	
+	
+></p>
+<h3 id="effectiveness-evaluation">
+    <a href="#effectiveness-evaluation" class="header-anchor">#</a>
+    Effectiveness evaluation
+</h3><p>Table 5 shows the experimental results of Sreamspot-DS and DARPA3 under 100 repeated experiments. Taking Unicorn as the baseline, the ProGrapher method in this article has better performance in precision, recall, accuracy and F1 value.</p>
+<blockquote>
+<p>Unicorn results are worse than those reported in the paper, mainly due to:</p>
+<ol>
+<li>I learned from the Unicorn author that they used a non-public benign data set under DARPA TC for training, and the author of this article does not have access to this data set.</li>
+<li>The Unicorn implementation does not force graphs under test to occur after training and validation, which is a common &ldquo;data snooping&rdquo; problem in security systems [5].</li>
+</ol>
+</blockquote>
+<center>Table 5: Experimental results of Sreamspot-DS and DARPA3 (average of 100 runs)</center>
+<p><img src="/media%5cimage-20240514221458395.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514221458395"
+	
+	
+></p>
+<blockquote>
+<p>Only one benign graph in CLEARSCOPE was incorrectly detected as an anomaly. FP is mainly caused by insufficient behavioral information in the training set. Since the authors only keep the latest events for the same pair of entities, for CLEARSCOPE, hundreds of events can be deleted for each entity pair. This strategy removes useful information that can distinguish benign from malicious behavior, which explains why the size of the CLEARSCOPE dataset after preprocessing is small (only 2GB).</p>
+</blockquote>
+<p>Table 6 shows the performance of ProGrapher on the ATLAS-DS and DARPA ENGAGEMENT data sets. The ProGrapher system successfully detected all attacks and did not generate any FP. The results also show that PROGRAPHER can handle different types of APT attacks.</p>
+<center>Table 6: Experimental results of ATLAS-DS and DARPA ENGAGEMENT</center>
+<p><img src="/media%5cimage-20240514223305399.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514223305399"
+	
+	
+></p>
+<p>Experimental results in Production EDR. Approximately 59K charts were extracted from 180GB of logs by endpoint. Starting from the first 7 days, the authors use 51119 benign graphs for training (benign graphs are selected by analysts) and 2889 benign graphs for validation. In the remaining 2 days, we used 4684 benign graphs and 486 attack graphs for testing.</p>
+<p>In Figure 3, the authors draw a ROC curve to illustrate the relationship between TPR and FPR and compare it with Unicorn. The results show that PROGRAPHER can achieve reasonable accuracy in a production environment, such as 94% TPR, 14% FPR. The detection accuracy of Unicorn is significantly lower than PROGRAPHER, e.g., at 20% FPR, the TPR is lower than 10%. The area under the curve (AUC) of PROGRAPHER is almost twice that of Unicorn (0.943 vs. 0.542).</p>
+<p><img src="/media%5cimage-20240514223936140.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514223936140"
+	
+	
+></p>
+<center>Figure 3: ROC curve of Production EDR data set</center>
+<h3 id="generate-indicator-evaluation">
+    <a href="#generate-indicator-evaluation" class="header-anchor">#</a>
+    Generate indicator evaluation
+</h3><p>**Indicator validity. ** The ProGrapher method selects the top K RSGs from the exception snapshot and feeds back all nodes matching these RSGs. Given a real attacking node, we consider nodes in the 3-hop neighborhood to be valid and all other nodes to be invalid.</p>
+<blockquote>
+<p>The 3-hop neighborhood is chosen in this article because the WL kernel depth of the small graph is set to 3 in this article (4 for the large graph), because it is a common practice to investigate neighborhood entities when an alert is given, and the metric is considered valid if at least one node in the metric belongs to the attacking node or a valid neighbor.</p>
+</blockquote>
+<p>Effectiveness is calculated as the ratio between effective metrics and all metrics identified by PROGRAPHER. Table 7 shows the ratios for different K (from 1 to 5) for the 3 DARPA3 subsets. It can be seen that even if the K value is between 2 and 3, the efficiency is already quite high (at least 0.94).</p>
+<center>Table 7: Effectiveness of DARPA3 indicators</center>
+<p><img src="/media%5cimage-20240514223148281.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514223148281"
+	
+	
+></p>
+<p>Define coverage as the ratio between correctly identified attack nodes and all real attack nodes. Table 8 shows the coverage for each dataset for K ranging from 1 to 5. For THEIA and CLEARSCOPE datasets, all attack nodes are identified, and for CADETS, only 1 attack node is lost when K ≥ 4.</p>
+<center>Table 8: DARPA3 attack node coverage</center>
+<p><img src="/media%5cimage-20240514235531511.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240514235531511"
+	
+	
+></p>
+<p>Define the reduction ratio as 1 − Covered/Total (&ldquo;Covered&rdquo; and &ldquo;Total&rdquo; are the number of nodes mapped to all indicators and the number of all nodes in the exception snapshot). Table 9 shows the workload reduction for each DARPA3 dataset when K = 4. On average, Metrics Generator reduces security analysts&rsquo; workload by 58%. In contrast, the baseline system Unicorn only tells if a snapshot is abnormal, and analysts must investigate all included nodes. We summed the number of nodes for all alert snapshots of Unicorn and display it in Table 10. The number of nodes to be investigated in Unicorn is 41343, which is 7.1 times that of PROGRAPHER.</p>
+<blockquote>
+<p>Unicorn&rsquo;s value is higher than Total because Unicorn predicts larger snapshots as anomalies</p>
+</blockquote>
+<center>Table 9: DARPA3 reduction rate</center>
+<p><img src="/media%5cimage-20240515000108830.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240515000108830"
+	
+	
+></p>
+<h3 id="run-performance-evaluation">
+    <a href="#run-performance-evaluation" class="header-anchor">#</a>
+    Run performance evaluation
+</h3><p>The runtime overhead of each component is shown in Table 10, and the results are the average of repeated runs on different DARPA3 datasets.</p>
+<p>**Data processing and training. ** On average, PROGRAPHER takes 8.4 minutes to process one day&rsquo;s worth of logs from a dataset and 8.3 microseconds to generate the snapshot sequence. PROGRAPHER takes 6.29 hours to train the encoder model for 100 epochs. For the anomaly detector, training takes approximately 20.6 minutes.</p>
+<p>**Inference and indicator generation. ** PROGRAPHER takes an average of 10.3 seconds to predict anomaly snapshots and 8.3 seconds to generate a sorted RSG for each anomalous snapshot.</p>
+<blockquote>
+<p>Demonstrates that PROGRAPHER is capable of near real-time anomaly detection</p>
+</blockquote>
+<center>Table 10: Overhead of each component</center>
+<p><img src="/media%5cimage-20240515001245467.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240515001245467"
+	
+	
+></p>
+<p>**Scalability. ** This article first measures how memory consumption increases with the amount of data by changing the number of training graphs. For the same data size, the depth (d) of the WL kernel has the greatest impact, so changing its value from 2 to 4, Figure 4(a) shows the relationship between data volume and memory consumption. Because PROGRAPHER performs training and inference on snapshots rather than the entire dataset, memory consumption scales sublinearly with the amount of data. For example, even when processing 40 GB of data with d set to 4, the maximum memory usage is 12.7 GB, of which 10.2 GB is used for training and storing embeddings. The time consumption of each epoch is shown in Figure 6(b). The time consumption has a linear relationship with the amount of data. Only when d = 4 and the data size exceeds 30GB, the time consumption increases faster.</p>
+<p><img src="/media%5cimage-20240515001641917.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240515001641917"
+	
+	
+></p>
+<center>Figure 4: PROGRAPHER scalability</center>
+<h3 id="other-experiments">
+    <a href="#other-experiments" class="header-anchor">#</a>
+    Other experiments
+</h3><p>This paper uses the relatively small dataset StreamSpot-DS (8.3GB) to analyze the impact of key parameters on the effectiveness of PROGRAPHER. Using the ATLAS-DS dataset, PROGRAPHER is tested for robustness by emulating an evasion attack by inserting many random events before and after the attack event.</p>
+<h2 id="research-trends">
+    <a href="#research-trends" class="header-anchor">#</a>
+    Research trends
+</h2><p>**Change in normal behavior. ** Because PROGRAPHER is designed as an anomaly detection system on provenance graphs, it will alert when unseen behavior is observed. However, changes in normal behavior (for example, an employee logging into a new internal server) may be viewed as an anomaly, which may introduce false positives. This problem can be viewed as a concept drift problem, which can be partially mitigated by retraining PROGRAPHER using updated data. It is crucial to detect when concept drift occurs so that frequent and costly retraining does not need to be performed.</p>
+<p>**Inductive and inductive learning. ** The current design of PROGRAPHER follows a push-through learning model, assuming that all RSGs in the test phase have been seen in the training phase. PROGRAPHER must be retrained when a new RSG is encountered. Although this article reduces the chance of seeing new RSGs by building them using only node and edge types, retraining will still be required in a production environment. This limitation also exists in existing graph learning-based security systems such as Euler and ShadeWatcher. To address this issue, future research could explore inductive learning models that are capable of dynamically generating embeddings for new nodes from their neighborhoods without retraining. However, in this case, a different encoder model must be chosen, such as GraphSage.</p>
+<p>**More adaptive attacks. ** An effective countermeasure is to inject repeated events to fill the cache used to build snapshots. In the experiments of this article, it was found that the false negatives on the CLEARSCOPE dataset are caused by event aggregation. This problem exists in other event aggregation traceability systems (such as ShadeWatcher). One possible solution is to retain more information after event aggregation (e.g. distribution of certain event fields).</p>
+<h2 id="comparative-analysis-of-literature">
+    <a href="#comparative-analysis-of-literature" class="header-anchor">#</a>
+    Comparative analysis of literature
+</h2><h3 id="learning-based-traceability-analysis">
+    <a href="#learning-based-traceability-analysis" class="header-anchor">#</a>
+    Learning-based traceability analysis
+</h3><p>When the target is an edge/node, the trained system aims to determine whether the interaction between a pair of entities or the entities themselves are malicious. ShadeWatcher builds a knowledge graph based on system logs and uses a graph neural network (GNN)-based recommendation system to detect malicious interactions. SIGL leverages node embeddings and autoencoder models to determine whether a process generated from a Software Installation Graph (SIG) is malicious. However, when encountering large traceability graphs, it is quite challenging to achieve high-precision edge/node-based detection. Furthermore, detection results do not provide contextual information that is valuable for understanding attack activity (e.g., other activities related to the detected edge/node).</p>
+<blockquote>
+<p>However, the Flash article stated that ShadeWatcher can provide context-related information.</p>
+<p>ShadeWatcher achieves high detection accuracy, but it is evaluated on small graphs (most graphs have only a few hundred interactions)</p>
+<p>The SIG checked by SIGL is usually very small</p>
+</blockquote>
+<p>For path-based detection, paths that match certain patterns (e.g., associated with POI nodes) are selected from the source graph, and the trained system classifies the paths. For example, ProvDetector identifies covert malware by applying word embeddings to convert execution paths into vectors and then clustering them. Atlas applies lemmatization and word embeddings to generate sequences, and uses a long short-term memory (LSTM) network to predict whether a sequence is relevant to an attack. However, these methods first rely on heuristics to select POI paths (ProvDetector selects rare paths customized for stealth malware) or nodes (ATLAS assumes some malicious nodes are known) and then apply learning-based methods.</p>
+<p>For graph-based detection, the provenance graph is either classified as a whole or decomposed into a set of subgraphs, and classification is performed on these subgraphs. For example, Unicorn slices logs through sliding time windows and constructs evolutionary subgraphs from them. For each subgraph, graph sketching converts the histogram capturing structural features into a fixed-size vector. ProvGem proposes multiple embeddings to capture different contexts of nodes and classify graphs on aggregated node embeddings in a supervised learning manner. The main problem with graph-based detection is that its detection granularity is too coarse, and analysts still need to expend considerable effort to pinpoint malicious entities/events from graphs that may include thousands of nodes.</p>
+<p>HERCULE uses a semi-supervised community detection algorithm to correlate attack events and reconstruct attacks. Streamspot extracts local graph features through breadth-first search (BFS) and clusters snapshots to detect abnormal features. P-Gaussian applies the Gaussian distribution principle to calculate the similarity between intrusion behaviors and their variants. Log2vec builds heterogeneous graphs from logs and applies graph embeddings to detect anomalous activities.</p>
+<h3 id="heuristic-based-traceability-analysis">
+    <a href="#heuristic-based-traceability-analysis" class="header-anchor">#</a>
+    Heuristic-based traceability analysis
+</h3><p>Heuristic-based origin analysis. To address the &ldquo;dependency explosion&rdquo; problem, another direction is to apply manually written rules to prioritize investigations. Many previous works perform graph traversal (e.g., breadth-first search) from POI events and select suspicious paths based on the rules. For example, NoDoze uses historical information to assign threat scores to alerts in a provenance graph and then identifies anomalous paths. PrioTracker accelerates forward tracking by calculating the event&rsquo;s rarity score to prioritize unusual events. Padoga considers the degree of anomaly of individual paths and the entire provenance graph to identify intrusions. SLEUTH and Morse use label-based information flow techniques to reconstruct attack scenarios.</p>
+<p>Analysts query the provenance graph using attack signatures, such as indicators of compromise (IoCs), and analyze similar subgraphs. $\tau$-calculus proposes a new domain-specific language (DSL) to make querying for threat analysts more intuitive and efficient. The Poirot model models this problem as a graph pattern matching (GPM) problem and proposes a new graph alignment method for it.</p>
+<p>Some works extract summary graphs from fine-grained source graphs to simplify investigation. RapSheet and Holmes rely on a knowledge base of adversarial tactics, techniques, and procedures (TTPs) to build summary graphs. DepComm summarizes process-centric community-based provenance graphs and extracts information paths for attack investigation.</p>
+<h3 id="log-anomaly-detection">
+    <a href="#log-anomaly-detection" class="header-anchor">#</a>
+    Log anomaly detection
+</h3><p>PROGRAPHER relies on graph2vec, which uses NLP technologies such as doc2vec and word2vec for graph embedding. Similar NLP technology is also used to detect abnormal logs. Deeplog treats audit logs as sentences and leverages LSTM models to detect abnormal events. LogAnomaly applies word2vec to extract semantic information hidden in log templates to detect log anomalies. Attack2Vec uses temporal word embeddings to model and track the evolution of attack steps.</p>
+<h2 id="reference">
+    <a href="#reference" class="header-anchor">#</a>
+    reference
+</h2><blockquote>
+<p>This section only lists the references that I think are important and closely related to the work of this article.</p>
+</blockquote>
+<p>[1] Abdulellah Alsaheel, Yuhong Nan, Shiqing Ma, Le Yu, Gregory Walkup, Z. Berkay Celik, Xiangyu Zhang, and Dongyan Xu. ATLAS: A sequence-based learning approach for attack investigation. In Michael Bailey and Rachel Greenstadt, editors, USENIX Security Symposium, pages 3005–3022. USENIX Association, 2021.</p>
+<p>[2] Xueyuan Han, Thomas F. J.-M. Pasquier, Adam Bates, James Mickens, and Margo I. Seltzer. UNICORN: runtime provenance-based detector for advanced persistent threats. CoRR, abs/2001.01525, 2020.</p>
+<p>[3] Qi Wang, Wajih Ul Hassan, Ding Li, Kangkook Jee, Xiao Yu, Kexuan Zou, Junghwan Rhee, Zhengzhang Chen, Wei Cheng, Carl A. Gunter, and Haifeng Chen. You are what you do: Hunting stealthy malware via data provenance analysis. In NDSS. The Internet Society, 2020.</p>
+<p>[4] J. Zeng, X. Wang, J. Liu, Y. Chen, Z. Liang, T. Chua, and Z. Chua. Shadewatcher: Recommendation-guided cyber threat analysis using system audit records. In 2022 IEEE Symposium on Security and Privacy (SP) (SP), 2022.</p>
+<p>[5] Daniel Arp, Erwin Quiring, Feargus Pendlebury, Alexander Warnecke, Fabio Pierazzi, Christian Wressnegger, Lorenzo Cavallaro, and Konrad Rieck. Dos and don’ts of machine learning in computer security. In Proc. of the USENIX Security Symposium, 2022.</p>
+<p>[6] Wajih Ul Hassan, Adam Bates, and Daniel Marino. Tactical provenance analysis for endpoint detection and response systems. In IEEE Symposium on Security and Privacy, pages 1172–1189. IEEE, 2020.</p>
+<p>[7] Sadegh Momeni Milajerdi, Rigel Gjomemo, Birhanu Eshete, R. Sekar, and V. N. Venkatakrishnan. HOLMES: real-time APT detection through correlation of suspicious information flows. In IEEE Symposium on Security and Privacy, pages 1137–1152. IEEE, 2019.</p>
+<p>[8] Z. Xu, P. Fang, C. Liu, X. Xiao, Y. Wen, and D. Meng. Depcomm: Graph summarization on system audit logs for attack investigation. In 2022 2022 IEEE Symposium on Security and Privacy (SP) (SP), 2022.</p>
+<h2 id="original-statement">
+    <a href="#original-statement" class="header-anchor">#</a>
+    Original statement
+</h2><blockquote>
+<p>This article is my UCAS course paper reading report and is not allowed to be reproduced! ! !</p>
+<p>This article is my UCAS course paper reading report and is not allowed to be reproduced! ! !</p>
+<p>This article is my UCAS course paper reading report and is not allowed to be reproduced! ! !</p>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/en/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Graph embedding analysis</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/prographer/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 11 篇文章 · 共 41.587k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

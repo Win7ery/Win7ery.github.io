@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2024 IEEE Symposium on Security and Privacy (SP)">
+<title>FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</title>
+
+<link rel='canonical' href='http://wintery.net/zh-cn/post/flash/'>
+
+<link rel="stylesheet" href="/scss/style.min.b1b30e523052975bf291a615e1968319490ace997b382f3f3bbbfe4b63455497.css"><meta property='og:title' content="FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning">
+<meta property='og:description' content="2024 IEEE Symposium on Security and Privacy (SP)">
+<meta property='og:url' content='http://wintery.net/zh-cn/post/flash/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Zh-Cn' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='og:image' content='http://wintery.net/zh-cn/post/flash/media/bg.png' />
+<meta name="twitter:title" content="FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning">
+<meta name="twitter:description" content="2024 IEEE Symposium on Security and Privacy (SP)"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://wintery.net/zh-cn/post/flash/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+
+  
+
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hued9230ef3d06bdef8a15d984550e3c60_83477_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description">Wintery的博客</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Main</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://wintery.net/en/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#研究团队">研究团队</a></li>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#研究目的">研究目的</a>
+      <ol>
+        <li><a href="#问题提出">问题提出</a></li>
+        <li><a href="#研究现状">研究现状</a></li>
+        <li><a href="#本文贡献">本文贡献</a></li>
+      </ol>
+    </li>
+    <li><a href="#研究方法">研究方法</a>
+      <ol>
+        <li><a href="#溯源图构建">溯源图构建</a></li>
+        <li><a href="#语义属性编码">语义属性编码</a></li>
+        <li><a href="#溯源图表示学习">溯源图表示学习</a>
+          <ol>
+            <li><a href="#选择性图遍历">选择性图遍历</a></li>
+            <li><a href="#训练和加权交叉熵损失">训练和加权交叉熵损失</a></li>
+          </ol>
+        </li>
+        <li><a href="#嵌入回收数据库">嵌入回收数据库</a></li>
+        <li><a href="#轻量级分类器">轻量级分类器</a></li>
+        <li><a href="#攻击演化图构建">攻击演化图构建</a></li>
+      </ol>
+    </li>
+    <li><a href="#实验评估">实验评估</a>
+      <ol>
+        <li><a href="#数据集">数据集</a></li>
+        <li><a href="#检测性能">检测性能</a></li>
+        <li><a href="#可扩展性分析">可扩展性分析</a></li>
+        <li><a href="#批量大小分析">批量大小分析</a></li>
+        <li><a href="#鲁棒性测试">鲁棒性测试</a></li>
+        <li><a href="#消融实验">消融实验</a></li>
+        <li><a href="#告警器有效性">告警器有效性</a></li>
+      </ol>
+    </li>
+    <li><a href="#总结与讨论">总结与讨论</a></li>
+    <li><a href="#相关工作">相关工作</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/zh-cn/post/flash/">
+                <img src="/zh-cn/post/flash/media/bg_hu20fe52d135fe85fde74731a761710853_159399_800x0_resize_box_3.png"
+                        srcset="/zh-cn/post/flash/media/bg_hu20fe52d135fe85fde74731a761710853_159399_800x0_resize_box_3.png 800w, /zh-cn/post/flash/media/bg_hu20fe52d135fe85fde74731a761710853_159399_1600x0_resize_box_3.png 1600w"
+                        width="800" 
+                        height="747" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                论文笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/zh-cn/post/flash/">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            2024 IEEE Symposium on Security and Privacy (SP)
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 07, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 30 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    14955 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><a class="link" href="https://dartlab.org/assets/pdf/flash.pdf"  target="_blank" rel="noopener"
+    >原文地址</a></p>
+<h2 id="研究团队">
+    <a href="#%e7%a0%94%e7%a9%b6%e5%9b%a2%e9%98%9f" class="header-anchor">#</a>
+    研究团队
+</h2><p><a class="link" href="https://dartlab.org/"  target="_blank" rel="noopener"
+    >DART（检测、分析和响应网络威胁）实验室</a>，弗吉尼亚大学</p>
+<p>Mati Ur Rehman：博士生，主要研究主机入侵检测系统、日志溯源图</p>
+<p><a class="link" href="https://www.cs.virginia.edu/~hur7wv/"  target="_blank" rel="noopener"
+    >Wajih Ul Hassan</a>：23‘sp Sok，20&rsquo;NDSS PROVDETECTOR，20’sp RapSheet，19&rsquo;NDSS <a class="link" href="https://par.nsf.gov/biblio/10085663"  target="_blank" rel="noopener"
+    >NoDoZe</a></p>
+<h2 id="摘要">
+    <a href="#%e6%91%98%e8%a6%81" class="header-anchor">#</a>
+    摘要
+</h2><p>最近，基于来源的入侵检测系统 (IDS) 因其在检测复杂的高级持续威胁 (APT) 攻击方面的潜力而受到欢迎。这些 IDS 使用根据系统日志创建的来源图来识别潜在的恶意活动。尽管它们具有潜力，但它们在准确性、实用性和可扩展性方面面临挑战，特别是在处理大型来源图时。我们推出了 FLASH，这是一种可扩展的 IDS，它通过数据来源图上的图神经网络 (GNN) 来利用图表示学习来克服这些限制。 FLASH 采用基于 Word2Vec 的语义编码器来捕获基本语义属性（例如进程名称和文件路径）以及来源图中事件的时间顺序。此外，FLASH 结合了基于 GNN 的上下文编码器的新颖改编，可以有效地将局部和全局图结构编码为表达节点嵌入。为了学习良性节点行为，我们利用结合了 GNN 和 Word2Vec 嵌入的轻量级分类器。认识到 GNN 的计算需求和缓慢的处理时间，特别是对于大型来源图，我们开发了一个嵌入回收数据库来存储在训练阶段生成的节点嵌入。在运行时，我们的轻量级分类器利用存储的嵌入，无需重新生成 GNN 嵌入，从而促进实时 APT 检测。与现有的基于来源的 IDS 相比，FLASH 在现实数据集上的广泛评估表明其检测精度更高。结果还说明了 FLASH 的可扩展性、针对模仿攻击的稳健性以及加速警报验证过程的潜力。</p>
+<h2 id="研究目的">
+    <a href="#%e7%a0%94%e7%a9%b6%e7%9b%ae%e7%9a%84" class="header-anchor">#</a>
+    研究目的
+</h2><h3 id="问题提出">
+    <a href="#%e9%97%ae%e9%a2%98%e6%8f%90%e5%87%ba" class="header-anchor">#</a>
+    问题提出
+</h3><p>基于溯源图的IDS的主要限制：</p>
+<ol>
+<li><strong>忽视语义信息</strong>：现有的 IDS 通常忽略有价值的语义数据，例如<strong>进程名称、命令行参数、文件路径和来源图中的 IP 地址</strong>。这种忽视可能会导致检测准确度降低。</li>
+<li><strong>忽视时间和因果关联</strong>：一些 IDS 忽视了系统事件的时间和因果关联的重要性。这种忽视可能会导致错误的威胁识别，因为它错过了恶意活动发生的顺序。</li>
+<li><strong>可扩展性挑战</strong>：实时检测对于有效的 IDS 至关重要。然而，一些现有的 IDS 面临可扩展性问题，特别是在处理大型来源图时。这限制了它们的实时应用程序，导致日志拥塞，并使系统容易受到持续攻击。</li>
+</ol>
+<blockquote>
+<p>（1）例如<a class="link" href="https://blog2.pillar.fun/p/kairos/"  target="_blank" rel="noopener"
+    >Kairos</a>、<a class="link" href="https://blog2.pillar.fun/p/magic/"  target="_blank" rel="noopener"
+    >MAGIC</a>、Unicorn等基于异常的威胁检测方法，其需要定期重新训练，造成资源开销大，检测准确度随时间推移出现衰弱的情况，本文指的扩展性不是这个</p>
+<p>（2）日志数据的持续扩展，需要在原有的溯源图基础上对其进行扩展，即需要支持溯源图实时添加新的边和节点</p>
+</blockquote>
+<ol start="4">
+<li><strong>粗粒度检测</strong>：许多 IDS 识别恶意子图而不是单个恶意节点，这使得安全分析师的警报验证和攻击重建既耗时又容易出错。此外，这种方法使这些系统容易受到逃避攻击。</li>
+</ol>
+<blockquote>
+<p><a class="link" href="https://par.nsf.gov/servlets/purl/10412012"  target="_blank" rel="noopener"
+    >Sometimes, you aren’t what you do: Mimicry attacks against provenance graph host intrusion detection systems</a>(<strong>2023 SP</strong>)，在StreamSpot、Unicorn、ProvDetector、Pagoda和SIGL(FGA)上进行评估实验，表明现有的基于异常的检测系统可以通过有效的手段进行检测规避，这种攻击策略通过向攻击图中注入良性子结构来混淆检测系统。</p>
+</blockquote>
+<p>在这项工作中，我们提出了 FLASH，一种新颖的 IDS，它利用来源图表示学习来高效、准确地检测 APT 攻击。为了解决检测过程中忽略语义信息的问题，FLASH 采用基于 Word2Vec 的嵌入技术将来源图中存在的各种节点属性（例如进程名称、命令行参数、文件路径和 IP 地址）编码为语义丰富的特征向量。此外，我们修改了 Word2Vec 技术以获得时间敏感的嵌入，解决了忽视事件之间的时间顺序的问题。实验表明，考虑事件之间时间顺序的语义丰富的特征向量可以更有效地区分良性节点和恶意节点，从而降低误报率并提高整体检测性能。</p>
+<p>为了编码结构和因果信息，我们利用图神经网络应用图表示学习。通过图神经网络（GNN）进行图表示学习有可能学习捕获局部和全局图结构的表达节点嵌入。然而，现有的 GNN 技术不可扩展，而且速度非常慢，尤其是对于大型图，这使得它们在基于来源的 IDS 领域的应用极具挑战性且不切实际。</p>
+<p>GNN 提供实时检测的可扩展性挑战是通过实施两种创新技术来解决的。首先，我们通过<strong>仅选择与威胁识别相关的边</strong> 来提高图表示学习中图遍历的效率。其次，我们<strong>设计了一个 GNN 嵌入数据库</strong> ，其灵感来自于之前应用于语言模型的嵌入回收技术 [59]。该数据库在训练过程和运行时存储节点嵌入，我们使用这些预先生成的 GNN 嵌入进行实时检测，与最先进的基于 GNN 的 IDS 相比，实时处理时间减少了 70% 以上同时保持卓越的检测性能。</p>
+<p>为了解决粗粒度检测的挑战，FLASH 通过<strong>使用 GNN 识别单个恶意节点（例如进程和文件）而不是整个异常子图（也包含良性节点）</strong> 来进行细粒度异常检测。此外，我们的方法展示了针对基于来源的 IDS 的对抗性模仿攻击的鲁棒性，正如 Goyal 等人提出的那样。检测后，FLASH 通过使用 FLASH 生成的异常分数对威胁警报进行排名并创建攻击演化图 (AEG) 来帮助威胁管理和攻击重建。这些 AEG 仅包含警报节点及其因果链接，与原始来源图相比，提供了简洁的入侵进展视图。</p>
+<h3 id="研究现状">
+    <a href="#%e7%a0%94%e7%a9%b6%e7%8e%b0%e7%8a%b6" class="header-anchor">#</a>
+    研究现状
+</h3><p>现有的基于来源的入侵检测系统 (IDS) 主要通过学习溯源图中的良性行为来发挥作用，每当与这些已建立的模型发生偏差时，就会检测到异常。</p>
+<p><a class="link" href="https://wintery.social/post/prographer/"  target="_blank" rel="noopener"
+    >ProGrapher</a>利用 Graph2Vec 和 TextRCNN 嵌入来识别图级别的异常。</p>
+<p>StreamSpot 提取图特征来构建良性模型，并利用聚类技术来识别异常图。</p>
+<p>Unicorn采用图相似度匹配方法来定位异常图，它将来源图特征简化为直方图并形成固定大小的图草图，然后对其进行聚类以检测异常。</p>
+<p>ProvDetector采用基于路径的恶意软件检测策略。它识别图中不常见的路径，使用路径嵌入生成，并采用局部离群因子方法进行异常检测。</p>
+<p>ThraTrace使用 GNN 执行节点级异常检测，学习良性数据集中节点的结构信息，并根据学习行为的偏差识别异常。</p>
+<p>ShadeWatcher使用 GNN 来描述系统实体对交互实体的偏好，通过边缘级异常检测建议对抗性交互。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240511223532095.png"
+	width="794"
+	height="551"
+	srcset="/zh-cn/post/flash/media/image-20240511223532095_hu6971bccfd73b96d87eda17b8db298a73_112796_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240511223532095_hu6971bccfd73b96d87eda17b8db298a73_112796_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240511223532095"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="144"
+		data-flex-basis="345px"
+	
+></p>
+<p><strong>语义编码</strong>：现有的基于来源的 IDS 利用 ML 算法根据每个节点的系统事件分布作为特征向量来检测系统攻击。然而，这些系统往往未能考虑到关键的语义属性因素。例如进程名称、命令行或文件路径。</p>
+<p><strong>时序编码</strong>：现有的基于来源的 IDS 不考虑系统事件的时间顺序，而仅关注每个节点的事件频率。鉴于多个节点可以以不同的顺序执行相同的事件，这种方法限制了模型对良性节点分布的理解。这种疏忽导致误报率上升。实验结果表明，与忽略时间因素的基线相比，合并时间排序时误报显着减少。</p>
+<p><strong>可扩展性</strong>：一些现有的基于来源的 IDS 使用 GNN 从来源图中提取结构信息，这通过捕获相邻节点之间的关系来改进检测。然而，GNN 的高计算需求可能会阻碍系统的可扩展性并使实时入侵检测变得复杂。另一方面，FLASH 为 GNN 实现了可扩展性增强技术，与不使用这些技术的现有系统相比，性能显着提高。</p>
+<blockquote>
+<p>这里的提高扩展性是指提高检测效率？之前是因为GNN计算消耗太大不方便扩展。</p>
+</blockquote>
+<p><strong>检测粒度</strong>：基于图的检测的粒度对于 IDS 的有效性起着重要作用。 StreamSpot 和 Unicorn 等许多现有 IDS 使用图形级异常检测，很难以最少的活动识别隐秘攻击。</p>
+<p><strong>上下文警报</strong>：具有图级粒度的 IDS 可识别潜在的恶意子图，而不是精确定位负责威胁警报的确切恶意节点（例如进程和文件）。由于安全分析师必须通过了解警报周围的上下文来确定每个 IDS 生成的威胁警报的准确性，这导致攻击重建和警报验证过程耗时且容易出错。在这种情况下，安全分析师必须彻底分析标记的子图以找到潜在的恶意节点。另一方面，节点级和边缘级检测方法通过直接指向入侵所涉及的确切实体以及该实体周围的数据来源，提高了攻击后调查的效率。</p>
+<p><strong>针对模仿攻击的鲁棒性</strong>：<a class="link" href="https://par.nsf.gov/servlets/purl/10412012"  target="_blank" rel="noopener"
+    >Goyal等人（23&rsquo;SP）</a>入了一种规避在图和路径级别粒度上运行的 IDS 的方法，他们的方法操纵分布图编码，修改攻击图中的节点邻域以模仿良性起源图中的节点邻域。当我们应用 Goyal 等人定义的对抗性攻击策略在我们提议的系统中，我们发现我们的系统能够抵抗此类规避尝试。这种抵抗证实了节点级检测方法（例如 FLASH 使用的方法）可以更好地防御规避攻击，<strong>因为它们能够在更细粒度的级别上识别异常</strong>。</p>
+<h3 id="本文贡献">
+    <a href="#%e6%9c%ac%e6%96%87%e8%b4%a1%e7%8c%ae" class="header-anchor">#</a>
+    本文贡献
+</h3><p>方法优势：FLASH 在检测率方面超越了现有的基于来源的 IDS。通过使用我们的 GNN 嵌入数据库，我们成功地显着减少了异常检测的时间开销，与现有最先进的基于来源的 IDS 相比，<strong>性能提高了多达三倍</strong> 。此外，通过使用 FLASH 生成的威胁警报异常评分，安全分析师可以有效地对警报进行分类，并将<strong>工作量减少多达 60%</strong> ，这表明 FLASH 在管理威胁警报疲劳方面的潜力</p>
+<blockquote>
+<p>工作量减少多达 60%存疑，评价标准是什么？还没看到那里</p>
+</blockquote>
+<p>工作的主要贡献是：</p>
+<ol>
+<li>提出了一种基于溯源图的 IDS：FLASH，它利用来源图中的上下文和结构信息来增强其检测能力。</li>
+<li>引入了一个两步过程，分别使用Word2Vec 和GNN 生成语义和上下文嵌入。此过程之后通过轻量级分类器模型进行实时异常检测，确保系统的可扩展性和效率。</li>
+<li>提供两种方案——选择性图遍历和嵌入回收数据库——使图表示学习对于IDS 设置变得实用。</li>
+<li>对真实世界数据集的技术进行了全面评估。结果突显了 FLASH 在识别恶意活动方面的有效性、抵御对抗性模仿攻击的能力以及加速警报验证过程的能力。</li>
+</ol>
+<blockquote>
+<p>开源地址：https://github.com/DART-Laboratory/Flash-IDS</p>
+</blockquote>
+<h2 id="研究方法">
+    <a href="#%e7%a0%94%e7%a9%b6%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    研究方法
+</h2><p><img src="/zh-cn/post/flash/media/image-20240511223604994.png"
+	width="805"
+	height="752"
+	srcset="/zh-cn/post/flash/media/image-20240511223604994_hu20fe52d135fe85fde74731a761710853_159399_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240511223604994_hu20fe52d135fe85fde74731a761710853_159399_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240511223557165"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="107"
+		data-flex-basis="256px"
+	
+></p>
+<p>FLASH 由五个关键模块组成：来源图构造器、基于 Word2Vec 的语义编码器、基于 GNN 的上下文编码器、嵌入数据库和异常检测器。</p>
+<p>FLASH 从流系统日志生成来源图，使用语义属性为节点创建特征向量，并应用 GNN 进行上下文感知编码。这些嵌入存储在数据库中，稍后在威胁检测期间由轻量级分类器使用。</p>
+<h3 id="溯源图构建">
+    <a href="#%e6%ba%af%e6%ba%90%e5%9b%be%e6%9e%84%e5%bb%ba" class="header-anchor">#</a>
+    溯源图构建
+</h3><p>首先将系统日志转换为来源图，该图构建过程植根于现有的来源图研究。它涉及三个主要步骤。首先，FLASH 解释系统日志，例如 Windows 事件日志或 Linux 审核日志。这些日志由主机事件记录组成，例如进程执行、文件操作和网络连接。下一步，FLASH 通过以可配置的批次处理系统日志来管理实时日志收集。批次大小 K 设置每批次的系统事件数。然后，FLASH 对每个日志批次进行顺序操作，并将其转换为来源图以供后续分析。</p>
+<p>最后，FLASH使用解析后的数据构建起源图，包括两种节点类型：进程节点和对象节点。对象节点包含文件、网络流、模块和其他系统对象。这些节点之间的边带有指定事件类型（系统调用）的标签，它演示了连接节点和事件时间戳之间的因果关系。此外，节点还包含进程名称、命令行、文件路径、IP 地址、端口号和模块路径等属性，提供进一步的上下文和详细信息。</p>
+<h3 id="语义属性编码">
+    <a href="#%e8%af%ad%e4%b9%89%e5%b1%9e%e6%80%a7%e7%bc%96%e7%a0%81" class="header-anchor">#</a>
+    语义属性编码
+</h3><blockquote>
+<p>参考文章：<a class="link" href="http://zh.gluon.ai/chapter_natural-language-processing/word2vec.html"  target="_blank" rel="noopener"
+    >词嵌入（word2vec） — 《动手学深度学习》 文档 (gluon.ai)</a></p>
+</blockquote>
+<p>系统日志包含与各种系统实体相关的丰富属性。这些属性（例如进程名称和文件路径）首先需要编码到向量空间中，以便模型可以使用它们。执行此操作的一些传统方法是 one-hot 编码 [11] 和词袋 [2] 方法。然而，这些方法会导致向量非常稀疏，而没有考虑文档中每个单词周围的上下文。为了克服这些限制，我们应用 <strong><a class="link" href="http://zh.gluon.ai/chapter_natural-language-processing/word2vec.html"  target="_blank" rel="noopener"
+    >Word2Vec 模型</a></strong> 将这些属性转换为密集向量空间。</p>
+<p>Word2Vec 是一种基于神经网络的方法，擅长学习词向量表示。它的工作原理是通过浅层神经网络预测单词的上下文。这种方法为每个单词生成一个低维稠密向量，其中相似的单词带有相似的向量表示。<strong>我们的模型考虑每个节点类型的以下节点属性：进程节点的进程名称和命令行参数、文件节点的文件路径、套接字节点的网络 IP 地址和端口以及模块节点的模块名称</strong> 。这些数据有助于生成语义丰富的特征向量。</p>
+<blockquote>
+<p>word2vec如何做到属性转换？</p>
+<p>word2vec的作用是对节点属性进行编码，而word2vec的原理为通过上下文学习词的信息对词进行编码，而属性的上下文信息是什么？</p>
+<p>进程节点预测进程名称、命令行参数；文件节点预测文件路径；套接字节点预测网络 IP 地址和端口；模块节点预测模块名称</p>
+<p>例如 <em>I’m hot because it’s summer</em> ，要将hot编码嵌入，那么需要结合<em>I’m _ because it’s summer</em>句子，其主要原理是根据hot预测上下文，将神经网络参数作为嵌入向量</p>
+</blockquote>
+<p>该方法捕获单词之间的语义关系，生成密集的嵌入，为后续的图表示学习提供节点特征。这种全面的功能集使恶意节点对良性节点的模仿变得复杂。为了成功模仿，恶意节点必须复制系统活动、时间顺序和语义属性。这种改进的检测能力使我们的模型能够发现其他被忽视的恶意活动。算法 1 概述了生成语义嵌入向量的过程。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240512004756452.png"
+	width="812"
+	height="932"
+	srcset="/zh-cn/post/flash/media/image-20240512004756452_hucefb538de30b33eb8131cdee8e51dba7_176389_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240512004756452_hucefb538de30b33eb8131cdee8e51dba7_176389_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240512004756452"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="87"
+		data-flex-basis="209px"
+	
+></p>
+<p><strong>时序编码</strong></p>
+<p>独立的 Word2Vec 模型有一个Key限制：它不保留句子中单词的顺序。为了纠正这个问题并增强模型的表达能力，我们设计了一种时间编码方案，为每个词嵌入<strong>分配单独的权重</strong>，这些权重在句子中累积，产生富含时间信息的嵌入。通过根据时间戳按时间顺序排列系统事件来启动这种方法，从而促进将时间顺序整合到句子中。随后，将位置编码（借用自 Transformers 的概念）合并到输入嵌入中，以传达有关序列中每个标记的位置的信息。这种包含至关重要，因为 Word2Vec 缺乏内置的顺序概念，因此位置编码允许模型根据标记的序列位置来区分标记。位置 i 处的标记的位置编码向量由下式给出：</p>
+<p><img src="/zh-cn/post/flash/media/image-20240605162034564.png"
+	width="429"
+	height="134"
+	srcset="/zh-cn/post/flash/media/image-20240605162034564_hu52c3b2407c30dbaed743945c84546dce_16413_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240605162034564_hu52c3b2407c30dbaed743945c84546dce_16413_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="320"
+		data-flex-basis="768px"
+	
+></p>
+<p>其中 d 表示嵌入的维度，j 是嵌入内维度的索引。</p>
+<p>然后将位置编码向量添加到该位置处每个标记的 Word2Vec 嵌入向量。此操作按元素执行，导致位置 i 处的标记嵌入为：</p>
+<p>$Emb_i=Emb_i+PE_i$</p>
+<p>通过将 Word2Vec 嵌入与位置编码相结合，我们的模型不仅可以捕获单词之间的语义关联，还可以捕获摘要句子中单词的顺序。这种丰富的表示允许 GNN 在下一步中更好地理解上下文并检测以前可能未被检测到的恶意活动。</p>
+<h3 id="溯源图表示学习">
+    <a href="#%e6%ba%af%e6%ba%90%e5%9b%be%e8%a1%a8%e7%a4%ba%e5%ad%a6%e4%b9%a0" class="header-anchor">#</a>
+    溯源图表示学习
+</h3><p>溯源图中隐秘攻击节点的有效识别需要对每个节点周围的 k 跳邻域结构进行编码。当前实现这一壮举的最先进方法是通过图神经网络（GNN）进行图表示学习。 GNN 擅长学习图中节点的低维向量表示，从而利用节点之间的连接有效地捕获其结构信息。</p>
+<p>在我们的方法中，我们利用上一步获取的 Word2Vec 嵌入作为 GNN 中节点的特征向量。 GNN 将这些特征与图结构结合使用来学习起源图中每个节点的结构信息。然而，由于消息传递过程，采用图表示学习可能会带来<strong>巨大的资源开销并引入更高的延迟</strong> ，特别是在大型图中。消息传递需要节点与图中的邻居交换信息，该过程被迭代地重复以使节点能够从图中越来越远的部分接收信息。因此，在实时入侵检测过程中持续利用 GNN 不仅会占用大量资源，还会导致可扩展性问题，因为企业环境中的来源图非常大。为了应对上述挑战并使 GNN 适用于基于来源的 IDS，本文采用了两种技术，如下所述。</p>
+<p>以<strong>离线方式运行 GNN 以生成上下文嵌入，随后将其存储起来以供轻量级分类器模型稍后使用</strong> 。我们观察到，绝大多数系统实体在每次系统执行期间执行相同的一组活动，这使得每次遇到它们时运行 GNN 的效率很低。我们对 DAPRA OpTC 数据集的细致分析表明，超过 80% 的系统实体在系统执行的良性阶段和评估阶段都表现出相同的邻域结构。通过存储这些节点的 GNN 输出，我们可以在 FLASH 实时运行时在大约 80% 的时间里避免使用 GNN。</p>
+<h4 id="选择性图遍历">
+    <a href="#%e9%80%89%e6%8b%a9%e6%80%a7%e5%9b%be%e9%81%8d%e5%8e%86" class="header-anchor">#</a>
+    选择性图遍历
+</h4><p>我们的 GNN 模型的灵感来自 GraphSage 框架，该框架因其学习节点嵌入的能力而受到认可。 GraphSage 采用邻域聚合方法，捕获有关节点的本地信息。然而，为了确保与威胁检测相关的大型起源图的高效处理，我们采用了 GraphSage 的图遍历算法。这种适应优先考虑对威胁检测和调查很重要的边缘，消除了完整的来源图遍历的必要性。为了实现这一目标，我们设计了一系列图遍历原则。这些原则指导 GraphSage 在应用 GNN 之前有选择地聚合来自特定边缘的信息。利用以下遍历原则（TP）来确定聚合期间应包含哪些节点和边。</p>
+<ol>
+<li><strong>TP1: 唯一边采样（Unique Edge Sampling）</strong>：
+<ul>
+<li>这个原则涉及在遍历中只对每种类型的边在两个节点之间采样一次。如果图中存在多个相同类型的边连接同一对节点，只选择其中一个边进行处理。</li>
+</ul>
+</li>
+<li><strong>TP2: 低优先级事件排除（Low-Priority Event Exclusion）</strong>：
+<ul>
+<li>此原则涉及排除代表低优先级和法医上无关紧要的系统事件的边。例如，可能会排除那些代表临时文件的删除事件，或者代表进程节点退出事件的自环。</li>
+</ul>
+</li>
+<li><strong>TP3: 执行特定信息过滤（Execution-Specific Information Filtering）</strong>：
+<ul>
+<li>这个原则包括只对具有相同执行特定信息的节点和边进行一次聚合。在图中，许多相邻节点可能仅因执行特定的属性而不同，例如具有相同映像路径但不同进程ID的进程节点。</li>
+</ul>
+</li>
+<li><strong>TP4: 用户特定属性处理（User-Specific Attribute Handling）</strong>：
+<ul>
+<li>在这个原则中，如果节点或边只在用户特定的属性上不同，它们被视为相同。例如，具有相同模块路径但不同用户ID的两个模块节点，在处理时会忽略用户特定的属性。</li>
+</ul>
+</li>
+</ol>
+<p>这些基本原则使系统能够在减少计算开销的同时，生成信息丰富且结构丰富的节点向量表示。</p>
+<p>对于每个节点 v ∈ V ，令 $X_v$ 为该节点的输入特征向量，并令 $h^{(0)}_v = X_v$ 为初始嵌入。在算法的每次迭代 k 中，GraphSage 使用以下等式更新每个节点 v ∈ V 的嵌入：</p>
+<p><img src="/zh-cn/post/flash/media/image-20240605211323907.png"
+	width="794"
+	height="76"
+	srcset="/zh-cn/post/flash/media/image-20240605211323907_hub2ffccab7ce30a83d816b8530fd0f093_14787_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240605211323907_hub2ffccab7ce30a83d816b8530fd0f093_14787_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="image-20240605211323907"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="1044"
+		data-flex-basis="2507px"
+	
+></p>
+<p>其中 σ(·) 是非线性激活函数，例如 ReLU，$\Nu(v)$ 是图中节点 v 的邻居集合，AGGREGATEk(·) 是结合节点 v 及其嵌入的聚合函数迭代 k 时的邻居。矩阵$W^{(k)}$是一个可学习的参数矩阵，它将聚合的特征映射到新的嵌入空间。按照此过程，GraphSage 可以将每个节点周围的结构信息编码到向量空间。</p>
+<h4 id="训练和加权交叉熵损失">
+    <a href="#%e8%ae%ad%e7%bb%83%e5%92%8c%e5%8a%a0%e6%9d%83%e4%ba%a4%e5%8f%89%e7%86%b5%e6%8d%9f%e5%a4%b1" class="header-anchor">#</a>
+    训练和加权交叉熵损失
+</h4><p>我们采用半监督节点分类方法来训练我们的新型 GNN 模型。我们的模型使用节点的输入特征和图结构来对其类型进行分类。我们的来源图包括多种节点类型，例如进程、文件和套接字。使用标记数据训练的 GNN 模型可以学习识别良性节点的类型。由于系统日志中的节点类型通常是不平衡的，因此我们使用加权交叉熵作为损失函数。加权交叉熵损失是交叉熵损失函数的一种变体，当数据中的类不平衡时使用。加权交叉熵损失通过为每个类别分配反映其重要性的权重来解决这个问题。通常，每个类别的权重设置为与该类别中样本的频率成反比。这种方法确保损失函数更多地关注少数类别，从而增强模型正确分类这些类别的能力。加权交叉熵损失的方程为：</p>
+<p><img src="/zh-cn/post/flash/media/image-20240605214528624.png"
+	width="794"
+	height="99"
+	srcset="/zh-cn/post/flash/media/image-20240605214528624_hu361e735dd4cb5377128678e7624068b2_14521_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240605214528624_hu361e735dd4cb5377128678e7624068b2_14521_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="802"
+		data-flex-basis="1924px"
+	
+></p>
+<p>其中 y 是真实标签向量，f (x) 是预测标签向量，n 是类数，$w_i$ 是第 i 类的权重，log 是自然对数。通过使用该损失函数训练我们的 GNN 模型，我们确保它能够有效地学习起源图中不同节点类型之间的结构关系。一旦模型经过训练，它生成的嵌入就可以用作轻量级分类器的输入，以进行实时入侵检测。因此，我们的 FLASH 系统可以利用 GNN 和轻量级分类器的强大功能来有效识别隐形攻击节点，而无需在实时入侵检测期间持续执行 GNN。</p>
+<h3 id="嵌入回收数据库">
+    <a href="#%e5%b5%8c%e5%85%a5%e5%9b%9e%e6%94%b6%e6%95%b0%e6%8d%ae%e5%ba%93" class="header-anchor">#</a>
+    嵌入回收数据库
+</h3><p>我们的系统采用经过训练的 GNN 模型为良性数据集中存在的所有节点生成结构嵌入。为了在实时威胁检测期间有效检索和存储这些 GNN 输出向量，我们构建了一个专门的键值存储。密钥被设计为<strong>持久节点标识符（PNI）</strong> ，与在不同系统执行中保持不变的节点属性相关联。其中包括进程名称、文件路径、模块路径和网络流 IP 地址。相应的值封装了 GNN 派生的嵌入，以及与该特定节点关联的一组邻居。</p>
+<p>我们利用属性抽象技术来<strong>删除特定于用户和执行的信息</strong>。这确保了存储的嵌入是可通用的。具体来说，有以下几种抽象模式</p>
+<ol>
+<li>用户抽象模式：针对进程和文件节点类型实现，该模式从进程名称和文件路径中省略<strong>用户ID</strong>，实现高度泛化。例如，文件路径 /Users/john/.bashrc 被抽象为 /Users/*/.bashrc。</li>
+<li>网络连接抽象架构：应用于套接字节点类型，此架构消除了<strong>开始和结束时间</strong>，从而增强了不同系统执行的通用性。例如，属性为IP:192.168.1.10、Port:22、Start:12:00:00、End:12:10:00的socket节点被抽象为IP:192.168.1.10、Port:22，只封装必要的连接信息。</li>
+<li>模块路径抽象架构：模块节点具有路径和基址属性。当基址更改时，路径在不同的执行中保持不变。此架构仅保留模块路径，确保模块节点的一致和可泛化表示。</li>
+</ol>
+<p><strong>利用预先计算的嵌入</strong></p>
+<p>构建我们的嵌入键值数据库背后的动机是双重的：优化实时异常检测和减少计算开销。通过预先计算和存储具有稳定邻域结构的节点的 GNN 嵌入，我们的方法在实时检测阶段快速将存储的嵌入分配给具有匹配邻域结构的节点，从而增强了检测管道的性能和可扩展性。</p>
+<p>在此设置中，邻域集起着关键作用。它有助于确定实时分析期间节点的邻域结构是否与良性阶段观察到的相匹配。如果匹配，则立即为该节点分配键值存储中存储的嵌入。另一方面，如果邻域结构存在差异，模型将默认使用实时生成的 Word2Vec 特征进行异常检测。这种平衡策略确保了我们系统的计算效率和对网络结构变化的适应性。</p>
+<p>我们使用 <strong>Jaccard</strong> 索引来比较节点的存储邻域和当前邻域，然后将其分配给预存储的 GNN 嵌入。</p>
+<p>在 FLASH 的实时检测阶段，节点必须满足以下两个条件才能分配其存储的 GNN 嵌入：</p>
+<ol>
+<li>节点的持久化节点标识符（PNI）必须作为键存在于特征存储中。PNI是基于节点属性（如进程名、文件路径、模块路径和网络流IP地址）构建的，这些属性在不同的系统执行中保持不变。</li>
+<li>特征存储中与此 PNI 对应的存储邻域集必须与给定节点的当前邻域集的 Jaccard 索引为 1。当Jaccard相似度为1时，表示两个邻域集完全相同。</li>
+</ol>
+<p>如果节点满足上述条件，则为其分配存储的 GNN 嵌入；否则，FLASH 依赖 Word2Vec 功能使用我们的轻量级分类器对该节点进行分类。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_features</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">similarity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nodes</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">mapp</span><span class="p">,</span> <span class="n">lbl</span><span class="p">,</span> <span class="n">nemap</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">zero_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">X_train</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">map_item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mapp</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">label</span> <span class="o">=</span> <span class="n">lbl</span><span class="p">[</span><span class="n">map_item</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node_feature</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">gnn_map</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">emb</span><span class="p">,</span> <span class="n">stored_set</span> <span class="o">=</span> <span class="n">gnn_map</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_set</span> <span class="o">=</span> <span class="n">nemap</span><span class="p">[</span><span class="n">map_item</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">jaccard_similarity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">stored_set</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">stored_set</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">emb</span> <span class="k">if</span> <span class="n">jaccard_similarity</span> <span class="o">&gt;=</span> <span class="n">similarity</span> <span class="k">else</span> <span class="n">zero_vector</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">zero_vector</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">X_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">node_feature</span><span class="p">,</span> <span class="n">feature_vector</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">mapp</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将 <code>node_feature</code> 和 <code>feature_vector</code> 按照列的方向（水平）拼接成一个新的数组。</p>
+<h3 id="轻量级分类器">
+    <a href="#%e8%bd%bb%e9%87%8f%e7%ba%a7%e5%88%86%e7%b1%bb%e5%99%a8" class="header-anchor">#</a>
+    轻量级分类器
+</h3><p>在寻找最佳轻量级分类器的过程中，我们评估了许多候选分类器，包括 XGBoost、支持向量机 (SVM) 和随机森林。本文选择 XGBoost 来执行异常检测任务。 XGBoost 使用决策树和高级提升技术的集合来提高准确性。</p>
+<p>XGBoost 最小化正则化目标函数 𝐽=𝐿(𝑦，𝑓(𝑥))+Ω(𝑓)，使用梯度提升以迭代方式向集合添加新树。每个新树都旨在最小化损失函数相对于当前集成预测的梯度。XGBoost 模型使用每个节点的串联 Word2Vec 编码向量和 GNN 嵌入向量。它从预训练的键值存储中检索 GNN 嵌入，实时生成 Word2Vec 特征，执行推理，并保存输出以供下一管道阶段使用。这种强大的流程巩固了我们IDS的性能和可扩展性。</p>
+<p>FLASH 通过<strong>比较预测节点类型和实际节点类型来检测异常节点</strong> 。该模型考虑邻域结构和节点属性来学习与各种节点类型相关的良性模式。例如，它可以概括不同进程和文件类型之间的交互以及它们的连接。恶意实体通常表现出偏离良性模式的邻域结构和属性。因此，当模型在运行时遇到此类异常值时，它们不符合学习到的节点分布，从而导致错误分类。</p>
+<p>利用 Word2Vec 特征和存储的 GNN 嵌入，FLASH 可以预测系统实体（节点）类型。输出中错误分类的节点表明存在潜在威胁。我们引入阈值参数 T 来控制警报生成。该参数限制了预测类别的分类概率，反映了模型对其预测的置信度。分数越高意味着信心越大，也可能存在异常情况。</p>
+<h3 id="攻击演化图构建">
+    <a href="#%e6%94%bb%e5%87%bb%e6%bc%94%e5%8c%96%e5%9b%be%e6%9e%84%e5%bb%ba" class="header-anchor">#</a>
+    攻击演化图构建
+</h3><p>鉴于生成的警报可能分散在整个大型来源图中，了解节点之间的因果关系需要分析师进行大量的向后和向前跟踪调用来调查警报。此外，APT 攻击的不同阶段分散在来源图中，因此很难识别它们的关系和进展。为了应对这些挑战，我们引入了一种方案，从大型起源图和 FLASH 生成的警报中构建紧凑的攻击演化图（AEG）。</p>
+<p>为了应对这些挑战，我们引入了一种方案，从大型起源图和 FLASH 生成的警报中构建紧凑的攻击演化图（AEG）。核心概念是在来源图中互连因果相关的警报，从而构建一系列简洁的 AEG。这些 AEG 仅封装警报节点及其因果链接，提供警报节点交互的简化且清晰的视图。这种减少显着简化了原始图表，使分析人员更容易快速有效地掌握攻击进展。这些精简的 AEG 不仅简化了来源图的分析，还为分析师提供了快速关联 APT 攻击不同阶段的强大工具。这种相关性提供了整体攻击策略和战术的清晰视图，有助于事件响应。</p>
+<p>算法 2 解释了创建 AEG 的过程。该算法采用起源图 G(V, E) 和一组跳跃长度为 h 的警报 N。然后它返回 AEG 列表。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240607134542597.png"
+	width="667"
+	height="601"
+	srcset="/zh-cn/post/flash/media/image-20240607134542597_hu2534b9fa93ec21a3c8d520e16349dbcd_105530_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607134542597_hu2534b9fa93ec21a3c8d520e16349dbcd_105530_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="110"
+		data-flex-basis="266px"
+	
+></p>
+<ol>
+<li><strong>初始化空列表IG</strong>：
+<ul>
+<li>首先，初始化一个空列表IG，用于存储最终生成的所有AEG图。</li>
+</ul>
+</li>
+<li><strong>遍历每个警报</strong>：
+<ul>
+<li>通过<code>foreach Alert n ∈ N do</code>循环，遍历提供的所有警报集合N中的每个警报n。</li>
+</ul>
+</li>
+<li><strong>获取因果路径</strong>：
+<ul>
+<li>对于每个警报，调用<code>GETCAUSALPATHS(n, h)</code>函数来获取与警报节点相关的因果路径，其中h表示跳数长度。</li>
+</ul>
+</li>
+<li><strong>初始化攻击路径列表</strong>：
+<ul>
+<li>对于每个警报，初始化一个空列表AttackPaths，用于存储包含警报节点的攻击路径。</li>
+</ul>
+</li>
+<li><strong>遍历所有路径</strong>：
+<ul>
+<li>通过嵌套的<code>foreach P ∈ Paths do</code>循环，遍历上一步获取的所有路径。</li>
+</ul>
+</li>
+<li><strong>筛选包含警报节点的路径</strong>：
+<ul>
+<li>在循环内部，使用<code>AlertNodes ← P ∩ N</code>计算路径P与警报集合N的交集，得到包含警报节点的路径部分。</li>
+</ul>
+</li>
+<li><strong>检查警报节点数量</strong>：
+<ul>
+<li>如果筛选后的路径包含多于一个的警报节点（<code>len(AlertNodes) &gt; 1</code>），则认为这是一个有效的攻击路径。</li>
+</ul>
+</li>
+<li><strong>构建紧凑的攻击路径</strong>：
+<ul>
+<li>使用<code>KEEPALERTNODESONLY(P)</code>函数从路径P中仅保留警报节点，构建一个紧凑的攻击路径CompactPath。</li>
+</ul>
+</li>
+<li><strong>添加到攻击路径列表</strong>：
+<ul>
+<li>将紧凑的攻击路径添加到AttackPaths列表中。</li>
+</ul>
+</li>
+<li><strong>将攻击路径列表添加到IG</strong>：
+<ul>
+<li>将包含所有攻击路径的AttackPaths列表添加到最终的AEG图列表IG中。</li>
+</ul>
+</li>
+<li><strong>转换为图结构</strong>：
+<ul>
+<li>对于IG中的每个路径列表，使用<code>ConvertToGraph(Pathlist)</code>函数将路径转换为图结构AEGraph。</li>
+</ul>
+</li>
+<li><strong>返回AEG图列表</strong>：
+<ul>
+<li>最终，算法返回包含所有AEG图的列表IG。</li>
+</ul>
+</li>
+</ol>
+<h2 id="实验评估">
+    <a href="#%e5%ae%9e%e9%aa%8c%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    实验评估
+</h2><p>实验中使用 250k 的事件批量大小，Jaccard 相似度阈值为1。</p>
+<ol>
+<li>与现有系统相比，FLASH 检测精度如何？</li>
+<li>FLASH的GNN优化是如何提升性能的？</li>
+<li>批量大小参数如何影响 FLASH 的性能、准确性和资源使用情况？</li>
+<li>FLASH 抵御模仿攻击的鲁棒性如何？</li>
+<li>对各种FLASH组件和超参数的消融研究结果如何？</li>
+<li>FLASH 在警报验证过程中的协助效果如何？</li>
+</ol>
+<h3 id="数据集">
+    <a href="#%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-anchor">#</a>
+    数据集
+</h3><p>E3 数据集1 来自 DAPRA 第三次红蓝队演习。它提供显示良性和攻击行为的审核日志数据。我们使用 DAPRA 的地面实况文档来标记 OpTC 攻击事件。对于 E3，我们使用 ThraTrace 中的标签。为了识别 StreamSpot 和 Unicorn 数据集中的攻击图，我们参考了它们各自的文档。</p>
+<p>DAPRA OpTC 数据集提供了一个广泛的视图，包含来自约 1000 个主机的良性和恶意审计记录。该数据集有六天的良性活动用于训练，接下来的三天详细介绍了恶意活动以供评估。这三天中的每一天都显示出不同类型的攻击。第一天绘制了 PowerShell Empire 的过渡场景，包括初始立足点、横向移动和权限升级。第二天记录数据泄露事件。第三天记录恶意软件升级。</p>
+<p>为了评估 FLASH，我们使用两个基于来源图的 IDS 作为基准：ThreaTrace 和 Unicorn。我们使用与我们进行比较的相应系统相同的检测指标。我们使用节点级异常检测进行ThreaTrace比较，而对于Unicorn，我们进行图级异常检测，因为Unicorn无法执行细粒度的异常节点检测。如果其中的异常节点数量超过特定阈值，FLASH 会将图识别为异常。</p>
+<h3 id="检测性能">
+    <a href="#%e6%a3%80%e6%b5%8b%e6%80%a7%e8%83%bd" class="header-anchor">#</a>
+    检测性能
+</h3><p>表 2 显示了 FLASH 和 ThraTrace [67] 在我们的评估数据集上的性能。 FLASH 始终超越 ThraTrace，实现卓越的精度和 F 分数值。与 ThraTrace 相比，FLASH 利用 word2vec 和系统属性生成语义丰富的向量。这为模型在正常节点和异常节点之间建立明显的决策边界提供了宝贵的背景，从而减少误报并提高精度和 F 分数。由于ThreaTrace论文缺乏OpTC数据集的评估结果，我们在OpTC上执行ThreaTrace以获得评估结果。研究结果表明，FLASH 的性能显着优于 ThraTrace，因为 OpTC 攻击由于规模较小且混合良好的恶意活动而更难以检测。 ThraTrace 仅依赖系统调用分发模式作为功能，这是不够的。另一方面，<strong>FLASH采用的Word2Vec编码特征为每个节点提供了更多的语义信息</strong> ，使得攻击节点更难隐藏自己。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240607154046277.png"
+	width="1381"
+	height="368"
+	srcset="/zh-cn/post/flash/media/image-20240607154046277_huced35a83226f73af0b4e2ebca6bbee8b_133593_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607154046277_huced35a83226f73af0b4e2ebca6bbee8b_133593_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="375"
+		data-flex-basis="900px"
+	
+></p>
+<p>表3给出了两个系统之间检测比较的实验结果。虽然 Unicorn 在某些数据集（例如 Cadets）上的性能与 FLASH 相当，这些数据集的隐秘性图表较少，但在更隐秘的攻击数据集（例如 Unicorn SC-1 和 SC-2）上，FLASH 的性能优于 Unicorn。这一优势<strong>归因于 FLASH 使用图表示学习以及时间敏感的节点嵌入</strong> ，这使其能够对基线良性行为产生深入的理解。因此，FLASH 甚至可以有效地标记最隐蔽的攻击图。</p>
+<h3 id="可扩展性分析">
+    <a href="#%e5%8f%af%e6%89%a9%e5%b1%95%e6%80%a7%e5%88%86%e6%9e%90" class="header-anchor">#</a>
+    可扩展性分析
+</h3><p>本文评估了利用 FLASH 中的 GNN 嵌入数据库提供的可扩展性增强。这些预存储的嵌入与 Word2Vec 语义编码相结合，为 XGBoost 分类器提供服务。在检查 E3 数据集时，我们发现很大一部分节点缺乏属性数据。例如，在 DARPA E3 的四个数据集（Cadets、Trace、FiveDirections 和 Theia）中，分别有 70%、54%、72% 和 76% 的节点缺少属性数据。该数据对于节点和邻居识别以及分配持久节点标识符 (PNI) 至关重要。如果没有这些 PNI，我们的高效嵌入数据库就无法使用。然而，OpTC数据集提供了完整的节点信息，使得FLASH能够实现两步管道。因此，在推理（检测）阶段，我们专门使用 OpTC 的嵌入数据库。相比之下，我们在推理过程中为 E3 生成 GNN 嵌入。</p>
+<p>在训练阶段，FLASH 的 GNN 模型从良性数据生成嵌入向量，并将其存储在键值数据存储中以供将来使用。在运行时，这些存储的嵌入与 Word2Vec 向量相结合，作为 XGBoost 模型的特征向量，然后执行异常检测。表 2“FLASH (GNN + XGBoost)”列中概述的检测结果表明，利用此两步管道的 FLASH 的检测性能与仅使用 GNN 进行异常检测相当，并且大大超过了 ThreaTrace。此外，与 ThraTrace 相比，这种两步管道大大加快了处理速度。如图 3 所示，GNN 嵌入的重用导致时间开销比 ThraTrace 少三倍。报告的推理时间使用 OpTC 数据集中单个主机一天的系统日志。当我们在实验中使用来自更多主机的日志时，我们观察到推理时间开销也有类似的减少。因此，我们的方法可以节省大型企业数小时的推理时间，并有助于防止日志拥塞，确保及时发出警报。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240607214032911.png"
+	width="797"
+	height="341"
+	srcset="/zh-cn/post/flash/media/image-20240607214032911_hue78149359787e3712e24f1c3fa003ddc_125643_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607214032911_hue78149359787e3712e24f1c3fa003ddc_125643_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="233"
+		data-flex-basis="560px"
+	
+></p>
+<p>在我们的实验中，我们观察到FLASH在运行时成功地将预存嵌入平均分配给大约84%的节点，命中率高达90%。这种高分配率表明许多系统实体表现出重复的行为模式，多项研究也表明了这一点，使 FLASH 能够利用其两步管道来增强可扩展性和实时 APT 检测。</p>
+<h3 id="批量大小分析">
+    <a href="#%e6%89%b9%e9%87%8f%e5%a4%a7%e5%b0%8f%e5%88%86%e6%9e%90" class="header-anchor">#</a>
+    批量大小分析
+</h3><p>FLASH 运行时性能取决于给定时间处理的日志数量，这是由批量大小参数 K 调节的行为。我们进行了全面的分析，以显示我们的系统在不同批量大小下的性能。当 FLASH 接收到系统日志时，我们采用滑动事件窗口来处理系统日志。</p>
+<p>图 4a 展示了增加批处理大小对 CPU 和内存资源运行时消耗的影响。有趣的是，CPU 利用率保持相对恒定，而内存消耗相对于批处理大小几乎呈线性增长，对于 250K 的事件窗口大小达到约 600 MB 的峰值。这些观察结果表明，即使在处理大批量数据时，FLASH 也善于有效地利用系统资源，从而使其适合实时 IDS。图 4b 显示了使用 OpTC 数据集不同批量大小的推理时间。事件窗口大小的选择也会对FLASH的检测性能产生影响。较小的窗口大小会阻碍对系统节点活动的完整捕获，从而导致检测精度下降。图 4c 显示了随着批量大小的增加，FLASH 的各种准确度测量的改进。值得注意的是，性能在达到特定阈值之前会有所增强，然后稳定下来。从这些发现可以看出，批量大小的最佳选择取决于资源限制和将部署 FLASH 系统的企业环境的要求。对于资源有限的系统，可能需要较小的事件窗口大小，而具有大量事件吞吐量的高性能系统可以从较大的窗口大小中受益。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240607205524346.png"
+	width="804"
+	height="664"
+	srcset="/zh-cn/post/flash/media/image-20240607205524346_hu1b1dca73ae8288294d37f7a90fd5c426_154765_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607205524346_hu1b1dca73ae8288294d37f7a90fd5c426_154765_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="121"
+		data-flex-basis="290px"
+	
+></p>
+<h3 id="鲁棒性测试">
+    <a href="#%e9%b2%81%e6%a3%92%e6%80%a7%e6%b5%8b%e8%af%95" class="header-anchor">#</a>
+    鲁棒性测试
+</h3><p>为了评估 FLASH 针对对抗性攻击的恢复能力，我们对基于来源的 IDS 进行了对抗性模仿攻击，正如 Goyal 等人详细介绍的那样。Goyal 等人的一个值得注意的发现是，具有图级粒度的 IDS（如第 2 节中所述），例如 Unicorn、StreamSpot、ProvDetector 和 SIGL 对对抗性攻击的敏感性。这种对抗策略操纵分布图编码来针对基于来源的 IDS 发起规避攻击，其目的是在攻击图中的节点邻域分布与良性来源图中的节点邻域分布之间创建误导性的相似性。该策略的目标是<strong>使攻击图中的节点与参与良性活动的节点具有相似的嵌入</strong> 。为了实现这一目标，我们将训练数据集中的良性节点结构集成到攻击图中，而FLASH 使用 GNN 对起源图中节点的结构信息进行编码，该 GNN 通过消息传递机制从节点的父节点收集特征向量，根据每个节点的 k 跳邻域创建 D 维向量表示。</p>
+<p>攻击者通过修改攻击图中的节点邻域，使其与正常行为图中的节点邻域相似，目的是让攻击节点的嵌入与正常节点相似。</p>
+<p>实验结果如图 5 所示，显示了使用良性结构（x 轴）添加到攻击图中的边数与所有攻击节点（y 轴）的异常分数（最小值、平均值和最大值）添加的良性边的数量。最初，添加良性节点邻域会降低攻击节点的异常分数，但这种降低不足以确保成功规避，如图 5 中的阈值线所示。随后，随着更多良性边缘的引入，攻击节点的异常分数增加。这种趋势可以归因于这样一个事实：在攻击节点周围合并额外的良性节点可以增强其嵌入，为其赋予更多良性特征，从而降低节点的异常分数。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240607211212225.png"
+	width="709"
+	height="369"
+	srcset="/zh-cn/post/flash/media/image-20240607211212225_hu015775b7f34e2dd703736c99e9305c13_66939_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607211212225_hu015775b7f34e2dd703736c99e9305c13_66939_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="192"
+		data-flex-basis="461px"
+	
+></p>
+<p>但是不断添加更多良性节点会在模型中引起怀疑，模型学习到的节点分布的这种变化会导致异常分数的增加。这种独特的行为可以与我们的模型强大的语义理解联系起来，这种理解源自节点级学习任务。通过这个过程，FLASH 可以全面了解与来源图中不同语义的节点相关的特征邻域结构。这种理解使得模型能够准确判断图中不同节点之间因果关系的合法性，使得 FLASH 对对抗性模仿攻击具有很强的抵抗力，这种弹性比图级检测方法具有显着优势。</p>
+<h3 id="消融实验">
+    <a href="#%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
+    消融实验
+</h3><p>消融研究中，我们通过改变各种参数设置和组件来系统地评估 FLASH 的性能，展示它们对系统有效性的影响。我们探索的关键领域包括</p>
+<ol>
+<li>不同轻量级分类器的影响</li>
+<li>加权交叉熵损失的使用</li>
+<li>GNN 嵌入相对于 Word2Vec 嵌入的有效性</li>
+</ol>
+<p><img src="/zh-cn/post/flash/media/image-20240607212216321.png"
+	width="801"
+	height="313"
+	srcset="/zh-cn/post/flash/media/image-20240607212216321_hu0237bc8c6b8dc76e55e487bc86fa1880_108538_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607212216321_hu0237bc8c6b8dc76e55e487bc86fa1880_108538_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="255"
+		data-flex-basis="614px"
+	
+></p>
+<ol start="4">
+<li>时序编码的作用</li>
+</ol>
+<p><img src="/zh-cn/post/flash/media/image-20240607212243200.png"
+	width="764"
+	height="154"
+	srcset="/zh-cn/post/flash/media/image-20240607212243200_hudf92d48850499cd83ebe9cbdf4e07fe9_64828_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607212243200_hudf92d48850499cd83ebe9cbdf4e07fe9_64828_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="496"
+		data-flex-basis="1190px"
+	
+></p>
+<ol start="5">
+<li>选择性图遍历的有效性。</li>
+</ol>
+<p>结果如图 9 所示，表明遍历技术可将指定数量的系统事件的 GNN 训练时间减少 43%。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240608214649567.png"
+	width="759"
+	height="319"
+	srcset="/zh-cn/post/flash/media/image-20240608214649567_hua9283f1e50b8b82792e55207b14d5eba_51040_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240608214649567_hua9283f1e50b8b82792e55207b14d5eba_51040_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="237"
+		data-flex-basis="571px"
+	
+></p>
+<h3 id="告警器有效性">
+    <a href="#%e5%91%8a%e8%ad%a6%e5%99%a8%e6%9c%89%e6%95%88%e6%80%a7" class="header-anchor">#</a>
+    告警器有效性
+</h3><p>FLASH 的主要设计目标是威胁检测，但其潜力还可以促进更快的攻击调查。我们专注于两个主要领域：管理威胁警报疲劳和生成攻击演化图 (AEG)。当安全分析师处理过多的威胁警报时，就会出现警报疲劳，从而导致在误报中忽视威胁。为了评估 FLASH 是否可以缓解此问题，我们根据 FLASH 分配的威胁（异常）分数对警报进行排名。图 10 显示了真警报和假警报排名的累积分布函数。它表明 FLASH 的威胁评分优先考虑真实警报。此外，如果在最低真实警报分数上建立分离阈值，则最多可以丢弃 60% 的错误警报。这种优先级有助于分析人员专注于得分较高的警报，减少忽视真正威胁的机会并最大限度地减少攻击者的暴露时间。就 AEG 而言，这些视觉辅助工具绘制了攻击的演变过程，在警报验证期间为分析人员提供帮助。如图 11 所示，使用 AEG 减少了调查人员需要审查的项目数量，因为AEG 的数量少于单个警报。这种调查方法类似于 RapSheet 系统，可以进行更高效、更有针对性的攻击分析。相反，由于使用多个 GNN 模型进行预测，ThreaTrace 在警报分类方面遇到了困难。仅当所有模型将节点分类为异常时才会触发警报，从而导致每个节点具有来自不同模型的不同警报分数。每个节点缺乏单一的代表性异常分数给分类过程带来了重大挑战。</p>
+<p><img src="/zh-cn/post/flash/media/image-20240607212921987.png"
+	width="792"
+	height="677"
+	srcset="/zh-cn/post/flash/media/image-20240607212921987_hu35c9a0ea5ea593092301e6f1bc9189e0_222341_480x0_resize_box_3.png 480w, /zh-cn/post/flash/media/image-20240607212921987_hu35c9a0ea5ea593092301e6f1bc9189e0_222341_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="116"
+		data-flex-basis="280px"
+	
+></p>
+<h2 id="总结与讨论">
+    <a href="#%e6%80%bb%e7%bb%93%e4%b8%8e%e8%ae%a8%e8%ae%ba" class="header-anchor">#</a>
+    总结与讨论
+</h2><p><strong>概念漂移</strong> 。即底层系统的数据分布随着时间的推移而变化，是一个潜在的问题。例如，随着新系统活动的出现，FLASH 在训练期间学到的模式可能不再有效。这种漂移可能会导致错误分类，因为新的良性行为可能会被错误地识别为异常。一种缓解策略是使用最新数据定期进行再训练，以更新模型和嵌入数据库。由于其选择性遍历，FLASH 的训练非常高效，使用户能够定期重新训练他们的模型。然而，这种方法面临着保持模型识别较旧但仍然相关的攻击的能力的挑战。不幸的是，目前没有公共数据集来评估该策略的有效性。因此，有效处理 FLASH 中的概念漂移仍然是一个值得未来研究的挑战。</p>
+<p><strong>自适应对抗性攻击。</strong> 各种现有的防御措施可以集成到 Flash 中，以提高其针对这些攻击的鲁棒性。例如，对抗性训练[63]和梯度掩蔽[50]通常用于防御基于梯度的攻击。前者涉及用对抗性示例增强训练数据集以提高模型的鲁棒性，而后者使攻击者难以准确计算梯度以制作对抗性输入。之前的防御审计日志篡改工作中的技术 [14, 57] 可用于防止训练时数据中毒攻击。这些防御措施可以很容易地融入 Flash 中，以增强其对自适应对手的抵抗力。</p>
+<h2 id="相关工作">
+    <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c" class="header-anchor">#</a>
+    相关工作
+</h2><p>基于规则的 IDS。基于规范的 IDS 方法，例如 Holmes 、Rapsheet  和 Poirot ，使用起源图上的规范规则来检测与正常行为的偏差。尽管这些方法有效地减少了误报，但它们存在被新攻击规避的风险，并且需要持续更新以应对不断变化的威胁形势。与这些系统相比，FLASH 是一种更具可扩展性和鲁棒性的解决方案，能够通过利用来源图中丰富的语义和上下文信息来检测以前未见过的威胁。</p>
+<p>基于嵌入的IDS。嵌入技术广泛用于日志分析任务，他们经常使用 ML 模型（例如神经网络和 n-gram）将日志转换为向量形式。示例包括使用 LSTM  的 DeepLog、应用 Doc2Vec  的 ProvDetector 以及利用时间词嵌入模型的 Attack2Vec 。 Euler  使用 GNN 和 RNN 嵌入来检测横向运动。 SIGL  仅专注于通过深度学习检测恶意软件安装，并受到图级粒度检测的限制。此外，SIGL 的评估基于正常/恶意软件安装的小数据集，这使得扩展到大型来源图具有挑战性。 DeepAid [29] 使用深度神经网络来检测网络流量中的异常情况。与这些系统不同的是，FLASH 是一种基于主机的 IDS，将 GNN 与系统日志中丰富的语义词嵌入相结合，并存储训练阶段嵌入用于实时 APT 检测。</p>
+<p>基于来源的调查。Hassan等人利用来源图的语法推理来加速系统入侵调查。Pasquier等人介绍了CamQuery，一个实时来源分析框架。此外，现有系统，如DEPCOMM 、DEPIMPACT 、Watson 、NoDoze 、Palantir 、Deepcase 、SAQL 、OmegaLog 、C2SR  、Dossier  和 Atlas ，促进攻击调查和事件响应。这些现有系统与我们的研究方向正交，因为它们并非旨在检测 APT 攻击，他们需要入侵探测器的初始攻击症状来启动调查。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/en/post/mprof_use/">
+        
+        
+            <div class="article-image">
+                <img src="/en/post/mprof_use/xiaoai.90489ac67a31fa432cf1bb25a8279c35_hu797ffb446376cd267c6c2d423d6697b4_406500_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 论文写作技巧"
+                        
+                        data-hash="md5-kEiaxnox&#43;kMs8bslqCecNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">论文写作技巧</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/mprof_use/">
+        
+        
+            <div class="article-image">
+                <img src="/zh-cn/post/mprof_use/xiaoai.90489ac67a31fa432cf1bb25a8279c35_hu797ffb446376cd267c6c2d423d6697b4_406500_250x150_fill_q75_h2_box_smart1_2.webp" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 论文写作技巧"
+                        
+                        data-hash="md5-kEiaxnox&#43;kMs8bslqCecNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">论文写作技巧</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/cyber-security/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" loading="lazy" data-key="" data-hash="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">学术报告笔记整理1</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/en/post/cyber-security/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" loading="lazy" data-key="" data-hash="https://ts1.cn.mm.bing.net/th/id/R-C.c5e24b80ac23e64ff3d1d81b84587261?rik=0tZ3Y2NoB%2fTNWA&amp;riu=http%3a%2f%2fwallpapercave.com%2fwp%2flUWJtEd.jpg&amp;ehk=b6bIPIYVipttwxzgYBnx1PoW%2frRSIjKnQ6S%2f6A16p4I%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">学术报告笔记整理1</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/tools/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://memeprod.ap-south-1.linodeobjects.com/user-template/5f63a0d9d4d3dd395c9b508aac91d328.png" loading="lazy" data-key="" data-hash="https://memeprod.ap-south-1.linodeobjects.com/user-template/5f63a0d9d4d3dd395c9b508aac91d328.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">工具箱维护记录</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 0 篇文章 · 共 185.744k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
