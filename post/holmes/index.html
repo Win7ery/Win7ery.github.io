@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2019 SP">
 <title>HOLMES: Real-time APT Detection through Correlation of Suspicious Information Flows</title>
@@ -61,7 +61,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -184,7 +184,7 @@
 
 
                 
-                <span>主页</span>
+                <span>Home</span>
             </a>
         </li>
         
@@ -203,7 +203,7 @@
 
 
                 
-                <span>留言</span>
+                <span>About</span>
             </a>
         </li>
         
@@ -223,7 +223,7 @@
 
 
                 
-                <span>文章</span>
+                <span>Article</span>
             </a>
         </li>
         
@@ -242,7 +242,7 @@
 
 
                 
-                <span>搜索</span>
+                <span>Search</span>
             </a>
         </li>
         
@@ -261,7 +261,7 @@
 
 
                 
-                <span>链接</span>
+                <span>Link</span>
             </a>
         </li>
         
@@ -286,8 +286,8 @@
 
 
 
-                    <a href="https://wintery.net/en/">
-                        English
+                    <a href="https://wintery.net/zh-cn/">
+                        简体中文
                     </a>
                 </li>
                 
@@ -311,7 +311,7 @@
 
 
 
-                    <span>暗色模式</span>
+                    <span>Dark Mode</span>
                 </li>
                 
             </ol>
@@ -336,46 +336,46 @@
 
 
         </div>
-        <h2 class="widget-title section-title">目录</h2>
+        <h2 class="widget-title section-title">Table of contents</h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#贡献">贡献</a></li>
-    <li><a href="#挑战">挑战</a></li>
+    <li><a href="#contribute">contribute</a></li>
+    <li><a href="#challenge">challenge</a></li>
   </ol>
 
   <ol>
-    <li><a href="#思路目标">思路目标</a></li>
-    <li><a href="#弥合语义差距">弥合语义差距</a></li>
-    <li><a href="#关键技术">关键技术</a></li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#idea-goals">Idea goals</a></li>
+    <li><a href="#bridging-the-semantic-gap">Bridging the semantic gap</a></li>
+    <li><a href="#key-technologies">Key technologies</a></li>
+    <li><a href="#summarize">Summarize</a></li>
   </ol>
 
   <ol>
-    <li><a href="#a数据收集和表示">A.数据收集和表示</a></li>
-    <li><a href="#bttp规范">B.TTP规范</a></li>
-    <li><a href="#chsg构建">C.HSG构建</a></li>
-    <li><a href="#d避免虚假依赖">D.避免虚假依赖</a></li>
-    <li><a href="#e降噪">E.降噪</a>
+    <li><a href="#a-data-collection-and-presentation">A. Data Collection and Presentation</a></li>
+    <li><a href="#bttp-specification">B.TTP specification</a></li>
+    <li><a href="#chsg-build">C.HSG Build</a></li>
+    <li><a href="#d-avoid-false-dependencies">D. Avoid false dependencies</a></li>
+    <li><a href="#e-noise-reduction">E. Noise reduction</a>
       <ol>
-        <li><a href="#良性先决条件匹配">良性先决条件匹配</a></li>
-        <li><a href="#良性数据流数量">良性数据流数量</a></li>
+        <li><a href="#good-prerequisite-matching">Good prerequisite matching</a></li>
+        <li><a href="#number-of-benign-data-flows">Number of benign data flows</a></li>
       </ol>
     </li>
-    <li><a href="#f信息关联和检测">F.信息关联和检测</a></li>
+    <li><a href="#f-information-association-and-detection">F. Information association and detection</a></li>
   </ol>
 
   <ol>
-    <li><a href="#来源图构建的流消耗">来源图构建的流消耗</a></li>
-    <li><a href="#规则匹配引擎和hsg构建">规则匹配引擎和HSG构建</a></li>
-    <li><a href="#噪声过滤和检测引擎">噪声过滤和检测引擎</a></li>
+    <li><a href="#stream-consumption-of-source-graph-construction">Stream consumption of source graph construction</a></li>
+    <li><a href="#rule-matching-engine-and-hsg-construction">Rule matching engine and HSG construction</a></li>
+    <li><a href="#noise-filtering-and-detection-engine">Noise filtering and detection engine</a></li>
   </ol>
 
   <ol>
-    <li><a href="#得分结果">得分结果</a></li>
-    <li><a href="#性能评估">性能评估</a></li>
-    <li><a href="#真实场景">真实场景</a></li>
+    <li><a href="#score-results">Score results</a></li>
+    <li><a href="#performance-evaluation">Performance evaluation</a></li>
+    <li><a href="#real-scene">Real scene</a></li>
   </ol>
 </nav>
         </div>
@@ -407,7 +407,7 @@
     <header class="article-category">
         
             <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
-                笔记
+                Notes
             </a>
         
     </header>
@@ -457,7 +457,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 8 分钟
+                    9 minute read
                 </time>
             </div>
         
@@ -466,32 +466,13 @@
             <div>
                 <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
                 <time class="article-words">
-                    3709 字
+                    1782 字
                 </time>
             </div>
         
     </footer>
     
 
-    
-        <footer class="article-translations">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-            <div>
-                
-                    <a href="https://wintery.net/en/post/holmes/" class="link">English</a>
-                
-            </div>
-        </footer>
     
 </div>
 
@@ -503,29 +484,27 @@
     <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th><strong>期刊</strong></th>
+          <th><strong>Journal</strong></th>
           <th>2019 SP</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td><strong>作者</strong></td>
+          <td><strong>Authors</strong></td>
           <td>Sadegh M. Milajerdi, Rigel Gjomemo, Birhanu Eshete, R. Sekar, V.N. Venkatakrishnan</td>
       </tr>
       <tr>
-          <td><strong>状态</strong></td>
-          <td>阅读完</td>
+          <td><strong>Status</strong></td>
+          <td>Finished reading</td>
       </tr>
       <tr>
-          <td><strong>摘要</strong></td>
-          <td>在本文中，我们介绍了 HOLMES，这是一个实现高级和持续威胁 (APT) 检测新方法的系统。 HOLMES 的灵感来自现实世界 APT 的几个案例研究，这些案例突出了 APT 参与者的一些共同目标。简而言之，HOLMES 的目标是产生一个检测信号，表明存在一组协调的活动，这些活动是 APT 活动的一部分。我们的方法解决的主要挑战之一是开发一套使检测信号稳健可靠的技术。在高层次上，我们开发的技术有效地利用了攻击者活动期间出现的可疑信息流之间的相关性。除了检测能力之外，HOLMES 还能够生成实时总结攻击者行为的高级图表。分析师可以使用该图来进行有效的网络响应。对我们的方法针对一些现实世界的 APT 的评估表明，HOLMES 可以高精度和低误报率检测 APT 活动。 HOLMES 生成的紧凑的高级图表有效地总结了正在进行的攻击活动，并可以协助实时网络响应操作。</td>
+          <td><strong>Abstract</strong></td>
+          <td>In this article, we introduce HOLMES, a system that implements a new approach to advanced and persistent threat (APT) detection. HOLMES was inspired by several case studies of real-world APTs that highlighted some of the common goals of APT actors. In short, the goal of HOLMES is to generate a detection signal that indicates the presence of a coordinated set of activities that are part of an APT campaign. One of the main challenges addressed by our approach is the development of a set of techniques that make detection signals robust and reliable. At a high level, the techniques we develop effectively exploit correlations between suspicious information flows that appear during attacker activity. In addition to its detection capabilities, HOLMES is able to generate high-level graphs summarizing attacker behavior in real time. Analysts can use this diagram to conduct effective network responses. An evaluation of our approach against some real-world APTs shows that HOLMES can detect APT activity with high accuracy and low false positive rates. The compact, high-level diagrams generated by HOLMES effectively summarize ongoing attack activity and can assist real-time network response operations.</td>
       </tr>
   </tbody>
 </table></div>
-<h1 id="思维导图">
-    <a href="#%e6%80%9d%e7%bb%b4%e5%af%bc%e5%9b%be" class="header-anchor">#</a>
-    思维导图
-</h1><p><img src="/media%5c1704254763397-dd787a17-94a8-4f9b-b664-0b71fd7aba58.jpeg"
+<p>#mindmap</p>
+<p><img src="/media%5c1704254763397-dd787a17-94a8-4f9b-b664-0b71fd7aba58.jpeg"
 	
 	
 	
@@ -533,30 +512,30 @@
 	
 	
 ></p>
-<h1 id="研究内容">
-    <a href="#%e7%a0%94%e7%a9%b6%e5%86%85%e5%ae%b9" class="header-anchor">#</a>
-    研究内容
-</h1><h2 id="贡献">
-    <a href="#%e8%b4%a1%e7%8c%ae" class="header-anchor">#</a>
-    贡献
+<h1 id="research-content">
+    <a href="#research-content" class="header-anchor">#</a>
+    Research content
+</h1><h2 id="contribute">
+    <a href="#contribute" class="header-anchor">#</a>
+    contribute
 </h2><ol>
-<li>HOLMES 旨在将主机日志中发现的活动以及企业中发现的任何警报直接映射到杀伤链。</li>
-<li>HOLMES 的第二个重要思想是使用系统中低级实体（文件、进程等）之间的信息流作为警报关联的基础。</li>
-<li>HOLMES 的第三个主要贡献是开发了高级场景图 (HSG)。 HSG的节点对应于TTP，边代表TTP中涉及的实体之间的信息流。</li>
-<li>HSG 随时提供非常紧凑、直观的活动摘要，从而为攻击理解做出重要贡献。</li>
+<li>HOLMES is designed to map activity found in host logs and any alerts found in the enterprise directly to the kill chain.</li>
+<li>The second important idea of ​​HOLMES is to use the information flow between low-level entities in the system (files, processes, etc.) as the basis for alert correlation.</li>
+<li>The third major contribution of HOLMES is the development of high-level scene graphs (HSG). The nodes of HSG correspond to TTP, and the edges represent the information flow between entities involved in TTP.</li>
+<li>HSG makes an important contribution to attack understanding by providing a very compact, intuitive summary of activity at any time.</li>
 </ol>
-<h2 id="挑战">
-    <a href="#%e6%8c%91%e6%88%98" class="header-anchor">#</a>
-    挑战
+<h2 id="challenge">
+    <a href="#challenge" class="header-anchor">#</a>
+    challenge
 </h2><ul>
-<li>隐蔽性（恶意活动难以被察觉）</li>
-<li>低阳性（恶意活动占比较少）</li>
-<li>实时性（恶意活动难以实时被检测）</li>
+<li>Stealth (malicious activities are difficult to detect)</li>
+<li>Low positivity (less malicious activity)</li>
+<li>Real-time (malicious activities are difficult to detect in real-time)</li>
 </ul>
-<p>为了克服这些挑战，请注意，尽管无缝地融入良性后台活动，但与攻击有关的两个因素仍然很突出。首先，攻击步骤实现了与某些APT阶段相对应的能力。其次，攻击活动通过信息流相互联系。在下一节中，我们将根据这两个关键观察来描述HOLMES方法。</p>
-<h1 id="杀伤链模型">
-    <a href="#%e6%9d%80%e4%bc%a4%e9%93%be%e6%a8%a1%e5%9e%8b" class="header-anchor">#</a>
-    杀伤链模型
+<p>To overcome these challenges, note that despite seamless integration into benign background activity, two factors related to the attack remain prominent. First, the attack steps implement capabilities corresponding to certain APT stages. Second, attack campaigns are interconnected through information flows. In the next section, we describe the HOLMES method based on these two key observations.</p>
+<h1 id="kill-chain-model">
+    <a href="#kill-chain-model" class="header-anchor">#</a>
+    Kill chain model
 </h1><p><img src="/media%5c1704190863735-e8343322-ec19-4a76-a5af-4bc509da5d0c.png"
 	
 	
@@ -567,27 +546,27 @@
 	
 	
 >
-初始入侵（Initial Compromise）：例如网站挂马或鱼叉式钓鱼攻击
-建落脚点（Establish Foothold）：安装木马后门
-权限提升（Escalation Privilege）：漏洞利用
-内部侦查（Internal Reconnaissance）：内部侦察目标系统信息
-横向移动（Move Laterally）：通过网络的横向移动渗透
-保持存在（Maintain Presence）：Command and Control（C&amp;C）、Remote Access Trojans(RATs)
-完成任务（Complete Mission）：泄露敏感信息</p>
-<h1 id="研究方法">
-    <a href="#%e7%a0%94%e7%a9%b6%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
-    研究方法
-</h1><h2 id="思路目标">
-    <a href="#%e6%80%9d%e8%b7%af%e7%9b%ae%e6%a0%87" class="header-anchor">#</a>
-    思路目标
+Initial Compromise: For example, website malware or spear phishing attack
+Establish Foothold: Install Trojan backdoor
+Escalation Privilege: Exploitation
+Internal Reconnaissance: Internal reconnaissance target system information
+Move Laterally: Penetration through lateral movement of the network
+Maintain Presence: Command and Control (C&amp;C), Remote Access Trojans (RATs)
+Complete Mission: Disclosure of sensitive information</p>
+<h1 id="research-methods">
+    <a href="#research-methods" class="header-anchor">#</a>
+    research methods
+</h1><h2 id="idea-goals">
+    <a href="#idea-goals" class="header-anchor">#</a>
+    Idea goals
 </h2><ul>
-<li>APT 最基本的高级行为步骤</li>
-<li>这些步骤之间的信息流依赖关系</li>
+<li>The most basic advanced behavioral steps of APT</li>
+<li>Information flow dependencies between these steps</li>
 </ul>
-<p>挑战：低级审计数据与攻击者目标、意图和能力的高级杀伤链视图之间存在巨大的语义差距</p>
-<h2 id="弥合语义差距">
-    <a href="#%e5%bc%a5%e5%90%88%e8%af%ad%e4%b9%89%e5%b7%ae%e8%b7%9d" class="header-anchor">#</a>
-    弥合语义差距
+<p>Challenge: A large semantic gap exists between low-level audit data and a high-level kill chain view of attacker goals, intent, and capabilities</p>
+<h2 id="bridging-the-semantic-gap">
+    <a href="#bridging-the-semantic-gap" class="header-anchor">#</a>
+    Bridging the semantic gap
 </h2><p><img src="/media%5c1704168605237-b4e3c0e7-ee1f-4f7a-bd8e-520aae188f1f.png"
 	
 	
@@ -598,45 +577,45 @@
 	
 	
 ></p>
-<h2 id="关键技术">
-    <a href="#%e5%85%b3%e9%94%ae%e6%8a%80%e6%9c%af" class="header-anchor">#</a>
-    关键技术
+<h2 id="key-technologies">
+    <a href="#key-technologies" class="header-anchor">#</a>
+    Key technologies
 </h2><ol>
-<li>高效匹配（使用审计日志的表示形式作为主内存中的有向来源图）</li>
-<li>关联关系（构建高级场景图HSG）</li>
-<li>减少误报
+<li>Efficient matching (using a representation of the audit log as a directed source graph in main memory)</li>
+<li>Association relationships (building high-level scene graph HSG)</li>
+<li>Reduce false positives
 <ol>
-<li>学习可能产生误报 TTP 的良性模式；</li>
-<li>根据严重性为图中的节点和路径分配权重的启发式算法，以便对 HSG 进行排名，并将排名最高的 HSG 呈现给分析师</li>
+<li>Learn benign patterns that may produce false positive TTPs;</li>
+<li>A heuristic that assigns weights to nodes and paths in the graph based on severity in order to rank HSGs and present the highest-ranked HSG to analysts</li>
 </ol>
 </li>
 </ol>
-<h2 id="总结">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-anchor">#</a>
-    总结
-</h2><p>APT 的高级阶段是使用可从审计数据中观察到的一套通用策略来实施的。这些观察结果表明，某些恶意活动可能正在发生。那么，<strong>HOLMES的工作就是收集证据并推断它们之间的相关性，并利用这些相关性来规划整个攻击活动。</strong></p>
-<h1 id="系统设计">
-    <a href="#%e7%b3%bb%e7%bb%9f%e8%ae%be%e8%ae%a1" class="header-anchor">#</a>
-    系统设计
-</h1><h2 id="a数据收集和表示">
-    <a href="#a%e6%95%b0%e6%8d%ae%e6%94%b6%e9%9b%86%e5%92%8c%e8%a1%a8%e7%a4%ba" class="header-anchor">#</a>
-    A.数据收集和表示
-</h2><p>该设计与前人的工作有两个不同之处：</p>
+<h2 id="summarize">
+    <a href="#summarize" class="header-anchor">#</a>
+    Summarize
+</h2><p>Advanced stages of APT are conducted using a common set of tactics that can be observed from audit data. These observations suggest that some malicious activity may be occurring. Well, **HOLMES&rsquo; job is to collect evidence and infer correlations between them, and use these correlations to plan the entire attack campaign. **</p>
+<h1 id="system-design">
+    <a href="#system-design" class="header-anchor">#</a>
+    system design
+</h1><h2 id="a-data-collection-and-presentation">
+    <a href="#a-data-collection-and-presentation" class="header-anchor">#</a>
+    A. Data Collection and Presentation
+</h2><p>This design differs from previous work in two ways:</p>
 <ul>
-<li>provenance graph是不断变化的：当一条边改变了节点的依赖关系，一个新的节点将会被创建并替换旧节点。这种“版本化”的方法使得在不改变分析结果的情况下可以对图进行修剪，而且这种versioned graph是无环的，这可以简化许多图算法。</li>
-<li>另一个不同之处是provenance graph是存储在主存中的，每个事件所占空间小于5bytes，这种表示方式可以在较长的时间段内实时消耗事件和构建起溯源图。</li>
+<li>The provenance graph is constantly changing: when an edge changes a node&rsquo;s dependency, a new node is created and replaces the old node. This &ldquo;versioned&rdquo; approach allows the graph to be pruned without changing the analysis results, and this versioned graph is acyclic, which can simplify many graph algorithms.</li>
+<li>Another difference is that the provenance graph is stored in main memory, and each event occupies less than 5 bytes. This representation can consume events in real time and build a traceability graph over a long period of time.</li>
 </ul>
-<h2 id="bttp规范">
-    <a href="#bttp%e8%a7%84%e8%8c%83" class="header-anchor">#</a>
-    B.TTP规范
-</h2><p>TTP规范提供了低级别审计事件和高级别APT阶段之间的映射，因此这是本文所提出的方法的核心。TTP代表了具体审计日志和高级APT步骤之间的中间抽象层。具体而言，<strong>主要依靠两种技术将审计日志数据提升到该中间层</strong>：</p>
+<h2 id="bttp-specification">
+    <a href="#bttp-specification" class="header-anchor">#</a>
+    B.TTP specification
+</h2><p>The TTP specification provides a mapping between low-level audit events and high-level APT phases, so this is the core of the approach proposed in this paper. TTP represents an intermediate abstraction layer between concrete audit logs and high-level APT steps. Specifically, <strong>mainly relies on two technologies to promote audit log data to the middle layer</strong>:</p>
 <ol>
-<li>以安全相关事件的溯源图形式的OS中性表示；</li>
-<li>使用TTPs中涉及的实体之间的信息流依赖关系。</li>
+<li>OS-neutral representation in the form of traceability graphs of security-related events;</li>
+<li>Use information flow dependencies between entities involved in TTPs.</li>
 </ol>
-<h2 id="chsg构建">
-    <a href="#chsg%e6%9e%84%e5%bb%ba" class="header-anchor">#</a>
-    C.HSG构建
+<h2 id="chsg-build">
+    <a href="#chsg-build" class="header-anchor">#</a>
+    C.HSG Build
 </h2><p><img src="/media%5c1704196420598-5e0d1edb-858f-4316-9e06-c27879371078.png"
 	
 	
@@ -647,15 +626,15 @@
 	
 	
 >
-HSG的构建主要是由先决条件驱动的。如果一个TTP的所有先决条件都满足了，那么这个TTP就会被匹配并且被添加到HSG中，这可以减少HSG中TTP的数量，从而可以进行复杂的分析而不会影响实时性能。</p>
-<h2 id="d避免虚假依赖">
-    <a href="#d%e9%81%bf%e5%85%8d%e8%99%9a%e5%81%87%e4%be%9d%e8%b5%96" class="header-anchor">#</a>
-    D.避免虚假依赖
-</h2><p>解决HSG中依赖关系爆炸问题</p>
+The construction of HSG is primarily driven by prerequisites. If all prerequisites for a TTP are met, then the TTP is matched and added to the HSG, which can reduce the number of TTPs in the HSG, allowing complex analysis to be performed without affecting real-time performance.</p>
+<h2 id="d-avoid-false-dependencies">
+    <a href="#d-avoid-false-dependencies" class="header-anchor">#</a>
+    D. Avoid false dependencies
+</h2><p>Solve dependency explosion problem in HSG</p>
 <ol>
-<li>祖先覆盖</li>
+<li>Ancestor coverage</li>
 </ol>
-<p>确定该流代表强信息流还是弱信息流相当于确定流中的实体是否共享受损的祖先。如果它们共享受损的祖先，那么它们就是攻击者活动的一部分，并且它们之间存在很强的依赖性，必须优先考虑。否则，我们认为依赖性很弱，并在分析中不再强调它。
+<p>Determining whether the flow represents a strong or weak information flow is equivalent to determining whether the entities in the flow share a compromised ancestor. If they share a compromised ancestor, then they are part of the attacker&rsquo;s campaign and there is a strong dependency between them that must be prioritized. Otherwise, we consider the dependence to be weak and deemphasize it in the analysis.
 <img src="/media%5c1704198043221-310aaa21-3ea8-443e-bffe-51eb9a005f83.png"
 	
 	
@@ -667,54 +646,54 @@ HSG的构建主要是由先决条件驱动的。如果一个TTP的所有先决�
 	
 ></p>
 <ul>
-<li>f 表示一条信息流路径</li>
-<li>仅针对在f中的所有进程，不影响非进程节点</li>
+<li>f represents an information flow path</li>
+<li>Only for all processes in f, does not affect non-process nodes</li>
 </ul>
 <ol start="2">
-<li>最小祖先覆盖</li>
+<li>Minimum ancestor coverage</li>
 </ol>
-<p>$AC_{min}(f)$表示攻击者如果想要控制整条信息流路径，那么所需要攻击的最少祖先节点数</p>
+<p>$AC_{min}(f)$ represents the minimum number of ancestor nodes that an attacker needs to attack if he wants to control the entire information flow path.</p>
 <ol start="3">
-<li>路径因子</li>
+<li>Path factor</li>
 </ol>
-<p>$path_factor(N_1,N_2)$，考虑从$N_1$到$N_2$的所有信息流路径$f_1,&hellip;,f_n$，$m_i$表示为$f_i$的最小祖先覆盖覆盖。那么，$path_factor(N_1,N_2)$就是$m_1,&hellip;,m_n$中的最小值。
-路径因子的使用通过优先考虑受攻击者影响的流，极大地减轻了依赖爆炸</p>
-<h2 id="e降噪">
-    <a href="#e%e9%99%8d%e5%99%aa" class="header-anchor">#</a>
-    E.降噪
-</h2><p>攻击检测和取证的审计日志分析中的一个挑战是存在噪音，即与TTP规则匹配的良性事件。诸如浏览器、Web服务器和ssh守护进程之类的长周期进程不时会触发TTP匹配。为了减少这些误报，结合了基于训练数据的降噪规则。</p>
-<h3 id="良性先决条件匹配">
-    <a href="#%e8%89%af%e6%80%a7%e5%85%88%e5%86%b3%e6%9d%a1%e4%bb%b6%e5%8c%b9%e9%85%8d" class="header-anchor">#</a>
-    良性先决条件匹配
-</h3><p>对于每个进程，系统都会学习当系统在良性环境中运行时频繁触发的先决条件。在运行时，当触发的 TTP 的先决条件与训练期间遇到的先决条件匹配时，系统会忽略该匹配。</p>
-<h3 id="良性数据流数量">
-    <a href="#%e8%89%af%e6%80%a7%e6%95%b0%e6%8d%ae%e6%b5%81%e6%95%b0%e9%87%8f" class="header-anchor">#</a>
-    良性数据流数量
-</h3><p>良性先决条件匹配方法可能会导致漏报（false negative），比如一个恶意事件如果匹配到了良性环境中训练得到的良性先决条件，那么这个恶意事件就可能会被忽略。例如，即便没有任何攻击，在nginx的启动阶段也会执行read /etc/passwd，然而如果我们将该行为列入白名单的话，如果有恶意事件是读取改文件，那么该恶意事件就会被忽略。
-为了解决上述问题，提出了用字节转移度量的数据流数量的概念。比如从/etc/passwd到nginx的数据流数量等于/etc/passwd文件的大小。因此，如果观察到更多的字节从/etc/passwd流向nginx，那么该信息流可能是攻击的一部分。<strong>为了确定信息流数量的临界点，我们在一段时间的良性活动中观察process-file和process-socket活动。</strong></p>
-<h2 id="f信息关联和检测">
-    <a href="#f%e4%bf%a1%e6%81%af%e5%85%b3%e8%81%94%e5%92%8c%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
-    F.信息关联和检测
-</h2><p>对每一个HSG定义严重程度评分（severity score）</p>
+<p>$path_factor(N_1,N_2)$, considering all information flow paths $f_1,&hellip;,f_n$ from $N_1$ to $N_2$, $m_i$ is represented as the minimum ancestor coverage of $f_i$. Then, $path_factor(N_1,N_2)$ is the minimum value among $m_1,&hellip;,m_n$.
+The use of path factors greatly mitigates dependency explosion by prioritizing flows affected by the attacker.</p>
+<h2 id="e-noise-reduction">
+    <a href="#e-noise-reduction" class="header-anchor">#</a>
+    E. Noise reduction
+</h2><p>One challenge in audit log analysis for attack detection and forensics is the presence of noise, i.e. benign events that match TTP rules. Long-lived processes such as browsers, web servers, and ssh daemons trigger TTP matches from time to time. To reduce these false positives, denoising rules based on training data are incorporated.</p>
+<h3 id="good-prerequisite-matching">
+    <a href="#good-prerequisite-matching" class="header-anchor">#</a>
+    Good prerequisite matching
+</h3><p>For each process, the system learns prerequisites that are frequently triggered when the system is operating in a benign environment. At runtime, when a prerequisite for a triggered TTP matches a prerequisite encountered during training, the match is ignored.</p>
+<h3 id="number-of-benign-data-flows">
+    <a href="#number-of-benign-data-flows" class="header-anchor">#</a>
+    Number of benign data flows
+</h3><p>The benign prerequisite matching method may lead to false negatives. For example, if a malicious event matches the benign prerequisites trained in a benign environment, then the malicious event may be ignored. For example, even if there is no attack, read /etc/passwd will be executed during the startup phase of nginx. However, if we whitelist this behavior, if there is a malicious event that reads and changes files, then the malicious event will be ignored.
+In order to solve the above problems, the concept of data flow quantity measured by byte transfer is proposed. For example, the number of data flows from /etc/passwd to nginx is equal to the size of the /etc/passwd file. Therefore, if more bytes are observed flowing from /etc/passwd to nginx, then this flow may be part of an attack. **To determine the critical point in traffic volume, we observe process-file and process-socket activity over a period of benign activity. **</p>
+<h2 id="f-information-association-and-detection">
+    <a href="#f-information-association-and-detection" class="header-anchor">#</a>
+    F. Information association and detection
+</h2><p>Define a severity score for each HSG</p>
 <ol>
-<li>威胁元组</li>
+<li>Threat tuple</li>
 </ol>
-<p>首先通过与相应的HSG关联的抽象威胁元组来表示攻击者在活动中的进度。特别是对于每个HSG，威胁元组由7个元素&lt;S1, S2, S3, …, S7&gt;组成，其中每个Si对应于APT攻击阶段的威胁程度。一个APT阶段通常会包含许多APT，选取威胁程度最高的来构成威胁元组。</p>
+<p>The attacker&rsquo;s progress in the campaign is first represented by an abstract threat tuple associated with the corresponding HSG. Especially for each HSG, the threat tuple consists of 7 elements &lt;S1, S2, S3, …, S7&gt;, where each Si corresponds to the threat level of the APT attack phase. An APT stage usually contains many APTs, and the ones with the highest threat level are selected to form a threat tuple.</p>
 <ol start="2">
-<li>HSG 排名和优先级</li>
+<li>HSG ranking and prioritization</li>
 </ol>
 <p>$\prod_i^n(S_i)^{w_i}\geq{\Tau}$
-n表示APT攻击的步骤数，wi 和 Si 分别表示步骤i的权重和威胁程度，T表示阈值。如果在步骤i中没有TTP出现，我们将Si设置为1。
-【问题：wi设置较为主观，同时依赖Si的合理性】</p>
-<h1 id="实验">
-    <a href="#%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
-    实验
-</h1><h2 id="来源图构建的流消耗">
-    <a href="#%e6%9d%a5%e6%ba%90%e5%9b%be%e6%9e%84%e5%bb%ba%e7%9a%84%e6%b5%81%e6%b6%88%e8%80%97" class="header-anchor">#</a>
-    来源图构建的流消耗
-</h2><p>为了实现平台独立性，来自不同操作系统的审计记录被标准化为通用数据表示（CDR），并为各种系统实体提供共享抽象。为了简化审计数据处理，基于 CDR 的审计记录被发布到流处理服务器（Kafka），并通过从流处理服务器消费来进行实时分析和检测。
+n represents the number of steps of the APT attack, wi and Si represent the weight and threat level of step i respectively, and T represents the threshold. If no TTP occurs in step i, we set Si to 1.
+[Problem: wi setting is more subjective and depends on the rationality of Si]</p>
+<h1 id="experiment">
+    <a href="#experiment" class="header-anchor">#</a>
+    Experiment
+</h1><h2 id="stream-consumption-of-source-graph-construction">
+    <a href="#stream-consumption-of-source-graph-construction" class="header-anchor">#</a>
+    Stream consumption of source graph construction
+</h2><p>To achieve platform independence, audit records from different operating systems are standardized into a Common Data Representation (CDR) and provide a shared abstraction for various system entities. To simplify audit data processing, CDR-based audit records are published to a streaming server (Kafka) and consumed from the streaming server for real-time analysis and detection.
 Md Nahid Hossain, Sadegh M. Milajerdi, Junao Wang, Birhanu Eshete, Rigel Gjomemo, R. Sekar, Scott Stoller, and V.N. Venkatakrishnan. <strong>SLEUTH</strong>: Real-time attack scenario reconstruction from COTS audit data. In 26th USENIX Security Symposium (USENIX Security 17), pages 487–504, Vancouver, BC, 2017. USENIX Association.
-<strong>使用SLEUTH（USENIX’17）系统进行数据流消耗，利用因果关系跟踪和起源图构造。</strong>
+**Using the SLEUTH (USENIX’17) system for data flow consumption, utilizing causality tracing and provenance graph construction. **
 <img src="/media%5c1704169737368-afd26d14-01b9-4f6a-8970-289f89e9cb56.png"
 	
 	
@@ -725,20 +704,20 @@ Md Nahid Hossain, Sadegh M. Milajerdi, Junao Wang, Birhanu Eshete, Rigel Gjomemo
 	
 	
 ></p>
-<h2 id="规则匹配引擎和hsg构建">
-    <a href="#%e8%a7%84%e5%88%99%e5%8c%b9%e9%85%8d%e5%bc%95%e6%93%8e%e5%92%8chsg%e6%9e%84%e5%bb%ba" class="header-anchor">#</a>
-    规则匹配引擎和HSG构建
-</h2><p>此任务的一个特别具有挑战性的部分是检查每个 TTP 的先前匹配的 TTP 的先决条件和路径因子。为了在不回溯的情况下（避免大量运算）解决这一挑战，我们使用<strong>增量匹配方法</strong>来存储先前计算的结果，并沿着图匹配和传播指向这些结果的指针。</p>
-<h2 id="噪声过滤和检测引擎">
-    <a href="#%e5%99%aa%e5%a3%b0%e8%bf%87%e6%bb%a4%e5%92%8c%e6%a3%80%e6%b5%8b%e5%bc%95%e6%93%8e" class="header-anchor">#</a>
-    噪声过滤和检测引擎
-</h2><h1 id="评估">
-    <a href="#%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
-    评估
-</h1><p>为了构建降噪模型，我们使用了4天的良性审计数据。这些程序包括浏览器（如火狐）、Web服务器（如Nginx）和各种守护进程（如postfix、syslogd）。</p>
-<h2 id="得分结果">
-    <a href="#%e5%be%97%e5%88%86%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
-    得分结果
+<h2 id="rule-matching-engine-and-hsg-construction">
+    <a href="#rule-matching-engine-and-hsg-construction" class="header-anchor">#</a>
+    Rule matching engine and HSG construction
+</h2><p>A particularly challenging part of this task is examining each TTP&rsquo;s prerequisites and path factors for previously matched TTPs. To solve this challenge without backtracking (avoiding large operations), we use an incremental matching method to store previously calculated results and match and propagate pointers to these results along the graph.</p>
+<h2 id="noise-filtering-and-detection-engine">
+    <a href="#noise-filtering-and-detection-engine" class="header-anchor">#</a>
+    Noise filtering and detection engine
+</h2><h1 id="evaluate">
+    <a href="#evaluate" class="header-anchor">#</a>
+    Evaluate
+</h1><p>To build the noise reduction model, we used 4 days of benign audit data. These programs include browsers (such as Firefox), web servers (such as Nginx), and various daemon processes (such as postfix, syslogd).</p>
+<h2 id="score-results">
+    <a href="#score-results" class="header-anchor">#</a>
+    Score results
 </h2><p><img src="/media%5c1704252063688-197d6377-9401-43b1-96d9-edeb9ba1ffc0.png"
 	
 	
@@ -749,25 +728,25 @@ Md Nahid Hossain, Sadegh M. Milajerdi, Junao Wang, Birhanu Eshete, Rigel Gjomemo
 	
 	
 ></p>
-<h2 id="性能评估">
-    <a href="#%e6%80%a7%e8%83%bd%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
-    性能评估
+<h2 id="performance-evaluation">
+    <a href="#performance-evaluation" class="header-anchor">#</a>
+    Performance evaluation
 </h2><p>Graph Size
 HSG Size
 Memory Use
 Runtime</p>
-<h2 id="真实场景">
-    <a href="#%e7%9c%9f%e5%ae%9e%e5%9c%ba%e6%99%af" class="header-anchor">#</a>
-    真实场景
+<h2 id="real-scene">
+    <a href="#real-scene" class="header-anchor">#</a>
+    Real scene
 </h2><ol>
-<li>误报（False Positive）</li>
+<li>False Positive</li>
 </ol>
-<p>将系统放在两周的良性活动环境中，没有发现误报</p>
+<p>Putting the system in an environment of benign activity for two weeks, no false positives were found</p>
 <ol start="2">
-<li>漏报（False Negative）</li>
+<li>False Negative</li>
 </ol>
-<p><strong>TTP之间的隐式因果关系</strong>：对于避免系统调用的信息流，HOLMES无法直接查看系统实体之间的因果关系。 但是，如果攻击的其余部分通过系统调用展开，则HOLMES仍将重构部分攻击。
-<strong>多个入口点</strong>：作为一种主动规避技术，攻击者可能会利用多个入口点来生成分离的子图。 HOLMES会跟踪每个单独的入口点，直到满足我们的检测阈值为止，并且当不相交的子图之间存在信息流时，它们会关联TTP。 但是，可能需要一些其他分析来完全关联攻击步骤，这些攻击步骤来自不同的入口点，并且之间没有信息流。</p>
+<p><strong>Implicit causal relationships between TTPs</strong>: For information flow that avoids system calls, HOLMES cannot directly see the causal relationships between system entities. However, if the rest of the attack unfolds via system calls, HOLMES will still reconstruct parts of the attack.
+<strong>Multiple Entry Points</strong>: As an active evasion technique, an attacker may exploit multiple entry points to generate separate subgraphs. HOLMES tracks each individual entry point until our detection threshold is met, and correlates TTPs when there is information flow between disjoint subgraphs. However, some additional analysis may be required to fully correlate attack steps that come from different entry points without information flow between them.</p>
 
 </section>
 
@@ -829,7 +808,7 @@ Runtime</p>
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">相关文章</h2>
+    <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -918,7 +897,7 @@ Runtime</p>
         
 
         <div class="article-details">
-            <h2 class="article-title">图嵌入分析</h2>
+            <h2 class="article-title">Graph embedding analysis</h2>
         </div>
     </a>
 </article>
@@ -988,7 +967,7 @@ Runtime</p>
     <section class="powerby">
         
 		 
-		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
 		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
 		
 		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
@@ -1050,7 +1029,7 @@ Runtime</p>
 		
 		
 		<br>
-			已经发表了 11 篇文章 · 共 80.326k 字
+			已经发表了 11 篇文章 · 共 41.587k 字
 		</br>
     </section>
 	

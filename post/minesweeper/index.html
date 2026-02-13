@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" # 1.分析过程 # （1）寻找游戏基础信息存储位置 调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。\n">
-<title>扫雷外挂</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" # 1. Analysis process # (1) Find the storage location of basic game information Adjust the difficulty level of the Minesweeper game to change the number of mines, then fill in the new number of mines on the CE interface and click the &ldquo;Scan Again&rdquo; button. Repeat this operation until the number of addresses found on the left side of the CE drops to single digits. Double-click the found address to add it to the address list below the CE.\n">
+<title>Minesweeper plug-in</title>
 
 <link rel='canonical' href='https://wintery.net/post/minesweeper/'>
 
-<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="扫雷外挂">
-<meta property='og:description' content=" # 1.分析过程 # （1）寻找游戏基础信息存储位置 调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。\n">
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="Minesweeper plug-in">
+<meta property='og:description' content=" # 1. Analysis process # (1) Find the storage location of basic game information Adjust the difficulty level of the Minesweeper game to change the number of mines, then fill in the new number of mines on the CE interface and click the &ldquo;Scan Again&rdquo; button. Repeat this operation until the number of addresses found on the left side of the CE drops to single digits. Double-click the found address to add it to the address list below the CE.\n">
 <meta property='og:url' content='https://wintery.net/post/minesweeper/'>
 <meta property='og:site_name' content='Wintery'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2023-11-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-28T00:00:00&#43;00:00'/><meta property='og:image' content='https://wintery.net/post/minesweeper/media/bg.png' />
-<meta name="twitter:title" content="扫雷外挂">
-<meta name="twitter:description" content=" # 1.分析过程 # （1）寻找游戏基础信息存储位置 调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。\n"><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Minesweeper plug-in">
+<meta name="twitter:description" content=" # 1. Analysis process # (1) Find the storage location of basic game information Adjust the difficulty level of the Minesweeper game to change the number of mines, then fill in the new number of mines on the CE interface and click the &ldquo;Scan Again&rdquo; button. Repeat this operation until the number of addresses found on the left side of the CE drops to single digits. Double-click the found address to add it to the address list below the CE.\n"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://wintery.net/post/minesweeper/media/bg.png' />
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
 <style>
@@ -61,7 +61,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -184,7 +184,7 @@
 
 
                 
-                <span>主页</span>
+                <span>Home</span>
             </a>
         </li>
         
@@ -203,7 +203,7 @@
 
 
                 
-                <span>留言</span>
+                <span>About</span>
             </a>
         </li>
         
@@ -223,7 +223,7 @@
 
 
                 
-                <span>文章</span>
+                <span>Article</span>
             </a>
         </li>
         
@@ -242,7 +242,7 @@
 
 
                 
-                <span>搜索</span>
+                <span>Search</span>
             </a>
         </li>
         
@@ -261,7 +261,7 @@
 
 
                 
-                <span>链接</span>
+                <span>Link</span>
             </a>
         </li>
         
@@ -286,8 +286,8 @@
 
 
 
-                    <a href="https://wintery.net/en/">
-                        English
+                    <a href="https://wintery.net/zh-cn/">
+                        简体中文
                     </a>
                 </li>
                 
@@ -311,7 +311,7 @@
 
 
 
-                    <span>暗色模式</span>
+                    <span>Dark Mode</span>
                 </li>
                 
             </ol>
@@ -336,16 +336,16 @@
 
 
         </div>
-        <h2 class="widget-title section-title">目录</h2>
+        <h2 class="widget-title section-title">Table of contents</h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#1寻找游戏基础信息存储位置">（1）寻找游戏基础信息存储位置</a></li>
-    <li><a href="#2使用ollydbg找到游戏计时指令存储位置">（2）使用ollydbg找到游戏计时指令存储位置</a></li>
-    <li><a href="#3点到雷不结束游戏">（3）点到雷不结束游戏</a></li>
-    <li><a href="#4自动游戏获胜功能1确定雷区真实的内存起始地址">（4）自动游戏获胜功能1——确定雷区真实的内存起始地址</a></li>
-    <li><a href="#5自动游戏获胜功能2确定扫雷游戏格子大小">（5）自动游戏获胜功能2——确定扫雷游戏格子大小</a></li>
+    <li><a href="#1-find-the-storage-location-of-basic-game-information">(1) Find the storage location of basic game information</a></li>
+    <li><a href="#2-use-ollydbg-to-find-the-game-timing-instruction-storage-location">(2) Use ollydbg to find the game timing instruction storage location</a></li>
+    <li><a href="#3-the-game-will-not-end-if-you-click-on-the-thunder">(3) The game will not end if you click on the thunder</a></li>
+    <li><a href="#4-automatic-game-winning-function-1---determine-the-real-memory-starting-address-of-the-minefield">(4) Automatic game winning function 1 - Determine the real memory starting address of the minefield</a></li>
+    <li><a href="#5-automatic-game-winning-function-2---determine-the-size-of-the-minesweeper-game-grid">(5) Automatic game winning function 2 - Determine the size of the minesweeper game grid</a></li>
   </ol>
 </nav>
         </div>
@@ -366,7 +366,7 @@
                         width="800" 
                         height="568" 
                         loading="lazy"
-                        alt="Featured image of post 扫雷外挂" />
+                        alt="Featured image of post Minesweeper plug-in" />
                 
             </a>
         </div>
@@ -377,7 +377,7 @@
     <header class="article-category">
         
             <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
-                笔记
+                Notes
             </a>
         
     </header>
@@ -385,7 +385,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/post/minesweeper/">扫雷外挂</a>
+            <a href="/post/minesweeper/">Minesweeper plug-in</a>
         </h2>
     
         
@@ -423,7 +423,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 6 分钟
+                    8 minute read
                 </time>
             </div>
         
@@ -432,32 +432,13 @@
             <div>
                 <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
                 <time class="article-words">
-                    2524 字
+                    1594 字
                 </time>
             </div>
         
     </footer>
     
 
-    
-        <footer class="article-translations">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-            <div>
-                
-                    <a href="https://wintery.net/en/post/minesweeper/" class="link">English</a>
-                
-            </div>
-        </footer>
     
 </div>
 
@@ -466,13 +447,13 @@
     <section class="article-content">
     
     
-    <h1 id="1分析过程">
-    <a href="#1%e5%88%86%e6%9e%90%e8%bf%87%e7%a8%8b" class="header-anchor">#</a>
-    1.分析过程
-</h1><h2 id="1寻找游戏基础信息存储位置">
-    <a href="#1%e5%af%bb%e6%89%be%e6%b8%b8%e6%88%8f%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%ad%98%e5%82%a8%e4%bd%8d%e7%bd%ae" class="header-anchor">#</a>
-    （1）寻找游戏基础信息存储位置
-</h2><p>调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。</p>
+    <h1 id="1-analysis-process">
+    <a href="#1-analysis-process" class="header-anchor">#</a>
+    1. Analysis process
+</h1><h2 id="1-find-the-storage-location-of-basic-game-information">
+    <a href="#1-find-the-storage-location-of-basic-game-information" class="header-anchor">#</a>
+    (1) Find the storage location of basic game information
+</h2><p>Adjust the difficulty level of the Minesweeper game to change the number of mines, then fill in the new number of mines on the CE interface and click the &ldquo;Scan Again&rdquo; button. Repeat this operation until the number of addresses found on the left side of the CE drops to single digits. Double-click the found address to add it to the address list below the CE.</p>
 <p><img src="/post/minesweeper/media/0313a3dfea260eec41c893bc9fd9b0a8.png"
 	width="1007"
 	height="743"
@@ -497,8 +478,8 @@
 		data-flex-basis="370px"
 	
 ></p>
-<p>存储地雷数量的地址：0x01005194、0x01005330、0x010056A4</p>
-<p>寻找地图高存储位置，将地图高从24修改为20</p>
+<p>Address where the number of mines is stored: 0x01005194, 0x01005330, 0x010056A4</p>
+<p>Find the map height storage location and change the map height from 24 to 20</p>
 <p><img src="/post/minesweeper/media/7da121503276134dfa9adc76807f90c5.png"
 	width="1141"
 	height="733"
@@ -523,8 +504,8 @@
 		data-flex-basis="373px"
 	
 ></p>
-<p>存储地图高的地址为：0x01005338和0x010056A8</p>
-<p>寻找地图宽存储位置，将地图宽从30修改为26</p>
+<p>The addresses where map heights are stored are: 0x01005338 and 0x010056A8</p>
+<p>Find the map width storage location and change the map width from 30 to 26</p>
 <p><img src="/post/minesweeper/media/dffe2c6326715250e4751075c6b847a6.png"
 	width="1423"
 	height="733"
@@ -549,8 +530,8 @@
 		data-flex-basis="436px"
 	
 ></p>
-<p>存储地图宽的地址为：0x01005334和0x010056AC</p>
-<p>寻找存储游戏时间的地址，首次扫描数值为0</p>
+<p>The addresses where the map width is stored are: 0x01005334 and 0x010056AC</p>
+<p>Find the address where the game time is stored. The first scan value is 0</p>
 <p><img src="/post/minesweeper/media/2aaff885d1c7a11e1d08292123e4cb11.png"
 	width="1000"
 	height="743"
@@ -563,7 +544,7 @@
 		data-flex-basis="323px"
 	
 ></p>
-<p>开始游戏后，不断扫描增加的值，直至扫描结果地址变为个位数</p>
+<p>After starting the game, continue to scan the increasing value until the scan result address becomes a single digit.</p>
 <p><img src="/post/minesweeper/media/b48194385b6f140973bc4b5b34e3a07e.png"
 	width="1002"
 	height="736"
@@ -576,8 +557,8 @@
 		data-flex-basis="326px"
 	
 ></p>
-<p>存储游戏时间的地址为0x0100579C</p>
-<p>寻找已扫数量存储的位置，通过不断增值查找</p>
+<p>The address where the game time is stored is 0x0100579C</p>
+<p>Find the location where the scanned quantity is stored, and search through continuous value addition</p>
 <p><img src="/post/minesweeper/media/704fd942513eac4522e52a02d0c8b067.png"
 	width="1424"
 	height="812"
@@ -590,10 +571,10 @@
 		data-flex-basis="420px"
 	
 ></p>
-<p>存储已扫数量的地址为0x010057A4</p>
-<h2 id="2使用ollydbg找到游戏计时指令存储位置">
-    <a href="#2%e4%bd%bf%e7%94%a8ollydbg%e6%89%be%e5%88%b0%e6%b8%b8%e6%88%8f%e8%ae%a1%e6%97%b6%e6%8c%87%e4%bb%a4%e5%ad%98%e5%82%a8%e4%bd%8d%e7%bd%ae" class="header-anchor">#</a>
-    （2）使用ollydbg找到游戏计时指令存储位置
+<p>The address where the scanned quantity is stored is 0x010057A4</p>
+<h2 id="2-use-ollydbg-to-find-the-game-timing-instruction-storage-location">
+    <a href="#2-use-ollydbg-to-find-the-game-timing-instruction-storage-location" class="header-anchor">#</a>
+    (2) Use ollydbg to find the game timing instruction storage location
 </h2><p><img src="/post/minesweeper/media/b82cdb8b93949d5230cb79fdc4c1f8cd.png"
 	width="2561"
 	height="1381"
@@ -618,12 +599,12 @@
 		data-flex-basis="445px"
 	
 ></p>
-<p>在0x0100579C除设置硬件写入断点，找到计时指令存储位置为0x01003830和0x01002ff5。可在程序中修改这些地址的数据为0x90（nop指令），因此可以在游戏运行时不执行计时递增指令，从而做到游戏计时器停止。</p>
-<h2 id="3点到雷不结束游戏">
-    <a href="#3%e7%82%b9%e5%88%b0%e9%9b%b7%e4%b8%8d%e7%bb%93%e6%9d%9f%e6%b8%b8%e6%88%8f" class="header-anchor">#</a>
-    （3）点到雷不结束游戏
-</h2><p>通过调试发现，程序会将点击位置所在地址的内容与80进行test操作，然后执行je 0x01003595跳转。若点击位置所在地址的内容的若为0x8F，则不执行je跳转；若点击位置所在地址的内容的若为0x0F，则执行je跳转。</p>
-<p>通过对0x01003595的跟踪调试，发现后续执行的是继续游戏的操作，而在不跳转0x01003595则会执行到0x01003593处执行jmp 0x010035AB指令结束游戏。因此可以将内存中0x01003591-0x01003594处的指令修改为nop指令填充，从而满足无条件的游戏继续的跳转（点到雷继续游戏）。</p>
+<p>In addition to setting the hardware write breakpoint at 0x0100579C, the timing instruction storage locations are found to be 0x01003830 and 0x01002ff5. The data of these addresses can be modified in the program to 0x90 (nop instruction), so the timer increment instruction can not be executed when the game is running, thereby stopping the game timer.</p>
+<h2 id="3-the-game-will-not-end-if-you-click-on-the-thunder">
+    <a href="#3-the-game-will-not-end-if-you-click-on-the-thunder" class="header-anchor">#</a>
+    (3) The game will not end if you click on the thunder
+</h2><p>Through debugging, it was found that the program will perform a test operation on the content of the address of the clicked position and 80, and then perform a je 0x01003595 jump. If the content of the address where the click location is located is 0x8F, the je jump will not be executed; if the content of the address where the click location is located is 0x0F, the je jump will be executed.</p>
+<p>Through the tracking and debugging of 0x01003595, it is found that the subsequent execution is to continue the game. If 0x01003595 is not jumped, the execution will be executed to 0x01003593 and the jmp 0x010035AB command will be executed to end the game. Therefore, the instructions at 0x01003591-0x01003594 in the memory can be modified to fill with nop instructions, thereby satisfying the unconditional jump to continue the game (click to continue the game).</p>
 <p><img src="/post/minesweeper/media/018ca7565b50bb6dc3028fec708a9afc.png"
 	width="706"
 	height="251"
@@ -636,10 +617,10 @@
 		data-flex-basis="675px"
 	
 ></p>
-<h2 id="4自动游戏获胜功能1确定雷区真实的内存起始地址">
-    <a href="#4%e8%87%aa%e5%8a%a8%e6%b8%b8%e6%88%8f%e8%8e%b7%e8%83%9c%e5%8a%9f%e8%83%bd1%e7%a1%ae%e5%ae%9a%e9%9b%b7%e5%8c%ba%e7%9c%9f%e5%ae%9e%e7%9a%84%e5%86%85%e5%ad%98%e8%b5%b7%e5%a7%8b%e5%9c%b0%e5%9d%80" class="header-anchor">#</a>
-    （4）自动游戏获胜功能1——确定雷区真实的内存起始地址
-</h2><p>在扫描得到的多组地址中，依次通过右键“浏览相关内存区域”，打开地址所对应的内存空间，然后通过开始新一局游戏和点击雷区左上角的操作，确定雷区真实的内存起始地址，以及地雷和非地雷的标识，地址为0x01005361</p>
+<h2 id="4-automatic-game-winning-function-1---determine-the-real-memory-starting-address-of-the-minefield">
+    <a href="#4-automatic-game-winning-function-1---determine-the-real-memory-starting-address-of-the-minefield" class="header-anchor">#</a>
+    (4) Automatic game winning function 1 - Determine the real memory starting address of the minefield
+</h2><p>Among the multiple sets of addresses obtained by scanning, open the memory space corresponding to the address by right-clicking &ldquo;Browse related memory area&rdquo;, and then by starting a new game and clicking on the upper left corner of the minefield, determine the real memory starting address of the minefield, as well as the identification of mines and non-mines, the address is 0x01005361</p>
 <p><img src="/post/minesweeper/media/38e30faf796120008d2a70a65154e989.png"
 	width="1038"
 	height="799"
@@ -652,8 +633,8 @@
 		data-flex-basis="311px"
 	
 ></p>
-<p>地雷标识数据为0X8F，非地雷标识数据为0X0F 。</p>
-<p>修改地图宽</p>
+<p>The mine identification data is 0X8F, and the non-mine identification data is 0X0F.</p>
+<p>Modify map width</p>
 <p><img src="/post/minesweeper/media/bce973ff81c1e6960544cf952ee19506.png"
 	width="1353"
 	height="803"
@@ -666,7 +647,7 @@
 		data-flex-basis="404px"
 	
 ></p>
-<p>修改地图高</p>
+<p>Modify map height</p>
 <p><img src="/post/minesweeper/media/48c2891e749512abc547e6a625366ef2.png"
 	width="1063"
 	height="795"
@@ -679,12 +660,12 @@
 		data-flex-basis="320px"
 	
 ></p>
-<p>最后通过创建新一局游戏，依次点击第 1、2、3 行最左侧格子的操作确定雷区每行的起始地址，寻找起始地址与雷区行和列之间的对应关系，即确定每行格子的数量为32。</p>
-<h2 id="5自动游戏获胜功能2确定扫雷游戏格子大小">
-    <a href="#5%e8%87%aa%e5%8a%a8%e6%b8%b8%e6%88%8f%e8%8e%b7%e8%83%9c%e5%8a%9f%e8%83%bd2%e7%a1%ae%e5%ae%9a%e6%89%ab%e9%9b%b7%e6%b8%b8%e6%88%8f%e6%a0%bc%e5%ad%90%e5%a4%a7%e5%b0%8f" class="header-anchor">#</a>
-    （5）自动游戏获胜功能2——确定扫雷游戏格子大小
-</h2><p>打开 Spy++，单击“监视&ndash;日志消息”，勾选“隐藏 Spy++选项”，拖动“查找程序工具”至扫雷游戏主界面，如图 8-4 所示，显示的内容包括扫雷窗口类（WNDCLASS）的名称以及标题名。</p>
-<p>切换至Spy++的“消息”窗口，先清除所有消息，然后勾选 “WM_LBUTTONDOWN 和 WM_LBUTTONUP”两个消息，如图 8-5 所示，单击确定后返回 Spy++主界面。</p>
+<p>Finally, create a new game and click on the leftmost grid in rows 1, 2, and 3 to determine the starting address of each row of the minefield, and find the correspondence between the starting address and the rows and columns of the minefield, that is, determine the number of grids in each row to be 32.</p>
+<h2 id="5-automatic-game-winning-function-2---determine-the-size-of-the-minesweeper-game-grid">
+    <a href="#5-automatic-game-winning-function-2---determine-the-size-of-the-minesweeper-game-grid" class="header-anchor">#</a>
+    (5) Automatic game winning function 2 - Determine the size of the minesweeper game grid
+</h2><p>Open Spy++, click &ldquo;Monitor&ndash;Log Message&rdquo;, check &ldquo;Hide Spy++ Options&rdquo;, and drag the &ldquo;Find Program Tool&rdquo; to the main interface of the Minesweeper game, as shown in Figure 8-4. The displayed content includes the name of the Minesweeper window class (WNDCLASS) and the title name.</p>
+<p>Switch to the &ldquo;Message&rdquo; window of Spy++, first clear all messages, and then check the two messages &ldquo;WM_LBUTTONDOWN and WM_LBUTTONUP&rdquo;, as shown in Figure 8-5. Click OK to return to the main interface of Spy++.</p>
 <p><img src="/post/minesweeper/media/3ec2c65ba66fb76d4ad862c5a0542b1c.png"
 	width="726"
 	height="625"
@@ -709,23 +690,37 @@
 		data-flex-basis="1001px"
 	
 ></p>
-<p>返回扫雷游戏界面，依次单击左上角、紧邻左上角右方、紧邻左上角下方的三个格子，查看 Spy++记录的鼠标单击时的 xPos 和 yPos 的值，以此计算每个格子的宽度和高度。</p>
-<p>首个雷区坐标为：</p>
+<p>Return to the Minesweeper game interface, click on the three grids in the upper left corner, immediately to the right of the upper left corner, and immediately below the upper left corner, and view the xPos and yPos values ​​recorded by Spy++ when the mouse is clicked, to calculate the width and height of each grid.</p>
+<p>The coordinates of the first minefield are:</p>
 <p>xPos =14</p>
 <p>yPos =58</p>
-<p>在Spy++界面，右键&ndash;清除消息日志，然后重复上述操作，也可间隔数个格 子单击，以此计算每个格子的平均值，作为每个格子的宽和高度值。格子的宽度为16 ，格子的高度为16 。</p>
-<p>（6）自动游戏获胜功能3——根据雷区存储数据自动游戏</p>
-<p>1）创建控制台项目；</p>
-<p>2）打开扫雷进程，根据雷区的行和列所在内存地址，获取行、列的值；</p>
-<p>3）根据雷区首地址和雷区范围，读取雷区数据；</p>
-<p>4）将扫雷游戏界面置顶，读取雷区第i行第j列的数值，判断是否为地雷，如果不是则模拟鼠标左键单击操作，如果是地雷则模拟鼠标右键单击操作。</p>
-<p>5）根据扫雷游戏界面的客户坐标系，计算第i行第j列的坐标位置，然后将鼠标移动到该位置，执行第3步的鼠标操作。</p>
-<p>6）重复 3-4，直至雷区数据全部被扫描完成。</p>
-<p>程序源码以及可执行文件见附录</p>
-<h1 id="2-使用手册">
-    <a href="#2-%e4%bd%bf%e7%94%a8%e6%89%8b%e5%86%8c" class="header-anchor">#</a>
-    2. 使用手册
-</h1><p>（1）显示游戏运行时基础信息（地图大小、地雷总数等）——输入1</p>
+<p>In the Spy++ interface, right-click - Clear Message Log, and then repeat the above operation. You can also click several grids apart to calculate the average value of each grid as the width and height value of each grid. The width of the grid is 16 and the height of the grid is 16.</p>
+<p>(6) Automatic game winning function 3 - automatic game based on minefield storage data</p>
+<ol>
+<li>
+<p>Create a console project;</p>
+</li>
+<li>
+<p>Open the minesweeper process and obtain the row and column values ​​based on the memory address of the rows and columns of the minefield;</p>
+</li>
+<li>
+<p>Read the minefield data according to the minefield first address and minefield range;</p>
+</li>
+<li>
+<p>Place the minesweeper game interface at the top, read the value in row i and column j of the minefield, and determine whether it is a mine. If not, simulate a left-click operation of the mouse. If it is a mine, simulate a right-click operation of the mouse.</p>
+</li>
+<li>
+<p>According to the customer coordinate system of the Minesweeper game interface, calculate the coordinate position of the i-th row and j-th column, then move the mouse to this position and perform the mouse operation in step 3.</p>
+</li>
+<li>
+<p>Repeat 3-4 until all minefield data is scanned.</p>
+</li>
+</ol>
+<p>See the appendix for program source code and executable files.</p>
+<h1 id="2-user-manual">
+    <a href="#2-user-manual" class="header-anchor">#</a>
+    2. User Manual
+</h1><p>(1) Display basic information when the game is running (map size, total number of mines, etc.) - enter 1</p>
 <p><img src="/post/minesweeper/media/0ee1b06db040358a57448c36646b7ab1.png"
 	width="1112"
 	height="790"
@@ -738,7 +733,7 @@
 		data-flex-basis="337px"
 	
 ></p>
-<p>修改地图信息后重新查看基础信息</p>
+<p>Check the basic information again after modifying the map information.</p>
 <p><img src="/post/minesweeper/media/1f7503e256075bab1ffcea1ab8676e54.png"
 	width="1112"
 	height="790"
@@ -751,7 +746,7 @@
 		data-flex-basis="337px"
 	
 ></p>
-<p>游戏运行后重新查看游戏运行时基础信息</p>
+<p>After the game is running, recheck the basic information when the game is running.</p>
 <p><img src="/post/minesweeper/media/60c7be0236746d92626134c5b3b4c3f0.png"
 	width="1112"
 	height="790"
@@ -764,7 +759,7 @@
 		data-flex-basis="337px"
 	
 ></p>
-<p>（2）计时器停止——输入2</p>
+<p>(2) Timer stops - input 2</p>
 <p><img src="/post/minesweeper/media/3ddaadb10af362f477b63a193470ed9c.png"
 	width="1112"
 	height="790"
@@ -777,7 +772,7 @@
 		data-flex-basis="337px"
 	
 ></p>
-<p>（3）点到雷不会结束游戏——输入3</p>
+<p>(3) Clicking on the mine will not end the game - enter 3</p>
 <p><img src="/post/minesweeper/media/f3aa799e94923ba617a42a6c7158dae9.png"
 	width="1112"
 	height="790"
@@ -790,7 +785,7 @@
 		data-flex-basis="337px"
 	
 ></p>
-<p>（4）自动游戏获胜功能——输入4</p>
+<p>(4) Automatic game winning function - input 4</p>
 <p><img src="/post/minesweeper/media/774a118d645f894f62f3635dde1fd511.png"
 	width="1112"
 	height="790"
@@ -803,10 +798,10 @@
 		data-flex-basis="337px"
 	
 ></p>
-<p>（5）退出程序——输入5</p>
-<h1 id="3代码附录">
-    <a href="#3%e4%bb%a3%e7%a0%81%e9%99%84%e5%bd%95" class="header-anchor">#</a>
-    3.代码附录
+<p>(5) Exit the program - enter 5</p>
+<h1 id="3-code-appendix">
+    <a href="#3-code-appendix" class="header-anchor">#</a>
+    3. Code appendix
 </h1><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">  1
@@ -969,11 +964,11 @@
 </span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005338</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x0100579C</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">play_time</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x010057A4</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">aleardy_mines</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;地图高：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;地图宽：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;地雷总数：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">Mines_num</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;已扫数量：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">aleardy_mines</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;游戏运行时间：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">play_time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Map height: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Map width: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Total number of mines: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">Mines_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Scanned quantity: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">aleady_mines</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Game running time: %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">play_time</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">stop_timing</span><span class="p">()</span> <span class="p">{</span>
@@ -1041,7 +1036,7 @@
 </span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">menu</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">option</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;1.显示游戏运行时基础信息（地图大小、地雷总数等）</span><span class="se">\n</span><span class="s">2.计时器停止</span><span class="se">\n</span><span class="s">3.点到雷不会结束游戏</span><span class="se">\n</span><span class="s">4.自动游戏获胜功能</span><span class="se">\n</span><span class="s">5.退出</span><span class="se">\n</span><span class="s">选择功能：&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;1. Display basic information when the game is running (map size, total number of mines, etc.)</span><span class="se">\n</span><span class="s">2. Stop the timer</span><span class="se">\n</span><span class="s">3. Clicking on the mine will not end the game</span><span class="se">\n</span><span class="s">4. Automatic game winning function</span><span class="se">\n</span><span class="s">5. Exit</span><span class="se">\n</span><span class="s">Select function:&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">option</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">option</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
@@ -1065,7 +1060,7 @@
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">init_minesweeper</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">    <span class="n">menu</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;程序结束......&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Program ends...&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -1130,7 +1125,7 @@
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">相关文章</h2>
+    <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -1219,7 +1214,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">图嵌入分析</h2>
+            <h2 class="article-title">Graph embedding analysis</h2>
         </div>
     </a>
 </article>
@@ -1289,7 +1284,7 @@
     <section class="powerby">
         
 		 
-		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
 		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
 		
 		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
@@ -1351,7 +1346,7 @@
 		
 		
 		<br>
-			已经发表了 11 篇文章 · 共 80.326k 字
+			已经发表了 11 篇文章 · 共 41.587k 字
 		</br>
     </section>
 	

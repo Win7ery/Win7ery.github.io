@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Network and Distributed System Security (NDSS) Symposium 2024">
 <title>NODLINK: An Online System for Fine-Grained APT Attack Detection and Investigation</title>
@@ -61,7 +61,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -184,7 +184,7 @@
 
 
                 
-                <span>主页</span>
+                <span>Home</span>
             </a>
         </li>
         
@@ -203,7 +203,7 @@
 
 
                 
-                <span>留言</span>
+                <span>About</span>
             </a>
         </li>
         
@@ -223,7 +223,7 @@
 
 
                 
-                <span>文章</span>
+                <span>Article</span>
             </a>
         </li>
         
@@ -242,7 +242,7 @@
 
 
                 
-                <span>搜索</span>
+                <span>Search</span>
             </a>
         </li>
         
@@ -261,7 +261,7 @@
 
 
                 
-                <span>链接</span>
+                <span>Link</span>
             </a>
         </li>
         
@@ -286,8 +286,8 @@
 
 
 
-                    <a href="https://wintery.net/en/">
-                        English
+                    <a href="https://wintery.net/zh-cn/">
+                        简体中文
                     </a>
                 </li>
                 
@@ -311,7 +311,7 @@
 
 
 
-                    <span>暗色模式</span>
+                    <span>Dark Mode</span>
                 </li>
                 
             </ol>
@@ -336,56 +336,56 @@
 
 
         </div>
-        <h2 class="widget-title section-title">目录</h2>
+        <h2 class="widget-title section-title">Table of contents</h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#摘要">摘要</a></li>
-    <li><a href="#研究团队介绍">研究团队介绍</a></li>
-    <li><a href="#背景介绍">背景介绍</a>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#research-team-introduction">Research team introduction</a></li>
+    <li><a href="#background-introduction">Background introduction</a>
       <ol>
-        <li><a href="#apt威胁检测">APT威胁检测</a></li>
-        <li><a href="#现有技术的局限性">现有技术的局限性</a></li>
-        <li><a href="#在线stp">在线STP</a></li>
+        <li><a href="#apt-threat-detection">APT Threat Detection</a></li>
+        <li><a href="#limitations-of-existing-technology">Limitations of existing technology</a></li>
+        <li><a href="#online-stp">Online STP</a></li>
       </ol>
     </li>
-    <li><a href="#方法概述">方法概述</a>
+    <li><a href="#method-overview">Method overview</a>
       <ol>
-        <li><a href="#异常检测方法">异常检测方法：</a></li>
-        <li><a href="#内存缓存">内存缓存</a></li>
-        <li><a href="#终端识别">终端识别</a>
+        <li><a href="#anomaly-detection-method">Anomaly detection method:</a></li>
+        <li><a href="#memory-cache">Memory cache</a></li>
+        <li><a href="#terminal-identification">Terminal identification</a>
           <ol>
-            <li><a href="#作用">作用</a></li>
-            <li><a href="#方法">方法</a></li>
+            <li><a href="#function">Function</a></li>
+            <li><a href="#method">method</a></li>
           </ol>
         </li>
-        <li><a href="#hopset构建">Hopset构建</a>
+        <li><a href="#hopset-build">Hopset build</a>
           <ol>
-            <li><a href="#作用-1">作用</a></li>
-            <li><a href="#方法-1">方法</a></li>
+            <li><a href="#function-1">Function</a></li>
+            <li><a href="#method-1">method</a></li>
           </ol>
         </li>
-        <li><a href="#综合检测">综合检测</a>
+        <li><a href="#comprehensive-detection">Comprehensive detection</a>
           <ol>
-            <li><a href="#作用-2">作用</a></li>
-            <li><a href="#方法-2">方法</a></li>
+            <li><a href="#function-2">Function</a></li>
+            <li><a href="#method-2">method</a></li>
           </ol>
         </li>
       </ol>
     </li>
-    <li><a href="#实验评估">实验评估</a>
+    <li><a href="#experimental-evaluation">Experimental evaluation</a>
       <ol>
-        <li><a href="#数据集">数据集</a></li>
-        <li><a href="#图粒度准确度">图粒度准确度</a></li>
-        <li><a href="#节点粒度准确度">节点粒度准确度</a></li>
-        <li><a href="#运行效率">运行效率</a></li>
-        <li><a href="#效率消融实验">效率消融实验</a></li>
-        <li><a href="#其他实验">其他实验</a></li>
+        <li><a href="#dataset">Dataset</a></li>
+        <li><a href="#graph-granularity-accuracy">Graph granularity accuracy</a></li>
+        <li><a href="#node-granularity-accuracy">Node granularity accuracy</a></li>
+        <li><a href="#operating-efficiency">Operating efficiency</a></li>
+        <li><a href="#efficiency-ablation-experiment">Efficiency ablation experiment</a></li>
+        <li><a href="#other-experiments">Other experiments</a></li>
       </ol>
     </li>
-    <li><a href="#相关工作">相关工作</a></li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#related-work">Related work</a></li>
+    <li><a href="#summarize">Summarize</a></li>
   </ol>
 </nav>
         </div>
@@ -417,7 +417,7 @@
     <header class="article-category">
         
             <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
-                笔记
+                Notes
             </a>
         
     </header>
@@ -467,7 +467,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 25 分钟
+                    31 minute read
                 </time>
             </div>
         
@@ -476,32 +476,13 @@
             <div>
                 <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
                 <time class="article-words">
-                    12495 字
+                    6473 字
                 </time>
             </div>
         
     </footer>
     
 
-    
-        <footer class="article-translations">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-            <div>
-                
-                    <a href="https://wintery.net/en/post/nodlink/" class="link">English</a>
-                
-            </div>
-        </footer>
     
 </div>
 
@@ -510,51 +491,51 @@
     <section class="article-content">
     
     
-    <h2 id="摘要">
-    <a href="#%e6%91%98%e8%a6%81" class="header-anchor">#</a>
-    摘要
-</h2><p>高级持续威胁（APT）攻击一直困扰着现代企业，造成了重大的财务损失。为了应对这些攻击，研究人员提出了一些技术，通过使用溯源图对系统实体及其依赖关系进行建模来捕获 APT 攻击的复杂且隐蔽的场景。特别是，为了加速攻击检测并减少经济损失，迫切需要在时效性和资源有限的约束下检测和调查 APT 攻击的在线溯源检测系统。不幸的是，现有的在线系统通常会牺牲检测粒度来降低计算复杂性，并生成超过 100,000 个节点的溯源图，这给安全管理员解释检测结果带来了挑战。在本文中，我们设计并实现了NODLINK，这是<strong>第一个在不牺牲检测粒度的情况下保持高检测精度的在线检测系统</strong> 。我们的见解是，基于在线溯源的检测系统中的 APT 攻击检测过程可以建模为斯坦纳树问题 (STP)，该问题具有高效的在线近似算法，可以恢复简洁的攻击相关溯源图，并具有理论上有限的误差。为了利用STP近似算法的框架进行APT攻击检测，我们提出了一种新颖的内存缓存设计、一种高效的攻击筛选方法以及一种新的STP近似算法，该算法在APT攻击检测方面比传统算法更高效，同时保持相同的复杂性。我们在生产环境中评估 NODLINK。开放世界实验表明，NODLINK 在具有相同或更高吞吐量的同时实现了更高的检测和调查精度，优于两种最先进的 (SOTA) 在线溯源分析系统。</p>
-<h2 id="研究团队介绍">
-    <a href="#%e7%a0%94%e7%a9%b6%e5%9b%a2%e9%98%9f%e4%bb%8b%e7%bb%8d" class="header-anchor">#</a>
-    研究团队介绍
+    <h2 id="summary">
+    <a href="#summary" class="header-anchor">#</a>
+    Summary
+</h2><p>Advanced persistent threat (APT) attacks continue to plague modern enterprises, causing significant financial losses. To combat these attacks, researchers have proposed techniques to capture complex and covert scenarios of APT attacks by modeling system entities and their dependencies using provenance graphs. In particular, in order to speed up attack detection and reduce economic losses, there is an urgent need for an online traceability detection system that can detect and investigate APT attacks under the constraints of timeliness and limited resources. Unfortunately, existing online systems often sacrifice detection granularity to reduce computational complexity and generate provenance graphs exceeding 100,000 nodes, which creates challenges for security administrators in interpreting detection results. In this paper, we design and implement NODLINK, the first online detection system that maintains high detection accuracy without sacrificing detection granularity. Our insight is that the APT attack detection process in online provenance-based detection systems can be modeled as a Steiner Tree Problem (STP), which has an efficient online approximation algorithm that can recover concise attack-related provenance graphs with theoretically bounded errors. To leverage the framework of the STP approximation algorithm for APT attack detection, we propose a novel memory cache design, an efficient attack screening method, and a new STP approximation algorithm that is more efficient than traditional algorithms in APT attack detection while maintaining the same complexity. We evaluate NODLINK in a production environment. Open-world experiments show that NODLINK achieves higher detection and investigation accuracy with the same or higher throughput, outperforming two state-of-the-art (SOTA) online traceability analysis systems.</p>
+<h2 id="research-team-introduction">
+    <a href="#research-team-introduction" class="header-anchor">#</a>
+    Research team introduction
 </h2><p>Shaofei Li, Xiangqun Chen, <strong><a class="link" href="https://yaoguopku.github.io/"  target="_blank" rel="noopener"
     >Yao Guo</a></strong> ,<a class="link" href="https://marapapman.github.io/"  target="_blank" rel="noopener"
-    ><strong>Ding Li</strong></a>：北京大学计算机学院高可信软件技术教育部重点实验室</p>
-<p>Feng Dong, Haoyu Wang：华中科技大学，主要研究软件分析、隐私和安全、电子犯罪、 互联网/系统测量和 AI 安全</p>
-<p>Jiedong Chen：深信服</p>
+    ><strong>Ding Li</strong></a>: Key Laboratory of High Trust Software Technology, Ministry of Education, School of Computer Science, Peking University</p>
+<p>Feng Dong, Haoyu Wang: Huazhong University of Science and Technology, majoring in software analysis, privacy and security, electronic crime, Internet/system measurement and AI security</p>
+<p>Jiedong Chen: Convinced</p>
 <p><a class="link" href="https://xusheng-xiao.github.io/"  target="_blank" rel="noopener"
-    >Xusheng Xiao</a>：亚利桑那州立大学，主要研究移动应用程序分析、网络威胁检测和调查、区块链/智能合约安全以及软件测试和调试</p>
-<p>Fei Shao：凯斯西储大学</p>
-<p>代表作：<strong>Are we there yet? An Industrial Viewpoint on Provenance-based Endpoint Detection and Response Tools.</strong> （CCS'23）</p>
-<h2 id="背景介绍">
-    <a href="#%e8%83%8c%e6%99%af%e4%bb%8b%e7%bb%8d" class="header-anchor">#</a>
-    背景介绍
-</h2><h3 id="apt威胁检测">
-    <a href="#apt%e5%a8%81%e8%83%81%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
-    APT威胁检测
-</h3><p>高级持续威胁（APT）攻击已成为现代企业的主要威胁。由于缺乏恢复APT攻击步骤之间复杂因果关系的能力，这些企业现有的端点检测和响应（EDR）系统在应对APT攻击方面存在困难。因此，从业者和研究人员现在分析溯源数据中的系统审计事件以恢复APT攻击场景。不幸的是，现有的溯源分析系统大多仅支持对 EDR 系统警报的事后分析，这可能会使 APT 攻击的准确检测延迟一周，并造成重大财务损失。最近的一项研究表明，当攻击者持续存在于网络中时，企业每天会损失约 32,000 美元。</p>
-<p>为此，研究人员构建了基于溯源的在线检测系统，可以同时检测和调查 APT 攻击。与事后分析系统不同，基于溯源的在线检测系统可以在 APT 攻击发生后几秒钟内检测并恢复其逻辑，从而使安全管理员能够及时响应并减少潜在损失。此外，通过对整个APT攻击活动而不是单个系统事件进行全面分析，基于溯源的在线检测系统的误报率大大低于传统的EDR系统，进一步提高了APT攻击调查的有效性和效率。</p>
-<p>尽管取得了这些有希望的早期成果，但由于有限资源的限制和对及时性的高期望，构建准确的在线检测系统在概念上仍然具有挑战性。最近的研究表明，运营成本是行业采用 EDR 系统的主要瓶颈。因此，降低基于溯源的检测系统的运行成本非常重要。同时，人们仍然期望基于溯源的检测系统能够及时在线检测APT攻击。不幸的是，在时效性和有限资源的限制下实现高检测精度尤其具有挑战性，因为溯源数据是高度结构化的图（称为溯源图）。现有的图处理算法，例如图神经网络[38]或迭代消息传递算法[41]，由于效率低而无法直接应用。</p>
-<p>为了应对这些挑战，最近的基于溯源的在线检测系统使用低维数据结构或手动制定的规则过度简化高度结构化的溯源图。这些系统通过牺牲检测粒度来降低计算复杂性，它们使检测结果难以解释。例如，给定在溯源数据中捕获的 APT 攻击，SOTA 在线检测系统之一 UNICORN 可能会生成具有超过 100,000 个节点的溯源图。然而，只有不到100个节点与APT攻击有关。因此，从溯源图中识别出如此少量节点所代表的攻击步骤就像“大海捞针”一样，这对于安全管理员来说是极其困难的。</p>
-<p>基于溯源的APT检测的工作流程包含三个步骤：</p>
+    >Xusheng Xiao</a>: Arizona State University, focusing on mobile application analysis, network threat detection and investigation, blockchain/smart contract security, and software testing and debugging</p>
+<p>Fei Shao: Case Western Reserve University</p>
+<p>Representative work: <strong>Are we there yet? An Industrial Viewpoint on Provenance-based Endpoint Detection and Response Tools.</strong> (CCS'23)</p>
+<h2 id="background-introduction">
+    <a href="#background-introduction" class="header-anchor">#</a>
+    Background introduction
+</h2><h3 id="apt-threat-detection">
+    <a href="#apt-threat-detection" class="header-anchor">#</a>
+    APT Threat Detection
+</h3><p>Advanced persistent threat (APT) attacks have become a major threat to modern enterprises. These enterprises&rsquo; existing endpoint detection and response (EDR) systems have difficulty responding to APT attacks due to a lack of ability to recover complex causal relationships between APT attack steps. As a result, practitioners and researchers now analyze system audit events in traceability data to recover APT attack scenarios. Unfortunately, most existing provenance analysis systems only support post-mortem analysis of EDR system alerts, which can delay accurate detection of APT attacks by a week and cause significant financial losses. A recent study showed that businesses lose approximately $32,000 per day when attackers have a persistent presence on their networks.</p>
+<p>To this end, researchers built an online detection system based on traceability that can simultaneously detect and investigate APT attacks. Unlike post-mortem analysis systems, online detection systems based on traceability can detect and restore the logic of APT attacks within seconds after they occur, allowing security administrators to respond promptly and reduce potential losses. In addition, by comprehensively analyzing the entire APT attack activity instead of a single system event, the false positive rate of the traceability-based online detection system is much lower than that of the traditional EDR system, further improving the effectiveness and efficiency of APT attack investigation.</p>
+<p>Despite these promising early results, building accurate online detection systems remains conceptually challenging due to limited resource constraints and high expectations for timeliness. Recent studies indicate that operating costs are a major bottleneck in industry adoption of EDR systems. Therefore, it is very important to reduce the operating costs of traceability-based detection systems. At the same time, people still expect detection systems based on traceability to detect APT attacks online in a timely manner. Unfortunately, achieving high detection accuracy under the constraints of timeliness and limited resources is particularly challenging because provenance data are highly structured graphs (called provenance graphs). Existing graph processing algorithms, such as graph neural networks [38] or iterative message passing algorithms [41], cannot be directly applied due to low efficiency.</p>
+<p>To address these challenges, recent provenance-based online detection systems use low-dimensional data structures or manually formulated rules to oversimplify highly structured provenance graphs. These systems reduce computational complexity by sacrificing detection granularity, and they make detection results difficult to interpret. For example, given an APT attack captured in attribution data, UNICORN, one of SOTA&rsquo;s online detection systems, might generate an attribution graph with over 100,000 nodes. However, less than 100 nodes are associated with APT attacks. Therefore, identifying the attack steps represented by such a small number of nodes from the traceability graph is like &ldquo;finding a needle in a haystack&rdquo;, which is extremely difficult for security administrators.</p>
+<p>The workflow of APT detection based on traceability consists of three steps:</p>
 <ol>
-<li>候选攻击检测，选择妥协指标 (IOC) 或异常事件；</li>
-<li>溯源图构建，用代表系统实体的节点和代表实体交互（例如读/写文件）的边构建图，以揭示 IOC 或异常之间的交互；</li>
-<li>全面检测，根据步骤2构建的溯源图来检测APT攻击。</li>
+<li>Candidate attack detection, selecting indicators of compromise (IOC) or abnormal events;</li>
+<li>Traceability graph construction, using nodes representing system entities and edges representing entity interactions (such as reading/writing files) to construct a graph to reveal interactions between IOCs or exceptions;</li>
+<li>Comprehensive detection, detect APT attacks based on the traceability graph constructed in step 2.</li>
 </ol>
-<p>在这三个步骤中，步骤2构建的溯源图的质量是准确、细粒度检测的关键。不幸的是，构建一个最简洁和准确的溯源图来揭示 IOC 或异常之间的相互作用是具有挑战性的。现有方法使用的启发式要么过度简化溯源图，错过关键信息，要么对于在线检测系统来说过于繁重。因此，他们无法同时实现简洁、高效和准确。</p>
-<p>在本文中，我们提出了FIRST在线检测系统，该系统在时效性和有限资源的约束下实现细粒度检测，同时保持检测精度。现有方法无法同时实现 APT 检测的简洁性、高效性和准确性，因为它们存在根本局限性：缺乏 APT 检测多目标的正式模型。因此，为了解决这个基本限制，我们建议将溯源图构建（溯源检测的步骤 2）建模为 STP（斯坦纳树问题），它可以有效地建模多个目标，并且具有高效的在线能力具有理论有限误差的近似解。将 IOC 或异常视为 STP 中的一组预定义节点（即终端），并为系统实体之间的每次交互分配相同的非负权重。然后，构建溯源图可以建模为在线 STP，它搜索用最少数量的边链接所有异常的子图。通过这样做，我们可以设计一种近似算法，确保子图在多项式时间内在理论上有界误差范围内具有最小边缘。</p>
-<p>虽然听起来很有希望，但解决基于 STP 的 APT 攻击检测问题面临三个主要挑战。</p>
+<p>Among these three steps, the quality of the traceability map constructed in step 2 is the key to accurate and fine-grained detection. Unfortunately, it is challenging to construct the most concise and accurate traceability diagram that reveals the interactions between IOCs or anomalies. Existing methods use heuristics that either oversimplify the provenance graph, miss critical information, or are too burdensome for online detection systems. Therefore, they cannot be concise, efficient, and accurate at the same time.</p>
+<p>In this paper, we propose the FIRST online detection system, which achieves fine-grained detection under the constraints of timeliness and limited resources while maintaining detection accuracy. Existing methods cannot achieve the simplicity, efficiency, and accuracy of APT detection simultaneously because they suffer from a fundamental limitation: the lack of a formal model for APT detection of multiple targets. Therefore, to address this fundamental limitation, we propose to model provenance graph construction (step 2 of provenance detection) as an STP (Steiner Tree Problem), which can efficiently model multiple targets and has efficient online capabilities for approximate solutions with theoretically bounded errors. Think of IOCs or exceptions as a predefined set of nodes (i.e. terminals) in STP and assign the same non-negative weight to every interaction between system entities. Then, building the provenance graph can be modeled as an online STP, which searches for subgraphs that link all anomalies with a minimum number of edges. By doing this, we can design an approximation algorithm that ensures that the subgraph has a minimal edge within a theoretically bounded error in polynomial time.</p>
+<p>While this sounds promising, there are three main challenges in solving the problem of STP-based APT attack detection.</p>
 <ol>
-<li>第一个是如何检测长期攻击？ STP 需要提前了解整个来源图。然而，由于数据大小的原因，将所有来源数据保存在内存中是不可能的，并且由于 I/O 瓶颈，将其存储在磁盘数据库中也不切实际。使用仅保存最新数据的时间窗口的直接方法并不总是有效，因为攻击者可能需要比窗口允许的时间更长的时间。为了解决这个问题，我们提出了一种新颖的内存缓存设计，采用评分方法来优先考虑可能导致 APT 攻击的事件，并在 STP 的时间窗口内捕获长时间运行的攻击。</li>
-<li>第二个挑战是如何在STP中高效地识别终端？现有的检测方法依赖于来源图上的密集随机行走和消息传递，这不适合在线系统。为了解决这个问题，我们设计了一个需要最少计算的 IDF 加权三层变分自动编码器（VAE）。</li>
-<li>第三个挑战是当前的 STP 近似算法对于 APT 攻击检测仍然不够高效。现有的方法需要找到两个节点之间的最短路径，这对于在线APT攻击检测来说成本太高。为了解决这个问题，我们开发了一种用于在线 STP 优化的面向重要性的贪婪算法，该算法以有限的竞争比实现了低计算复杂度。</li>
+<li>The first one is how to detect long term attacks? STP requires understanding the entire source picture in advance. However, keeping all source data in memory is not possible due to data size, and storing it in a disk database is impractical due to I/O bottlenecks. The straightforward approach of using a time window where only the latest data is saved does not always work, as the attacker may need more time than the window allows. To address this issue, we propose a novel memory cache design that employs a scoring approach to prioritize events that may lead to APT attacks and capture long-running attacks within the STP&rsquo;s time window.</li>
+<li>The second challenge is how to efficiently identify terminals in STP? Existing detection methods rely on dense random walks and message passing on the source graph, which is not suitable for online systems. To address this problem, we design an IDF-weighted three-layer variational autoencoder (VAE) that requires minimal computation.</li>
+<li>The third challenge is that the current STP approximation algorithm is still not efficient enough for APT attack detection. Existing methods require finding the shortest path between two nodes, which is too costly for online APT attack detection. To address this problem, we develop an importance-oriented greedy algorithm for online STP optimization that achieves low computational complexity with a limited competitive ratio.</li>
 </ol>
-<p>主要贡献：</p>
+<p>Main contributions:</p>
 <ol>
-<li>我们将APT检测建模为在线STP，为在线APT检测提供了新的视角。</li>
-<li>我们设计并实现了在线APT检测系统NODLINK，该系统基于STP实现了及时性和有限资源的细粒度检测。</li>
-<li>我们在实际生产环境中评估NODLINK。据我们所知，这是对基于来源的 APT 攻击检测的首次开放世界评估。</li>
+<li>We model APT detection as online STP, which provides a new perspective for online APT detection.</li>
+<li>We designed and implemented the online APT detection system NODLINK, which implements timely and fine-grained detection of limited resources based on STP.</li>
+<li>We evaluate NODLINK in a real production environment. To the best of our knowledge, this is the first open-world evaluation of source-based APT attack detection.</li>
 </ol>
 <p><img src="/media%5cbg.png"
 	
@@ -562,312 +543,303 @@
 	
 	loading="lazy"
 	
-		alt="图1：APT29 的来源图示例。 NODLINK 能够在包含约 200 个节点的简洁警报来源图中精确定位攻击。警报来源图的主要部分用红色虚线标记。关键攻击步骤以红色阴影矩形突出显示。"
+		alt="Figure 1: Example of APT29’s source map. NODLINK is able to pinpoint attacks in a concise alert source graph containing approximately 200 nodes. The main part of the alert source graph is marked with a red dashed line. Key attack steps are highlighted with red shaded rectangles. "
 	
 	
 ></p>
-<h3 id="现有技术的局限性">
-    <a href="#%e7%8e%b0%e6%9c%89%e6%8a%80%e6%9c%af%e7%9a%84%e5%b1%80%e9%99%90%e6%80%a7" class="header-anchor">#</a>
-    现有技术的局限性
-</h3><p>现有的基于来源的检测系统可以分为两类：基于规则的系统和基于学习的系统。两组中的许多实例都证明了实现实际图形级精度的能力。然而，现有系统无法同时实现足够的节点级精度和节点级召回率。</p>
-<p>由于规则集不完整，基于规则的系统的节点级准确性较低。例如，基于 SOTA 规则的系统之一 HOLMES无法检测到图 1 中蓝色虚线框中的攻击步骤。原因是 HOLMES 的规则是从外部不受信任的 IP 发起的，而邮件过程并不与外部 IP 地址有直接连接。因此，图 1 中攻击的 HOLMES 输出图是支离破碎的。无法将HOST2上的攻击步骤与HOST1上的攻击步骤联系起来，给根因分析带来了挑战。此外，基于规则的系统在节点级别上会产生许多误报，因为规则无法很好地模拟动态系统的所有特征。</p>
-<p>另一方面，基于学习的系统由于过度逼近而节点级精度较低。为了支持在线检测，现有的基于学习的方法将来源图投影到低维数据结构中以降低计算复杂性，从而导致过度逼近。例如，基于 SOTA 学习的在线检测方法 UNICORN 将来源图转换为哈希向量。因此，UNICORN 无法从良性数据（以绿色虚线框显示）中查明图 1 中与攻击相关的节点（以红色虚线框显示），导致节点级精度较低（&lt;1%）。</p>
-<h3 id="在线stp">
-    <a href="#%e5%9c%a8%e7%ba%bfstp" class="header-anchor">#</a>
-    在线STP
+<h3 id="limitations-of-existing-technology">
+    <a href="#limitations-of-existing-technology" class="header-anchor">#</a>
+    Limitations of existing technology
+</h3><p>Existing source-based detection systems can be divided into two categories: rule-based systems and learning-based systems. Many examples in both groups demonstrate the ability to achieve practical graphics-level accuracy. However, existing systems cannot achieve sufficient node-level precision and node-level recall simultaneously.</p>
+<p>Rule-based systems have lower node-level accuracy due to incomplete rule sets. For example, HOLMES, one of the SOTA rule-based systems, cannot detect the attack steps in the blue dotted box in Figure 1. The reason is that HOLMES&rsquo;s rules are initiated from an external untrusted IP, and the mail process does not have a direct connection to the external IP address. Therefore, the HOLMES output plot of the attack in Figure 1 is fragmented. The attack steps on HOST2 cannot be linked to the attack steps on HOST1, which brings challenges to root cause analysis. Furthermore, rule-based systems produce many false positives at the node level because rules cannot model all characteristics of dynamic systems well.</p>
+<p>On the other hand, learning-based systems suffer from lower node-level accuracy due to over-approximation. To support online detection, existing learning-based methods project source graphs into low-dimensional data structures to reduce computational complexity, leading to over-approximation. For example, UNICORN, an online detection method based on SOTA learning, converts source graphs into hash vectors. Therefore, UNICORN is unable to pinpoint attack-related nodes in Figure 1 (shown in red dashed boxes) from benign data (shown in green dashed boxes), resulting in low node-level accuracy (&lt;1%).</p>
+<h3 id="online-stp">
+    <a href="#online-stp" class="header-anchor">#</a>
+    Online STP
 </h3><p><a class="link" href="https://zhuanlan.zhihu.com/p/684571642"  target="_blank" rel="noopener"
-    >在线STP</a>是一个组合优化问题，被确定为具有有界近似的NP完全问题。给定一个具有非负边权重的无向图 G = (V, E)，我们对每条边 e ∈ E 和一系列在线显示顶点（称为终端）T = {t1, t2,&hellip; , tk}，它输出 G 的一个子图 Si，其跨越 {t1, t2, &hellip; , ti}。目标是最小化 $c(\bigcup_i^kS_i)$ 的总成本。</p>
-<p>在线 STP 优化算法的一般框架如算法 1 所示。对于每个到达的新终端 ti，我们选择将 ti 连接到算法当前解的未选择边的集合 Si。该集合 Si 被选择为最便宜的，在将 ti 连接到现有终端的所有可能集合中，其具有最小的加权边缘。为了找到这个集合，它使用贪心方法：计算 ti 和每个前一个终端 tj 之间的最短路径 Pj（其中 j &lt; i），然后选择最便宜的路径作为 Si。我们将 Si 添加到解决方案中并重复此过程，直到所有终端都到达。最终的解决方案是所有集合 Si 的并集。</p>
+    >Online STP</a> is a combinatorial optimization problem determined to be an NP-complete problem with bounded approximation. Given an undirected graph G = (V, E) with non-negative edge weights, we display for each edge e ∈ E and a series of online vertices (called terminals) T = {t1, t2,&hellip; , tk}, which outputs a subgraph Si of G spanning {t1, t2,&hellip; , ti}. The goal is to minimize the total cost of $c(\bigcup_i^kS_i)$.</p>
+<p>The general framework of the online STP optimization algorithm is shown in Algorithm 1. For each arriving new terminal ti, we choose the set Si of unselected edges connecting ti to the current solution of the algorithm. The set Si is chosen as the cheapest one with the smallest weighted edge among all possible sets connecting ti to existing terminals. To find this set, it uses a greedy approach: it computes the shortest path Pj between ti and each previous terminal tj (where j &lt; i), and then selects the cheapest path as Si. We add Si to the solution and repeat this process until all terminals are reached. The final solution is the union of all sets Si.</p>
 <p><img src="/media%5cimage-20240522150026142.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="算法1"
+		alt="Algorithm 1"
 	
 	
 ></p>
-<h2 id="方法概述">
-    <a href="#%e6%96%b9%e6%b3%95%e6%a6%82%e8%bf%b0" class="header-anchor">#</a>
-    方法概述
-</h2><h3 id="异常检测方法">
-    <a href="#%e5%bc%82%e5%b8%b8%e6%a3%80%e6%b5%8b%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
-    异常检测方法：
+<h2 id="method-overview">
+    <a href="#method-overview" class="header-anchor">#</a>
+    Method overview
+</h2><h3 id="anomaly-detection-method">
+    <a href="#anomaly-detection-method" class="header-anchor">#</a>
+    Anomaly detection method:
 </h3><ol>
-<li><strong>内存缓存设计</strong> ：设计内存缓存以维持最新的异常节点，支持长期攻击的跟踪并保持算法性能。</li>
-<li><strong>终端识别</strong> ：通过分析系统审计事件并使用机器学习模型（如VAE）来识别可疑的进程节点作为终端。</li>
-<li><strong>霍普集构建算法</strong> ：基于重要性分数引导的搜索算法来构建霍普集，该算法考虑了节点的异常分数和与终端的距离。</li>
-<li><strong>重要性分数计算</strong> ：计算每个节点的重要性分数，该分数综合了节点的异常分数、与终端的距离以及FANOUT因子。</li>
-<li><strong>图异常分数</strong> ：为每个霍普集分配一个图异常分数（HAS），这是霍普集中所有节点异常分数的总和。</li>
-<li><strong>综合检测</strong> ：合并时间窗口内构建的霍普集，使用Grubbs测试等统计方法来检测异常高分的霍普集，从而识别APT攻击。</li>
-<li><strong>理论分析</strong> ：对算法的复杂度和竞争比进行理论分析，确保近似算法的有效性和效率。</li>
+<li><strong>Memory cache design</strong>: Design the memory cache to maintain the latest abnormal nodes, support the tracking of long-term attacks and maintain algorithm performance.</li>
+<li><strong>Terminal Identification</strong>: Identify suspicious process nodes as terminals by analyzing system audit events and using machine learning models (such as VAE).</li>
+<li><strong>Hope set construction algorithm</strong>: Construct a Hope set based on a search algorithm guided by the importance score, which takes into account the node&rsquo;s anomaly score and the distance from the terminal.</li>
+<li><strong>Importance score calculation</strong>: Calculate the importance score of each node, which combines the node&rsquo;s anomaly score, distance from the terminal and FANOUT factor.</li>
+<li><strong>Graph Anomaly Score</strong>: Each Hopp set is assigned a graph anomaly score (HAS), which is the sum of the anomaly scores of all nodes in the Hopp set.</li>
+<li><strong>Comprehensive detection</strong>: Merge the Hope sets constructed within the time window, and use statistical methods such as Grubbs test to detect abnormally high-scoring Hope sets to identify APT attacks.</li>
+<li><strong>Theoretical Analysis</strong>: Conduct a theoretical analysis on the complexity and competition ratio of the algorithm to ensure the effectiveness and efficiency of the approximate algorithm.</li>
 </ol>
-<p>一般来说，NODLINK是一个在线APT攻击检测系统。它接受从受监控主机上安装的代理收集的系统来源事件的事件流。 NODLINK 的输出是包含关键攻击步骤的简洁警报来源图，图 1 显示了警报来源图的示例（由红色虚线框标记，其中包含约 200 个事件）。</p>
-<p>算法2显示了NODLINK的高级工作流程，它与现有的检测系统类似。我们的 NODLINK 算法通过四个阶段每隔 Δ（在我们的实现中 Δ = 10）秒检测一次异常：</p>
+<p>Generally speaking, NODLINK is an online APT attack detection system. It accepts an event stream of system-sourced events collected from an agent installed on the monitored host. The output of NODLINK is a concise alert source graph containing key attack steps, Figure 1 shows an example of an alert source graph (marked by a red dotted box, which contains approximately 200 events).</p>
+<p>Algorithm 2 shows the high-level workflow of NODLINK, which is similar to existing detection systems. Our NODLINK algorithm detects anomalies every Δ (Δ = 10 in our implementation) seconds through four stages:</p>
 <ol>
-<li>内存中缓存构建（第 6 行）</li>
-<li>终端识别（第 7 行）</li>
-<li>Hopset 构建（第 8 行）</li>
-<li>综合检测（第9行）</li>
+<li>In-memory cache build (line 6)</li>
+<li>Terminal identification (line 7)</li>
+<li>Hopset construction (line 8)</li>
+<li>Comprehensive detection (line 9)</li>
 </ol>
-<p>我们获取事件并将它们存储在缓存中，允许 NODLINK 跟踪内存中长时间运行的攻击事件的因果关系，而不会受到缓慢 I/O 带来的性能瓶颈的影响。根据本地特征（例如命令行、进程名称和访问的文件）识别可疑进程并分配异常分数。为每个终端构建 Hopset，以连接拓扑上接近的事件级异常。最后，我们将 hopset 与缓存合并，并报告任何具有偏差异常分数的子图作为警报，以减少误报。</p>
+<p>We obtain events and store them in cache, allowing NODLINK to track the cause and effect of long-running attack events in memory without suffering from the performance bottlenecks caused by slow I/O. Identifies suspicious processes and assigns an anomaly score based on local characteristics such as command line, process name, and files accessed. A Hopset is built for each terminal to connect topologically close event-level anomalies. Finally, we merge the hopset with the cache and report any subgraph with a biased anomaly score as an alert to reduce false positives.</p>
 <p><img src="/media%5cimage-20240522152706323.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="算法2"
+		alt="Algorithm 2"
 	
 	
 ></p>
-<p>我们方法的关键新颖之处在于 Hopset 的第三阶段。现有方法要么使用重型图学习算法，要么使用容易出错的启发式算法。在我们的方法中，我们提出了一种基于在线 STP 的方法，可确保简洁、准确和高效。为了将起源图上的 APT 攻击检测建模为 STP，我们将与攻击相关的过程视为终端，并将有向图转换为每条边具有相等非负权重 w 的无向图，为了简化，w = 1。它帮助我们对没有直接因果关系但对同一节点有依赖关系的终端进行建模。因此，APT检测的目的是首先识别终端集T，并找到能够连接所有攻击相关节点且总权值$c(S)=\sum_{(u,v)\in S}W_{uv}$最小的边集S，即，即是一个标准的STP公式。然后，如果 Steiner 树中节点的聚合异常分数大于阈值，我们的系统会发出警报。</p>
-<h3 id="内存缓存">
-    <a href="#%e5%86%85%e5%ad%98%e7%bc%93%e5%ad%98" class="header-anchor">#</a>
-    内存缓存
-</h3><p>将NODLINK的时间窗口设计为内存缓存，以解决长时间运行的攻击并保持在线STP优化算法的效率。它在内存中维护最新的异常节点，并将过时的良性节点驱逐到磁盘。</p>
-<p>在我们的设计中，内存缓存以 &lt;srcid, dstid, attr&gt; 的形式包含起源图的边，其中 srcid 和 dstid 分别是边的源和目的地的 ID，attr 是边的 ID。边的属性，包括操作类型和时间戳。表1列出了边的类型及其可用的操作类型。NODLINK还存储有向图中节点的必要属性，即进程、文件和IP地址。对于进程，NODLINK 存储它们的命令行、进程名称、pid 和 uid。对于文件和IP，NODLINK分别存储它们的路径和IP以及端口。</p>
+<p>The key novelty of our approach lies in the third stage of Hopset. Existing methods either use heavy graph learning algorithms or error-prone heuristics. In our approach, we propose an online STP-based approach that ensures simplicity, accuracy, and efficiency. To model APT attack detection on the origin graph as STP, we treat the attack-related processes as terminals and convert the directed graph into an undirected graph with each edge having equal non-negative weight w, which for simplicity, w = 1. It helps us model terminals that have no direct causal relationship but have dependencies on the same node. Therefore, the purpose of APT detection is to first identify the terminal set T and find the edge set S that can connect all attack-related nodes and have the smallest total weight $c(S)=\sum_{(u,v)\in S}W_{uv}$, that is, it is a standard STP formula. Our system then issues an alert if the aggregate anomaly score of a node in the Steiner tree is greater than a threshold.</p>
+<h3 id="memory-cache">
+    <a href="#memory-cache" class="header-anchor">#</a>
+    Memory cache
+</h3><p>The time window of NODLINK is designed as a memory cache to solve long-running attacks and maintain the efficiency of the online STP optimization algorithm. It maintains the latest abnormal nodes in memory and evicts outdated benign nodes to disk.</p>
+<p>In our design, the memory cache contains the edges of the origin graph in the form &lt;srcid, dstid, attr&gt;, where srcid and dstid are the IDs of the edge&rsquo;s source and destination respectively, and attr is the edge&rsquo;s ID. Edge properties, including operation type and timestamp. Table 1 lists the edge types and their available operation types. NODLINK also stores the necessary attributes of the nodes in the directed graph, namely processes, files and IP addresses. For processes, NODLINK stores their command line, process name, pid, and uid. For files and IPs, NODLINK stores their paths and IPs and ports respectively.</p>
 <p><img src="/media%5cimage-20240525122056345.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="表1：系统溯源事件分析"
+		alt="Table 1: System traceability event analysis"
 	
 	
 ></p>
-<p>缓存更新：通常，内存缓存缓冲子图</p>
+<p>Cache updates: Normally, the in-memory cache buffers subgraphs</p>
 <ol>
-<li>具有较高的异常分数并</li>
-<li>正在积极演变。</li>
+<li>Have a high anomaly score and</li>
+<li>Actively evolving.</li>
 </ol>
-<p>内存缓存会在每个长度为 Δ 的时间窗口更新当前时间窗口中 STP 的解，NODLINK 利用内存缓存来实现全局 STP 解决方案和误报减少。</p>
-<p>NODLINK 将缓存中的子图组织为 hopset，并为每个 hopset 提供一个 hopset 异常分数 (HAS)。在较高级别上，跳跃集是起源图的子集，其中包含一组事件级异常的本地上下文信息。 HAS表示每个hopset的异常程度。</p>
-<h3 id="终端识别">
-    <a href="#%e7%bb%88%e7%ab%af%e8%af%86%e5%88%ab" class="header-anchor">#</a>
-    终端识别
-</h3><p>在终端识别中，NODLINK扫描内存缓存并根据可疑进程节点的节点级特征将其识别为终端。请注意，虽然 NODLINK 的输出仅包含异常进程，但它确实考虑了异常文件和 IP 地址。 NODLINK 将异常文件和 IP 地址合并到访问它们的进程。这一设计决策背后的逻辑是，恶意文件和 IP 在被进程访问之前无法生效。因此，关注异常进程可以减少文件和 IP 上的重复警报，而不会损失节点级的准确性。 NODLINK分析三类节点级特征：启动进程的命令行（命令行）、进程访问的文件（文件）以及进程访问的IP地址（网络）。终端识别包括两个步骤：首先，它根据节点级特征将流程节点嵌入到数值向量中。其次，它使用机器学习模型来检测异常。</p>
-<p><strong>离线模型训练：</strong> 虽然NODLINK是一个在线检测框架，但它需要离线训练FastText模型、VAE模型、SV模型以及从历史数据中提出异常的阈值。 NODLINK 在历史数据中的命令行、文件路径和 IP 地址上训练 FastText 模型。然后，NODLINK 使用经过训练的嵌入向量进一步训练 VAE 模型。 NODLINK 通过对历史数据定期运行 DBSCAN 算法来离线计算 SV。它首先将进程嵌入向量分类为不同的组。然后，将进程名称及其簇数存储在内存哈希表中，用于在线异常分数计算。</p>
-<h4 id="作用">
-    <a href="#%e4%bd%9c%e7%94%a8" class="header-anchor">#</a>
-    作用
+<p>An in-memory cache updates the solution for the STP in the current time window every time window of length Δ, and NODLINK leverages the in-memory cache to achieve global STP solutions and false positive reduction.</p>
+<p>NODLINK organizes subgraphs in the cache into hopsets and provides a hopset anomaly score (HAS) for each hopset. At a high level, a skip set is a subset of the origin graph that contains local contextual information for a set of event-level anomalies. HAS represents the abnormality degree of each hopset.</p>
+<h3 id="terminal-identification">
+    <a href="#terminal-identification" class="header-anchor">#</a>
+    Terminal identification
+</h3><p>In terminal identification, NODLINK scans the memory cache and identifies suspicious process nodes as terminals based on their node-level characteristics. Note that while NODLINK&rsquo;s output only includes anomalous processes, it does take into account anomalous files and IP addresses. NODLINK merges unusual files and IP addresses into the processes accessing them. The logic behind this design decision is that malicious files and IPs cannot take effect until they are accessed by a process. Therefore, focusing on anomalous processes can reduce duplicate alerts on files and IPs without losing node-level accuracy. NODLINK analyzes three types of node-level characteristics: the command line that starts the process (command line), the files accessed by the process (file), and the IP address accessed by the process (network). Terminal identification consists of two steps: first, it embeds process nodes into numerical vectors based on node-level features. Second, it uses machine learning models to detect anomalies.</p>
+<p><strong>Offline model training:</strong> Although NODLINK is an online detection framework, it requires offline training of FastText models, VAE models, SV models, and thresholds for proposing anomalies from historical data. NODLINK trains FastText models on command lines, file paths, and IP addresses in historical data. NODLINK then uses the trained embedding vectors to further train the VAE model. NODLINK calculates SV offline by periodically running the DBSCAN algorithm on historical data. It first classifies process embedding vectors into different groups. The process name and its cluster number are then stored in an in-memory hash table for online anomaly score calculation.</p>
+<h4 id="function">
+    <a href="#function" class="header-anchor">#</a>
+    Function
 </h4><ol>
-<li><strong>识别攻击入口点</strong> ：终端检测的目的是识别出可能表示APT攻击开始的异常或可疑节点，这些节点可以视为攻击的“入口点”或“终端”。</li>
-<li><strong>确定攻击相关实体</strong> ：通过检测异常行为或特征，终端检测帮助确定与APT攻击直接相关的系统实体，如恶意进程、文件或网络连接。</li>
-<li><strong>减少误报</strong> ：准确识别攻击相关的终端可以减少误报，因为这些检测结果将用于后续的霍普集构建和攻击图生成，专注于与攻击最相关的事件。</li>
-<li><strong>提高检测精度</strong> ：终端检测通过分析系统审计事件来恢复APT攻击场景，提高了对攻击步骤的检测精度。</li>
-<li><strong>支持快速响应</strong> ：快速准确地识别攻击终端允许安全管理员及时响应，采取措施以遏制攻击的扩散，减少潜在损失。</li>
-<li><strong>构建攻击图的基础</strong> ：终端检测为构建攻击图提供了基础节点，这些节点是后续霍普集构建和攻击场景重建的关键。</li>
-<li><strong>优化资源分配</strong> ：通过识别最关键的攻击节点，系统可以更有效地分配资源，如计算和存储，以处理与攻击最相关的数据。</li>
-<li><strong>辅助攻击调查</strong> ：终端检测的结果可以辅助安全分析师理解攻击的起源、范围和潜在影响，从而更有效地进行攻击调查和事后分析。</li>
+<li><strong>Identify attack entry points</strong>: The purpose of terminal detection is to identify abnormal or suspicious nodes that may indicate the start of an APT attack. These nodes can be regarded as the &ldquo;entry points&rdquo; or &ldquo;terminals&rdquo; of the attack.</li>
+<li><strong>Identify attack-related entities</strong>: By detecting abnormal behaviors or characteristics, terminal detection helps determine system entities directly related to APT attacks, such as malicious processes, files, or network connections.</li>
+<li><strong>Reduce False Positives</strong>: Accurately identifying attack-related terminals can reduce false positives, as these detection results will be used in subsequent Hope set construction and attack graph generation to focus on the events most relevant to the attack.</li>
+<li><strong>Improve detection accuracy</strong>: Terminal detection recovers APT attack scenarios by analyzing system audit events, improving the detection accuracy of attack steps.</li>
+<li><strong>Support rapid response</strong>: Quickly and accurately identify attacking terminals allowing security administrators to respond promptly and take measures to curb the spread of attacks and reduce potential losses.</li>
+<li><strong>Basics for building attack graphs</strong>: Terminal detection provides basic nodes for building attack graphs. These nodes are the key to subsequent construction of Hope sets and reconstruction of attack scenarios.</li>
+<li><strong>Optimize resource allocation</strong>: By identifying the most critical attack nodes, the system can more effectively allocate resources, such as computing and storage, to process the data most relevant to the attack.</li>
+<li><strong>Assisted attack investigation</strong>: The results of terminal detection can assist security analysts in understanding the origin, scope and potential impact of the attack, so as to conduct attack investigation and post-event analysis more effectively.</li>
 </ol>
-<h4 id="方法">
-    <a href="#%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
-    方法
+<h4 id="method">
+    <a href="#method" class="header-anchor">#</a>
+    method
 </h4><ol>
-<li><strong>基于节点级特征的嵌入（Embedding Based on Node-Level Features）</strong> ：
+<li><strong>Embedding Based on Node-Level Features</strong>:
 <ul>
-<li>NODLINK首先将进程节点的命令行、访问的文件和IP地址等节点级特征嵌入为数值向量。这一步骤使用自然语言处理（NLP）技术，将命令行、文件路径和IP地址转换成自然语言句子，然后利用文档嵌入工具（如FastText）将句子转换成数值向量。</li>
+<li>NODLINK first embeds node-level features such as command lines, accessed files and IP addresses of process nodes into numerical vectors. This step uses natural language processing (NLP) technology to convert command lines, file paths, and IP addresses into natural language sentences, and then uses document embedding tools such as FastText to convert the sentences into numerical vectors.</li>
 </ul>
 </li>
-<li><strong>异常分数计算（Anomaly Score Calculation）</strong> ：
+<li><strong>Anomaly Score Calculation</strong>:
 <ul>
-<li>使用变分自编码器（VAE）模型来为每个进程节点计算异常分数。VAE模型将嵌入向量作为输入，并输出一个重建的输入向量。如果重建向量与原始嵌入向量有显著差异，则该节点更可能是异常的。</li>
+<li>Use a variational autoencoder (VAE) model to calculate anomaly scores for each process node. The VAE model takes an embedding vector as input and outputs a reconstructed input vector. If the reconstructed vector is significantly different from the original embedding vector, the node is more likely to be an anomaly.</li>
 </ul>
 </li>
-<li><strong>稳定性分数（Stability Score）</strong> ：
+<li><strong>Stability Score</strong>:
 <ul>
-<li>为了减少不稳定进程（如经常访问随机文件或IP地址的进程）导致的误报，NODLINK引入了稳定性分数（SV），该分数基于具有相同名称的进程在历史数据中的聚类数量。</li>
+<li>To reduce false positives caused by unstable processes (such as those that frequently access random files or IP addresses), NODLINK introduces a Stability Score (SV), which is based on the number of clusters of processes with the same name in historical data.</li>
 </ul>
 </li>
-<li><strong>综合异常分数（Comprehensive Anomaly Score）</strong> ：
+<li><strong>Comprehensive Anomaly Score</strong>:
 <ul>
-<li>NODLINK将重建误差（由VAE模型给出）和稳定性分数结合起来，计算每个进程节点的综合异常分数。异常分数的计算公式为： $AS(p) = \log\left(\frac{RE(p)}{SV(p)}\right)$ 其中，𝑝是进程的嵌入向量，𝑅𝐸是由VAE模型给出的重建误差，𝑆𝑉是进程 𝑝 的稳定性分数。</li>
+<li>NODLINK combines the reconstruction error (given by the VAE model) and the stability score to calculate a comprehensive anomaly score for each process node. The anomaly score is calculated as: $AS(p) = \log\left(\frac{RE(p)}{SV(p)}\right)$ where 𝑝 is the embedding vector of the process, 𝑅𝐸 is the reconstruction error given by the VAE model, and 𝑆𝑉 is the stability score of process 𝑝.</li>
 </ul>
 </li>
-<li><strong>终端判定（Terminal Determination）</strong> ：
+<li><strong>Terminal Determination</strong>:
 <ul>
-<li>如果一个进程节点的综合异常分数高于历史数据中异常分数的90th百分位数，则该进程节点被标记为异常（终端）。这个阈值是VAE基础异常检测中常用的，以确保方法的泛化能力。</li>
+<li>A process node is marked as anomaly (terminal) if its combined anomaly score is higher than the 90th percentile of anomaly scores in historical data. This threshold is commonly used in VAE basic anomaly detection to ensure the generalization ability of the method.</li>
 </ul>
 </li>
-<li><strong>离线模型训练（Offline Model-Training）</strong> ：
+<li><strong>Offline Model-Training</strong>:
 <ul>
-<li>尽管NODLINK是一个在线检测框架，但它需要在历史数据上离线训练FastText模型、VAE模型、SV模型以及确定异常分数的阈值。</li>
+<li>Although NODLINK is an online detection framework, it requires offline training of FastText model, VAE model, SV model and threshold for determining anomaly scores on historical data.</li>
 </ul>
 </li>
 </ol>
-<h3 id="hopset构建">
-    <a href="#hopset%e6%9e%84%e5%bb%ba" class="header-anchor">#</a>
-    Hopset构建
-</h3><p>在终端识别中检测到终端后，NODLINK运行Hopset Construction来解决当前时间窗口内的STP。某个时间窗口内的跳集是每个终端的邻居上下文，其中包括有界的邻居节点以及到这些节点的路径。 NODLINK利用贪心算法，我们称之为重要性评分引导搜索（ISG）算法，根据局部信息（例如AS和节点度）构造跳集。 Hopset Construction 输出一个具有低复杂度和有限竞争比的 STP 近似解。</p>
-<p><strong>图异常分数计算：</strong> Hopset构建的最后一步是将异常分数HAS分配给每个hopset。我们将 hopset 的 HAS 定义为 hopset 中所有节点的所有异常分数的总和$has(H_i)=\sum_{n\in H_i}AS(n)$。请注意，由于 NODLINK 已经根据 IV 排除了不重要的节点，因此 hopset 中的节点可能与攻击相关。因此，AS 的总和仅包括极有可能与攻击相关的节点。该设计通过避免与攻击无关的事件，有助于提高终端识别中定义的节点级准确性和图级准确性。</p>
-<h4 id="作用-1">
-    <a href="#%e4%bd%9c%e7%94%a8-1" class="header-anchor">#</a>
-    作用
+<h3 id="hopset-build">
+    <a href="#hopset-build" class="header-anchor">#</a>
+    Hopset build
+</h3><p>After detecting a terminal in terminal identification, NODLINK runs Hopset Construction to resolve STPs within the current time window. The hop set within a certain time window is the neighbor context of each terminal, which includes bounded neighbor nodes and paths to these nodes. NODLINK utilizes a greedy algorithm, which we call the Importance Score Guided Search (ISG) algorithm, to construct hop sets based on local information (such as AS and node degree). Hopset Construction outputs an STP approximate solution with low complexity and finite competition ratio.</p>
+<p><strong>Graph Anomaly Score Calculation:</strong> The final step in Hopset construction is to assign the anomaly score HAS to each hopset. We define the HAS of a hopset as the sum of all anomaly scores $has(H_i)=\sum_{n\in H_i}AS(n)$ for all nodes in the hopset. Note that since NODLINK already excludes unimportant nodes based on IV, nodes in the hopset may be relevant to the attack. Therefore, the sum of ASs only includes nodes that are most likely to be relevant to the attack. This design helps improve the node-level accuracy and graph-level accuracy defined in terminal identification by avoiding events unrelated to attacks.</p>
+<h4 id="function-1">
+    <a href="#function-1" class="header-anchor">#</a>
+    Function
 </h4><ol>
-<li><strong>局部上下文捕获</strong> ：霍普集包含了每个终端（即攻击相关的异常节点）的邻居上下文，这包括有界的邻居节点和到这些节点的路径。通过霍普集，系统能够捕获到攻击行为的局部细节。</li>
-<li><strong>异常检测和识别</strong> ：霍普集帮助系统通过连接事件级异常来识别攻击步骤，从而实现对APT攻击的细粒度检测。</li>
-<li><strong>减少误报</strong> ：通过专注于与攻击相关的异常节点，霍普集有助于降低与攻击无关的良性事件的干扰，从而减少误报。</li>
-<li><strong>支持快速检测</strong> ：霍普集的构建是为了与在线STP近似算法相结合，以快速响应新的攻击证据，实现实时检测。</li>
-<li><strong>攻击场景重建</strong> ：霍普集提供了攻击步骤之间的逻辑连接，这对于重建完整的攻击场景至关重要。</li>
+<li><strong>Local context capture</strong>: The Hope set contains the neighbor context of each terminal (i.e., the abnormal node related to the attack), which includes bounded neighbor nodes and paths to these nodes. Through the Hope set, the system can capture the local details of the attack behavior.</li>
+<li><strong>Anomaly Detection and Identification</strong>: Hopeset helps the system identify attack steps by connecting event-level anomalies, thereby enabling fine-grained detection of APT attacks.</li>
+<li><strong>Reduce False Positives</strong>: By focusing on abnormal nodes related to the attack, the Hope set helps reduce the interference of benign events unrelated to the attack, thereby reducing false positives.</li>
+<li><strong>Support rapid detection</strong>: The Hope set is constructed to be combined with the online STP approximation algorithm to quickly respond to new attack evidence and achieve real-time detection.</li>
+<li><strong>Attack Scenario Reconstruction</strong>: The Hop set provides logical connections between attack steps, which is crucial for reconstructing a complete attack scenario.</li>
 </ol>
-<h4 id="方法-1">
-    <a href="#%e6%96%b9%e6%b3%95-1" class="header-anchor">#</a>
-    方法
+<h4 id="method-1">
+    <a href="#method-1" class="header-anchor">#</a>
+    method
 </h4><ol>
-<li><strong>基于重要性分数的搜索</strong> ：NODLINK使用一个称为重要性分数（Importance Score, IV）的指标来指导搜索过程。这个分数考虑了节点的异常分数和与终端的距离。</li>
-<li><strong>贪婪搜索算法</strong> ：霍普集构建采用了一种贪婪搜索算法，该算法从每个终端开始，基于重要性分数探索邻居节点。</li>
-<li><strong>节点选择</strong> ：在搜索过程中，NODLINK会选择那些具有较高重要性分数的节点，以确保霍普集包含与攻击最相关的事件。</li>
-<li><strong>有界搜索范围</strong> ：为了控制霍普集的大小并提高效率，搜索过程会在达到预设的节点数（θ）时停止。</li>
-<li><strong>合并重叠霍普集</strong> ：在贪婪搜索过程中，如果有重叠的霍普集，NODLINK会合并它们，以有效地连接终端。</li>
-<li><strong>异常分数分配</strong> ：每个霍普集都会被分配一个霍普集异常分数（HAS），这是霍普集中所有节点异常分数的总和，用于评估霍普集的异常程度。</li>
-<li><strong>更新和维护</strong> ：在每个时间窗口内，NODLINK会更新内存中的缓存霍普集，并与当前时间窗口内构建的霍普集合并，以维持对当前攻击场景的反映。</li>
+<li><strong>Importance score-based search</strong>: NODLINK uses an indicator called the importance score (Importance Score, IV) to guide the search process. This score takes into account the node&rsquo;s anomaly score and distance from the terminal.</li>
+<li><strong>Greedy Search Algorithm</strong>: Hope set construction adopts a greedy search algorithm, which starts from each terminal and explores neighbor nodes based on importance scores.</li>
+<li><strong>Node Selection</strong>: During the search process, NODLINK selects those nodes with higher importance scores to ensure that the Hope set contains the events most relevant to the attack.</li>
+<li><strong>Bounded search range</strong>: In order to control the size of the Hop set and improve efficiency, the search process will stop when the preset number of nodes (θ) is reached.</li>
+<li><strong>Merge overlapping Hopsets</strong>: During greedy search, if there are overlapping Hopsets, NODLINK will merge them to connect terminals efficiently.</li>
+<li><strong>Anomaly Score Assignment</strong>: Each Hop set will be assigned a Hop set anomaly score (HAS), which is the sum of the anomaly scores of all nodes in the Hop set and is used to evaluate the anomaly degree of the Hop set.</li>
+<li><strong>Update and Maintenance</strong>: In each time window, NODLINK will update the cached Hop set in memory and merge it with the Hop set built in the current time window to maintain the reflection of the current attack scenario.</li>
 </ol>
-<p>通过霍普集构建，NODLINK能够有效地识别和连接APT攻击中的相关事件，实现对攻击行为的快速和准确检测，同时保持对攻击场景的细粒度理解。</p>
-<h3 id="综合检测">
-    <a href="#%e7%bb%bc%e5%90%88%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
-    综合检测
-</h3><p>为了进行全面的检测，NODLINK首先用当前时间窗口构造的hopset更新内存中的缓存hopset。如果当前时间窗口的跳集与缓存中的跳集具有相同的节点，NODLINK 将它们合并。然而，如果我们直接合并 hopset，在最坏的情况下，长时间运行的进程会被识别为终端，并在每个时间窗口中更新 θ 个不同的邻居，这可能会导致依赖爆炸。为了防止这种情况，我们将每个终端的跳数限制在 θ 个节点内，并在合并时将 IV 值较低的节点替换为 IV 值较高的节点。</p>
-<p>跳集合并后，NODLINK 将 HAS 分配给更新的跳集。这样，我们就可以将每个时间窗口的STP解与全局解连接起来，从而重建长期的攻击活动。然后，NODLINK 利用 Grubbs 测试 来检测具有异常高 HAS 的 hopset。Grubbs的测试检测一组样本中的最大值是否为异常值。我们选择Grubbs测试，因为它是非参数化的并且对污染的训练数据集具有鲁棒性。 NODLINK 在内存缓存上运行 Grubbs 测试多轮，直到没有标记异常值。最后，检测到的异常值被识别为攻击活动并发出警报。</p>
-<h4 id="作用-2">
-    <a href="#%e4%bd%9c%e7%94%a8-2" class="header-anchor">#</a>
-    作用
+<p>Through the construction of Hope sets, NODLINK can effectively identify and connect relevant events in APT attacks, achieving rapid and accurate detection of attack behaviors while maintaining a fine-grained understanding of attack scenarios.</p>
+<h3 id="comprehensive-detection">
+    <a href="#comprehensive-detection" class="header-anchor">#</a>
+    Comprehensive detection
+</h3><p>In order to conduct comprehensive detection, NODLINK first updates the cached hopset in memory with the hopset constructed in the current time window. If the hop set for the current time window has the same nodes as the hop set in the cache, NODLINK merges them. However, if we merge hopsets directly, in the worst case, long-running processes will be recognized as terminals and update θ different neighbors in each time window, which may lead to dependency explosion. To prevent this, we limit the number of hops per terminal to θ nodes and replace nodes with lower IV values ​​with nodes with higher IV values ​​when merging.</p>
+<p>After the hop sets are merged, NODLINK assigns the HAS to the updated hop sets. In this way, we can concatenate the STP solution for each time window with the global solution to reconstruct long-term attack activity. NODLINK then utilizes the Grubbs test to detect hopsets with unusually high HAS. Grubbs&rsquo; test detects whether the maximum value in a set of samples is an outlier. We choose the Grubbs test because it is non-parametric and robust to contaminated training data sets. NODLINK runs the Grubbs test on the memory cache for multiple rounds until no outliers are flagged. Finally, detected anomalies are identified as attack activity and alerts are issued.</p>
+<h4 id="function-2">
+    <a href="#function-2" class="header-anchor">#</a>
+    Function
 </h4><ol>
-<li><strong>整合检测结果</strong> ：综合检测负责将不同时间窗口内通过霍普集构建得到的局部检测结果进行整合，形成一个全局的攻击检测视角。</li>
-<li><strong>提高检测准确性</strong> ：通过对各个霍普集的合并和分析，综合检测有助于提高对APT攻击的检测准确性，确保攻击步骤没有被遗漏。</li>
-<li><strong>减少误报</strong> ：综合检测通过合并霍普集并应用统计测试来识别异常高分的霍普集，这有助于区分真正的攻击和误报。</li>
-<li><strong>攻击场景重建</strong> ：综合检测有助于重建完整的APT攻击场景，这对于理解攻击的全貌、攻击者的行为和攻击的影响至关重要。</li>
-<li><strong>及时响应</strong> ：综合检测为安全管理员提供了及时的攻击检测结果，使他们能够快速响应并采取措施来阻止攻击。</li>
-<li><strong>统计分析</strong> ：综合检测使用统计方法（如Grubbs测试）来分析霍普集的异常分数，进一步验证攻击的存在。</li>
+<li><strong>Integrated detection results</strong>: Comprehensive detection is responsible for integrating the local detection results obtained through the Hope set construction in different time windows to form a global attack detection perspective.</li>
+<li><strong>Improve detection accuracy</strong>: By merging and analyzing each Hope set, comprehensive detection helps improve the detection accuracy of APT attacks and ensure that no attack steps are missed.</li>
+<li><strong>Reduce False Positives</strong>: Comprehensive detection identifies unusually high-scoring Hope sets by merging Hope sets and applying statistical tests, which helps distinguish true attacks from false positives.</li>
+<li><strong>Attack Scenario Reconstruction</strong>: Comprehensive detection helps reconstruct the complete APT attack scenario, which is crucial for understanding the full picture of the attack, the attacker&rsquo;s behavior, and the impact of the attack.</li>
+<li><strong>Timely Response</strong>: Comprehensive detection provides security administrators with timely attack detection results, allowing them to respond quickly and take measures to stop the attack.</li>
+<li><strong>Statistical Analysis</strong>: Comprehensive detection uses statistical methods (such as Grubbs test) to analyze the abnormal scores of the Hope set to further verify the existence of the attack.</li>
 </ol>
-<h4 id="方法-2">
-    <a href="#%e6%96%b9%e6%b3%95-2" class="header-anchor">#</a>
-    方法
+<h4 id="method-2">
+    <a href="#method-2" class="header-anchor">#</a>
+    method
 </h4><ol>
-<li><strong>更新缓存霍普集</strong> ：在每个时间窗口结束时，NODLINK会更新内存中缓存的霍普集，将新构建的霍普集与缓存中的霍普集合并。</li>
-<li><strong>合并霍普集</strong> ：如果当前时间窗口构建的霍普集与缓存中的霍普集有相同的节点，NODLINK会将它们合并。合并时，会考虑重要性分数（IV）来决定哪些节点保留。</li>
-<li><strong>限制霍普集大小</strong> ：为了防止依赖爆炸，NODLINK限制每个终端的霍普集大小，并在合并时替换IV值较低的节点。</li>
-<li><strong>计算图异常分数</strong> ：为每个霍普集计算一个图异常分数（HAS），这是霍普集中所有节点异常分数的总和。</li>
-<li><strong>应用统计测试</strong> ：NODLINK使用Grubbs测试等统计方法来检测HAS异常高的霍普集，这些霍普集可能表示攻击活动。</li>
-<li><strong>识别攻击活动</strong> ：通过多轮Grubbs测试，NODLINK识别出异常的霍普集，并将它们标记为攻击活动，随后触发警报。</li>
-<li><strong>生成攻击图</strong> ：综合检测的结果被用于生成攻击图，该攻击图展示了APT攻击的步骤和相关实体之间的依赖关系。</li>
+<li><strong>Update cached Hop set</strong>: At the end of each time window, NODLINK updates the cached Hop set in memory, merging the newly constructed Hop set with the cached Hop set.</li>
+<li><strong>Merge Hope Set</strong>: If the Hope set built in the current time window has the same nodes as the Hope set in the cache, NODLINK will merge them. When merging, the importance score (IV) is considered to decide which nodes to keep.</li>
+<li><strong>Limit Hope Set Size</strong>: To prevent dependency explosion, NODLINK limits the Hope set size of each terminal and replaces nodes with lower IV values ​​when merging.</li>
+<li><strong>Calculate graph anomaly score</strong>: Calculate a graph anomaly score (HAS) for each Hop set, which is the sum of the anomaly scores of all nodes in the Hop set.</li>
+<li><strong>Applied Statistical Tests</strong>: NODLINK uses statistical methods such as the Grubbs test to detect abnormally high HAS hope sets that may indicate attack activity.</li>
+<li><strong>Identification of attack activities</strong>: Through multiple rounds of Grubbs testing, NODLINK identifies abnormal Hop sets and marks them as attack activities, subsequently triggering alerts.</li>
+<li><strong>Generate attack graph</strong>: The results of comprehensive detection are used to generate an attack graph, which shows the steps of the APT attack and the dependencies between related entities.</li>
 </ol>
-<h2 id="实验评估">
-    <a href="#%e5%ae%9e%e9%aa%8c%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
-    实验评估
-</h2><h3 id="数据集">
-    <a href="#%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-anchor">#</a>
-    数据集
+<h2 id="experimental-evaluation">
+    <a href="#experimental-evaluation" class="header-anchor">#</a>
+    Experimental evaluation
+</h2><h3 id="dataset">
+    <a href="#dataset" class="header-anchor">#</a>
+    Dataset
 </h3><p><img src="/media%5cimage-20240525113702848.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="表2：评估数据集摘要"
+		alt="Table 2: Summary of evaluation data set"
 	
 	
 ></p>
-<h3 id="图粒度准确度">
-    <a href="#%e5%9b%be%e7%b2%92%e5%ba%a6%e5%87%86%e7%a1%ae%e5%ba%a6" class="header-anchor">#</a>
-    图粒度准确度
+<h3 id="graph-granularity-accuracy">
+    <a href="#graph-granularity-accuracy" class="header-anchor">#</a>
+    Graph granularity accuracy
 </h3><p><img src="/media%5cimage-20240525110932727.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="表3：数据集的真实情况和检测结果。 CADETS 和 THEIA 的 UNICORN 的精度和召回率来自原始论文。 ProvDetector 无法报告 DARPA-CADETS 数据集上的任何警报，并且由于内存限制而无法对 DARPA-TRACE 数据集进行检测。 HOLMES 无法报告有关开放世界数据集的任何警报"
+		alt="Table 3: Real situation of the data set and detection results. Precision and recall of UNICORN for CADETS and THEIA are from the original paper. ProvDetector was unable to report any alerts on the DARPA-CADETS dataset, and detection on the DARPA-TRACE dataset was not possible due to memory limitations. HOLMES cannot report any alerts on the open world dataset"
 	
 	
 ></p>
-<p><strong>Close-World Result:</strong> 如表3 所示，虽然这些系统可以检测到所有攻击，但它们报告的误报比 NODLINK 更多。具体来说，ProvDetector、UNICORN 和 HOLMES 生成 783、14 和 416 个 GF P。相反，NODLINK 仅报告这些数据集中的一个误报。</p>
-<p>ProvDetector 无法检测到 DARPA-CADETS 中的攻击，并且由于内存限制也无法在 DARPA-TRACE 上进行检测。它还在 DARPA-THEIA 上具有最低的图形级精度，因为它无法处理会爆炸依赖性的浏览器活动。例如，当 Firefox 连接到新的 IP 地址时，ProvDetector 会错误地报告错误警报。 UNICORN 具有较低的图级精度，因为它过度近似起源图。 UNICORN 将来源图投影到数值向量以进行检测。此步骤降低了其图形级精度。 HOLMES 有更多的 GF P，因为它的规则过于保守。例如，如果进程在访问不受信任的 IP 地址后运行命令行实用程序，HOLMES 的命令行实用程序规则会将进程标记为异常。此规则会对长时间运行的进程（例如 Nginx）产生大量误报：一旦 Nginx 进程收到来自不受信任 IP 的连接，所有由 Nginx 进程分叉的 shell 命令执行都会被标记为异常。虽然构建更复杂的规则可以提高 HOLMES 的精度，但考虑系统的异质性和不同类型系统活动的数量是乏味的。</p>
-<p><strong>Open-World Results:</strong> 结果与近距离世界实验的结果一致。 NODLINK 在开放世界实验中的节点级精度较低，因为开放世界实验中的信噪比要低得多。 NODLINK 的性能优于基线。特别是，HOLMES 在开放世界实验中未能检测到任何攻击，因为其规则集缺乏检测 Webshell 和处理劫持攻击的规则。不幸的是，开放世界实验中的攻击都利用了 webshell 和相关攻击来劫持正在运行的进程以保持隐蔽性。因此，HOLMES未能捕获其中任何一个。</p>
-<h3 id="节点粒度准确度">
-    <a href="#%e8%8a%82%e7%82%b9%e7%b2%92%e5%ba%a6%e5%87%86%e7%a1%ae%e5%ba%a6" class="header-anchor">#</a>
-    节点粒度准确度
-</h3><p><img src="/media%5cimage-20240525111326024.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="表4：NODLINK和基线的节点级精度。 PI、HI和UI分别表示NODLINK相对于ProvDetector、HOLMES和UNICORN的改进"
-	
-	
-></p>
+<p><strong>Close-World Result:</strong> As shown in Table 3, although these systems can detect all attacks, they report more false positives than NODLINK. Specifically, ProvDetector, UNICORN, and HOLMES generate 783, 14, and 416 GF Ps. In contrast, NODLINK reports only one false positive in these datasets.</p>
+<p>ProvDetector was unable to detect the attack in DARPA-CADETS and was also unable to detect it on DARPA-TRACE due to memory limitations. It also has the lowest graphics-level accuracy on DARPA-THEIA because it cannot handle browser activity that explodes dependencies. For example, ProvDetector incorrectly reported false alerts when Firefox connected to a new IP address. UNICORN has lower graph-level accuracy because it overapproximates the origin graph. UNICORN projects source images to numerical vectors for detection. This step reduces its graphics-level accuracy. HOLMES has more GF P because its rules are too conservative. For example, if a process runs a command-line utility after accessing an untrusted IP address, HOLMES&rsquo; command-line utility rules will flag the process as an anomaly. This rule can generate a large number of false positives for long-running processes such as Nginx: all shell command executions forked by the Nginx process will be marked as exceptions once the Nginx process receives a connection from an untrusted IP. While building more complex rules can improve the accuracy of HOLMES, taking into account the heterogeneity of the system and the number of different types of system activities is tedious.</p>
+<p><strong>Open-World Results:</strong> The results are consistent with those from the close-world experiment. NODLINK has lower node-level accuracy in open-world experiments because the signal-to-noise ratio is much lower in open-world experiments. NODLINK outperforms the baseline. In particular, HOLMES failed to detect any attacks in open-world experiments because its rule set lacked rules for detecting webshells and handling hijacking attacks. Unfortunately, the attacks in the open world experiment all leveraged webshell and related attacks to hijack running processes to remain invisible. Therefore, HOLMES failed to capture any of them.</p>
+<h3 id="node-granularity-accuracy">
+    <a href="#node-granularity-accuracy" class="header-anchor">#</a>
+    Node granularity accuracy
+</h3><p>![Table 4: Node-level accuracy of NODLINK and baseline. PI, HI and UI represent the improvements of NODLINK relative to ProvDetector, HOLMES and UNICORN respectively] (media\image-20240525111326024.png)</p>
 <p><img src="/media%5cimage-20240525111439169.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="表5：NODLINK和基线的节点级召回。越高越好。值为 1 表示所有攻击动作均已捕获，而 0 表示错过所有攻击步骤"
+		alt="Table 5: Node-level recall of NODLINK and baseline. The higher the better. A value of 1 means that all attack actions are captured, while 0 means that all attack steps are missed"
 	
 	
 ></p>
-<p>**Close-World Results:  ** NODLINK的节点级精度与离线解决方案ProvDetector相当。对于在线解决方案，NODLINK比HOLMES高一到两个数量级，比UNICORN高两到三个数量级。</p>
-<p>对于节点级召回，NODLINK 在其报告的来源图中捕获了大部分攻击步骤。平均而言，NODLINK 覆盖了 98% 的攻击相关事件。遗漏的步骤与侦察有关，例如运行“whoami”、“ipconfig”、“tasklist”和“systeminfo”来收集有关系统的信息。 NODLINK 在我们的实验中捕获了与运行攻击负载和横向移动相关的所有步骤。 HOLMES 的节点级召回率较低，因为它缺乏检测多个攻击步骤的规则。例如，它无法检测由内部文件发起的攻击步骤。</p>
-<p>无法测量 UNICORN 的节点级召回率，因为它只是报告来源图中的所有事件，无论事件与攻击相关还是无关。因此，尽管 UNICORN 在其报告的来源图中捕获了所有攻击步骤，但它的节点级精度比其他方法低很多。此外，UNICORN与其他调查技术不兼容，因为所有调查技术都需要IOC的可疑节点或边缘来发起调查。 UNICORN 不会产生 IOC 作为调查技术的起点。相反，它会生成包含攻击的来源图。因此，我们无法将 UNICORN 与后处理步骤结合起来以提高其节点级精度。</p>
-<p><strong>Open-World Results:</strong> 跳过了 HOLMES 的数据，因为它在开放世界实验中未能检测到任何攻击。总的来说，结果与近距离实验的结果一致。 NODLINK 实现了与 UNICORN 相同的节点级召回率，但节点级精度提高了两个数量级。</p>
-<h3 id="运行效率">
-    <a href="#%e8%bf%90%e8%a1%8c%e6%95%88%e7%8e%87" class="header-anchor">#</a>
-    运行效率
-</h3><p>通过测量吞吐量（吞吐量定义为每秒可以处理多少个系统事件）来评估 NODLINK 及时检测 APT 攻击的效率。</p>
-<p><strong>时间复杂度理论分析：</strong> ProvDetector 首先提取出处图中的所有路径并计算每个事件的规律性得分。然后，它将检测转换为在有向无环图上寻找 K 条最长路径，该问题由 Epstein 算法求解，时间复杂度为 O(E + N log N )。 HOLMES 通过策略匹配引擎处理来源图。因此，其时间复杂度为O(E)，其中E为边数。 UNICORN 构造复杂度为 O(R * E) 的图直方图，并使用 HistoSketch 实时生成图草图，其中 R 是跳数，E 是边数，正如其在其中所声称的那样论文。请记住，NODLINK 的复杂度是 O(θN )。因此，我们的分析预计 NODLINK 和 HOLMES 比 ProvDetector 和 UNICORN 快得多。</p>
-<p><strong>实验分析：</strong> 如图 2 显示 y 轴是每个数据集中每秒处理的事件数。总体而言，NODLINK 的吞吐量与 HOLMES 的吞吐量相当。 NODLINK 在 DARPATHEIA 和 DARPA-TRACE 中具有更高的吞吐量，而 HOLMES 在 In-lab Arena 数据集和开放世界实验中具有更高的吞吐量。</p>
-<p>HOLMES 分两个阶段运行：</p>
-<p>(1) 根据来源数据匹配策略、技术和程序 (TTP)</p>
-<p>(2) 将 TTP 链接到高级场景图 (HSG)</p>
-<p>然而，HOLMES 未能匹配实验室内和开放世界数据集中的一些关键步骤，如表 5 所示。第一阶段的失败消除了第二步的需要，从而导致 HOLMES 在这两个数据集中具有更高的吞吐量性能。 ProvDetector 显示了最差的吞吐量，因为它需要计算每个事件的规律性得分并找到 K 条最长路径。如表 2 所列，开放世界主机平均每秒生成 40 个事件。在工业环境中，基于中央的检测系统预计可以处理集群中数百到数千台主机。假设有 500 个主机，系统每秒必须处理 20,000 个事件。因此，UNICORN和ProvDetector的吞吐量达不到工业要求。总体而言，NODLINK 具有与现有检测系统相当或更高的吞吐量。</p>
+<p>**Close-World Results: ** NODLINK’s node-level accuracy is comparable to the offline solution ProvDetector. For online solutions, NODLINK is one to two orders of magnitude better than HOLMES and two to three orders of magnitude better than UNICORN.</p>
+<p>For node-level recall, NODLINK captures most of the attack steps in its reported source graph. On average, NODLINK covers 98% of attack-related incidents. The missing steps are related to reconnaissance, such as running &ldquo;whoami&rdquo;, &ldquo;ipconfig&rdquo;, &ldquo;tasklist&rdquo; and &ldquo;systeminfo&rdquo; to gather information about the system. NODLINK captured all steps related to running attack payloads and lateral movement in our experiments. HOLMES has lower node-level recall because it lacks rules to detect multiple attack steps. For example, it cannot detect attack steps initiated by internal files.</p>
+<p>UNICORN&rsquo;s node-level recall cannot be measured because it simply reports all events in the source graph, regardless of whether the events are attack-related or not. Therefore, although UNICORN captures all attack steps in its reported source graph, its node-level accuracy is much lower than other methods. Furthermore, UNICORN is incompatible with other investigation techniques, as all investigation techniques require a suspicious node or edge of the IOC to initiate an investigation. UNICORN does not produce IOCs as a starting point for investigative techniques. Instead, it generates a source graph containing the attack. Therefore, we cannot combine UNICORN with a post-processing step to improve its node-level accuracy.</p>
+<p><strong>Open-World Results:</strong> Data from HOLMES was skipped because it failed to detect any attacks in the open-world experiment. Overall, the results are consistent with those from close-range experiments. NODLINK achieves the same node-level recall as UNICORN, but with two orders of magnitude better node-level precision.</p>
+<h3 id="operating-efficiency">
+    <a href="#operating-efficiency" class="header-anchor">#</a>
+    Operating efficiency
+</h3><p>Evaluate NODLINK&rsquo;s effectiveness in detecting APT attacks in a timely manner by measuring throughput, defined as how many system events it can process per second.</p>
+<p><strong>Time complexity theoretical analysis:</strong> ProvDetector first extracts all paths in the provenance graph and calculates the regularity score of each event. It then converts detection into finding the K longest paths on a directed acyclic graph, a problem solved by Epstein&rsquo;s algorithm with time complexity O(E + N log N ). HOLMES processes the source graph through a policy matching engine. Therefore, its time complexity is O(E), where E is the number of edges. UNICORN constructs graph histograms with complexity O(R * E) and generates graph sketches in real time using HistoSketch, where R is the number of hops and E is the number of edges, as claimed in the paper. Remember, the complexity of NODLINK is O(θN ). Therefore, our analysis predicts that NODLINK and HOLMES are significantly faster than ProvDetector and UNICORN.</p>
+<p><strong>Experimental analysis:</strong> As shown in Figure 2, the y-axis is the number of events processed per second in each data set. Overall, the throughput of NODLINK is comparable to that of HOLMES. NODLINK has higher throughput in DARPATHEIA and DARPA-TRACE, while HOLMES has higher throughput in In-lab Arena datasets and open-world experiments.</p>
+<p>HOLMES operates in two phases:</p>
+<p>(1) Matching strategies, techniques and procedures (TTP) to source data</p>
+<p>(2) Link TTP to high-level scene graph (HSG)</p>
+<p>However, HOLMES failed to match some key steps in both the in-lab and open-world datasets, as shown in Table 5. Failure of the first stage eliminates the need for the second stage, resulting in higher throughput performance of HOLMES in both datasets. ProvDetector shows the worst throughput since it requires calculating the regularity score for each event and finding the K longest paths. As listed in Table 2, the open world console generated an average of 40 events per second. In industrial environments, centrally based detection systems are expected to handle hundreds to thousands of hosts in a cluster. Assume there are 500 hosts and the system must handle 20,000 events per second. Therefore, the throughput of UNICORN and ProvDetector does not meet industrial requirements. Overall, NODLINK has throughput that is comparable to or higher than existing detection systems.</p>
 <p><img src="/media%5cimage-20240525112654497.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="图2：NODLINK的吞吐量以及不同数据集上的三个基线。 ProvDetector无法在 DARPATRACE 上运行，因此无法获取吞吐量"
+		alt="Figure 2: Throughput of NODLINK and three baselines on different datasets. ProvDetector cannot run on DARPATRACE, so throughput cannot be obtained"
 	
 	
 ></p>
-<h3 id="效率消融实验">
-    <a href="#%e6%95%88%e7%8e%87%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
-    效率消融实验
-</h3><p>NODLINK设计了内存缓存和ISG来提高效率。在本节中，我们使用 DARPA 数据集对它们分别对效率的影响进行消融研究。为了评估缓存设计，我们禁用缓存并将所有来源数据和缓存图存储在图数据库 Neo4j 中。为了评估 ISG 算法，本文使用传统的斯坦纳树近似算法Kou和 Mehlhorn，以每个时间窗口为基线。在表6中显示了结果。以NODLINK的吞吐量为基准，计算它们之间的比率。总体而言，内存缓存和ISG搜索算法的设计大大提高了检测效率。</p>
+<h3 id="efficiency-ablation-experiment">
+    <a href="#efficiency-ablation-experiment" class="header-anchor">#</a>
+    Efficiency ablation experiment
+</h3><p>NODLINK designed memory cache and ISG to improve efficiency. In this section, we conduct an ablation study on their respective effects on efficiency using the DARPA dataset. To evaluate the caching design, we disabled caching and stored all source data and cached graphs in the graph database Neo4j. To evaluate the ISG algorithm, this paper uses the traditional Steiner tree approximation algorithm Kou and Mehlhorn, with each time window as the baseline. The results are shown in Table 6. Taking the throughput of NODLINK as a benchmark, the ratio between them is calculated. Overall, the design of the memory cache and ISG search algorithm greatly improves detection efficiency.</p>
 <p><img src="/media%5cimage-20240525114506540.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="表6：NODLINK 效率的消融研究。“w/o Cache”禁用内存缓存。“w/Kou”用 Kou 算法代替 ISG。“w/Mehlhorn”用 Mehlhorn 算法代替 ISG。以NODLINK的吞吐量为标准。"
+		alt="Table 6: Ablation study of NODLINK efficiency. “w/o Cache” disables memory caching. “w/Kou” replaces ISG with the Kou algorithm. “w/Mehlhorn” replaces ISG with the Mehlhorn algorithm. Take the throughput of NODLINK as the standard. "
 	
 	
 ></p>
-<p>如表六所示，当禁用内存缓存设计时，效率比原始设计慢82.54 - 159.06倍。当用 Kou 替换我们的算法时，在 DARPACADETS 上效率慢了 8406.86 倍。由于其他两个数据集的处理时间较长，我们无法获得 Kou 的准确时间。当用 Mehlhorn 替换我们的算法时，效率慢了 3.08 - 111.21 倍。研究发现，这些算法的效率随着数据集大小的增加而降低，这是它们高复杂性的结果。</p>
-<h3 id="其他实验">
-    <a href="#%e5%85%b6%e4%bb%96%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
-    其他实验
-</h3><p><strong>实验案例：</strong> 本文通过七个案例研究展示 NODLINK 如何在开放世界实验中检测真实攻击。总体而言，HOLMES 未能检测到所有这些攻击，因为它缺乏检测 webshell 代码注入的规则。 NODLINK 和 UNICORN 可以成功检测到它们。NODLINK具有更高的节点级精度，其数量级始终比 UNICORN 大。</p>
-<p><strong>超参数实验：</strong> 本文使用 DARPA 数据集上的最佳实验结果选择默认超参数。总体而言，NODLINK 对参数变化具有鲁棒性，因为我们选择使用非参数化学习技术。</p>
-<h2 id="相关工作">
-    <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c" class="header-anchor">#</a>
-    相关工作
-</h2><p>SLEUTH 是第一个基于来源的在线 APT 检测系统。存在各种离线事后攻击调查系统，使用大量图学习算法。然而，这些可能会延迟检测，导致经济损失。与这些系统相比，NODLINK 是第一个在不损失检测粒度的情况下实现高检测精度的在线系统。还有针对传统入侵检测系统的研究，然而，这些系统与 NODLINK 是正交的，因为它们无法支持 APT 攻击调查。未来可以<strong>借用传统入侵检测系统最新进展的思想来提高terminal Identification中异常识别的准确性</strong> 。</p>
-<p>NODLINK 还与传统的基于主机的入侵检测技术 (HIDS) 相关。 Log2vec 通过在异构图上随机游走的图嵌入将日志嵌入到向量中。 Deeplog 使用长短期记忆（LSTM）对日志的序列和上下文特征进行建模。这些技术在检测APT攻击方面效果较差，因为它们无法链接攻击步骤并重建APT攻击活动。</p>
-<h2 id="总结">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-anchor">#</a>
-    总结
-</h2><p><strong>规避攻击：</strong> NODLINK 与其他基于分数传播的技术（如 MORSE [46]、PrioTracker [68] 和 NoDoze [41]）保持安全对等，为来源子图提供高效、准确的异常分数计算。尽管它很稳健，但仍发现了针对 NODLINK 的两种潜在攻击。</p>
+<p>As shown in Table VI, when the memory cache design is disabled, the efficiency is 82.54 - 159.06 times slower than the original design. When replacing our algorithm with Kou, it is 8406.86 times slower on DARPACADETS. Due to the long processing time of the other two datasets, we were unable to obtain an accurate time for Kou. When replacing our algorithm with Mehlhorn, the efficiency is 3.08 - 111.21 times slower. The study found that the efficiency of these algorithms decreases with increasing data set size, which is a result of their high complexity.</p>
+<h3 id="other-experiments">
+    <a href="#other-experiments" class="header-anchor">#</a>
+    Other experiments
+</h3><p><strong>Experiment Cases:</strong> This article uses seven case studies to demonstrate how NODLINK detects real attacks in an open-world experiment. Overall, HOLMES fails to detect all these attacks because it lacks rules to detect webshell code injection. NODLINK and UNICORN can successfully detect them. NODLINK has higher node-level accuracy, which is always orders of magnitude greater than UNICORN.</p>
+<p><strong>Hyperparameter Experiments:</strong> This article uses the best experimental results on the DARPA dataset to select default hyperparameters. Overall, NODLINK is robust to parameter changes because we chose to use non-parametric learning techniques.</p>
+<h2 id="related-work">
+    <a href="#related-work" class="header-anchor">#</a>
+    Related work
+</h2><p>SLEUTH is the first source-based online APT detection system. Various offline post-attack investigation systems exist, using a large number of graph learning algorithms. However, these may delay detection, resulting in financial losses. Compared to these systems, NODLINK is the first online system to achieve high detection accuracy without losing detection granularity. There are also studies on traditional intrusion detection systems, however, these systems are orthogonal to NODLINK as they cannot support APT attack investigation. In the future, ideas from the latest advances in traditional intrusion detection systems can be borrowed to improve the accuracy of anomaly identification in terminal Identification.</p>
+<p>NODLINK is also related to traditional host-based intrusion detection techniques (HIDS). Log2vec embeds logs into vectors via graph embedding of random walks on heterogeneous graphs. Deeplog uses long short-term memory (LSTM) to model the sequential and contextual features of logs. These techniques are less effective at detecting APT attacks because they cannot link attack steps and reconstruct APT attack activity.</p>
+<h2 id="summarize">
+    <a href="#summarize" class="header-anchor">#</a>
+    Summarize
+</h2><p><strong>Attacking Attacks:</strong> NODLINK maintains secure parity with other score propagation-based techniques such as MORSE [46], PrioTracker [68] and NoDoze [41], providing efficient and accurate anomaly score calculations for source subgraphs. Despite its robustness, two potential attacks against NODLINK were discovered.</p>
 <ol>
-<li>攻击者可以利用分数传播中使用的衰减因子，使用良性诱饵事件来降低攻击路径的异常分数。然而，这种理论上的威胁在实践中问题不大，因为创建良性节点通常会导致新的异常并创建可检测到的异常路径形状。</li>
-<li>攻击者可以尝试通过延长每个攻击步骤之间的时间间隔来逃避检测，从而导致异常节点被从缓存中清除。 NODLINK 通过节点检索机制来应对这一问题，该机制从磁盘中恢复被逐出的节点，防止长期攻击规避。</li>
+<li>An attacker can take advantage of the attenuation factor used in score propagation and use benign decoy events to reduce the abnormal score of the attack path. However, this theoretical threat is less problematic in practice, as creating benign nodes often leads to new anomalies and creates detectable anomalous path shapes.</li>
+<li>An attacker can try to evade detection by extending the time interval between each attack step, causing abnormal nodes to be purged from the cache. NODLINK counters this problem with a node retrieval mechanism that recovers evicted nodes from disk, preventing long-term attack evasion.</li>
 </ol>
-<p><strong>鲁棒性：</strong> 得益于 Grubbs 的测试识别和 VAE 的鲁棒性，NODLINK 对于包含轻微攻击的训练数据集具有弹性。我们使用五个封闭世界数据集评估了 NODLINK 针对污染训练数据的鲁棒性，并向其中添加了一天的攻击数据。结果显示，NODLINK 的图表和节点级准确性并未受到训练集中存在的一些攻击相关数据的影响。这得益于本文的设计选择采用 <strong>VAE 和非参数化异常检测技术</strong> 。</p>
-<p>基于在线来源的检测系统比事后检测系统更适合及时检测 APT 攻击。然而，由于资源和及时性有限，现有系统为了准确性而牺牲了检测粒度。我们观察到现有系统无法实现细粒度的检测，因为它们将大部分有限的资源浪费在明显良性的事件上。为此，我们提出NODLINK，一种基于来源的在线检测系统，可以在满足有限资源和及时性的约束的同时实现细粒度的检测。 NODLINK 的关键思想是将 APT 攻击检测问题建模为 STP，它具有高效的在线近似算法，理论上误差有限。我们在生产环境中的实验表明，与两个 SOTA 在线来源分析系统相比，NODLINK 可以在相同或更高的吞吐量下实现更高的检测和调查精度。</p>
+<p><strong>Robustness:</strong> Thanks to Grubbs&rsquo; test identification and VAE&rsquo;s robustness, NODLINK is resilient to training data sets containing minor attacks. We evaluate the robustness of NODLINK against contaminated training data using five closed-world datasets, to which we add one day of attack data. The results show that NODLINK&rsquo;s graph and node-level accuracy is not affected by the presence of some attack-related data in the training set. This is due to the design choice of this article to use <strong>VAE and non-parametric anomaly detection technology</strong>.</p>
+<p>Detection systems based on online sources are better suited for timely detection of APT attacks than post-event detection systems. However, due to limited resources and timeliness, existing systems sacrifice detection granularity for accuracy. We observe that existing systems fail to achieve fine-grained detection because they waste most of their limited resources on apparently benign events. To this end, we propose NODLINK, a source-based online detection system that can achieve fine-grained detection while meeting the constraints of limited resources and timeliness. The key idea of ​​NODLINK is to model the APT attack detection problem as STP, which has an efficient online approximation algorithm with limited theoretical error. Our experiments in a production environment show that NODLINK can achieve higher detection and investigation accuracy at the same or higher throughput compared to two SOTA online source analysis systems.</p>
 
 </section>
 
@@ -929,7 +901,7 @@
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">相关文章</h2>
+    <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -1018,7 +990,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">图嵌入分析</h2>
+            <h2 class="article-title">Graph embedding analysis</h2>
         </div>
     </a>
 </article>
@@ -1088,7 +1060,7 @@
     <section class="powerby">
         
 		 
-		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
 		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
 		
 		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
@@ -1150,7 +1122,7 @@
 		
 		
 		<br>
-			已经发表了 11 篇文章 · 共 80.326k 字
+			已经发表了 11 篇文章 · 共 41.587k 字
 		</br>
     </section>
 	

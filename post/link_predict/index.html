@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2023 ICML">
 <title>Linkless Link Prediction via Relational Distillation</title>
@@ -61,7 +61,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -184,7 +184,7 @@
 
 
                 
-                <span>主页</span>
+                <span>Home</span>
             </a>
         </li>
         
@@ -203,7 +203,7 @@
 
 
                 
-                <span>留言</span>
+                <span>About</span>
             </a>
         </li>
         
@@ -223,7 +223,7 @@
 
 
                 
-                <span>文章</span>
+                <span>Article</span>
             </a>
         </li>
         
@@ -242,7 +242,7 @@
 
 
                 
-                <span>搜索</span>
+                <span>Search</span>
             </a>
         </li>
         
@@ -261,7 +261,7 @@
 
 
                 
-                <span>链接</span>
+                <span>Link</span>
             </a>
         </li>
         
@@ -286,8 +286,8 @@
 
 
 
-                    <a href="https://wintery.net/en/">
-                        English
+                    <a href="https://wintery.net/zh-cn/">
+                        简体中文
                     </a>
                 </li>
                 
@@ -311,7 +311,7 @@
 
 
 
-                    <span>暗色模式</span>
+                    <span>Dark Mode</span>
                 </li>
                 
             </ol>
@@ -336,31 +336,31 @@
 
 
         </div>
-        <h2 class="widget-title section-title">目录</h2>
+        <h2 class="widget-title section-title">Table of contents</h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#引言">引言</a></li>
-    <li><a href="#相关工作和背景">相关工作和背景</a></li>
-    <li><a href="#跨模型知识蒸馏用于链接预测">跨模型知识蒸馏用于链接预测</a>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#related-work-and-background">Related work and background</a></li>
+    <li><a href="#cross-model-knowledge-distillation-for-link-prediction">Cross-model knowledge distillation for link prediction</a>
       <ol>
-        <li><a href="#直接方法">直接方法</a></li>
-        <li><a href="#关系蒸馏的链接预测">关系蒸馏的链接预测</a></li>
-        <li><a href="#无连接链接预测">无连接链接预测</a></li>
+        <li><a href="#direct-method">Direct method</a></li>
+        <li><a href="#link-prediction-for-relation-distillation">Link prediction for relation distillation</a></li>
+        <li><a href="#connectionless-link-prediction">Connectionless link prediction</a></li>
       </ol>
     </li>
-    <li><a href="#实验评估">实验评估</a>
+    <li><a href="#experimental-evaluation">Experimental evaluation</a>
       <ol>
-        <li><a href="#实验设置">实验设置</a></li>
-        <li><a href="#链接预测结果">链接预测结果</a></li>
-        <li><a href="#推理速度">推理速度</a></li>
-        <li><a href="#冷启动节点的链接预测结果">冷启动节点的链接预测结果</a></li>
-        <li><a href="#大规模数据集上的链接预测结果">大规模数据集上的链接预测结果</a></li>
-        <li><a href="#消融实验">消融实验</a></li>
+        <li><a href="#experimental-settings">Experimental settings</a></li>
+        <li><a href="#link-prediction-results">Link prediction results</a></li>
+        <li><a href="#inference-speed">Inference speed</a></li>
+        <li><a href="#link-prediction-results-of-cold-start-nodes">Link prediction results of cold start nodes</a></li>
+        <li><a href="#link-prediction-results-on-large-scale-data-sets">Link prediction results on large-scale data sets</a></li>
+        <li><a href="#ablation-experiment">Ablation experiment</a></li>
       </ol>
     </li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#summarize">Summarize</a></li>
   </ol>
 </nav>
         </div>
@@ -392,7 +392,7 @@
     <header class="article-category">
         
             <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
-                笔记
+                Notes
             </a>
         
     </header>
@@ -442,7 +442,7 @@
 
 
                 <time class="article-time--reading">
-                    阅读时长: 19 分钟
+                    21 minute read
                 </time>
             </div>
         
@@ -451,32 +451,13 @@
             <div>
                 <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
                 <time class="article-words">
-                    9257 字
+                    4439 字
                 </time>
             </div>
         
     </footer>
     
 
-    
-        <footer class="article-translations">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-            <div>
-                
-                    <a href="https://wintery.net/en/post/link_predict/" class="link">English</a>
-                
-            </div>
-        </footer>
     
 </div>
 
@@ -485,24 +466,24 @@
     <section class="article-content">
     
     
-    <h1 id="通过关系蒸馏进行无链接链路预测">
-    <a href="#%e9%80%9a%e8%bf%87%e5%85%b3%e7%b3%bb%e8%92%b8%e9%a6%8f%e8%bf%9b%e8%a1%8c%e6%97%a0%e9%93%be%e6%8e%a5%e9%93%be%e8%b7%af%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
-    通过关系蒸馏进行无链接链路预测
-</h1><p>图神经网络（GNN）在链路预测任务中表现出了卓越的性能。尽管图形神经网络非常有效，但其非三角邻域数据依赖性带来的高延迟限制了图形神经网络的实际部署。相反，由于缺乏关系知识，已知的高效 MLP 的效果远不如 GNN。在这项工作中，为了结合 GNN 和 MLP 的优势，我们首先探索了用于链接预测的直接知识提炼（KD）方法，即基于预测 logit 的匹配和基于节点表示的匹配。在观察到直接 KD 类似方法在链接预测中的表现不佳后，我们提出了一种关系 KD 框架，即无链接链接预测（LLP），以利用 MLP 对链接预测进行知识提炼。与匹配独立链接对数或节点表示的简单 KD 方法不同，LLP 将以每个（锚）节点为中心的关系知识提炼到学生 MLP 中。具体来说，我们提出了基于等级的匹配和基于分布的匹配策略，两者相辅相成。广泛的实验证明，LLP 显著提高了 MLP 的链接预测性能，甚至在 8 项基准测试中的 7 项测试中，LLP 的表现优于教师 GNN。在大规模 OGB 数据集上，LLP 的链接预测推理速度比 GNN 提高了 70.68 倍。</p>
-<h2 id="引言">
-    <a href="#%e5%bc%95%e8%a8%80" class="header-anchor">#</a>
-    引言
-</h2><p>图神经网络（GNN）已被广泛用于图结构数据的机器学习（Kipf &amp; Welling、2016a; Hamilton 等人，2017）。它们在节点分类（Veliˇ ckovi ́ c 等人，2017 年；Chen 等人，2020 年）、图分类（Zhang 等人，2018 年）、图生成（You 等人，2018 年；Shiao &amp; Papalexakis，2021 年）和链接预测（Zhang &amp; Chen，2018 年；Shiao 等人，2023 年）等各种应用中表现出了显著的性能。</p>
-<p>其中，链接预测是图机器学习领域一个显著的关键问题，其目的是<strong>预测任意两个节点形成链接的可能性</strong>。它有着广泛的实际应用，如知识图谱的完成（Schlichtkrull 等人，2018；Nathani 等人，2019；Vashishth 等人，2020）、社交平台上的好友推荐（Sankar 等人，2021；Tang 等人，2022；Fan 等人，2022）以及服务和商务平台上的用户项目推荐（Koren 等人，2009；Ying 等人，2018a；He 等人，2020）。随着 GNN 的日益普及，<strong>最先进的链接预测方法采用了编码器-解码器式模型</strong>，其中编码器是 GNN，解码器直接应用于由 GNN 学习到的节点表示对（Kipf &amp; Welling, 2016b；Zhang &amp; Chen, 2018；Cai &amp; Ji, 2020；Zhao 等人，2022b）。</p>
-<p>GNN 的成功通常归功于<strong>明确使用了节点周围邻域的上下文信息</strong>（Zhang 等人，2020e）。然而，与多层感知器（MLP）等表格式模型相比，这导致了对邻域获取和聚合方案的严重依赖，特别是由于邻域爆炸，会导致<strong>训练和推理的时间成本很高</strong>（Zhang 等，2020b；Jia 等，2020；Zhang 等，2021b；Zeng 等，2019）。与 GNNs 相比，<strong>MLPs 不需要任何图拓扑信息</strong>，因此更适用于新节点或孤立节点（如冷启动设置），但通常会<strong>导致编码器的一般任务性能较差</strong>，这一点我们在第 4 节中也进行了实证验证。尽管如此，与 GNN 相比，没有图依赖性使得 MLP 的训练和推理时间可以忽略不计。因此，在需要快速实时推理的大规模应用中，MLP 仍然是一个主要选择（Zhang 等人，2021b；Covington 等人，2016；Gholami 等人，2021）。</p>
-<p>鉴于这些速度与性能的权衡，最近有几项研究提出利用知识蒸馏（KD）技术将所学知识从 GNN 转移到 MLP（Hinton et al., 2015; Zhang et al., 2021b; Zheng et al.,2021; Hu et al., 2021)）以利用 GNN 的性能优势和 MLP 的速度优势。具体来说，通过这种方式，学生 MLP 有可能从 GNN 教师那里获得通过 KD 传播的图语境知识，从而不仅在实践中表现更好，而且还能享受到与 GNN 相比的模型延迟优势，例如在生产推理设置中。不过，这些研究主要集中在节点或图层任务上。鉴于链接预测任务中的 KD 尚未得到探索，而推荐系统中存在大量的链接预测问题，我们的工作旨在弥补这一关键差距。具体来说，我们的问题是：</p>
-<p><strong>我们能否从 GNN 中有效地提炼出与 MLP 相关的链接预测知识？</strong></p>
-<p>在这项工作中，我们重点探索、借鉴并提出了针对链接预测设置的跨模型（GNN 到 MLP）提炼技术。我们首先探索了两种直接对齐学生和教师的 KD 方法：(i) 基于对数的链接存在概率预测匹配（Hinton 等人，2015 年），以及 (ii) 基于生成的潜在节点表征的表征匹配（Gou 等人，2021 年）。然而，根据经验，我们发现无论是基于对数的匹配还是基于表征的匹配都不足以提炼出足够的知识，使学生模型在链接预测任务中表现出色。我们假设，这两种 KD 方法表现不佳的原因是，链接预测与节点分类不同，在很大程度上依赖于关系图拓扑信息（Mart ́ınez 等人，2016；Zhang &amp; Chen，2018；Yun 等人，2021；Zhao 等人，2022b），而直接方法并不能很好地捕捉这些信息。</p>
-<p>为了解决这个问题，我们提出了一个关系 KD 框架，即 LLP：我们的主要直觉是，<strong>我们不关注单个节点对或节点表示的匹配，而是关注每个（锚）节点与图中其他（上下文）节点之间关系的匹配</strong>。鉴于以锚节点为中心的关系知识，即教师模型预测的锚节点与每个上下文节点之间的链接存在概率，LLP 通过两种匹配方法将其提炼到学生模型中：(i) 基于等级的匹配和 (ii) 基于分布的匹配。更具体地说，基于等级的匹配为学生模型提供了所有上下文节点相对于锚节点的等级损失，保留了与下游链接预测用例直接相关的关键等级信息，例如用户上下文好友推荐（Sankar 等，2021；Tang 等，2022）或项目推荐（Ying 等，2018a；He 等，2020）。另一方面，基于分布的匹配为学生模型提供了以锚节点为条件的上下文节点的链接概率分布。重要的是，基于分布的匹配是对基于等级的匹配的补充，因为它提供了关于概率相对值和差异大小的辅助信息。为了全面评估我们提出的 LLP 的有效性，我们在 8 个公共基准上进行了实验。除了图任务的标准转导设置外，我们还设计了一个更现实的设置，模仿链接预测的现实（在线）用例，我们称之为生产设置。在所有数据集上，LLP 在转导设置下平均比独立 MLP 高出 18.18 分，在生产设置下平均比独立 MLP 高出 12.01 分；在转导设置下，LLP 在 7/8 个数据集上的表现与教师 GNN 相当或更胜一筹。令人欣慰的是，在冷启动节点上，LLP 平均分别比教师 GNN 和独立 MLP 高出 25.29 和 9.42 Hits@20。最后，LLP 的推断速度大大快于 GNNs，例如在大型 Collab 数据集上快了 70.68 倍。</p>
-<h2 id="相关工作和背景">
-    <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c%e5%92%8c%e8%83%8c%e6%99%af" class="header-anchor">#</a>
-    相关工作和背景
-</h2><p>使用 GNN 进行链接预测。在这项工作中，我们将常用的编码器-解码器框架用于链接预测任务（Kipf &amp; Welling, 2016b；Berg 等人，2017；Schlichtkrull 等人，2018；Ying 等人，2018a；Davidson 等人，2018；Zhu 等人，2021；Yun 等人，2021；Zhao 等人，2022b），其中基于 GNN 的编码器学习节点表示，解码器预测链接存在概率。大多数 GNN 在消息传递框架下运行，模型通过获取邻居的信息迭代更新每个节点 i 的表示 hi。也就是说，节点在第 l 层的表示是通过聚合学习操作和更新操作：</p>
+    <h1 id="link-free-link-prediction-through-relation-distillation">
+    <a href="#link-free-link-prediction-through-relation-distillation" class="header-anchor">#</a>
+    Link-free link prediction through relation distillation
+</h1><p>Graph Neural Networks (GNN) have shown excellent performance in link prediction tasks. Although graph neural networks are very efficient, the high latency introduced by their non-triangular neighborhood data dependence limits the practical deployment of graph neural networks. On the contrary, the known efficient MLP is far less effective than GNN due to the lack of relational knowledge. In this work, to combine the advantages of GNN and MLP, we first explore direct knowledge distillation (KD) methods for link prediction, namely prediction logit-based matching and node representation-based matching. After observing that direct KD-like methods perform poorly in link prediction, we propose a relational KD framework, link-less link prediction (LLP), to leverage MLP for knowledge distillation of link prediction. Unlike simple KD methods that match independent link pairs or node representations, LLP distills relational knowledge centered on each (anchor) node into a student MLP. Specifically, we propose rank-based matching and distribution-based matching strategies, which complement each other. Extensive experiments demonstrate that LLP significantly improves the link prediction performance of MLP, even outperforming teacher GNN on 7 out of 8 benchmarks. On the large-scale OGB dataset, LLP&rsquo;s link prediction inference speed is 70.68 times faster than that of GNN.</p>
+<h2 id="introduction">
+    <a href="#introduction" class="header-anchor">#</a>
+    Introduction
+</h2><p>Graph neural networks (GNN) have been widely used for machine learning on graph-structured data (Kipf &amp; Welling, 2016a; Hamilton et al., 2017). They have shown remarkable performance in various applications such as node classification (Veliˇ ckovi ́ c et al., 2017; Chen et al., 2020), graph classification (Zhang et al., 2018), graph generation (You et al., 2018; Shiao &amp; Papalexakis, 2021), and link prediction (Zhang &amp; Chen, 2018; Shiao et al., 2023).</p>
+<p>Among them, link prediction is a significant key issue in the field of graph machine learning, whose purpose is to predict the possibility of any two nodes forming a link. It has a wide range of practical applications, such as the completion of knowledge graphs (Schlichtkrull et al., 2018; Nathani et al., 2019; Vashishth et al., 2020), friend recommendations on social platforms (Sankar et al., 2021; Tang et al., 2022; Fan et al., 2022), and user item recommendations on service and business platforms (Koren et al., 2009; Ying et al., 2009). et al., 2018a; He et al., 2020). With the increasing popularity of GNNs, the most advanced link prediction methods adopt an encoder-decoder style model, where the encoder is a GNN and the decoder is directly applied to the node representation pairs learned by the GNN (Kipf &amp; Welling, 2016b; Zhang &amp; Chen, 2018; Cai &amp; Ji, 2020; Zhao et al., 2022b).</p>
+<p>The success of GNNs is often attributed to the explicit use of contextual information from the neighborhood surrounding a node (Zhang et al., 2020e). However, compared with tabular models such as multilayer perceptrons (MLP), this leads to a heavy reliance on neighborhood acquisition and aggregation schemes, especially due to neighborhood explosion, resulting in high time costs for training and inference (Zhang et al., 2020b; Jia et al., 2020; Zhang et al., 2021b; Zeng et al., 2019). Compared with GNNs, MLPs do not require any graph topology information and are therefore more suitable for new nodes or isolated nodes (such as cold start settings), but often lead to poorer general task performance of the encoder, which we also empirically verify in Section 4. Nonetheless, the absence of graph dependence makes the training and inference time of MLP negligible compared to GNN. Therefore, MLP remains a dominant choice in large-scale applications requiring fast real-time inference (Zhang et al., 2021b; Covington et al., 2016; Gholami et al., 2021).</p>
+<p>Given these speed versus performance trade-offs, several recent studies have proposed utilizing knowledge distillation (KD) techniques to transfer learned knowledge from GNNs to MLPs (Hinton et al., 2015; Zhang et al., 2021b; Zheng et al., 2021; Hu et al., 2021)) to take advantage of the performance advantages of GNNs and the speed advantages of MLPs. Specifically, in this way, it is possible for student MLPs to acquire graph context knowledge propagated through KD from GNN teachers, thereby not only performing better in practice but also enjoying model latency advantages compared to GNNs, such as in production inference settings. However, these studies mainly focus on node or layer tasks. Given that KD in the link prediction task has not yet been explored and there are a large number of link prediction problems in recommender systems, our work aims to bridge this critical gap. Specifically, our questions are:</p>
+<p>**Can we efficiently extract MLP-related link prediction knowledge from GNNs? **</p>
+<p>In this work, we focus on exploring, borrowing, and proposing cross-model (GNN to MLP) refinement techniques for link prediction settings. We first explore two KD methods that directly align students and teachers: (i) probabilistic prediction matching based on the logarithm of link presence ( Hinton et al., 2015 ), and (ii) representational matching based on generated latent node representations ( Gou et al., 2021 ). Empirically, however, we find that neither logarithm-based matching nor representation-based matching is sufficient to extract sufficient knowledge for student models to perform well on link prediction tasks. We hypothesize that the reason for the poor performance of these two KD methods is that link prediction, unlike node classification, relies heavily on graph topology information (Mart ́ınez et al., 2016; Zhang &amp; Chen, 2018; Yun et al., 2021; Zhao et al., 2022b), which direct methods do not capture well.</p>
+<p>To address this problem, we propose a relational KD framework, the LLP: Our main intuition is that we do not focus on the matching of individual node pairs or node representations, but rather on the matching of relationships between each (anchor) node and other (context) nodes in the graph. Given the anchor node-centered relation knowledge, i.e., the link existence probability between the anchor node and each context node predicted by the teacher model, LLP refines it into the student model through two matching methods: (i) rank-based matching and (ii) distribution-based matching. More specifically, rank-based matching provides the student model with rank losses of all contextual nodes relative to anchor nodes, preserving key rank information directly relevant to downstream link prediction use cases, such as user contextual friend recommendations (Sankar et al., 2021; Tang et al., 2022) or item recommendations (Ying et al., 2018a; He et al., 2020). Distribution-based matching, on the other hand, provides the student model with a link probability distribution of context nodes conditioned on anchor nodes. Importantly, distribution-based matching is complementary to rank-based matching in that it provides auxiliary information about the relative values ​​of probabilities and the magnitude of differences. To comprehensively evaluate the effectiveness of our proposed LLP, we conduct experiments on 8 public benchmarks. In addition to the standard transduction setting for the graph task, we also designed a more realistic setting that mimics real-world (online) use cases of link prediction, which we call the production setting. Across all datasets, LLP outperforms standalone MLP by an average of 18.18 points in the transduction setting and 12.01 points in the production setting; in the transduction setting, LLP outperforms teacher GNN on 7/8 datasets. Reassuringly, on cold-start nodes, LLP outperforms teacher GNN and independent MLP by an average of 25.29 and 9.42 Hits@20, respectively. Finally, LLP inference is significantly faster than GNNs, e.g. 70.68x faster on the large Collab dataset.</p>
+<h2 id="related-work-and-background">
+    <a href="#related-work-and-background" class="header-anchor">#</a>
+    Related work and background
+</h2><p>Link prediction using GNN. In this work, we apply the commonly used encoder-decoder framework for the link prediction task (Kipf &amp; Welling, 2016b; Berg et al., 2017; Schlichtkrull et al., 2018; Ying et al., 2018a; Davidson et al., 2018; Zhu et al., 2021; Yun et al., 2021; Zhao et al., 2022b), which is based on GNN The encoder learns node representations and the decoder predicts link existence probabilities. Most GNNs operate under a message passing framework, where the model iteratively updates the representation hi of each node i by obtaining information about its neighbors. That is to say, the representation of nodes in layer l is through aggregation learning operations and update operations:</p>
 <p><img src="/media%5cimage-20240707214436174.png"
 	
 	
@@ -513,7 +494,7 @@
 	
 	
 ></p>
-<p>其中，AGGREGATE 组合或汇集本地邻居特征，UPDATE 是可学习的变换$h_i^0=x_i$。链接预测解码器利用上一层的节点表示，即 i∈V 的 hi，来预测节点对 i 和 j 之间的链接概率：</p>
+<p>Among them, AGGREGATE combines or aggregates local neighbor features, and UPDATE is a learnable transformation $h_i^0=x_i$. The link prediction decoder uses the node representation of the previous layer, i.e., hi of i∈V, to predict the link probability between node pair i and j:</p>
 <p><img src="/media%5cimage-20240707214445298.png"
 	
 	
@@ -524,26 +505,26 @@
 	
 	
 ></p>
-<p>其中 σ 表示Sigmoid运算。在这项工作中，根据大多数最先进的链接预测文献（Zhang 等人，2021a；Tsitsulin 等人，2018；Zhao 等人，2022b；Wang 等人，2021），我们将 Hadamard 乘积和 MLP 作为所有方法的链接预测 DECODER。</p>
-<p>GNN的知识蒸馏。知识蒸馏（KD）旨在将知识从高容量和高准确性的教师模型转移到轻量级学生模型，通常在资源受限的环境中使用。KD方法已显示出在显著降低模型复杂性的同时，几乎不会牺牲任务性能的潜力。由于GNNs因邻居聚合引起的数据依赖性而速度较慢，基于图的KD方法通常将GNNs蒸馏到MLPs上，后者由于其显著提高的效率和可扩展性，在大规模工业应用中得到广泛应用。例如，Zheng等人提出了一种基于KD的框架，重新发现MLPs缺失的图结构信息，这提高了模型在冷启动节点上的节点分类任务的泛化能力。现有的基于图数据的KD方法主要关注节点级别和图级别任务，而将KD应用于链接预测尚未被探索。我们的工作专注于从GNN教师向MLP学生中提取链接预测相关信息，并研究各种KD策略以对齐学生和教师的预测。</p>
-<h2 id="跨模型知识蒸馏用于链接预测">
-    <a href="#%e8%b7%a8%e6%a8%a1%e5%9e%8b%e7%9f%a5%e8%af%86%e8%92%b8%e9%a6%8f%e7%94%a8%e4%ba%8e%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
-    跨模型知识蒸馏用于链接预测
+<p>where σ represents the Sigmoid operation. In this work, following most of the state-of-the-art link prediction literature (Zhang et al., 2021a; Tsitsulin et al., 2018; Zhao et al., 2022b; Wang et al., 2021), we adopt Hadamard product and MLP as the link prediction DECODER for all methods.</p>
+<p>Knowledge distillation of GNN. Knowledge Distillation (KD) aims to transfer knowledge from a high-capacity and high-accuracy teacher model to a lightweight student model, often used in resource-constrained environments. KD methods have shown the potential to significantly reduce model complexity while sacrificing little to no task performance. Since GNNs are slow due to data dependence caused by neighbor aggregation, graph-based KD methods usually distill GNNs onto MLPs, which are widely used in large-scale industrial applications due to their significantly improved efficiency and scalability. For example, Zheng et al. proposed a KD-based framework to rediscover the missing graph structure information of MLPs, which improved the model&rsquo;s generalization ability on the node classification task on cold-start nodes. Existing KD methods based on graph data mainly focus on node-level and graph-level tasks, while applying KD to link prediction has not yet been explored. Our work focuses on extracting link prediction relevant information from GNN teachers to MLP students and studies various KD strategies to align student and teacher predictions.</p>
+<h2 id="cross-model-knowledge-distillation-for-link-prediction">
+    <a href="#cross-model-knowledge-distillation-for-link-prediction" class="header-anchor">#</a>
+    Cross-model knowledge distillation for link prediction
 </h2><p><img src="/media%5cBG.png"
 	
 	
 	
 	loading="lazy"
 	
-		alt="我们探讨了用于链接预测的 KD 方法，这些方法将知识从教师 GNN 提炼到学生 MLP 编码器，每个编码器都有自己的解码器。我们首先探讨了直接 KD 方法：表示匹配和 logit 匹配（第 3.1 节）。观察到它们无法提炼关系信息的缺点后，我们进一步提出了一个关系 KD 框架：LLP（第 3.3 节），它通过我们提出的基于等级的匹配和基于分布的匹配目标，为学生模型提供了每个（锚）节点与其他（上下文）节点之间关系的知识。"
+		alt="We explore KD methods for link prediction that distill knowledge from a teacher GNN to a student MLP encoder, each with its own decoder. We first explore direct KD methods: representation matching and logit matching (Section 3.1). Observing the shortcoming of their inability to refine relational information, we further propose a relational KD framework: LLP (Section 3.3), which provides the student model with knowledge of the relations between each (anchor) node and other (context) nodes through our proposed rank-based matching and distribution-based matching objectives. "
 	
 	
 ></p>
-<p>在本节中，我们提出并讨论了几种跨模型从教师GNN到学生MLP的知识蒸馏方法，用于链接预测的目的。在所有情况下，我们的目标是使用由GNN教师产生的工件来指导学生MLP，除了任何可用的训练标签（关于链接存在的ai,j）。我们首先采用两种直接的知识蒸馏（KD）方法：基于逻辑匹配和基于表示匹配，将它们适应到链接预测任务中；我们称这些方法为直接的，因为它们涉及直接匹配教师和学生之间的样本预测。接下来，我们提出并介绍了我们提出的关系KD框架，LLP（Linkless Link Prediction），并提出了两种匹配策略，以将额外的拓扑结构信息蒸馏到学生模型中。我们称这些方法为关系的，因为它们要求在教师和学生之间保持跨样本的关系（Park等人，2019）。图1总结了我们的提议。</p>
-<h3 id="直接方法">
-    <a href="#%e7%9b%b4%e6%8e%a5%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
-    直接方法
-</h3><p>逻辑匹配是一种直接的策略，用于从教师到学生的知识蒸馏，其中它直接旨在教导学生在下游任务上像教师一样概括。它由Hinton等人（2015）提出，并且仍然是各种任务中最广泛使用的KD方法之一。Phuong和Lampert（2019）以及Ji和Zhu（2020）从理论上分析了它的有效性。此外，它也被证明在图数据上的知识转移是有效的。例如，Zhang等人（2021b）使用教师GNN生成的软逻辑来指导学生MLP，并在节点分类任务上取得了强大的性能。类似地，我们为候选边（i, j）生成软分数yi,j，并训练学生使其预测ˆyi,j与此目标匹配：</p>
+<p>In this section, we propose and discuss several knowledge distillation methods across models from teacher GNN to student MLP for the purpose of link prediction. In all cases, we aim to guide student MLPs using artifacts produced by the GNN teacher, in addition to any available training labels (ai,j with respect to link presence). We first adopt two direct knowledge distillation (KD) methods: logic-based matching and representation-based matching, and adapt them to the link prediction task; we call these methods direct because they involve directly matching sample predictions between teachers and students. Next, we propose and introduce our proposed relational KD framework, LLP (Linkless Link Prediction), and propose two matching strategies to distill additional topological structure information into the student model. We call these methods relational because they require relationships between teachers and students to be maintained across samples (Park et al., 2019). Figure 1 summarizes our proposal.</p>
+<h3 id="direct-method">
+    <a href="#direct-method" class="header-anchor">#</a>
+    Direct method
+</h3><p>Logical matching is a straightforward strategy for knowledge distillation from teacher to student, where it directly aims to teach students to generalize as well as teachers on downstream tasks. It was proposed by Hinton et al. (2015) and remains one of the most widely used KD methods in various tasks. Phuong and Lampert (2019) and Ji and Zhu (2020) theoretically analyzed its effectiveness. Furthermore, it has also been shown to be effective in knowledge transfer on graph data. For example, Zhang et al. (2021b) used soft logic generated by teacher GNN to guide student MLP and achieved strong performance on node classification tasks. Similarly, we generate soft scores yi,j for candidate edges (i, j) and train the student to predict ˆyi,j matching this target:</p>
 <p><img src="/media%5cimage-20240707220636126.png"
 	
 	
@@ -554,7 +535,7 @@
 	
 	
 ></p>
-<p>表示匹配是另一种直接的蒸馏方法，我们旨在对齐学生学到的潜在节点嵌入空间与教师的。由于这种KD训练信号只优化学生模型的编码器部分，所以它必须与Lsup一起使用，以便学生解码器也能接收梯度并被优化：</p>
+<p>Representation matching is another straightforward distillation method where we aim to align the student&rsquo;s learned latent node embedding space with the teacher&rsquo;s. Since this KD training signal only optimizes the encoder part of the student model, it must be used with Lsup so that the student decoder also receives gradients and is optimized:</p>
 <p><img src="/media%5cimage-20240707220650001.png"
 	
 	
@@ -565,17 +546,17 @@
 	
 	
 ></p>
-<h3 id="关系蒸馏的链接预测">
-    <a href="#%e5%85%b3%e7%b3%bb%e8%92%b8%e9%a6%8f%e7%9a%84%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
-    关系蒸馏的链接预测
-</h3><p>动机。上述直接方法要求学生模型直接匹配节点级或链接级的工件。然而，人们可能会问：对于链接预测任务来说，匹配这些是否足够？这在考虑大多数链接预测应用涉及任务的上下文中尤其相关，其中对源节点或锚点节点的候选目标进行排名是感兴趣的任务，即在用户-项目图中，预测器必须从用户的角度对一组候选项目进行排名。这些上下文涉及同时对多个关系或链接级样本进行推理，表明跨这些关系的匹配可能比直接的节点级或链接级方法更符合目标链接预测任务。</p>
-<p>此外，一些作品（Zhang &amp; Chen, 2018; Yun等人，2021）表明，图结构信息对链接预测任务至关重要。例如，启发式链接预测方法通常显示出与GNNs相比具有竞争力的性能，并且在神经图方法之前一直是准确链接预测的基石。大多数启发式方法仅基于图结构信息（例如，共同邻居和最短路径）来衡量目标节点对的分数。此外，一些最近的工作（Zhang &amp; Chen, 2017, 2018; Li等人，2020; Zhao等人，2022b）也表明，包含拓扑信息，如局部子图、与锚点节点的距离或增强链接，可以大幅提高GNNs在链接级任务上的性能。观察到大多数成功的链接预测方法都涉及使用关系信息而不仅仅是两个节点，我们也在蒸馏背景下采用这种直觉，并提出我们的关系KD用于链接预测。</p>
-<h3 id="无连接链接预测">
-    <a href="#%e6%97%a0%e8%bf%9e%e6%8e%a5%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b" class="header-anchor">#</a>
-    无连接链接预测
-</h3><p>根据我们关于保持关系知识的直观理解，我们提出了一个新的关系蒸馏框架，称为Linkless Link Prediction，或LLP。与专注于匹配单个节点对分数或节点表示不同，LLP专注于蒸馏每个节点在图中与其他节点的关系知识；我们将前者称为锚点节点，后者称为上下文节点。对于图中的每个节点，当它作为锚点节点时，我们的目标是为学生MLP模型提供其与一组上下文节点的关系知识。每个节点可以作为锚点节点，也可以作为其他锚点节点的上下文节点。</p>
-<p>设v表示锚点节点，Cv表示v对应的上下文节点集合。我们表示教师模型预测的v与Cv中每个节点之间的概率为Yv = {yv,i | i ∈ Cv}。同样，我们表示学生模型对这些的预测为Yv = {yv,i | i ∈ Cv}。为了有效地从Yv到Yv蒸馏关系知识，我们提出了两种关系匹配目标来训练LLP：基于排名的匹配和基于分布的匹配，我们将在下文中介绍。</p>
-<p>基于排名的匹配（Rank-based Matching）。如第3.2节所述，链接预测通常被视为一个排名任务，要求模型根据一个种子节点对相关候选项进行排名，例如在用户-项目图设置中，预测器必须从用户的角度对一组候选项目进行排名。因此，我们认为，与匹配独立的逻辑不同，匹配由教师引起的排名可以更直接地教会学生关于上下文节点相对于锚点节点的关系知识。例如，对于特定用户，项目A应该排在项目C之前，项目C应该排在项目B之前。为了将这种基于排名的直觉纳入训练目标，我们采用了修改后的基于边际的排名损失，用教师GNN的排名对数来训练学生。具体来说，我们枚举𝑌^𝑣<em>Y</em>^<em>v</em>中所有预测概率的对，并用𝑌𝑣<em>Y**v</em>中的相应对进行监督。即：</p>
+<h3 id="link-prediction-for-relation-distillation">
+    <a href="#link-prediction-for-relation-distillation" class="header-anchor">#</a>
+    Link prediction for relation distillation
+</h3><p>motivation. The direct methods described above require student models to directly match node-level or link-level artifacts. However, one might ask: is matching these sufficient for the link prediction task? This is particularly relevant in the context of considering that most link prediction applications involve tasks where ranking candidate targets of a source node or an anchor node is the task of interest, i.e. in a user-item graph the predictor must rank a set of candidate items from the user&rsquo;s perspective. These contexts involve reasoning over multiple relationship- or link-level samples simultaneously, suggesting that matching across these relationships may be more suitable for target link prediction tasks than direct node-level or link-level approaches.</p>
+<p>Furthermore, some works (Zhang &amp; Chen, 2018; Yun et al., 2021) show that graph structure information is crucial for the link prediction task. For example, heuristic link prediction methods often show competitive performance compared to GNNs and have been the cornerstone of accurate link prediction before neural graph methods. Most heuristics measure the score of a target node pair based only on graph structure information (e.g., common neighbors and shortest paths). In addition, some recent works (Zhang &amp; Chen, 2017, 2018; Li et al., 2020; Zhao et al., 2022b) also show that including topological information, such as local subgraphs, distances from anchor nodes, or enhanced links, can significantly improve the performance of GNNs on link-level tasks. Observing that most successful link prediction methods involve using relation information rather than just two nodes, we also adopt this intuition in the context of distillation and propose our relation KD for link prediction.</p>
+<h3 id="connectionless-link-prediction">
+    <a href="#connectionless-link-prediction" class="header-anchor">#</a>
+    Connectionless link prediction
+</h3><p>Based on our intuitive understanding of preserving relational knowledge, we propose a new relational distillation framework called Linkless Link Prediction, or LLP. Rather than focusing on matching individual node pair scores or node representations, LLP focuses on distilling knowledge of each node’s relationships with other nodes in the graph; we call the former anchor nodes and the latter context nodes. For each node in the graph, when it serves as an anchor node, our goal is to provide the student MLP model with knowledge of its relationships with a set of context nodes. Each node can serve as an anchor node or as a context node for other anchor nodes.</p>
+<p>Let v represent the anchor node, and Cv represent the set of context nodes corresponding to v. We represent the probability between v predicted by the teacher model and each node in Cv as Yv = {yv,i | i ∈ Cv}. Likewise, we denote the student model&rsquo;s predictions of these as Yv = {yv,i | i ∈ Cv}. To effectively distill relational knowledge from Yv to Yv, we propose two relational matching objectives to train LLP: ranking-based matching and distribution-based matching, which we will introduce below.</p>
+<p>Rank-based Matching. As mentioned in Section 3.2, link prediction is usually viewed as a ranking task, requiring the model to rank relevant candidates based on a seed node, such as in the user-item graph setting, where the predictor must rank a set of candidate items from the user&rsquo;s perspective. Therefore, we argue that, unlike matching independent logic, matching teacher-induced rankings can more directly teach students knowledge about the relationships of context nodes relative to anchor nodes. For example, for a specific user, item A should be ranked before item C, and item C should be ranked before item B. To incorporate this ranking-based intuition into the training objective, we employ a modified margin-based ranking loss to train the student with the ranking logarithm of the teacher GNN. Specifically, we enumerate all pairs of predicted probabilities in 𝑌^𝑣<em>Y</em>^<em>v</em> and supervise with the corresponding pairs in 𝑌𝑣<em>Y**v</em>. Right now:</p>
 <p><img src="/media%5cimage-20240707222000233.png"
 	
 	
@@ -586,8 +567,8 @@
 	
 	
 ></p>
-<p><em>δ</em>是边际超参数，通常是一个非常小的值（例如0.05）。注意，上述损失与传统的基于边际的排名损失不同，因为它在教师GNN给出相似概率的对数对上有一个𝑟=0<em>r</em>=0的条件（导致恒定损失），即∣𝑦𝑣,𝑖−𝑦𝑣,𝑗∣&lt;𝛿∣<em>y**v</em>,<em>i</em>−<em>y**v</em>,<em>j</em>∣&lt;<em>δ</em>。这种设计有效地防止了学生模型试图区分教师可能由于噪声而产生的微小概率差异；如果没有这个条件，损失将传递二元信息，而不考虑差异有多小。我们还通过表D.16的经验性地展示了这种设计的必要性。</p>
-<p>基于分布的匹配（Distribution-based Matching）。虽然基于排名的匹配可以有效地教会学生模型关系排名信息，我们观察到它并没有充分利用𝑌𝑣<em>Y**v</em>中的值信息。例如，对于特定用户，项目A应该比项目C排名高得多，项目C应该只比项目B略高。尽管第3.1节中介绍的逻辑匹配似乎适合这里，我们观察到它的链接级匹配策略只便于匹配分散的节点对上的信息，而不是集中在锚点节点上的上下文关系上——从经验上，我们也发现它的效果有限。因此，为了实现以锚点节点为中心的关系值匹配，我们进一步提出了一个基于分布的匹配方案，它利用教师预测𝑌𝑣<em>Y**v</em>和学生预测𝑌^𝑣<em>Y</em>^<em>v</em>之间的KL散度，以每个锚点节点𝑣<em>v</em>为中心。具体来说，我们定义它为：</p>
+<p><em>δ</em> is the marginal hyperparameter, usually a very small value (e.g. 0.05). Note that the above loss is different from the traditional margin-based ranking loss because it has a condition of 𝑟=0<em>r</em>=0 (resulting in a constant loss) on logarithmic pairs where the teacher GNN gives similar probabilities, i.e. ∣𝑦𝑣,　−𝑦𝑣,𝑗∣&lt;𝛿∣<em>y**v</em>,<em>i</em>−<em>y**v</em>,<em>j</em>∣&lt;<em>δ</em>. This design effectively prevents the student model from trying to distinguish small probability differences that teachers may have due to noise; without this condition, the loss will convey binary information regardless of how small the difference is. We also demonstrate empirically the necessity of this design through Table D.16.</p>
+<p>Distribution-based Matching. Although ranking-based matching can effectively teach student models relational ranking information, we observe that it does not fully utilize the value information in 𝑌𝑣<em>Y**v</em>. For example, for a particular user, item A should be ranked much higher than item C, which should be only slightly higher than item B. Although the logical matching introduced in Section 3.1 seems suitable here, we observe that its link-level matching strategy only facilitates matching information on scattered node pairs, rather than focusing on contextual relations on anchor nodes—empirically, we also find that its effect is limited. Therefore, in order to achieve relationship value matching centered on the anchor node, we further propose a distribution-based matching scheme, which utilizes the KL divergence between the teacher’s prediction 𝑌𝑣<em>Y**v</em> and the student’s prediction 𝑌^𝑣<em>Y</em>^<em>v</em>, centered on each anchor node 𝑣<em>v</em>. Specifically, we define it as:</p>
 <p><img src="/media%5cimage-20240707222817206.png"
 	
 	
@@ -598,7 +579,7 @@
 	
 	
 ></p>
-<p>在训练 LLP 时，除了地面实况标签损失外，我们还联合优化了基于排名的匹配损失和基于分布的匹配损失。因此，LLP 对学生采用的总体训练损失为</p>
+<p>When training LLP, in addition to the ground truth label loss, we jointly optimize the ranking-based matching loss and the distribution-based matching loss. Therefore, the overall training loss adopted by LLP for students is</p>
 <p><img src="/media%5cimage-20240707223304194.png"
 	
 	
@@ -609,12 +590,12 @@
 	
 	
 ></p>
-<h2 id="实验评估">
-    <a href="#%e5%ae%9e%e9%aa%8c%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
-    实验评估
-</h2><h3 id="实验设置">
-    <a href="#%e5%ae%9e%e9%aa%8c%e8%ae%be%e7%bd%ae" class="header-anchor">#</a>
-    实验设置
+<h2 id="experimental-evaluation">
+    <a href="#experimental-evaluation" class="header-anchor">#</a>
+    Experimental evaluation
+</h2><h3 id="experimental-settings">
+    <a href="#experimental-settings" class="header-anchor">#</a>
+    Experimental settings
 </h3><p><img src="/media%5cimage-20240707223512593.png"
 	
 	
@@ -625,16 +606,16 @@
 	
 	
 ></p>
-<p>评估设置。为了在链接预测任务中全面评估我们提出的 LLP 和基线方法，我们在转导和生产设置中进行了实验。对于转导设置，图中的所有节点都可以在训练集/验证集/测试集中观察到。根据之前的研究（Zhang &amp; Chen，2018；Chami 等人，2019；Cai 等人，2021），我们从图中随机抽取 5%/15% 的链接，这些链接的无边节点对数量与非 OGB 数据集上的验证集/测试集相同。验证/测试链接将从训练图中屏蔽掉。对于 OGB 数据集，我们遵循其官方的训练/验证/测试拆分方法（Wang 等人，2020a）。除了过渡性设置外，我们还设计了一种更现实的设置来模拟实际的链接预测用例，我们称之为生产设置。在生产环境中，新节点会出现在测试集中，而训练集和验证集只观察以前存在的节点。因此，在这种情况下，测试集中会出现三类节点对（边或无边）：现有-现有、现有-新、新-新，其中第一类类似于转导式设置中的测试边，后两类则类似于最近一些研究中使用的归纳式设置（Bojchevski &amp; G ̈ unnemann, 2017; Hao et al., 2020; Chen et al., 2021b）。然而，在实际应用案例中，例如社交网络或在线平台的增长，这三类边缘都会以不同的比例出现，因此我们对这三类边缘都进行了评估。请注意，我们只在非 OGB 数据集上进行生产环境实验，因为 OGB 数据集在其公开发布的版本中已经进行了时间分割。我们将在附录 C 中进一步阐述生产环境的细节。</p>
-<h3 id="链接预测结果">
-    <a href="#%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
-    链接预测结果
-</h3><p><strong>Transductive Setting（归纳设置）</strong></p>
+<p>Assessment settings. To comprehensively evaluate our proposed LLP and baseline methods in the link prediction task, we conducted experiments in both transduction and production settings. For the transduction setting, all nodes in the graph are observable in the training/validation/test sets. Following previous studies (Zhang &amp; Chen, 2018; Chami et al., 2019; Cai et al., 2021), we randomly sample 5%/15% of links from the graph with the same number of edgeless node pairs as the validation set/test set on the non-OGB dataset. Validation/testing links will be masked from the training graph. For the OGB dataset, we follow its official train/validation/test split method (Wang et al., 2020a). In addition to the transitional setup, we also designed a more realistic setup to simulate actual link prediction use cases, which we call the production setup. In a production environment, new nodes appear in the test set, while the training and validation sets only observe previously existing nodes. Therefore, in this case, three types of node pairs (edges or no edges) will appear in the test set: existing-existing, existing-new, new-new, where the first type is similar to the test edges in the transductive setting, and the last two types are similar to the inductive setting used in some recent studies (Bojchevski &amp; G ̈ unnemann, 2017; Hao et al., 2020; Chen et al., 2021b). However, in real application cases, such as the growth of social networks or online platforms, these three types of edges will appear in different proportions, so we evaluated all three types of edges. Note that we only conduct production experiments on non-OGB datasets because the OGB dataset is already time-split in its publicly released version. We elaborate further on the details of the production environment in Appendix C.</p>
+<h3 id="link-prediction-results">
+    <a href="#link-prediction-results" class="header-anchor">#</a>
+    Link prediction results
+</h3><p><strong>Transductive Setting</strong></p>
 <ul>
-<li>这是链接预测中的一个标准设置，其中训练、验证和测试集中的所有节点在训练图上都是可见的，但是一部分正链接被遮蔽用于验证和测试集。</li>
-<li>在这种设置下，模型在训练期间可以看到整个图的结构，包括所有的节点和边，除了那些被明确遮蔽用于评估的链接。</li>
+<li>This is a standard setting in link prediction, where all nodes in the training, validation and test sets are visible on the training graph, but a portion of the positive links are masked for the validation and test sets.</li>
+<li>In this setting, the model can see the entire graph structure during training, including all nodes and edges, except those links that are explicitly masked for evaluation.</li>
 </ul>
-<p>从表 2 中，我们还发现在某些数据集上，LLP 的性能比教师 GNN 有了显著提高。我们假设，导致这种改进的原因有两个。其一，当节点特征对链接预测具有足够的信息量时，学生 MLP 模型已经具备了显著的学习能力。例如，在 Cora 数据集上，MLP 已经可以产生比 GNN 更好的预测性能。另一个原因是关系 KD 提供了从 GNN 到 MLP 的关系结构知识，这为 MLP 提供了额外的有价值的知识。最近关于知识提炼的研究（Allen-Zhu &amp; Li，2020；Guo 等人，2022）也有类似的发现，即<strong>结合不同模型的不同观点有助于提高模型的性能</strong> 。</p>
+<p>From Table 2, we also find that the performance of LLP is significantly improved over teacher GNN on some datasets. We hypothesize that there are two reasons for this improvement. First, when node features are sufficiently informative for link prediction, the student MLP model already has significant learning capabilities. For example, on the Cora dataset, MLP can already produce better prediction performance than GNN. Another reason is that relational KD provides relational structure knowledge from GNN to MLP, which provides additional valuable knowledge to MLP. Recent research on knowledge extraction (Allen-Zhu &amp; Li, 2020; Guo et al., 2022) has similar findings, that is, combining different perspectives from different models helps improve the performance of the model.</p>
 <p><img src="/media%5cimage-20240708112057303.png"
 	
 	
@@ -645,10 +626,10 @@
 	
 	
 ></p>
-<p><strong>Production Setting（生产设置）</strong></p>
+<p><strong>Production Setting</strong></p>
 <ul>
-<li>这是一种更接近实际应用场景的设置，模拟了实际链接预测用例，例如社交网络平台上的用户好友推荐，其中新用户和好友关系会频繁出现。</li>
-<li>在生产设置中，测试集中可能会出现在训练阶段不可见的新节点和新边。这种设置考虑了三个类别的节点对：现有-现有、现有-新、新-新，分别对应于训练集中已经存在的节点对、至少一个新节点的节点对，以及完全由新节点组成的节点对。</li>
+<li>This is a setting that is closer to actual application scenarios and simulates actual link prediction use cases, such as user friend recommendations on social network platforms, where new users and friend relationships appear frequently.</li>
+<li>In production settings, new nodes and edges may appear in the test set that were not visible during the training phase. This setting considers three categories of node pairs: existing-existing, existing-new, and new-new, corresponding respectively to node pairs that already exist in the training set, node pairs with at least one new node, and node pairs consisting entirely of new nodes.</li>
 </ul>
 <p><img src="/media%5cimage-20240708112106966.png"
 	
@@ -660,10 +641,10 @@
 	
 	
 ></p>
-<h3 id="推理速度">
-    <a href="#%e6%8e%a8%e7%90%86%e9%80%9f%e5%ba%a6" class="header-anchor">#</a>
-    推理速度
-</h3><p>与其他常见的 GNN 推断加速方法相比，我们对 LLP 进行了评估，这些方法主要侧重于硬件和算法以减少计算消耗，例如剪枝（Zhou 等人，2021 年）和量化（Zhao 等人，2020 年；Tailor 等人，2020 年）。按照 Zhang 等人（2021b）的实验设置，我们测量了图中的归纳推理时间。我们针对 4 种常见的 GNN 推理加速方法进行了评估：(i) SAGE（Hamilton 等人，2017 年），(ii) 从 float32 到 int8 的量化 SAGE（QSAGE）（Zhao 等人，2020 年；Tailor 等人，2020 年），(iii) 去掉 50% 权重的 SAGE（PSAGE）（Zhou 等人，2021 年；Chen 等人，2021 年c），以及 (iv) 去掉 15 个扇出的邻居采样 SAGE。图 2 显示了大规模 OGB 数据集 Collab 的结果。我们可以看到，与 SAGE 相比，LLP 在 Collab 上的速度提高了 70.68 倍。与最佳加速方法 &ldquo;邻居采样&rdquo;（该方法可减少图依赖性，但不能像 LLP 那样消除图依赖性）相比，LLP 仍然实现了 15.05 倍的加速。这是因为所有这些推理加速方法仍然依赖于图结构。从图 2 的下图中，我们可以进一步观察到 LLP 的性能优于 GNN 和其他推理加速方法。</p>
+<h3 id="inference-speed">
+    <a href="#inference-speed" class="header-anchor">#</a>
+    Inference speed
+</h3><p>We evaluate LLP compared with other common GNN inference acceleration methods, which mainly focus on hardware and algorithms to reduce computational consumption, such as pruning (Zhou et al., 2021) and quantization (Zhao et al., 2020; Tailor et al., 2020). Following the experimental setup of Zhang et al. (2021b), we measured the inductive reasoning time in the graph. We evaluated 4 common GNN inference acceleration methods: (i) SAGE (Hamilton et al., 2017), (ii) quantized SAGE from float32 to int8 (QSAGE) (Zhao et al., 2020; Tailor et al., 2020), (iii) SAGE with 50% weight removed (PSAGE) (Zhou et al., 2021; Chen) et al., 2021c), and (iv) neighbor sampling SAGE with 15 fan-outs removed. Figure 2 shows the results of Collab on the large-scale OGB dataset. We can see that LLP is 70.68x faster on Collab compared to SAGE. LLP still achieves a 15.05x speedup compared to the best speedup method &ldquo;Neighbor Sampling&rdquo; (which reduces graph dependence but cannot eliminate it like LLP). This is because all these inference acceleration methods still rely on graph structures. From the lower graph of Figure 2, we can further observe that LLP outperforms GNN and other inference acceleration methods.</p>
 <p><img src="/media%5cimage-20240708113957795.png"
 	
 	
@@ -674,13 +655,13 @@
 	
 	
 ></p>
-<h3 id="冷启动节点的链接预测结果">
-    <a href="#%e5%86%b7%e5%90%af%e5%8a%a8%e8%8a%82%e7%82%b9%e7%9a%84%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
-    冷启动节点的链接预测结果
-</h3><p>处理冷启动节点（新出现的无边节点）是推荐和信息检索应用中的一个常见挑战（Li 等人，2019 年；Zheng 等人，2021 年；Ding 等人，2021 年）。如果没有这些边，GNNs 就不能很好地发挥作用，因为它们在很大程度上依赖于邻居信息。另一方面，不使用任何图拓扑信息的 MLP 可以说更适合。在这里，我们模拟了冷启动设置，即在生产设置的测试阶段移除所有新边缘，即所有新出现的节点都被隔离（更多详情见附录 C）。表 4 显示了 LLP、独立 MLP 和教师 GNN 在冷启动节点上的表现。我们观察到，在 Hits@20 上，LLP 的平均性能一直优于 GNN 和 MLP，分别为 25.29 和 9.42。我们还在附录 D.8 中进一步比较了 LLP 与冷启动节点的另一项相关研究。</p>
-<h3 id="大规模数据集上的链接预测结果">
-    <a href="#%e5%a4%a7%e8%a7%84%e6%a8%a1%e6%95%b0%e6%8d%ae%e9%9b%86%e4%b8%8a%e7%9a%84%e9%93%be%e6%8e%a5%e9%a2%84%e6%b5%8b%e7%bb%93%e6%9e%9c" class="header-anchor">#</a>
-    大规模数据集上的链接预测结果
+<h3 id="link-prediction-results-of-cold-start-nodes">
+    <a href="#link-prediction-results-of-cold-start-nodes" class="header-anchor">#</a>
+    Link prediction results of cold start nodes
+</h3><p>Handling cold-start nodes (emerging edgeless nodes) is a common challenge in recommendation and information retrieval applications (Li et al., 2019; Zheng et al., 2021; Ding et al., 2021). Without these edges, GNNs do not work well because they rely heavily on neighbor information. On the other hand, MLP which does not use any graph topology information is arguably more suitable. Here, we simulate a cold-start setup, i.e., all new edges are removed during the testing phase of a production setup, i.e., all emerging nodes are isolated (see Appendix C for more details). Table 4 shows the performance of LLP, independent MLP and teacher GNN on cold start nodes. We observe that on Hits@20, LLP consistently outperforms GNN and MLP on average by 25.29 and 9.42, respectively. We also further present another related study comparing LLP with cold start nodes in Appendix D.8.</p>
+<h3 id="link-prediction-results-on-large-scale-data-sets">
+    <a href="#link-prediction-results-on-large-scale-data-sets" class="header-anchor">#</a>
+    Link prediction results on large-scale data sets
 </h3><p><img src="/media%5cimage-20240708114735522.png"
 	
 	
@@ -691,14 +672,14 @@
 	
 	
 ></p>
-<p>除了 Collab 之外，我们还在最近提出的三个大规模图基准上进行了实验：IGB-100K、IGB-1M（Khatua 等人，2023 年）和 Citation2（Wang 等人，2020a；Mikolov 等人，2013 年）。数据集统计和链接预测结果（Hits@200）如表 5 所示。在 IGB 数据集上，我们观察到 LLP 可以在这两个数据集上生成有竞争力的结果，这进一步证明了 LLP 有能力从大规模图中获取复杂的链接预测相关知识。另一方面，Citation2 的结果则显示出不同的模式。虽然 LLP 的表现明显优于 MLP，但与 GNN 相比，其性能仍有很大差距。</p>
-<p>我们假设，Citation2 上的不同性能模式是由于数据集的独特分布造成的。为了验证我们的假设，我们进一步在 Citation2 的采样版本（表 5 中的 &ldquo;Citation2-s &ldquo;列）上进行了实验。具体来说，我们对 Citation2 进行了缩减采样，以生成一个更小的版本（大小与 Collab 类似）。我们使用了基于随机漫步的抽样方法，事实证明这种方法能够保持原始图的属性（Leskovec &amp; Faloutsos, 2006）。从表 5 中，我们观察到 Citation2 和 Citation2-s 的性能模式非常相似，这验证了我们的假设，即 LLP 和 GNN 之间的性能差距是由数据集自身的分布造成的，而不是由图的大小等其他因素造成的。在比较表 2 中照片和 Collab 的结果时，我们也发现了类似的情况，但情况正好相反：在较大的数据集（Collab）上，LLP 的表现优于 GNN，但在较小的数据集（Photos）上，LLP 的表现略逊于 GNN。总之，在不同的数据集上，LLP 的有效性可能会有所不同，但对图形的大小并不敏感。</p>
-<h3 id="消融实验">
-    <a href="#%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" class="header-anchor">#</a>
-    消融实验
-</h3><p>LLLP R 和 LLLP D 的有效性。由于我们提出的 LLP 包含两种匹配策略，即基于等级的匹配和基于分布的匹配，因此我们通过将它们从 LLP 中移除来评估它们的有效性。此外，我们还通过去除 Lsup 进行了进一步评估，即仅使用其中一种匹配损失作为 LLP 的总体损失。表 6 显示了这些设置与完全 LLP、独立 MLP 和教师 GNN 在 Pubmed 和 CS 数据集上的性能比较结果。我们注意到，基于等级的匹配和基于分布的匹配都对整体性能有很大贡献。在转导式设置中，两个损失项本身（最下面两行）的性能就已经超过了教师 GNN。</p>
-<p>在生产环境中，单独的匹配损失性能优于 MLP，并且在添加 Lsup 后可以达到与 GNN 相当的性能。总之，基于等级的匹配和基于分布的匹配都能有效地提炼关系知识，并通过互补达到最佳性能。</p>
-<p>图 3 显示了 LLP 在不同上下文节点样本数（p 局部样本和 q 随机样本）下，在 Pubmed 上的链接预测性能。为便于调整超参数，我们将 q 设为 p 的倍数，如图 3 的 x 轴所示。我们观察到，随机样本数量较少的 LLP 的链接预测性能较差，这表明保留全局关系对于所提议的关系 KD 是必要的。一般来说，热图显示了一个清晰的趋势，使最佳值易于定位。</p>
+<p>In addition to Collab, we also conduct experiments on three recently proposed large-scale graph benchmarks: IGB-100K, IGB-1M (Khatua et al., 2023), and Citation2 (Wang et al., 2020a; Mikolov et al., 2013). Data set statistics and link prediction results (Hits@200) are shown in Table 5. On the IGB dataset, we observe that LLP can produce competitive results on both datasets, which further demonstrates the ability of LLP to obtain complex link prediction-related knowledge from large-scale graphs. On the other hand, the results for Citation2 show a different pattern. Although LLP performs significantly better than MLP, its performance is still far behind GNN.</p>
+<p>We hypothesize that the different performance patterns on Citation2 are due to the unique distribution of the dataset. To verify our hypothesis, we further conducted experiments on a sampled version of Citation2 (column &ldquo;Citation2-s&rdquo; in Table 5). Specifically, we downsampled Citation2 to produce a smaller version (similar in size to Collab). We used a random walk-based sampling method, which has been shown to preserve the properties of the original graph (Leskovec &amp; Faloutsos, 2006). From Table 5, we observe that the performance patterns of Citation2 and Citation2-s are very similar, which verifies our hypothesis that the performance gap between LLP and GNN is caused by the distribution of the dataset itself rather than by other factors such as the size of the graph. When comparing the results for Photos and Collab in Table 2, we also find a similar situation, but the opposite is true: on the larger dataset (Collab), LLP performs better than GNN, but on the smaller dataset (Photos), LLP performs slightly worse than GNN. In summary, the effectiveness of LLP may vary on different datasets but is not sensitive to the size of the graph.</p>
+<h3 id="ablation-experiment">
+    <a href="#ablation-experiment" class="header-anchor">#</a>
+    Ablation experiment
+</h3><p>Validity of LLLP R and LLLP D. Since our proposed LLP contains two matching strategies, namely rank-based matching and distribution-based matching, we evaluate their effectiveness by removing them from the LLP. Additionally, we conducted further evaluation by removing Lsup, i.e. using only one of the matching losses as the overall loss for LLP. Table 6 shows the performance comparison results of these settings with full LLP, independent MLP, and teacher GNN on Pubmed and CS datasets. We note that both rank-based matching and distribution-based matching contribute significantly to the overall performance. In the transductive setting, the two loss terms themselves (bottom two rows) already outperform the teacher GNN.</p>
+<p>In a production environment, matching loss alone outperforms MLP, and when adding Lsup can achieve comparable performance to GNN. In summary, both rank-based matching and distribution-based matching can effectively refine relational knowledge and achieve optimal performance through complementation.</p>
+<p>Figure 3 shows the link prediction performance of LLP on Pubmed under different numbers of context node samples (p local samples and q random samples). To facilitate tuning of hyperparameters, we set q to be a multiple of p, as shown on the x-axis of Figure 3. We observe that LLPs with a smaller number of random samples have poorer link prediction performance, indicating that preserving global relationships is necessary for the proposed relationship KD. In general, heat maps show a clear trend, making the optimal values ​​easy to locate.</p>
 <p><img src="/media%5cimage-20240708115406808.png"
 	
 	
@@ -719,10 +700,10 @@
 	
 	
 ></p>
-<h2 id="总结">
-    <a href="#%e6%80%bb%e7%bb%93" class="header-anchor">#</a>
-    总结
-</h2><p>我们的工作是解决与大规模应用 GNN 进行链接预测有关的问题。我们注意到，由于非三维数据依赖性，这些模型在推理时具有较高的延迟。为此，我们探索了从教师 GNN 到学生 MLP 模型的跨模型提炼方法，这种方法在推理时间上具有优势。我们首先将两种直接对数匹配和表示匹配 KD 方法应用到链接预测中，并观察到它们的不适用性。作为回应，我们引入了关系 KD 框架 LLP，该框架提出了基于等级的匹配和基于分布的匹配目标，两者相辅相成，迫使学生保留锚节点间上下文关系的关键信息。我们的实验表明，LLP 实现了 MLP 级别的提速（比 GNN 高出 70.68 倍），同时在转导和生产设置中，链接预测性能比 MLP 分别提高了 18.18 和 12.01 个百分点，在转导设置中的 7/8 个数据集和生产设置中的 3/6 个数据集中，LLP 的性能与教师 GNN 相当或优于教师 GNN，并且对冷启动节点的 Hits@20 改进显著提高了 25.29 个百分点。</p>
+<h2 id="summarize">
+    <a href="#summarize" class="header-anchor">#</a>
+    Summarize
+</h2><p>Our work addresses problems related to the large-scale application of GNNs for link prediction. We note that these models have higher latency at inference time due to non-3D data dependencies. To this end, we explore a cross-model refinement approach from teacher GNN to student MLP models, which has advantages in inference time. We first apply two direct log-matching and representation-matching KD methods to link prediction and observe their inapplicability. In response, we introduce the relational KD framework LLP, which proposes rank-based matching and distribution-based matching goals that complement each other and force students to retain key information of contextual relationships between anchor nodes. Our experiments show that LLP achieves MLP-level speedups (70.68x higher than GNN) while improving link prediction performance by 18.18 and 12.01 percentage points over MLP in the transduction and production settings respectively, performing as well as or better than the teacher GNN on 7/8 datasets in the transduction setting and 3/6 datasets in the production setting, and on cold-start nodes. The Hits@20 improvement is a significant 25.29 percentage points.</p>
 
 </section>
 
@@ -784,7 +765,7 @@
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">相关文章</h2>
+    <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -849,7 +830,7 @@
         
 
         <div class="article-details">
-            <h2 class="article-title">图嵌入分析</h2>
+            <h2 class="article-title">Graph embedding analysis</h2>
         </div>
     </a>
 </article>
@@ -943,7 +924,7 @@
     <section class="powerby">
         
 		 
-		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
 		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
 		
 		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
@@ -1005,7 +986,7 @@
 		
 		
 		<br>
-			已经发表了 11 篇文章 · 共 80.326k 字
+			已经发表了 11 篇文章 · 共 41.587k 字
 		</br>
     </section>
 	
