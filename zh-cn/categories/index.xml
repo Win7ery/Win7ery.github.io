@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Categories on Wintery</title>
+        <link>http://localhost:1313/zh-cn/categories/</link>
+        <description>Recent content in Categories on Wintery</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Wintery</copyright>
+        <lastBuildDate>Fri, 20 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/zh-cn/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>笔记</title>
+        <link>http://localhost:1313/zh-cn/categories/note/</link>
+        <pubDate>Fri, 20 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/categories/note/</guid>
+        <description>&lt;img src="http://localhost:1313/rjXJQ2y2Lj_small.jpg" alt="Featured image of post 笔记" /&gt;</description>
+        </item>
+        <item>
+        <title>论文</title>
+        <link>http://localhost:1313/zh-cn/categories/paper/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/categories/paper/</guid>
+        <description>&lt;img src="http://localhost:1313/xiaoai.webp" alt="Featured image of post 论文" /&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2024 IEEE Symposium on Security and Privacy (SP)">
+<title>FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</title>
+
+<link rel='canonical' href='http://localhost:1313/post/flash/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning">
+<meta property='og:description' content="2024 IEEE Symposium on Security and Privacy (SP)">
+<meta property='og:url' content='http://localhost:1313/post/flash/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-07T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/flash/media/bg.png' />
+<meta name="twitter:title" content="FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning">
+<meta name="twitter:description" content="2024 IEEE Symposium on Security and Privacy (SP)"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/flash/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/zh-cn/post/flash/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#research-team">Research Team</a></li>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#research-purpose">Research purpose</a>
+      <ol>
+        <li><a href="#question-raised">Question raised</a></li>
+        <li><a href="#current-status-of-research">Current status of research</a></li>
+        <li><a href="#contributions-to-this-article">Contributions to this article</a></li>
+      </ol>
+    </li>
+    <li><a href="#research-methods">Research methods</a>
+      <ol>
+        <li><a href="#traceability-graph-construction">Traceability graph construction</a></li>
+        <li><a href="#semantic-attribute-encoding">Semantic attribute encoding</a></li>
+        <li><a href="#traceability-graph-representation-learning">Traceability graph representation learning</a>
+          <ol>
+            <li><a href="#selective-graph-traversal">Selective graph traversal</a></li>
+            <li><a href="#training-and-weighted-cross-entropy-loss">Training and weighted cross-entropy loss</a></li>
+          </ol>
+        </li>
+        <li><a href="#embed-recycling-database">Embed recycling database</a></li>
+        <li><a href="#lightweight-classifier">Lightweight classifier</a></li>
+        <li><a href="#construction-of-attack-evolution-graph">Construction of attack evolution graph</a></li>
+      </ol>
+    </li>
+    <li><a href="#experimental-evaluation">Experimental evaluation</a>
+      <ol>
+        <li><a href="#dataset">Dataset</a></li>
+        <li><a href="#detection-performance">Detection performance</a></li>
+        <li><a href="#scalability-analysis">Scalability analysis</a></li>
+        <li><a href="#batch-size-analysis">Batch size analysis</a></li>
+        <li><a href="#robustness-test">Robustness test</a></li>
+        <li><a href="#ablation-experiment">Ablation experiment</a></li>
+        <li><a href="#alarm-effectiveness">Alarm effectiveness</a></li>
+      </ol>
+    </li>
+    <li><a href="#summary-and-discussion">Summary and discussion</a></li>
+    <li><a href="#related-work">Related work</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/flash/">
+                <img src="/post/flash/media/bg_hu_ea287656c8190d2d.png"
+                        srcset="/post/flash/media/bg_hu_ea287656c8190d2d.png 800w, /post/flash/media/bg_hu_2001580b2a760d86.png 1600w"
+                        width="800" 
+                        height="747" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/flash/">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            2024 IEEE Symposium on Security and Privacy (SP)
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 07, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    36 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    7621 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/zh-cn/post/flash/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><a class="link" href="https://dartlab.org/assets/pdf/flash.pdf"  target="_blank" rel="noopener"
+    >Original address</a></p>
+<h2 id="research-team">
+    <a href="#research-team" class="header-anchor">#</a>
+    Research Team
+</h2><p><a class="link" href="https://dartlab.org/"  target="_blank" rel="noopener"
+    >DART (Detect, Analyze, and Respond to Cyber ​​Threats) Laboratory</a>, University of Virginia</p>
+<p>Mati Ur Rehman: PhD student, mainly researching host intrusion detection systems and log traceability maps</p>
+<p><a class="link" href="https://www.cs.virginia.edu/~hur7wv/"  target="_blank" rel="noopener"
+    >Wajih Ul Hassan</a>：23‘sp Sok，20&rsquo;NDSS PROVDETECTOR，20’sp RapSheet，19&rsquo;NDSS <a class="link" href="https://par.nsf.gov/biblio/10085663"  target="_blank" rel="noopener"
+    >NoDoZe</a></p>
+<h2 id="summary">
+    <a href="#summary" class="header-anchor">#</a>
+    Summary
+</h2><p>Recently, source-based intrusion detection systems (IDS) have gained popularity for their potential in detecting sophisticated advanced persistent threats (APT) attacks. These IDSs use source maps created from system logs to identify potentially malicious activity. Despite their potential, they face challenges in accuracy, practicality, and scalability, especially when dealing with large source graphs. We introduce FLASH, a scalable IDS that leverages graph representation learning through graph neural networks (GNN) on data source graphs to overcome these limitations. FLASH employs a Word2Vec-based semantic encoder to capture basic semantic properties such as process names and file paths as well as the temporal order of events in the source graph. Furthermore, FLASH incorporates a novel adaptation of a GNN-based context encoder that can efficiently encode local and global graph structures into expressive node embeddings. To learn benign node behavior, we utilize a lightweight classifier that combines GNN and Word2Vec embeddings. Recognizing the computational demands and slow processing time of GNNs, especially for large source graphs, we developed an embedding recycling database to store node embeddings generated during the training phase. At runtime, our lightweight classifier leverages stored embeddings without the need to regenerate GNN embeddings, thus facilitating real-time APT detection. Extensive evaluations of FLASH on real-world datasets demonstrate higher detection accuracy compared to existing source-based IDS. The results also illustrate FLASH&rsquo;s scalability, robustness against impersonation attacks, and potential to accelerate the alert verification process.</p>
+<h2 id="research-purpose">
+    <a href="#research-purpose" class="header-anchor">#</a>
+    Research purpose
+</h2><h3 id="question-raised">
+    <a href="#question-raised" class="header-anchor">#</a>
+    Question raised
+</h3><p>The main limitations of IDS based on traceability graphs:</p>
+<ol>
+<li><strong>Ignore semantic information</strong>: Existing IDSs often ignore valuable semantic data such as <strong>process names, command line arguments, file paths, and IP addresses in source maps</strong>. This neglect may result in reduced detection accuracy.</li>
+<li><strong>Ignore time and causality</strong>: Some IDS ignore the importance of time and causality of system events. This oversight can lead to false threat identification because it misses the sequence in which malicious activity occurs.</li>
+<li><strong>Scalability Challenge</strong>: Real-time detection is critical for an effective IDS. However, some existing IDS face scalability issues, especially when dealing with large source graphs. This limits their real-time applications, causes log congestion, and leaves the system vulnerable to persistent attacks.</li>
+</ol>
+<blockquote>
+<p>(1) Anomaly-based threat detection methods such as <a class="link" href="https://blog2.pillar.fun/p/kairos/"  target="_blank" rel="noopener"
+    >Kairos</a>, <a class="link" href="https://blog2.pillar.fun/p/magic/"  target="_blank" rel="noopener"
+    >MAGIC</a>, Unicorn and other anomaly-based threat detection methods require regular retraining, resulting in high resource overhead and detection accuracy declining over time. This article does not refer to scalability.</p>
+<p>(2) The continuous expansion of log data requires expansion on the basis of the original traceability graph, that is, it needs to support the real-time addition of new edges and nodes to the traceability graph.</p>
+</blockquote>
+<ol start="4">
+<li><strong>Coarse-grained Detection</strong>: Many IDS identify malicious subgraphs rather than individual malicious nodes, making alert validation and attack reconstruction by security analysts time-consuming and error-prone. Additionally, this approach makes these systems vulnerable to evasion attacks.</li>
+</ol>
+<blockquote>
+<p><a class="link" href="https://par.nsf.gov/servlets/purl/10412012"  target="_blank" rel="noopener"
+    >Sometimes, you aren’t what you do: Mimicry attacks against provenance graph host intrusion detection systems</a>(<strong>2023 SP</strong>), evaluation experiments on StreamSpot, Unicorn, ProvDetector, Pagoda and SIGL (FGA) show that existing anomaly-based detection systems can be circumvented through effective means. This attack strategy confuses the detection system by injecting benign substructures into the attack graph.</p>
+</blockquote>
+<p>In this work, we propose FLASH, a novel IDS that leverages source graph representation learning to efficiently and accurately detect APT attacks. In order to solve the problem of ignoring semantic information during the detection process, FLASH uses Word2Vec-based embedding technology to encode various node attributes (such as process names, command line parameters, file paths, and IP addresses) present in the source graph into semantically rich feature vectors. Furthermore, we modified the Word2Vec technique to obtain time-sensitive embeddings, solving the problem of ignoring the temporal order between events. Experiments show that semantically rich feature vectors that consider the temporal order between events can more effectively distinguish benign nodes from malicious nodes, thereby reducing false positive rates and improving overall detection performance.</p>
+<p>To encode structural and causal information, we apply graph representation learning using graph neural networks. Graph representation learning via graph neural networks (GNN) makes it possible to learn expressive node embeddings that capture local and global graph structures. However, existing GNN techniques are not scalable and very slow, especially for large graphs, which makes their application in the field of source-based IDS extremely challenging and impractical.</p>
+<p>The scalability challenge of GNNs providing real-time detection is addressed by implementing two innovative techniques. First, we improve the efficiency of graph traversal in graph representation learning by selecting only edges relevant to threat identification. Second, we design a GNN embedding database inspired by embedding recycling techniques previously applied to language models [59]. This database stores node embeddings during training and runtime, and we use these pre-generated GNN embeddings for real-time detection, reducing real-time processing time by more than 70% compared to state-of-the-art GNN-based IDS while maintaining superior detection performance.</p>
+<p>To address the challenge of coarse-grained detection, FLASH performs fine-grained anomaly detection by using GNNs to identify individual malicious nodes (such as processes and files) rather than the entire anomaly subgraph (which also contains benign nodes). Furthermore, our approach demonstrates robustness against adversarial imitation attacks against origin-based IDS, as proposed by Goyal et al. After detection, FLASH aids in threat management and attack reconstruction by using FLASH-generated anomaly scores to rank threat alerts and create Attack Evolution Graphs (AEGs). These AEGs contain only alert nodes and their causal links, providing a concise view of the intrusion&rsquo;s progression compared to the original source graph.</p>
+<h3 id="current-status-of-research">
+    <a href="#current-status-of-research" class="header-anchor">#</a>
+    Current status of research
+</h3><p>Existing provenance-based intrusion detection systems (IDS) primarily function by learning benign behaviors in provenance graphs, detecting anomalies whenever there is a deviation from these established models.</p>
+<p><a class="link" href="https://wintery.social/post/prographer/"  target="_blank" rel="noopener"
+    >ProGrapher</a> leverages Graph2Vec and TextRCNN embeddings to identify graph-level anomalies.</p>
+<p>StreamSpot extracts graph features to build benign models and leverages clustering techniques to identify anomalous graphs.</p>
+<p>Unicorn adopts a graph similarity matching method to locate abnormal graphs, which reduces source graph features into histograms and forms fixed-size graph sketches, which are then clustered to detect anomalies.</p>
+<p>ProvDetector adopts a path-based malware detection strategy. It identifies uncommon paths in the graph, uses path embedding generation, and employs a local outlier factor approach for anomaly detection.</p>
+<p>ThraTrace uses GNN to perform node-level anomaly detection, learn the structural information of nodes in benign data sets, and identify anomalies based on deviations in learned behavior.</p>
+<p>ShadeWatcher uses GNN to describe system entities&rsquo; preferences for interacting entities, suggesting adversarial interactions through edge-level anomaly detection.</p>
+<p><img src="/media%5cimage-20240511223532095.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240511223532095"
+	
+	
+></p>
+<p><strong>Semantic Encoding</strong>: Existing provenance-based IDS utilize ML algorithms to detect system attacks based on the system event distribution of each node as a feature vector. However, these systems often fail to take into account key semantic attribute factors. Such as process name, command line or file path.</p>
+<p><strong>Temporal Encoding</strong>: Existing source-based IDS do not consider the temporal order of system events, but only focus on the event frequency of each node. Given that multiple nodes can perform the same events in different orders, this approach limits the model&rsquo;s understanding of benign node distributions. This oversight leads to an increased rate of false positives. Experimental results show that false positives are significantly reduced when incorporating time sorting compared to the baseline that ignores the time factor.</p>
+<p><strong>Scalability</strong>: Some existing provenance-based IDS use GNNs to extract structural information from the provenance graph, which improves detection by capturing relationships between adjacent nodes. However, the high computational requirements of GNNs may hinder the scalability of the system and complicate real-time intrusion detection. FLASH, on the other hand, implements scalability-enhancing techniques for GNNs that significantly improve performance compared to existing systems that do not use these techniques.</p>
+<blockquote>
+<p>Improving scalability here refers to improving detection efficiency? Previously, it was because the GNN calculation consumes too much and is inconvenient to expand.</p>
+</blockquote>
+<p><strong>Detection Granularity</strong>: The granularity of graph-based detection plays an important role in the effectiveness of IDS. Many existing IDSs such as StreamSpot and Unicorn use graph-level anomaly detection, making it difficult to identify stealthy attacks with minimal activity.</p>
+<p><strong>Contextual Alerting</strong>: IDS with graph-level granularity identifies potentially malicious subgraphs rather than pinpointing the exact malicious nodes (such as processes and files) responsible for threat alerts. Because security analysts must determine the accuracy of each IDS-generated threat alert by understanding the context surrounding the alert, this results in attack reconstruction and alert validation processes that are time-consuming and error-prone. In this case, security analysts must thoroughly analyze the labeled subgraph to find potentially malicious nodes. Node-level and edge-level detection methods, on the other hand, increase the efficiency of post-attack investigations by pointing directly to the exact entity involved in the intrusion and the sources of data surrounding that entity.</p>
+<p><strong>Robustness against Imitation Attacks</strong>: <a class="link" href="https://par.nsf.gov/servlets/purl/10412012"  target="_blank" rel="noopener"
+    >Goyal et al. (23&rsquo;SP)</a> introduced a method to circumvent IDS operating at graph and path level granularity. Their method manipulates the distribution graph encoding, modifying the node neighborhoods in the attack graph to mimic the node neighborhoods in the benign origin graph. When we apply the adversarial attack strategy defined by Goyal et al. in our proposed system, we find that our system is resistant to such evasion attempts. This resistance confirms that node-level detection methods, such as those used by FLASH, provide better protection against evasion attacks because they are able to identify anomalies at a more granular level.</p>
+<h3 id="contributions-to-this-article">
+    <a href="#contributions-to-this-article" class="header-anchor">#</a>
+    Contributions to this article
+</h3><p>Method Strengths: FLASH outperforms existing source-based IDS in detection rate. By using our GNN embedded database, we successfully reduce the time overhead of anomaly detection significantly, improving performance by up to three times compared to existing state-of-the-art provenance-based IDS. Additionally, by using FLASH-generated threat alert anomaly scores, security analysts can effectively classify alerts and reduce workload by up to 60%, demonstrating the potential of FLASH in managing threat alert fatigue</p>
+<blockquote>
+<p>There is doubt that the workload has been reduced by as much as 60%. What are the evaluation criteria? Haven&rsquo;t seen it there yet</p>
+</blockquote>
+<p>The main contributions of the work are:</p>
+<ol>
+<li>An IDS based on provenance graphs is proposed: FLASH, which utilizes contextual and structural information in the provenance graph to enhance its detection capabilities.</li>
+<li>Introduced a two-step process to generate semantic and contextual embeddings using Word2Vec and GNN respectively. This process is followed by real-time anomaly detection via lightweight classifier models, ensuring the scalability and efficiency of the system.</li>
+<li>Provide two schemes—selective graph traversal and embedded recycling database—to make graph representation learning practical for IDS settings.</li>
+<li>A comprehensive evaluation of the technique on real-world datasets. The results highlight FLASH&rsquo;s effectiveness in identifying malicious activity, its ability to defend against adversarial imitation attacks, and its ability to accelerate the alert verification process.</li>
+</ol>
+<blockquote>
+<p>Open source address: <a class="link" href="https://github.com/DART-Laboratory/Flash-IDS"  target="_blank" rel="noopener"
+    >https://github.com/DART-Laboratory/Flash-IDS</a></p>
+</blockquote>
+<h2 id="research-methods">
+    <a href="#research-methods" class="header-anchor">#</a>
+    Research methods
+</h2><p><img src="/media%5cimage-20240511223604994.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240511223557165"
+	
+	
+></p>
+<p>FLASH consists of five key modules: source graph constructor, Word2Vec-based semantic encoder, GNN-based context encoder, embedding database, and anomaly detector.</p>
+<p>FLASH generates provenance graphs from streaming system logs, uses semantic attributes to create feature vectors for nodes, and applies GNN for context-aware encoding. These embeddings are stored in a database and later used by lightweight classifiers during threat detection.</p>
+<h3 id="traceability-graph-construction">
+    <a href="#traceability-graph-construction" class="header-anchor">#</a>
+    Traceability graph construction
+</h3><p>System logs are first converted into provenance graphs, and the graph construction process is rooted in existing provenance graph research. It involves three main steps. First, FLASH interprets system logs, such as Windows event logs or Linux audit logs. These logs consist of records of host events such as process executions, file operations, and network connections. Next, FLASH manages real-time log collection by processing system logs in configurable batches. Batch size K sets the number of system events per batch. FLASH then performs sequential operations on each log batch and converts them into source graphs for subsequent analysis.</p>
+<p>Finally, FLASH uses the parsed data to construct the origin graph, which includes two node types: process nodes and object nodes. Object nodes contain files, network streams, modules, and other system objects. The edges between these nodes are labeled with a specified event type (system call), which demonstrates the causal relationship between connecting nodes and event timestamps. Additionally, nodes contain properties such as process name, command line, file path, IP address, port number, and module path, providing further context and detail.</p>
+<h3 id="semantic-attribute-encoding">
+    <a href="#semantic-attribute-encoding" class="header-anchor">#</a>
+    Semantic attribute encoding
+</h3><blockquote>
+<p>Reference article: <a class="link" href="http://zh.gluon.ai/chapter_natural-language-processing/word2vec.html"  target="_blank" rel="noopener"
+    >Word Embedding (word2vec) - &ldquo;Hands-on Deep Learning&rdquo; Document (gluon.ai)</a></p>
+</blockquote>
+<p>System logs contain rich properties related to various system entities. These properties (such as process names and file paths) first need to be encoded into vector space so that the model can use them. Some traditional ways of doing this are one-hot encoding [11] and bag-of-words [2] methods. However, these methods result in very sparse vectors without taking into account the context surrounding each word in the document. To overcome these limitations, we apply the <strong><a class="link" href="http://zh.gluon.ai/chapter_natural-language-processing/word2vec.html"  target="_blank" rel="noopener"
+    >Word2Vec model</a></strong> to convert these attributes into a dense vector space.</p>
+<p>Word2Vec is a neural network-based method that excels at learning word vector representations. It works by predicting the context of words through a shallow neural network. This method generates a low-dimensional dense vector for each word, where similar words carry similar vector representations. <strong>Our model considers the following node properties for each node type: process name and command line arguments for process nodes, file paths for file nodes, network IP addresses and ports for socket nodes, and module names for module nodes</strong>. These data help generate semantically rich feature vectors.</p>
+<blockquote>
+<p>How does word2vec achieve attribute conversion?</p>
+<p>The function of word2vec is to encode node attributes, and the principle of word2vec is to encode words by learning word information from context. What is the context information of attributes?</p>
+<p>Process nodes predict process names and command line parameters; file nodes predict file paths; socket byte nodes predict network IP addresses and ports; module nodes predict module names.</p>
+<p>For example, <em>I’m hot because it’s summer</em>, to embed the hot code, you need to combine it with the <em>I’m _ because it’s summer</em> sentence. The main principle is to predict the context based on hot and use the neural network parameters as the embedding vector.</p>
+</blockquote>
+<p>This method captures the semantic relationships between words and generates dense embeddings that provide node features for subsequent graph representation learning. This comprehensive feature set complicates the imitation of benign nodes by malicious nodes. For successful impersonation, malicious nodes must replicate system activity, chronology, and semantic properties. This improved detection capability enables our model to uncover otherwise overlooked malicious activity. Algorithm 1 outlines the process of generating semantic embedding vectors.</p>
+<p><img src="/media%5cimage-20240512004756452.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240512004756452"
+	
+	
+></p>
+<p><strong>Timing Coding</strong></p>
+<p>The standalone Word2Vec model has a Key limitation: it does not preserve the order of words in a sentence. To correct this problem and enhance the expressive power of the model, we designed a temporal encoding scheme that assigns individual weights to each word embedding, and these weights are accumulated across sentences, producing embeddings rich in temporal information. This approach is initiated by chronologically arranging system events based on timestamps, thus facilitating the integration of chronological order into sentences. Positional encoding (a concept borrowed from Transformers) is then incorporated into the input embedding to convey information about the position of each token in the sequence. This inclusion is crucial because Word2Vec lacks a built-in concept of order, so positional encoding allows the model to differentiate tokens based on their sequence position. The position encoding vector of the marker at position i is given by:</p>
+<p><img src="/media%5cimage-20240605162034564.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>where d represents the dimension of the embedding and j is the index of the dimension within the embedding.</p>
+<p>The position encoding vector is then added to the Word2Vec embedding vector for each token at that position. This operation is performed element-wise, resulting in the marker at position i being embedded as:</p>
+<p>$Emb_i=Emb_i+PE_i$</p>
+<p>By combining Word2Vec embeddings with positional encoding, our model captures not only the semantic associations between words, but also the order of words in the summary sentence. This rich representation allows the GNN in the next step to better understand the context and detect malicious activity that may have gone undetected before.</p>
+<h3 id="traceability-graph-representation-learning">
+    <a href="#traceability-graph-representation-learning" class="header-anchor">#</a>
+    Traceability graph representation learning
+</h3><p>Effective identification of covert attack nodes in a provenance graph requires encoding the k-hop neighborhood structure around each node. The current state-of-the-art method to achieve this feat is graph representation learning through graph neural networks (GNN). GNN is good at learning low-dimensional vector representations of nodes in graphs, thereby effectively capturing their structural information using the connections between nodes.</p>
+<p>In our method, we utilize the Word2Vec embedding obtained in the previous step as the feature vector of the nodes in the GNN. GNN uses these features in conjunction with the graph structure to learn the structural information of each node in the origin graph. However, due to the message passing process, adopting graph representation learning may bring huge resource overhead and introduce higher latency, especially in large graphs. Message passing requires nodes to exchange information with neighbors in the graph, a process that is iteratively repeated to enable nodes to receive information from increasingly distant parts of the graph. Therefore, continuous utilization of GNNs in real-time intrusion detection processes is not only resource-intensive but also leads to scalability issues since the provenance graphs in enterprise environments are very large. To address the above challenges and make GNN suitable for source-based IDS, this paper adopts two techniques as described below.</p>
+<p>Run the GNN offline to generate contextual embeddings, which are then stored for later use by lightweight classifier models. We observe that the vast majority of system entities perform the same set of activities during each system execution, making it inefficient to run GNNs every time they are encountered. Our meticulous analysis of the DAPRA OpTC dataset shows that more than 80% of system entities exhibit the same neighborhood structure during both the benign and evaluation phases of system execution. By storing the GNN output of these nodes, we can avoid using the GNN approximately 80% of the time when running FLASH in real time.</p>
+<h4 id="selective-graph-traversal">
+    <a href="#selective-graph-traversal" class="header-anchor">#</a>
+    Selective graph traversal
+</h4><p>Our GNN model is inspired by the GraphSage framework, which is recognized for its ability to learn node embeddings. GraphSage uses a neighborhood aggregation approach to capture local information about nodes. However, to ensure efficient processing of large provenance graphs relevant for threat detection, we adopted GraphSage&rsquo;s graph traversal algorithm. This adaptation prioritizes edges that are important for threat detection and investigation, eliminating the need for a complete source graph traversal. To achieve this goal, we devise a series of graph traversal principles. These principles guide GraphSage to selectively aggregate information from specific edges before applying GNN. Utilize the following Traversal Principle (TP) to determine which nodes and edges should be included during aggregation.</p>
+<ol>
+<li><strong>TP1: Unique Edge Sampling</strong>:
+<ul>
+<li>This principle involves sampling each type of edge between two nodes only once in the traversal. If there are multiple edges of the same type connecting the same pair of nodes in the graph, only one of the edges is selected for processing.</li>
+</ul>
+</li>
+<li><strong>TP2: Low-Priority Event Exclusion</strong>:
+<ul>
+<li>This principle involves excluding edges that represent low priority and forensically insignificant system events. For example, you might exclude deletion events that represent temporary files, or loops that represent process node exit events.</li>
+</ul>
+</li>
+<li><strong>TP3: Execution-Specific Information Filtering</strong>:
+<ul>
+<li>This principle consists in aggregating nodes and edges with the same execution-specific information only once. In a graph, many adjacent nodes may differ only by execution-specific properties, such as process nodes with the same image path but different process IDs.</li>
+</ul>
+</li>
+<li><strong>TP4: User-Specific Attribute Handling</strong>:
+<ul>
+<li>In this principle, nodes or edges are considered identical if they differ only in user-specific attributes. For example, two module nodes with the same module path but different user IDs will have user-specific attributes ignored when processing.</li>
+</ul>
+</li>
+</ol>
+<p>These basic principles enable the system to generate information-rich and structurally rich node vector representations while reducing computational overhead.</p>
+<p>For each node v ∈ V , let $X_v$ be the input feature vector of the node, and let $h^{(0)}_v = X_v$ be the initial embedding. At each iteration k of the algorithm, GraphSage updates the embedding of each node v ∈ V using the following equation:</p>
+<p><img src="/media%5cimage-20240605211323907.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240605211323907"
+	
+	
+></p>
+<p>where σ(·) is a nonlinear activation function such as ReLU, $\Nu(v)$ is the set of neighbors of node v in the graph, and AGGREGATEk(·) is the neighborhood of node v and its embedded aggregate function iteration k when combined. The matrix $W^{(k)}$ is a learnable parameter matrix that maps the aggregated features to a new embedding space. Following this process, GraphSage can encode the structural information around each node into vector space.</p>
+<h4 id="training-and-weighted-cross-entropy-loss">
+    <a href="#training-and-weighted-cross-entropy-loss" class="header-anchor">#</a>
+    Training and weighted cross-entropy loss
+</h4><p>We adopt a semi-supervised node classification method to train our novel GNN model. Our model uses the input features and graph structure of a node to classify its type. Our source graph includes multiple node types such as processes, files, and sockets. A GNN model trained using labeled data can learn to identify types of benign nodes. Since node types in system logs are usually unbalanced, we use weighted cross-entropy as the loss function. Weighted cross-entropy loss is a variation of the cross-entropy loss function that is used when classes are imbalanced in the data. Weighted cross-entropy loss solves this problem by assigning each category a weight that reflects its importance. Typically, the weight of each category is set to be inversely proportional to the frequency of samples in that category. This approach ensures that the loss function focuses more on minority classes, thereby enhancing the model&rsquo;s ability to correctly classify these classes. The equation for weighted cross-entropy loss is:</p>
+<p><img src="/media%5cimage-20240605214528624.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>where y is the true label vector, f (x) is the predicted label vector, n is the number of classes, $w_i$ is the weight of the i-th class, and log is the natural logarithm. By training our GNN model using this loss function, we ensure that it can effectively learn the structural relationships between different node types in the origin graph. Once the model is trained, the embeddings it generates can be used as input to lightweight classifiers for real-time intrusion detection. Therefore, our FLASH system can leverage the power of GNNs and lightweight classifiers to effectively identify stealth attack nodes without the need to continuously execute GNNs during real-time intrusion detection.</p>
+<h3 id="embed-recycling-database">
+    <a href="#embed-recycling-database" class="header-anchor">#</a>
+    Embed recycling database
+</h3><p>Our system employs a trained GNN model to generate structural embeddings for all nodes present in the benign dataset. To efficiently retrieve and store these GNN output vectors during real-time threat detection, we built a specialized key-value store. The key is designed as a Persistent Node Identifier (PNI), associated with node attributes that remain unchanged across different system executions. These include process names, file paths, module paths, and network stream IP addresses. The corresponding value encapsulates the GNN-derived embedding, as well as the set of neighbors associated with that particular node.</p>
+<p>We leverage attribute abstraction techniques to remove user- and execution-specific information. This ensures that the stored embeddings are universal. Specifically, there are the following abstract modes:</p>
+<ol>
+<li>User abstract mode: Implemented for process and file node types, this mode omits <strong>user ID</strong> from the process name and file path, achieving a high degree of generalization. For example, the file path /Users/john/.bashrc is abstracted to /Users/*/.bashrc.</li>
+<li>Network connection abstraction architecture: Applied to the socket point type, this architecture eliminates <strong>start and end times</strong>, thereby enhancing the versatility of different system executions. For example, a socket node with attributes IP:192.168.1.10, Port:22, Start:12:00:00, End:12:10:00 is abstracted into IP:192.168.1.10, Port:22, and only the necessary connection information is encapsulated.</li>
+<li>Module path abstract architecture: module nodes have path and base address attributes. When the base address changes, the path remains the same across executions. This architecture preserves only module paths, ensuring consistent and generalizable representation of module nodes.</li>
+</ol>
+<p><strong>Leverage precomputed embeddings</strong></p>
+<p>The motivation behind building our embedded key-value database is twofold: to optimize real-time anomaly detection and reduce computational overhead. By pre-computing and storing GNN embeddings of nodes with stable neighborhood structures, our method quickly assigns the stored embeddings to nodes with matching neighborhood structures during the real-time detection stage, thereby enhancing the performance and scalability of the detection pipeline.</p>
+<p>In this setting, the neighborhood set plays a key role. It helps determine whether the neighborhood structure of a node during real-time analysis matches that observed during the benign phase. If there is a match, the node is immediately assigned the embedding stored in the key-value store. On the other hand, if there are differences in neighborhood structure, the model will default to using Word2Vec features generated in real time for anomaly detection. This balancing strategy ensures the computational efficiency and adaptability of our system to changes in network structure.</p>
+<p>We use the <strong>Jaccard</strong> index to compare a node&rsquo;s stored neighborhood with its current neighborhood and then assign it to a pre-stored GNN embedding.</p>
+<p>During FLASH&rsquo;s real-time detection phase, a node must meet the following two conditions to be assigned its stored GNN embedding:</p>
+<ol>
+<li>The node&rsquo;s Persistent Node Identifier (PNI) must exist as a key in the feature store. PNI is built based on node attributes such as process name, file path, module path, and network stream IP address, which remain unchanged across different system executions.</li>
+<li>The stored neighborhood set corresponding to this PNI in the feature store must have a Jaccard index of 1 with the current neighborhood set for the given node. When the Jaccard similarity is 1, it means that the two neighbor sets are exactly the same.</li>
+</ol>
+<p>If a node meets the above criteria, it is assigned a stored GNN embedding; otherwise, FLASH relies on the Word2Vec function to classify the node using our lightweight classifier.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_features</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">similarity</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nodes</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">mapp</span><span class="p">,</span> <span class="n">lbl</span><span class="p">,</span> <span class="n">nemap</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">zero_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">X_train</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">map_item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mapp</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">label</span> <span class="o">=</span> <span class="n">lbl</span><span class="p">[</span><span class="n">map_item</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">node_feature</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">gnn_map</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">emb</span><span class="p">,</span> <span class="n">stored_set</span> <span class="o">=</span> <span class="n">gnn_map</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">current_set</span> <span class="o">=</span> <span class="n">nemap</span><span class="p">[</span><span class="n">map_item</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">jaccard_similarity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_set</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">stored_set</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_set</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">stored_set</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">emb</span> <span class="k">if</span> <span class="n">jaccard_similarity</span> <span class="o">&gt;=</span> <span class="n">similarity</span> <span class="k">else</span> <span class="n">zero_vector</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">feature_vector</span> <span class="o">=</span> <span class="n">zero_vector</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">X_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">node_feature</span><span class="p">,</span> <span class="n">feature_vector</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">),</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">edges</span><span class="p">,</span> <span class="n">mapp</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Splice <code>node_feature</code> and <code>feature_vector</code> into a new array in the column direction (horizontally).</p>
+<h3 id="lightweight-classifier">
+    <a href="#lightweight-classifier" class="header-anchor">#</a>
+    Lightweight classifier
+</h3><p>In our search for the best lightweight classifier, we evaluated a number of candidate classifiers, including XGBoost, Support Vector Machines (SVM), and Random Forests. This article chooses XGBoost to perform anomaly detection tasks. XGBoost uses a collection of decision trees and advanced boosting techniques to improve accuracy.</p>
+<p>XGBoost minimizes the regularized objective function 𝐽=𝐿(𝑦,𝑓(𝑓))+Ω(𝑓), using gradient boosting to iteratively add new trees to the set. Each new tree aims to minimize the gradient of the loss function relative to the current ensemble prediction. The XGBoost model uses concatenated Word2Vec encoding vectors and GNN embedding vectors for each node. It retrieves GNN embeddings from a pretrained key-value store, generates Word2Vec features in real time, performs inference, and saves the output for use in the next pipeline stage. This powerful process underpins the performance and scalability of our IDS.</p>
+<p>FLASH detects abnormal nodes by comparing predicted node types with actual node types. The model considers neighborhood structure and node attributes to learn benign patterns associated with various node types. For example, it can outline the interactions between different processes and file types and their connections. Malicious entities often exhibit neighborhood structures and properties that deviate from benign patterns. Therefore, when the model encounters such outliers at runtime, they do not conform to the learned node distribution, resulting in misclassification.</p>
+<p>Using Word2Vec features and stored GNN embeddings, FLASH can predict system entity (node) types. Misclassified nodes in the output indicate potential threats. We introduce a threshold parameter T to control alert generation. This parameter limits the classification probability of the predicted class and reflects the model&rsquo;s confidence in its predictions. Higher scores mean greater confidence and possible anomalies.</p>
+<h3 id="construction-of-attack-evolution-graph">
+    <a href="#construction-of-attack-evolution-graph" class="header-anchor">#</a>
+    Construction of attack evolution graph
+</h3><p>Given that the generated alerts may be scattered throughout a large source graph, understanding the causal relationships between nodes requires analysts to make numerous backward and forward trace calls to investigate the alerts. Furthermore, the different stages of APT attacks are scattered across the source graph, making it difficult to identify their relationships and progression. To address these challenges, we introduce a scheme to build compact attack evolution graphs (AEG) from large origin graphs and FLASH-generated alerts.</p>
+<p>To address these challenges, we introduce a scheme to build compact attack evolution graphs (AEG) from large origin graphs and FLASH-generated alerts. The core concept is to interconnect causally related alerts in a source graph, thereby building a series of concise AEGs. These AEGs encapsulate only alert nodes and their causal links, providing a simplified and clear view of alert node interactions. This reduction significantly simplifies the original diagram, making it easier for analysts to quickly and efficiently grasp attack progress. These streamlined AEGs not only simplify the analysis of source graphs, but also provide analysts with a powerful tool to quickly correlate the different stages of an APT attack. This correlation provides a clear view of overall attack strategy and tactics, aiding incident response.</p>
+<p>Algorithm 2 explains the process of creating AEG. The algorithm takes an origin graph G(V, E) and a set of alarms N with jump length h. Then it returns the AEG list.</p>
+<p><img src="/media%5cimage-20240607134542597.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ol>
+<li><strong>Initialize empty list IG</strong>:
+<ul>
+<li>First, initialize an empty list IG to store all eventually generated AEG maps.</li>
+</ul>
+</li>
+<li><strong>Loop through each alert</strong>:
+<ul>
+<li>Loop through <code>foreach Alert n ∈ N do</code>, iterating over each alert n in the provided set N of alerts.</li>
+</ul>
+</li>
+<li><strong>Get the causal path</strong>:
+<ul>
+<li>For each alert, call the <code>GETCAUSALPATHS(n, h)</code> function to obtain the causal path associated with the alert node, where h represents the hop length.</li>
+</ul>
+</li>
+<li><strong>Initialize attack path list</strong>:
+<ul>
+<li>For each alert, initialize an empty list AttackPaths to store the attack paths containing the alert nodes.</li>
+</ul>
+</li>
+<li><strong>Traverse all paths</strong>:
+<ul>
+<li>Traverse all paths obtained in the previous step through nested <code>foreach P ∈ Paths do</code> loop.</li>
+</ul>
+</li>
+<li><strong>Filter paths that contain alert nodes</strong>:
+<ul>
+<li>Inside the loop, use <code>AlertNodes ← P ∩ N</code> to calculate the intersection of path P and alert set N to obtain the path part containing alert nodes.</li>
+</ul>
+</li>
+<li><strong>Check the number of alarm nodes</strong>:
+<ul>
+<li>If the filtered path contains more than one alert node (<code>len(AlertNodes) &gt; 1</code>), it is considered a valid attack path.</li>
+</ul>
+</li>
+<li><strong>Construct a compact attack path</strong>:
+<ul>
+<li>Use the <code>KEEPALERTNODESONLY(P)</code> function to keep only alert nodes from path P to build a compact attack path CompactPath.</li>
+</ul>
+</li>
+<li><strong>Add to attack path list</strong>:
+<ul>
+<li>Add compact attack paths to AttackPaths list.</li>
+</ul>
+</li>
+<li><strong>Add attack path list to IG</strong>:
+<ul>
+<li>Add the AttackPaths list containing all attack paths to the final AEG graph list IG.</li>
+</ul>
+</li>
+<li><strong>Convert to graph structure</strong>:
+<ul>
+<li>For each path list in IG, use the <code>ConvertToGraph(Pathlist)</code> function to convert the path into a graph structure AEGraph.</li>
+</ul>
+</li>
+<li><strong>Return to AEG chart list</strong>:
+<ul>
+<li>Eventually, the algorithm returns the list IG containing all AEG graphs.</li>
+</ul>
+</li>
+</ol>
+<h2 id="experimental-evaluation">
+    <a href="#experimental-evaluation" class="header-anchor">#</a>
+    Experimental evaluation
+</h2><p>An event batch size of 250k was used in the experiment, and the Jaccard similarity threshold was 1.</p>
+<ol>
+<li>How does FLASH detection accuracy compare to existing systems?</li>
+<li>How does FLASH’s GNN optimization improve performance?</li>
+<li>How does the batch size parameter affect FLASH’s performance, accuracy, and resource usage?</li>
+<li>How robust is FLASH against imitation attacks?</li>
+<li>What are the results of ablation studies on various FLASH components and hyperparameters?</li>
+<li>How well does FLASH assist in the alarm verification process?</li>
+</ol>
+<h3 id="dataset">
+    <a href="#dataset" class="header-anchor">#</a>
+    Dataset
+</h3><p>E3 Dataset 1 is from DAPRA’s third red and blue team exercise. It provides audit log data showing benign and offensive behavior. We use DAPRA&rsquo;s ground truth documentation to label OpTC attack events. For E3, we use tags from ThraTrace. To identify attack graphs in the StreamSpot and Unicorn datasets, we refer to their respective documentation.</p>
+<p>The DAPRA OpTC dataset provides a broad view of benign and malicious audit records from approximately 1000 hosts. The dataset has six days of benign activity for training, and the following three days detailing malicious activity for evaluation. Each of the three days showed a different type of attack. Day one mapped out transition scenarios for PowerShell Empire, including initial footing, lateral movement, and privilege escalation. The data breach was recorded the next day. Malware upgrades were recorded on the third day.</p>
+<p>To evaluate FLASH, we use two source graph-based IDS as benchmarks: ThreaTrace and Unicorn. We use the same detection metrics as the corresponding systems we compare against. We use node-level anomaly detection for ThreaTrace comparison, while for Unicorn we perform graph-level anomaly detection because Unicorn cannot perform fine-grained abnormal node detection. FLASH identifies a graph as an anomaly if the number of anomalous nodes in it exceeds a certain threshold.</p>
+<h3 id="detection-performance">
+    <a href="#detection-performance" class="header-anchor">#</a>
+    Detection performance
+</h3><p>Table 2 shows the performance of FLASH and ThraTrace [67] on our evaluation dataset. FLASH consistently outperforms ThraTrace, achieving superior accuracy and F-score values. Compared to ThraTrace, FLASH leverages word2vec and system properties to generate semantically rich vectors. This provides valuable context for the model to establish clear decision boundaries between normal and abnormal nodes, thereby reducing false positives and improving accuracy and F-score. Since the ThreaTrace paper lacks evaluation results on the OpTC dataset, we execute ThreaTrace on OpTC to obtain the evaluation results. The results show that FLASH significantly outperforms ThraTrace as OpTC attacks are more difficult to detect due to smaller and well-mixed malicious activities. ThraTrace only relies on system call distribution mode as a feature, which is not enough. On the other hand, the Word2Vec encoding feature adopted by <strong>FLASH provides more semantic information</strong> to each node, making it more difficult for attacking nodes to hide themselves.</p>
+<p><img src="/media%5cimage-20240607154046277.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>Table 3 gives the experimental results of detection comparison between the two systems. While Unicorn&rsquo;s performance is comparable to FLASH on some datasets (e.g., Cadets), which have less stealthy graphs, FLASH outperforms Unicorn on more stealthy attack datasets (e.g., Unicorn SC-1 and SC-2). This advantage is attributed to FLASH&rsquo;s use of graph representation learning and time-sensitive node embedding, which enables it to generate a deep understanding of baseline benign behavior. Therefore, FLASH can effectively label even the most subtle attack graphs.</p>
+<h3 id="scalability-analysis">
+    <a href="#scalability-analysis" class="header-anchor">#</a>
+    Scalability analysis
+</h3><p>This paper evaluates the scalability enhancements provided by leveraging GNN embedding databases in FLASH. These pre-stored embeddings are combined with Word2Vec semantic encoding to serve the XGBoost classifier. When examining the E3 dataset, we found that a large proportion of nodes lacked attribute data. For example, in four DARPA E3 datasets (Cadets, Trace, FiveDirections, and Theia), 70%, 54%, 72%, and 76% of nodes respectively have missing attribute data. This data is critical for node and neighbor identification and for assigning persistent node identifiers (PNIs). Without these PNIs, our efficient embedding database cannot be used. However, the OpTC dataset provides complete node information, enabling FLASH to implement a two-step pipeline. Therefore, during the inference (detection) phase, we exclusively use OpTC&rsquo;s embedded database. In contrast, we generate GNN embeddings for E3 during inference.</p>
+<p>During the training phase, FLASH’s GNN model generates embedding vectors from benign data and stores them in a key-value data store for future use. At runtime, these stored embeddings are combined with Word2Vec vectors as feature vectors for the XGBoost model, which then performs anomaly detection. The detection results summarized in the &ldquo;FLASH (GNN + XGBoost)&rdquo; column of Table 2 show that the detection performance of FLASH leveraging this two-step pipeline is comparable to using only GNN for anomaly detection and significantly exceeds ThreaTrace. Additionally, this two-step pipeline significantly speeds up processing compared to ThraTrace. As shown in Figure 3, the reuse of GNN embeddings results in three times less time overhead than ThraTrace. The reported inference times use a day&rsquo;s worth of system logs from a single host in the OpTC dataset. We observe similar reductions in inference time overhead when we use logs from more hosts in our experiments. As a result, our approach can save large enterprises hours of inference time and help prevent log congestion, ensuring timely alerts.</p>
+<p><img src="/media%5cimage-20240607214032911.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>In our experiments, we observed that FLASH successfully distributed pre-stored embeddings to approximately 84% of the nodes at runtime, with a hit rate as high as 90%. This high allocation rate indicates that many system entities exhibit repetitive patterns of behavior, which multiple studies have also shown, allowing FLASH to leverage its two-step pipeline for enhanced scalability and real-time APT detection.</p>
+<h3 id="batch-size-analysis">
+    <a href="#batch-size-analysis" class="header-anchor">#</a>
+    Batch size analysis
+</h3><p>FLASH runtime performance depends on the number of logs processed at a given time, a behavior regulated by the batch size parameter K. We conduct a comprehensive analysis to show the performance of our system at different batch sizes. When FLASH receives the system log, we use a sliding event window to process the system log.</p>
+<p>Figure 4a shows the impact of increasing batch size on runtime consumption of CPU and memory resources. Interestingly, CPU utilization remains relatively constant, while memory consumption grows almost linearly with batch size, peaking at approximately 600 MB for an event window size of 250K. These observations indicate that FLASH is good at utilizing system resources efficiently even when processing large batches of data, making it suitable for real-time IDS. Figure 4b shows the inference time for different batch sizes using the OpTC dataset. The choice of event window size will also have an impact on FLASH detection performance. Smaller window sizes prevent complete capture of system node activity, resulting in reduced detection accuracy. Figure 4c shows the improvement in various accuracy measures for FLASH as the batch size increases. It is worth noting that performance increases until it reaches a certain threshold and then stabilizes. From these findings, it can be seen that the optimal choice of batch size depends on the resource constraints and requirements of the enterprise environment in which the FLASH system will be deployed. For systems with limited resources, a smaller event window size may be required, while high-performance systems with large event throughput can benefit from a larger window size.</p>
+<p><img src="/media%5cimage-20240607205524346.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="robustness-test">
+    <a href="#robustness-test" class="header-anchor">#</a>
+    Robustness test
+</h3><p>To evaluate FLASH&rsquo;s resilience against adversarial attacks, we performed adversarial imitation attacks on source-based IDS, as detailed by Goyal et al. A noteworthy finding of Goyal et al. is the susceptibility of IDSs with graph-level granularity (as discussed in Section 2) such as Unicorn, StreamSpot, ProvDetector, and SIGL to adversarial attacks. This adversarial strategy manipulates the distribution graph encoding to launch evasion attacks against provenance-based IDS, with the goal of creating misleading similarities between the node neighborhood distribution in the attack graph and the node neighborhood distribution in the benign provenance graph. The goal of this strategy is to make nodes in the attack graph have similar embeddings as nodes involved in benign activities. To achieve this goal, we integrate the benign node structure in the training dataset into the attack graph, and FLASH encodes the structural information of the nodes in the origin graph using a GNN that collects feature vectors from the node&rsquo;s parents through a message passing mechanism to create a D-dimensional vector representation based on the k-hop neighborhood of each node.</p>
+<p>The attacker modifies the node neighborhood in the attack graph to make it similar to the node neighborhood in the normal behavior graph, with the goal of making the embedding of the attack node similar to that of normal nodes.</p>
+<p>The experimental results are shown in Figure 5, which shows the number of edges added to the attack graph using benign structures (x-axis) versus the number of benign edges added by the anomaly scores (minimum, average, and maximum) of all attack nodes (y-axis). Initially, adding benign node neighborhoods reduces the anomaly score of the attacking node, but this reduction is not enough to ensure successful evasion, as shown by the threshold line in Figure 5 . Subsequently, as more benign edges are introduced, the anomaly score of the attacking node increases. This trend can be attributed to the fact that incorporating additional benign nodes around the attack node can enhance its embedding, endowing it with more benign features, thus reducing the node’s anomaly score.</p>
+<p><img src="/media%5cimage-20240607211212225.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>But constantly adding more benign nodes will raise suspicion in the model, and this change in the node distribution learned by the model will lead to an increase in the anomaly score. This unique behavior can be linked to our model’s powerful semantic understanding derived from node-level learning tasks. Through this process, FLASH can gain a comprehensive understanding of the feature neighborhood structure associated with nodes with different semantics in the source graph. This understanding enables the model to accurately judge the legality of causal relationships between different nodes in the graph, making FLASH highly resistant to adversarial imitation attacks. This resilience has significant advantages over graph-level detection methods.</p>
+<h3 id="ablation-experiment">
+    <a href="#ablation-experiment" class="header-anchor">#</a>
+    Ablation experiment
+</h3><p>In the ablation study, we systematically evaluate the performance of FLASH by varying various parameter settings and components, demonstrating their impact on system effectiveness. Key areas we explore include</p>
+<ol>
+<li>The impact of different lightweight classifiers</li>
+<li>Use of weighted cross-entropy loss</li>
+<li>Effectiveness of GNN embeddings relative to Word2Vec embeddings</li>
+</ol>
+<p><img src="/media%5cimage-20240607212216321.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ol start="4">
+<li>The role of timing coding</li>
+</ol>
+<p><img src="/media%5cimage-20240607212243200.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<ol start="5">
+<li>Effectiveness of selective graph traversal.</li>
+</ol>
+<p>The results, shown in Figure 9, show that the traversal technique can reduce GNN training time by 43% for a specified number of system events.</p>
+<p><img src="/media%5cimage-20240608214649567.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="alarm-effectiveness">
+    <a href="#alarm-effectiveness" class="header-anchor">#</a>
+    Alarm effectiveness
+</h3><p>FLASH&rsquo;s primary design goal is threat detection, but it has the potential to also facilitate faster attack investigation. We focus on two main areas: managing threat alert fatigue and generating attack evolution graphs (AEG). Alert fatigue occurs when security analysts deal with too many threat alerts, leading to threats being overlooked in false positives. To evaluate whether FLASH can mitigate this issue, we ranked alerts based on the threat (anomaly) score assigned by FLASH. Figure 10 shows the cumulative distribution function of the ranking of true and false alarms. It shows that FLASH&rsquo;s threat score prioritizes real alerts. Furthermore, if a separation threshold is established at the lowest true alarm score, up to 60% of false alarms can be discarded. This prioritization helps analysts focus on higher-scoring alerts, reducing the chance of overlooking real threats and minimizing attackers&rsquo; exposure time. In the case of AEG, these visual aids map the evolution of the attack, aiding analysts during alert validation. As shown in Figure 11, using AEG reduces the number of items that investigators need to review because there are fewer AEGs than a single alert. This investigation method is similar to the RapSheet system and allows for more efficient and targeted attack analysis. In contrast, ThreaTrace encountered difficulty in alert classification due to the use of multiple GNN models for prediction. An alert is triggered only when all models classify a node as an anomaly, resulting in each node having a different alert score from different models. The lack of a single representative anomaly score for each node poses a significant challenge to the classification process.</p>
+<p><img src="/media%5cimage-20240607212921987.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="summary-and-discussion">
+    <a href="#summary-and-discussion" class="header-anchor">#</a>
+    Summary and discussion
+</h2><p><strong>Concept Drift</strong>. That is, the data distribution of the underlying system changes over time, which is a potential problem. For example, patterns learned by FLASH during training may no longer be valid as new system activity occurs. This drift may lead to misclassification, as new benign behaviors may be incorrectly identified as anomalies. One mitigation strategy is to periodically retrain with the latest data to update the model and embedding database. Due to its selective traversal, FLASH training is very efficient, enabling users to retrain their models regularly. However, this approach faces the challenge of maintaining the model&rsquo;s ability to identify older but still relevant attacks. Unfortunately, there are currently no public datasets to evaluate the effectiveness of this strategy. Therefore, effectively handling concept drift in FLASH remains a challenge worthy of future research.</p>
+<p>**Adaptive adversarial attacks. ** Various existing defenses can be integrated into Flash to increase its robustness against these attacks. For example, adversarial training [63] and gradient masking [50] are commonly used to defend against gradient-based attacks. The former involves augmenting the training dataset with adversarial examples to improve the robustness of the model, while the latter makes it difficult for an attacker to accurately calculate gradients to craft adversarial inputs. Techniques from previous work on defending against audit log tampering [14, 57] can be used to prevent training-time data poisoning attacks. These defenses can be easily incorporated into Flash to increase its resistance to adaptive adversaries.</p>
+<h2 id="related-work">
+    <a href="#related-work" class="header-anchor">#</a>
+    Related work
+</h2><p>Rule-based IDS. Norm-based IDS methods, such as Holmes, Rapsheet, and Poirot, use canonical rules on a provenance graph to detect deviations from normal behavior. While these methods are effective in reducing false positives, they run the risk of being evaded by new attacks and require continuous updating to address the evolving threat landscape. Compared to these systems, FLASH is a more scalable and robust solution capable of detecting previously unseen threats by leveraging the rich semantic and contextual information in the provenance graph.</p>
+<p>Based on embedded IDS. Embedding techniques are widely used for log analysis tasks, and they often use ML models (such as neural networks and n-grams) to convert logs into vector form. Examples include DeepLog using LSTM, ProvDetector applying Doc2Vec, and Attack2Vec leveraging a temporal word embedding model. Euler uses GNN and RNN embeddings to detect lateral motion. SIGL only focuses on detecting malware installations through deep learning and is limited by graph-level granular detection. Furthermore, SIGL&rsquo;s evaluation is based on a small dataset of normal/malware installations, which makes scaling to large source graphs challenging. DeepAid [29] uses deep neural networks to detect anomalies in network traffic. Unlike these systems, FLASH is a host-based IDS that combines GNNs with rich semantic word embeddings from system logs and stores training-stage embeddings for real-time APT detection.</p>
+<p>Source-based investigation. Hassan et al. exploit syntactic reasoning of source graphs to accelerate system intrusion investigation. Pasquier et al. introduce CamQuery, a real-time source analysis framework. Additionally, existing systems such as DEPCOMM, DEPIMPACT, Watson, NoDoze, Palantir, Deepcase, SAQL, OmegaLog, C2SR, Dossier, and Atlas facilitate attack investigation and incident response. These existing systems are orthogonal to our research direction as they are not designed to detect APT attacks and they require initial attack symptoms from an intrusion detector to initiate an investigation.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/provenance_graph/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/media/bg.png" loading="lazy" data-key="" data-hash="/media/bg.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">A Beginner’s Guide to Provenance Graphs</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Graph embedding analysis</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/flash/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 43.539k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

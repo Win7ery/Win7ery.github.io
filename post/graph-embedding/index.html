@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Social Networks and Social Computing Course Assignment">
+<title>Graph embedding analysis</title>
+
+<link rel='canonical' href='http://localhost:1313/post/graph-embedding/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="Graph embedding analysis">
+<meta property='og:description' content="Social Networks and Social Computing Course Assignment">
+<meta property='og:url' content='http://localhost:1313/post/graph-embedding/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-06-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-06-05T00:00:00&#43;00:00'/><meta property='og:image' content='https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg' />
+<meta name="twitter:title" content="Graph embedding analysis">
+<meta name="twitter:description" content="Social Networks and Social Computing Course Assignment"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/zh-cn/post/graph-embedding/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#image-embedding">Image embedding</a>
+      <ol>
+        <li><a href="#graph-embedding-based-on-matrix-factorization">Graph embedding based on matrix factorization</a></li>
+        <li><a href="#graph-embedding-based-on-random-walk">Graph embedding based on random walk</a></li>
+        <li><a href="#graph-embedding-based-on-graph-neural-network">Graph embedding based on graph neural network</a></li>
+      </ol>
+    </li>
+    <li><a href="#summary-and-discussion">Summary and discussion</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/graph-embedding/">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" alt="Featured image of post Graph embedding analysis" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/graph-embedding/">Graph embedding analysis</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Social Networks and Social Computing Course Assignment
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 05, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    12 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    2435 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/zh-cn/post/graph-embedding/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <blockquote>
+<p>My UCAS coursework may not be reproduced without permission!
+My UCAS coursework may not be reproduced without permission!
+My UCAS coursework may not be reproduced without permission!</p>
+</blockquote>
+<h2 id="introduction">
+    <a href="#introduction" class="header-anchor">#</a>
+    Introduction
+</h2><p>Graphs are commonly used information carriers in complex systems and can represent many complex relationships in reality, such as social networks, criminal networks, transportation networks, etc. As a kind of non-Euclidean data, graph structure is difficult to directly apply deep learning methods such as convolutional neural network (CNN) and recurrent neural network (RNN).</p>
+<p>To construct feature representations for graph data mining, graph embedding maps nodes into a low-dimensional space, generating low-dimensional vectors that preserve some important information in the original graph. Currently, graph embeddings are not only successful in machine learning tasks on complex networks such as node classification, link prediction, node clustering, and visualization, but are also widely used in real-world tasks such as social influence modeling and content recommendation. Early graph embedding algorithms were mainly used for data dimensionality reduction, building similarity graphs through neighborhood relationships, embedding nodes in low-dimensional vector space, and maintaining the similarity of connected node vectors. Such methods usually have high time complexity and are difficult to scale to large graphs. In recent years, graph embedding algorithms have turned to scalable methods. For example, the matrix factorization method uses an approximate decomposition of the adjacency matrix as the embedding; the random walk method inputs the walk sequence into Skip-Gram to generate the embedding. These methods exploit the sparsity of the graph to reduce time complexity.</p>
+<p>In order to adapt to better downstream tasks, good embedding methods need to meet more requirements. The main challenges at present are:</p>
+<p>(1) Need to ensure that the embedding describes the properties of the graph well. They need to represent graph topology, node connections, and node neighborhoods. The performance of a prediction or visualization depends on the quality of the embedding.</p>
+<p>(2) The size of the network should not slow down the embedding process. Graphs are often very large, for example a common social network may have millions of interactions, so good embedding methods need to be efficient on large graphs.</p>
+<p>(3) Longer embedding dimensions can retain more information, but at the same time it will bring higher time and space complexity, and users need to make trade-offs according to their needs.</p>
+<h2 id="image-embedding">
+    <a href="#image-embedding" class="header-anchor">#</a>
+    Image embedding
+</h2><p>In order to transform the graph from the original graph space to the embedding space, different models can be used to merge different types of information. Commonly used models mainly include matrix decomposition, random walk, and deep neural network.</p>
+<h3 id="graph-embedding-based-on-matrix-factorization">
+    <a href="#graph-embedding-based-on-matrix-factorization" class="header-anchor">#</a>
+    Graph embedding based on matrix factorization
+</h3><p>Adjacency matrices are often used to represent the structure of graphs, where each column and row represents a node, and the matrix entries represent the relationships between nodes. You can simply use row vectors or column vectors as vector representations of nodes, but the resulting representation space is N-dimensional, where N is the total number of nodes. Graph embedding aims to learn the low-dimensional vector space of the network, ultimately finding a low-rank space to represent the network. While matrix factorization methods have the same goal of learning the low-rank space of the original matrix, among a series of matrix factorization models, singular value decomposition (SVD) is often used for graph embedding due to its optimality for low-rank approximation, and non-negative matrix factorization is often used for its advantages as an additive model.</p>
+<p>Locally linear embedding (LLE) represents each node as a linear combination of adjacent nodes and constructs a neighborhood-preserving mapping. The specific implementation is divided into three steps: (1) Select k neighboring nodes using a certain metric (such as Euclidean distance); (2) Reconstruct the nodes linearly weighted by k neighbors and minimize the node reconstruction error to obtain the optimal weight; (3) Minimize the objective function constructed by the optimal weight to generate Y. However, this model is very sensitive to the choice of k value, which has a great impact on the final dimensionality reduction result.</p>
+<p><img src="/media%5cimage-20240605203211191.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 1 LLE steps"
+	
+	
+></p>
+<p>Laplacian eigenmaps (LE) are similar to LLE in that they also construct relationships between data from the perspective of local approximation. LE uses an adjacency matrix to build an embedding representation that contains local structural information and requires connected nodes to be as close as possible in the embedding space.</p>
+<p>The objective function of LE emphasizes node pairs with large weights and weakens node pairs with small weights, causing the local topology in the original graph to be destroyed. In order to enhance the local topology preservation of graph embedding, Cauchy graph embedding (CGE) introduces the inverse function of distance to maintain the similarity relationship of nodes in the embedding space. Compared with LE, the objective function of CGE emphasizes short distances, that is, ensuring that the closer the locally adjacent nodes are, the closer the distance in the embedding space is.</p>
+<p>In response to the current demand for dynamic graph analysis, a more general dynamic graph embedding method based on matrix decomposition has emerged. DANE adopts a distributed framework: in the offline part, using the method of maximizing correlation, introducing and to maximize the correlation after projection of topological embedding and feature embedding, capturing the dependence of the graph structure and node attributes, and then splicing the first d eigenvectors to keep and consistent in representation; in the online part, matrix perturbation theory is used to update the embedded eigenvalues ​​and eigenvectors. At time t, DANE performs spectral graph embedding on the topology structure and node attributes; at time t+1, DANE uses matrix perturbation theory to update and to generate new embeddings.</p>
+<h3 id="graph-embedding-based-on-random-walk">
+    <a href="#graph-embedding-based-on-random-walk" class="header-anchor">#</a>
+    Graph embedding based on random walk
+</h3><p>Inspired by word2vec, the random walk-based graph embedding method converts nodes into words, uses random walk sequences as sentences, and uses graph Skip-Gram to generate embedding vectors of nodes. The random walk method can preserve the structural characteristics of the graph and still perform well on large graphs that cannot be completely observed.</p>
+<p>DeepWalk generates embeddings using a random walk that starts at a selected node and moves from the current node to random neighbors and continues for a specified number of steps. The process consists of three steps as shown in Figure 2.</p>
+<p><img src="/media%5cimage-20240605203226056.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 2 DeepWalk steps"
+	
+	
+></p>
+<p>(1) Sampling: Sampling the graph through random walks. Perform few random walks from each node. The authors show that it is sufficient to perform 32 to 64 random walks from each node, and the authors show that the length of a good random walk is about 40 steps.</p>
+<p>(2) Training skip-gram: Random walk is equivalent to sentences in word2vec method. The Skip-gram network accepts a node in a random walk as a one-hot vector as input and maximizes the probability of predicting neighbor nodes. It is usually trained to predict about 20 neighbor nodes (10 nodes to the left, 10 nodes to the right).</p>
+<p>(3) Calculate embedding: Embedding is the output of the hidden layer of the network. DeepWalk computes the embedding of each node in the graph.</p>
+<p>The DeepWalk method randomly performs a random walk, which means that the embedding does not preserve the local neighborhood of nodes well. The Node2vec approach solves this problem. Node2vec is an improved version of DeepWalk with very small differences in random walks. It has parameters P and Q. The parameter Q defines how likely the random walk is to discover undiscovered parts of the graph, while the parameter P defines how likely the random walk is to return to the previous node. The parameter P controls the discovery of microscopic views around the node. The parameter Q controls the discovery of larger neighborhoods. It infers communities and complex dependencies.</p>
+<p><img src="/media%5cimage-20240605203235725.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 3 Probability of random walk steps in Node2vec"
+	
+	
+></p>
+<p>Figure 3 shows the probability of a random walk step in Node2vec. Taking a step from a red node to a green node, the probability of returning to a red node is 1/P, while the probability of going to a node not connected to the previous (red) node is 1/Q, and the probability of going to a neighbor of a red node is 1.</p>
+<p>Graph2vec is based on the idea of ​​the doc2vec method using skip-gram network, which takes the ID of the document on the input and is trained to maximize the probability of predicting random words from the document. Since the task is to predict subgraphs, graphs with similar subgraphs and similar structures have similar embeddings. As shown in Figure 4, the Graph2vec method consists of three steps.</p>
+<p><img src="/media%5cimage-20240605203248920.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 4 Graph2vec method"
+	
+	
+></p>
+<p>(1) Sample and relabel all subgraphs in the graph. A subgraph is a set of nodes that appear around a selected node, and the nodes in the subgraph are no further apart than the selected number of edges.</p>
+<p>(2) Train the skip-gram model. Diagrams are similar to documents. Since a document is a collection of words, a graph is a collection of subgraphs. At this stage, the skip-gram model is trained. It is trained to maximize the probability of predicting subgraphs present in the input graph. The input graph is provided as one-hot vectors.</p>
+<p>(3) Compute the embedding by providing the graph ID as a one-hot vector at the input, the embedding is the result of the hidden layer.</p>
+<h3 id="graph-embedding-based-on-graph-neural-network">
+    <a href="#graph-embedding-based-on-graph-neural-network" class="header-anchor">#</a>
+    Graph embedding based on graph neural network
+</h3><p>GCN is usually applied to direct push representation learning of fixed graphs. GraphSAGE extends it to the task of inductive unsupervised learning, using node features (such as text attributes, node degrees) to learn embedded representations of invisible nodes. As shown in Figure 5, GraphSAGE does not train a separate embedding for each node, but trains an aggregator function by sampling and aggregating the local neighborhood features of the node, while learning the topology and feature distribution of each node&rsquo;s neighborhood to generate an embedding representation. Compared with GCN, GraphSAGE uses an unsupervised loss function to force nearby nodes to have similar representations and distant nodes to have different representations. Given downstream tasks, GraphSAGE can replace or add the corresponding objective function to perform supervised or semi-supervised learning to improve the flexibility of the model; the training process performs batch training to improve the convergence speed of the model.</p>
+<p><img src="/media%5cimage-20240605203259014.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 5 GraphSAGE sampling and aggregation method"
+	
+	
+></p>
+<p>As shown in Figure 6, graph attention network (GAT) introduces an attention mechanism based on GCN, weights and sums the features of neighboring nodes, and assigns different weights. For a single node, GAT uses self-attention to obtain the attention coefficient, uses masked-attention to allocate attention to the neighborhood of node i, and uses multi-head attention to generate node embeddings.</p>
+<p>The attention parameters are shared throughout the graph, which greatly reduces the storage space occupied by the parameters. At the same time, GAT samples all neighbor nodes, which is more representative than the embedding obtained by GraphSAGE. The disadvantage of GAT is that when using second-order or higher neighbors, it can easily lead to over-smoothing.</p>
+<p><img src="/media%5cimage-20240605203410299.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Figure 6 GAT model"
+	
+	
+></p>
+<h2 id="summary-and-discussion">
+    <a href="#summary-and-discussion" class="header-anchor">#</a>
+    Summary and discussion
+</h2><p>Graph embedding can be interpreted as generating vector representations of graph data that are used to gain insight into certain properties of the graph. Table 1 summarizes the main graph embedding model strategies and summarizes the shortcomings of each model.</p>
+<p>Table 1 Summary of model strategies</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Categories</th>
+          <th>Models</th>
+          <th>Strategies</th>
+          <th>Disadvantages</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Matrix decomposition</td>
+          <td>LLE</td>
+          <td>Construct neighborhood-preserving mapping and minimize the reconstruction loss function</td>
+          <td>Very sensitive to the choice of k value, affecting the dimensionality reduction results</td>
+      </tr>
+      <tr>
+          <td>LE</td>
+          <td>Keep connected nodes as close as possible in the embedding space</td>
+          <td>It is difficult to learn the local topology in the original graph</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>DANE</td>
+          <td>Laplacian eigenmap captures the structure and attribute information at time t, and matrix perturbation theory updates dynamic information</td>
+          <td>The online part does not consider the high-order similarity of the graph</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Random walk</td>
+          <td>Deepwalk</td>
+          <td>Using random walk to sample nodes, Skip-Gram maximizes node co-occurrence probability</td>
+          <td>Embedding does not preserve the local neighborhood of nodes well.</td>
+      </tr>
+      <tr>
+          <td>node2vec</td>
+          <td>Introducing a biased random walk based on Deepwalk</td>
+          <td>Does not distinguish between node or relationship types</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Graph2vec</td>
+          <td>Use skip-gram network to maximize the probability of predicting random words from documents</td>
+          <td>Use adjacent nodes and do not consider high-order similarity information of the graph.</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Graph Neural Network</td>
+          <td>GraphSAGE</td>
+          <td>Sampling and aggregating local neighborhood features of nodes to train aggregator functions</td>
+          <td>Only aggregating neighbor information makes it difficult to capture complex neighbor relationships and graph structures</td>
+      </tr>
+      <tr>
+          <td>GAT</td>
+          <td>Introduce self-attentio and multi-head attention based on GCN</td>
+          <td>When using second-order or above neighbors, it is easy to cause over-smoothing</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>The main task at this stage is still to improve the scalability of the model to large-scale and complex graph data, innovate model methods and improve the performance of downstream tasks.</p>
+<p>Personally, I believe that task-specific embeddings still have strong research significance. The results generated by most graph embedding models will be used for multiple tasks such as node classification, link prediction, and visualization. But for specific downstream tasks, different graph embedding models have different effects on downstream tasks. Task-oriented embedding models can only focus on one task and make full use of information related to the task to train the model.</p>
+<blockquote>
+<p>My UCAS coursework may not be reproduced without permission!
+My UCAS coursework may not be reproduced without permission!
+My UCAS coursework may not be reproduced without permission!</p>
+</blockquote>
+<p>References:</p>
+<p>[0] <a class="link" href="https://medium.com/@ManishChablani/graph-neural-nets-explained-summary-of-different-graph-embedding-methods-8fd15778a490"  target="_blank" rel="noopener"
+    >Graph Neural Nets Explained: Summary of different graph embedding methods. | by Manish Chablani | Medium</a></p>
+<p>[1] Yuan Lining, Li Xin, Wang Xiaodong, &amp; Liu Zhao. (2022). Review of graph embedding models. Journal of Frontiers of Computer Science &amp; Technology, 16(1).</p>
+<p>[2] Roweis, S. T., &amp; Saul, L. K. (2000). Nonlinear dimensionality reduction by locally linear embedding. science, 290(5500), 2323-2326.</p>
+<p>[3] Belkin, M., &amp; Niyogi, P. (2001). Laplacian eigenmaps and spectral techniques for embedding and clustering. Advances in neural information processing systems, 14.</p>
+<p>[4] Perozzi, B., Al-Rfou, R., &amp; Skiena, S. (2014, August). Deepwalk: Online learning of social representations. In Proceedings of the 20th ACM SIGKDD international conference on Knowledge discovery and data mining (pp. 701-710).</p>
+<p>[5] Grover, A., &amp; Leskovec, J. (2016, August). node2vec: Scalable feature learning for networks. In Proceedings of the 22nd ACM SIGKDD international conference on Knowledge discovery and data mining (pp. 855-864).</p>
+<p>[6] Narayanan, A., Chandramohan, M., Venkatesan, R., Chen, L., Liu, Y., &amp; Jaiswal, S. (2017). graph2vec: Learning distributed representations of graphs. arXiv preprint arXiv:1707.05005.</p>
+<p>[7] Hamilton, W., Ying, Z., &amp; Leskovec, J. (2017). Inductive representation learning on large graphs. Advances in neural information processing systems, 30.</p>
+<p>[8] Veličković, P., Cucurull, G., Casanova, A., Romero, A., Lio, P., &amp; Bengio, Y. (2017). Graph attention networks. arXiv preprint arXiv:1710.10903.</p>
+<p>[9] Cai, H., Zheng, V. W., &amp; Chang, K. C. C. (2018). A comprehensive survey of graph embedding: Problems, techniques, and applications. IEEE transactions on knowledge and data engineering, 30(9), 1616-1637.</p>
+<p>[10] Cui, P., Wang, X., Pei, J., &amp; Zhu, W. (2018). A survey on network embedding. IEEE transactions on knowledge and data engineering, 31(5), 833-852.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/provenance_graph/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/media/bg.png" loading="lazy" data-key="" data-hash="/media/bg.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">A Beginner’s Guide to Provenance Graphs</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/graph-embedding/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 43.539k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

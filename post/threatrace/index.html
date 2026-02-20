@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="TIFS 2022">
+<title>THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</title>
+
+<link rel='canonical' href='http://localhost:1313/post/threatrace/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning">
+<meta property='og:description' content="TIFS 2022">
+<meta property='og:url' content='http://localhost:1313/post/threatrace/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-08-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-16T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/threatrace/media/bg.png' />
+<meta name="twitter:title" content="THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning">
+<meta name="twitter:description" content="TIFS 2022"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/threatrace/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Article</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Link</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/zh-cn/post/threatrace/">
+                        简体中文
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#author">author</a></li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#related-work">Related work</a>
+      <ol>
+        <li><a href="#threat-detection-based-on-traceability-graph"><strong>Threat detection based on traceability graph</strong></a></li>
+        <li><a href="#exception-tracking">Exception tracking</a></li>
+      </ol>
+    </li>
+    <li><a href="#motivation-and-background">Motivation and background</a>
+      <ol>
+        <li><a href="#graphsage">GraphSAGE</a></li>
+      </ol>
+    </li>
+    <li><a href="#design">design</a></li>
+    <li><a href="#model">Model</a>
+      <ol>
+        <li><a href="#feature-extraction">Feature extraction</a></li>
+        <li><a href="#training-phase">Training phase</a></li>
+        <li><a href="#alarm-alert">Alarm alert</a></li>
+      </ol>
+    </li>
+    <li><a href="#experimental-evaluation">Experimental evaluation</a>
+      <ol>
+        <li><a href="#streamspot-datasets">streamspot Datasets</a></li>
+        <li><a href="#unicorn-sc-datasets">Unicorn SC Datasets</a></li>
+        <li><a href="#darpa-tc-datasets">DARPA TC Datasets</a></li>
+        <li><a href="#robustness">robustness</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/threatrace/">
+                <img src="/post/threatrace/media/bg_hu_8aa7547c84bf8651.png"
+                        srcset="/post/threatrace/media/bg_hu_8aa7547c84bf8651.png 800w, /post/threatrace/media/bg_hu_440ffa0c4131ee7d.png 1600w"
+                        width="800" 
+                        height="261" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/threatrace/">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            TIFS 2022
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 16, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    21 minute read
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    4377 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/zh-cn/post/threatrace/" class="link">简体中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="author">
+    <a href="#author" class="header-anchor">#</a>
+    author
+</h2><p>•<strong>Wang Zhiliang</strong> is an associate professor and doctoral supervisor at the Institute of Network Science and Cyberspace, Tsinghua University. The main research directions include network testing and measurement and situational awareness, Internet architecture and protocols, etc.</p>
+<p>•Traffic engineering masterpiece: Boosting Bandwidth Availability Over Inter-DC WAN</p>
+<p>•<strong>Tsinghua University Network Management and Measurement Laboratory</strong>: Laboratory leader Professor Yang Jiahai, deputy director of Tsinghua University Information Technology Center, laboratory research includes: innovative basic research on Internet management architecture; research on network holographic measurement and network behavior; research on cyberspace mapping for the IPv6 next-generation Internet; research on network security analysis based on measurement (and research on cyberspace security situation awareness); research on cloud data center resource management and scheduling for network function virtualization.</p>
+<p><a class="link" href="https://github.com/threaTrace-detector/threaTrace/"  target="_blank" rel="noopener"
+    >https://github.com/threaTrace-detector/threaTrace/</a></p>
+<h2 id="introduction">
+    <a href="#introduction" class="header-anchor">#</a>
+    Introduction
+</h2><p>We introduce THREATRACE, an anomaly-based detector that effectively detects covert and persistent host-based threats at the node level. THREATRACE takes the data provenance graph as source input and customizes an inductive graph neural network framework (GraphSAGE) [11] to learn the rich contextual information in the data provenance graph. GraphSAGE is a graph neural network (GNN). GNN is a set of neural network models designed for various graph-related works and has achieved success in many fields such as computer vision [12], natural language processing [13], chemistry and biology [14], etc. We leverage its ability to learn structural information about a node&rsquo;s role in the provenance graph [11] for node-level threat detection. Note that THREATRACE aggregates node neighborhood information on the provenance graph, similar to the node embedding method. The main difference is that, at its core, THREATRACE is a deep learning method designed to solve the end-to-end abnormal node detection task, while the node embedding method aims to extract low-dimensional vector representations of nodes [15].</p>
+<p>Threat detection using GraphSAGE is challenging: 1) How to train a model without prior knowledge of zero-day attack patterns? 2) How to solve the data imbalance problem?</p>
+<p>We customized a novel framework based on GraphSAGE to address these challenges. Unlike previous graph-level detection methods, THREATRACE can learn the role of each benign node in the data source graph, thereby capturing covert anomalous behaviors without prior knowledge of attack patterns. THREATRACE is a semi-supervised anomaly detection method that requires the training data to be benign. We design a multi-model framework to learn different types of benign nodes, thereby solving the problem of data imbalance and effectively improving detection performance. THREATRACE is a real-time system that can be deployed in long-running systems with acceptable computational and memory overhead. It detects host intrusions in the early stages and tracks the location of anomalous behavior. We evaluate THREATRACE on five public datasets. The results show that THREATRACE can effectively detect host-based threats, which account for a small proportion of the overall system provenance graph, with fast processing speed and acceptable resource overhead.</p>
+<p>Our paper makes the following contributions:</p>
+<p>Novel node-level threat detection. To the best of our knowledge, THREATRACE is the first research effort to formalize the host-based threat detection problem as an abnormal node detection and tracking problem in a provenance graph. We propose a novel multi-model framework based on GraphSAGE for detecting node-level stealth threats.</p>
+<p>High detection performance and new features. We evaluate the detection performance of THREATRACE on five public datasets and compare it with three advanced host-based threat detection methods. In these datasets, THREATRACE outperforms them. We further evaluated THREATRACE&rsquo;s threat hunting capabilities in hosts. The results show that THREATRACE is able to successfully detect and track anomalous elements.</p>
+<h2 id="related-work">
+    <a href="#related-work" class="header-anchor">#</a>
+    Related work
+</h2><h3 id="threat-detection-based-on-traceability-graph">
+    <a href="#threat-detection-based-on-traceability-graph" class="header-anchor">#</a>
+    <strong>Threat detection based on traceability graph</strong>
+</h3><ol>
+<li>Misuse detection: matches known attack patterns (such as Poirot, Holmes), and has poor detection effect on APT/unknown attacks.</li>
+<li>Anomaly detection: Measuring the degree of deviation from normal behavior (such as StreamSpot, Unicorn, IPG, SHADEWATCHER), insensitive to small-scale attacks</li>
+</ol>
+<h3 id="exception-tracking">
+    <a href="#exception-tracking" class="header-anchor">#</a>
+    Exception tracking
+</h3><p>After deploying an intrusion detection system on monitored hosts, it is important to track anomalous behavior and not just raise alerts. THREATRACE utilizes a node classification framework to trace anomalies directly after detecting them. Advanced anomaly-based detectors [6], [7] raise alerts when anomalies are detected in a system’s provenance graph. However, they cannot track the location of anomalies. Detectors capable of tracking anomaly locations are often misuse-based, such as Holmes [3] and Poirot [2]. They require prior knowledge of exception graph patterns. Nodoze [10] is another method for identifying anomalous paths in source graphs. Unlike the above detectors, Nodoze is a secondary diversion tool that requires alerts from other detectors as input. Current alerts from anomaly-based threat detectors are not suitable for Nodoze because they are graph-level and have no detailed information. RapSheet [9] is another secondary triage system that uses alerts from other TTP-based EDRs (Endpoint Detection and Response) as input and filters false positives in a constructed TPG (Tactical Provenance Graph). RapSheet faces the same problem as these misuse-based detection methods. SLEUTH [27] performs tag- and policy-based attack detection and tag-based root cause and impact analysis to build scenario graphs. PrioTracker [28] quantifies the rarity of each event to distinguish abnormal operations from normal system events. PrioTracker proposes a forward tracking technology for timely analysis of attack causality. MORSE [29] studied the dependency explosion problem in attacker step backtracking. The attack detection part of the MORSE framework is identical to the SLEUTH [27] system. The attack detection part of SLEUTH [27] and MORSE [29] is based on misuse. ATLAS [30] proposes a sequence-based learning method for detecting threats and constructing attack stories. Unlike misuse-based methods [2], [3], [27], [29], ATLAS uses attack training data to learn the co-occurrence of attack steps through time-ordered sequences. The methods introduced above all propose to track intrusions and build attack stories. THREATRACE can track anomalies without knowledge database or attack training data as input. However, it fails to build an attack story. We plan to study the gap between anomaly-based approaches and building attack stories in future work.</p>
+<h2 id="motivation-and-background">
+    <a href="#motivation-and-background" class="header-anchor">#</a>
+    Motivation and background
+</h2><h3 id="graphsage">
+    <a href="#graphsage" class="header-anchor">#</a>
+    GraphSAGE
+</h3><p><a class="link" href="https://cloud.tencent.com/developer/article/1750378"  target="_blank" rel="noopener"
+    >GNN Tutorial: Detailed explanation of GraghSAGE algorithm! -Tencent Cloud Developer Community-Tencent Cloud (tencent.com)</a></p>
+<p><strong>Limitations of existing methods</strong>:</p>
+<ol>
+<li>Rules</li>
+<li>Covert attack</li>
+<li>Exception tracking</li>
+<li>Scalability</li>
+</ol>
+<p><strong>Essence of our approach</strong>: The core idea behind our approach is that even for covert intrusions that try to hide their behavior, nodes corresponding to malicious activity still behave differently from benign nodes. In Figure 2, the anomalous process node 1 /var/log/mail has thousands of connections to remote IP nodes, unlike the benign process node 2 /usr/bin/fluxbox. This phenomenon inspired us to formalize the host intrusion detection problem as an abnormal node detection problem. We customized a framework based on GraphSAGE to complete the node detection task. The detection results of the attack in Figure 2 will be presented as a case in §VI-C. This motivational example is also used to illustrate the design of our method.</p>
+<h2 id="design">
+    <a href="#design" class="header-anchor">#</a>
+    design
+</h2><p><img src="/media%5cbg.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><strong>Data traceability generator</strong>. This component collects the host&rsquo;s audit data in streaming mode and converts it into a provenance graph for subsequent analysis.</p>
+<p><strong>Data Storage</strong>. This component is responsible for allocating data to disk and memory. We store the entire graph on disk to store historical information and maintain a limited-sized subgraph in memory for training and detection. This storage strategy ensures THREATRACE’s scalability (P4) and dynamic detection capabilities.</p>
+<p><strong>Model</strong> . This is the core component of THREATRACE. We use the graph data created and assigned by the first two components as input and output exception nodes.</p>
+<p>Achieving ideal outlier node detection is a challenge:</p>
+<ol>
+<li>THREATRACE is a semi-supervised anomaly detection method that does not require prior knowledge of attack behaviors during the training phase. Therefore, we cannot train the model using traditional binary classification modes.</li>
+<li>Host-based threat detection faces the challenge of data imbalance [16]. During execution, abnormal nodes may account for only a small proportion of the provenance graph. As a result, false positives are more likely to occur, interfering with judgment and leading to the &ldquo;threat fatigue problem&rdquo; [32].</li>
+<li>The difference between abnormal nodes and benign nodes may not be obvious enough, resulting in false negatives.</li>
+</ol>
+<p>To address these challenges, we customize a multi-model framework based on GraphSAGE to learn different categories of benign nodes in the provenance graph of anomaly-free data (P1, C1). We then detect anomalous nodes based on the deviation of the predicted node type from its actual type. In this way, THREATRACE can detect abnormal nodes (P2) with a smaller proportion in the provenance graph under covert intrusion activities and directly locate them (P3). We propose a probability-based approach that reduces false positives and false positives (C2, C3).</p>
+<p><strong>Alerts and Tracking</strong>. We get the exception node from the previous component and decide in this component whether to alert and track the exception. We set waiting time thresholds and tolerance thresholds to reduce false positives and decide whether to issue an alert. Since THREATRACE detects threats at the node level, we directly track the location of anomalous behavior among the local neighbors of an anomalous node.</p>
+<h2 id="model">
+    <a href="#model" class="header-anchor">#</a>
+    Model
+</h2><p>Feature extraction: Detecting anomalous nodes without learning attack patterns (C1) is challenging. Traditional anomaly detection tasks usually use benign and anomaly data to train binary classification models in supervised mode. However, since we assume no prior knowledge about attack patterns during the training phase, the model cannot be trained using binary labeled data. GraphSAGE has an unsupervised node classification mode, but it is not suitable for threat detection because it assumes that adjacent nodes have similar categories. In a provenance graph, adjacent nodes may have different categories (for example, two adjacent nodes may be a process and a file).</p>
+<p>Since the unsupervised mode of GraphSAGE is not suitable for threat detection, we customized a feature extraction and label assignment method that enables THREATRACE to train the model in supervised mode without abnormal data and learn the local structural information of each benign node. We set the label of a node to the node type and extract its features as a distribution of the number of different edge types associated with it. The GraphSAGE model is trained in a supervised mode using annotated data to learn the different roles of benign nodes. The technical intuition behind feature extraction methods is that the behavior (or purpose) of a node is reflected in the edges associated with it. Take scanning processes, ransomware processes, and remote shell processes as examples (Figure 4). In Figure 4 (a), the behavior of the abnormal scanning process P1 is directly represented by a large number of connected edges of P1. For the ransomware process P2 in Figure 4(b), it first reads some files and generates encrypted copies. It then deletes (unlinks) the original file. For the remote shell process P3 (Figure 4 (c)), it receives instructions from IPa, executes Fp to escalate privileges, and sends Ft to another remote address IPb. Therefore, the model utilizes the extracted features to learn the hidden distribution of different nodes. If a node is misclassified during the execution phase, it means that its underlying distribution is different from the benign nodes learned during the training phase. That is, it may be an anomalous node with a different malicious mission than a benign node.</p>
+<p><img src="/media%5cimage-20240813152411528.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240813152411528"
+	
+	
+></p>
+<h3 id="feature-extraction">
+    <a href="#feature-extraction" class="header-anchor">#</a>
+    Feature extraction
+</h3><p>Type distribution of connected edges</p>
+<h3 id="training-phase">
+    <a href="#training-phase" class="header-anchor">#</a>
+    Training phase
+</h3><p>During the training phase, we split the entire training graph into multiple subgraphs. Each subgraph consists of a certain number (set to 150,000 in this paper) of randomly selected active nodes, related nodes, and edges between them. The sets of active nodes in different subgraphs are not connected. Then, model training is performed on each subgraph G sequentially. We only need to store a limited-sized subgraph in memory instead of using the entire graph for training, thus ensuring the scalability of the model.</p>
+<p>In covert intrusion activities, the proportion of abnormal nodes in the provenance graph may be very small. Therefore, false positives that interfere with judgment are more likely to occur (C2). According to the characteristics of the intrusion detection scenario, we customized a multi-model framework to reduce false positives. The characteristics of the host-based intrusion detection task provide the intuitiveness of the multi-model framework.</p>
+<p>In an intrusion detection scenario</p>
+<ol>
+<li>Unbalanced number of node types (for example, when the host does not have frequent network connections, there may be thousands of process nodes and few remote IP nodes). Mining the underlying representation with a single model can be very difficult due to the imbalance of node types.</li>
+<li>Nodes of the same type may have different tasks (such as fluxbox process 2 and bash process 3 in Figure 2), and it is difficult to classify these nodes into one category using only a single model.</li>
+</ol>
+<p>We keep a list X that stores the nodes that were not correctly classified. Its initialization includes all active nodes in the training subgraph. After training a sub-model (lines 6-13), we verify the nodes of X in this model (lines 15-21) and remove correctly classified nodes from X.</p>
+<h3 id="alarm-alert">
+    <a href="#alarm-alert" class="header-anchor">#</a>
+    Alarm alert
+</h3><p>We set a time threshold T and dynamically maintain Q instead of directly issuing an alert to the monitoring system. The reason is that THREATRACE uses a streaming method to detect abnormal nodes and detect threats at an early stage, while in the training phase, it uses the full graph to learn the role of nodes to learn rich contextual information.</p>
+<p>Therefore, a benign node may be detected as anomaly before reaching its final stage. We first store the abnormal nodes in Q and set a waiting time threshold T for them to reach the final stage. If it does not transform into a benign node within T time, we remove it from Q and treat it as an abnormal node. In streaming mode, a node may be detected multiple times. Therefore, an abnormal node may be initially detected as a benign node and then be detected as an active node when it starts performing malicious activities. When the number of abnormal nodes exceeds the tolerable threshold T, THREATRACE will alert the system and track the abnormal conditions of the 2-hop ancestors and descendants of the abnormal nodes.</p>
+<h2 id="experimental-evaluation">
+    <a href="#experimental-evaluation" class="header-anchor">#</a>
+    Experimental evaluation
+</h2><p>Q1. Threat detection performance compared to state-of-the-art detectors. (Section VI-A, VI-B, VI-C)</p>
+<p>Q2. Influence of parameters. (Section VI-D)</p>
+<p>Q3. Ability to track abnormal behavior. (Section VI-C)</p>
+<p>Q4. The ability to detect abnormal behavior in the early stages of intrusion. (§VI-C)</p>
+<p>Q5. Runtime and system resource overhead. (§VI-E)</p>
+<p>Q6. Robustness against adaptive attacks. (§VI-F)</p>
+<p>Q7. Impact of hop number K (§VI-G)</p>
+<p>Below we describe the dataset, experimental setup, and implementation of the comparison work. We compare THREATRACE with three anomaly-based host threat detectors (Unicorn, ProvDetector, and StreamSpot) and four anomaly log detectors (Log2vec, DeepLog, LogRobust, and LogGAN). We used five public datasets: StreamSpot, Unicorn SC-1 and SC-2, and DARPA TC #3 and #5 datasets. An overview of the data set is provided in Table 2, Table 4 and Table 6. We calculate the number of edges based on the number of logs. The number of nodes is obtained by counting the number of unique entities in all logs. In the StreamSpot and Unicorn datasets, normal and abnormal graphs are originally separated. We were unable to segment the nodes because no ground truth for the nodes was provided. For the DARPA TC dataset, we annotate anomaly data based on the names of attack events in ground truth files. For StreamSpot, Unicorn and LogGAN, we directly use open source projects [34], [35], [36]. The results for StreamSpot and Unicorn are almost identical to the original paper. ProvDetector is not open source. Therefore, we reimplemented it based on the original paper. We cannot compare its performance with the original paper on ProvDetector because we do not have the paper&rsquo;s private dataset to evaluate it on. For DeepLog and LogRobust, we used github projects implemented by other researchers [37], [38]. For Log2vec, we obtained the project from the author. We are unable to perform performance comparisons with the original papers [16], [21], [22], [23] on log-level detectors because their datasets cannot be converted to provenance formats. We did not compare THREATRACE with other state-of-the-art misuse-based detectors because they require a priori expert knowledge to build the model [2], [3], [9], [30].</p>
+<p>It should be noted that THREATRACE is a node-level detector, while the comparison method detects anomalies at different granularities (such as graph level, path level, and log level). We could not find other state-of-the-art anomaly-based methods that detect anomalies in the provenance graph at the node level. Although the detection granularity of the comparison method is different from that of THREATRACE, the detection goals of these methods are similar. Therefore, we select them as comparison methods and try our best to fairly compare their performance. The comparison principle is introduced as follows.</p>
+<p>For graph-level experiments (§VI-A, VI-B), THREATRACE alerts the graph when the number of abnormal nodes exceeds the tolerance threshold ˆ T . StreamSpot and Unicorn can directly emit graph alerts because they are graph-level detectors. As a path-level detector, provDetector raises an alert when an anomalous path in the graph exceeds k p . We enumerate the parameters k p and set k p to 2 to make ProvDetector achieve better results. We did not compare with log-level detectors because the dataset for graph-level experiments does not have log data.</p>
+<p>For node-level experiments (§VI-C), we did not compare with StreamSpot, Unicorn, and provDetector because their detection granularity is coarser than THREATRACE. THREATRACE alerts when a node anomaly is detected, while the log-level detector alerts when a log anomaly related to that node is detected. In graph-level and node-level experiments, we calculate precision, recall, accuracy, F-score, and false positive rate (FPR) based on the comparison of detection results with ground truth. In detection and runtime experiments, we tune the hyperparameters of the compared methods and select the best results.</p>
+<p>We show that THREATRACE achieves better detection performance in these datasets (Q1). In §VI-D, we evaluate how specially designed parameters affect threat detection performance (Q2). In §VI-C, we further evaluate THREATRACE&rsquo;s ability to track anomalies (Q3) and detect persistent intrusions early (Q4) using the DARPA TC dataset. We evaluate the operational performance of THREATRACE in terms of execution speed and system resource overhead (Q5) in §VI-E. We evaluate the robustness against adaptive attacks (Problem 6) in §VI-F. In §VI-G, we evaluate the impact of hop number K on detection and runtime performance (Question 7).</p>
+<p>Table 1 lists the parameters of THREATRACE in Sections VI-A, VI-B, VI-C, and VI-F. We set these parameters based on the detection and running performance in each subsection of the experiment. Each submodel has the same GraphSAGE hyperparameters. Specifically, we set most of the parameters to their default values. We set the number of neurons in the hidden layer to 32, which is approximately half the number of features in the Unicorn SC-2 dataset. The submodel has only one hidden layer because each node aggregates information from its 2-hop neighbors. We will test the impact of the parameters in Section VI-D.</p>
+<h3 id="streamspot-datasets">
+    <a href="#streamspot-datasets" class="header-anchor">#</a>
+    streamspot Datasets
+</h3><ol>
+<li>Data set: The StreamSpot data set (Table 2) is a public data set built by StreamSpot [39]. It contains 6*100 information flow graphs from five benign scenarios and one attack scenario. Each scenario was run 100 times using the Linux SystemTap logging system [40], generating 100 images. Benign scenarios involved different benign activities: checking Gmail, browsing CNN.com, downloading files, watching YouTube, and playing video games. The attack scenario involves a drive-by download attack. The victim host accesses a malicious URL that exploits a Flash vulnerability to gain root access to the victim host. We use the same validation strategy as Unicorn, randomly splitting the dataset into a training set containing 75*5 benign graphs and a test set containing 25*5 benign graphs and 25 attack graphs. We do not compare with ProvDetector because edges in the StreamSpot dataset do not have a timestamp attribute, which is required by ProvDetector. We repeat this process and report the average evaluation results.</li>
+</ol>
+<p>(1) Why do both THREATRACE and Unicorn achieve good performance on this data set? Compared with other datasets, the performance of the StreamSpot dataset is relatively weak, which is mainly reflected in two aspects. First, the average number of nodes in the StreamSpot dataset is only 3.5% of the Unicorn SC dataset and 0.9% of the DARPA TC dataset. Therefore, anomalous patterns in the StreamSpot dataset are easier to spot due to fewer benign background nodes. Second, abnormal graphs are significantly different from benign graphs. The most obvious evidence is also the size of the graph. The average number of edges for benign graphs is 173,857, while the average number of edges for abnormal graphs is only 28,423. For comparison, the average number of edges for the benign and abnormal graphs of the Unicorn SC dataset is 911,153 and 949,887 respectively, and there is no significant difference between the two.</p>
+<p>(2) Why can&rsquo;t Unicorn achieve 100% precision and recall? Our in-depth analysis of this dataset found that the 100 graphs of attack scenarios can generally be divided into two categories, namely 95 graphs and 5 graphs. Five figures in the second category are significantly different from the other 95 figures. They are more similar to Youtube scene graphs, which means the second set of threats are more subtle. Drive-by download attacks occur while the victim is browsing a website, similar to the Youtube scenario. It is difficult for kernel-based methods to detect these 5 images.</p>
+<p><img src="/media%5cimage-20240814135122450.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814135122450"
+	
+	
+></p>
+<h3 id="unicorn-sc-datasets">
+    <a href="#unicorn-sc-datasets" class="header-anchor">#</a>
+    Unicorn SC Datasets
+</h3><p>The Unicorn SC dataset consists of two datasets: SC-1 and SC-2 [41]. They are Unicorn&rsquo;s own dataset [41] and are more complex than the StreamSpot dataset. We use them to compare the detection performance of THREATRACE with Unicorn and ProvDetector. We cannot use StreamSpot for comparison because it cannot handle a large number of edges [7].</p>
+<p>Dataset: The Unicorn SC dataset (Table IV) was generated following a typical cyber kill chain model in a controlled laboratory environment. Each graph is captured by CamFlow (v0.5.0) and contains full system provenance of one host running for three days. There is background benign activity in both benign and attack graphs. We use the same 5-fold cross-validation method as Unicorn: 4 sets of 25 graphs each are used for training, and a 5th set of benign graphs and 25 attack graphs are used for validation. We adopt a streaming model to replay verification graphs and detect them dynamically. We repeat this process and report the average evaluation results.</p>
+<p>The results are shown in Table V. THREATRACE achieves higher performance than Unicorn using its own dataset. The reason for Unicorn&rsquo;s poor performance is described in Unicorn&rsquo;s paper [7]: the attacker has prior knowledge of the system and therefore acts more stealthily than the attacker on other datasets. We also found that THREATRACE alerts on fewer than 10 nodes in most attack graphs, demonstrating the stealthiness of this dataset. The comparison results on this dataset further demonstrate our motivation that it is difficult for graph kernel-based methods to detect covert threats. Additionally, THREATRACE also has a lower false positive rate compared to Unicorn and ProvDetector, which is important in mitigating the &ldquo;threat fatigue problem.&rdquo; ProvDetector performs poorly in this dataset. This may be related to the detection granularity. ProvDetector is a path-level detector capable of capturing anomalous paths in the source graph.</p>
+<p><img src="/media%5cimage-20240814135108500.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814135108500"
+	
+	
+></p>
+<h3 id="darpa-tc-datasets">
+    <a href="#darpa-tc-datasets" class="header-anchor">#</a>
+    DARPA TC Datasets
+</h3><p>We use the DARPA TC dataset to evaluate THREATRACE&rsquo;s ability to detect and track long-running intrusions. The datasets in the last two subsections do not have ground truth for the nodes, so we cannot use them to evaluate THREATRACE&rsquo;s anomaly tracking capabilities.</p>
+<p>Dataset: The DARPA TC dataset (Table VI) was generated during the Red Team vs. Blue Team competition of the DARPA Transparent Computing Project. The datasets from the third and fifth competitions have been made public [31]. Therefore, we use the DARPA TC #3 and #5 datasets for evaluation in this section.</p>
+<p>Non-threatening files are used for training the model, and threatening files are used for evaluation. When a node is detected as an anomaly, we check the node’s 2-hop ancestors and descendants to track its location (§V-D), so we define metrics as follows:</p>
+<ol>
+<li>True positive. An anomalous node that is detected as an anomaly, or one of its <strong>2-hop ancestors and descendants</strong> is an anomalous node that is detected as an anomaly. These nodes are defined as &ldquo;true positives&rdquo; because we can find them during alert tracking.</li>
+<li>False positive. A benign node that is detected as an anomaly has no abnormal nodes in its <strong>2-hop ancestors and descendants</strong>. These nodes are defined as false positives because we were unable to find any abnormal nodes when performing alert tracing on them.</li>
+<li>True negative. Other benign nodules</li>
+<li>False negatives. Other abnormal nodes.</li>
+</ol>
+<p>We drill down into the dataset to find reasons for the suboptimal detection results of log-level detectors. We found that anomalous entity logs in the DARPA TC dataset are not significantly different from benign logs. For example, the associated log for micro apt in Figure 5 is &ldquo;Remote shell dropped file named micro apt to host&rdquo;, which is a benign file download log in the host. The anomalous behavior of micro apt is hidden in the neighbor information in the graph.</p>
+<p><img src="/media%5cimage-20240814141225516.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814141225516"
+	
+	
+></p>
+<p>DeepLog, LogRobust, and LogGAN are unable to detect anomalies in graphs. Therefore, they hardly capture the anomaly context information in the graph. Log2vec uses node embedding and clustering methods to detect anomalous logs in graphs. It aggregates information from a node&rsquo;s neighbors and thus achieves better results than other log-level detectors. Log2vec classifies tiny logs into benign groups. One possible explanation is that the nodes of Log2vec are logs rather than system entities. Therefore, the information of the entity is scattered in the graph, because the log of the entity is displayed as multiple nodes in the graph of Log2vec, resulting in insufficient information aggregation. This is why recent research suggests provenance maps are a better data source</p>
+<p><img src="/media%5cimage-20240814141641743.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814141641743"
+	
+	
+></p>
+<h3 id="robustness">
+    <a href="#robustness" class="header-anchor">#</a>
+    robustness
+</h3><p>(1) The attacker has training data. The attacker has the training data. Using training data to avoid attacks can be performed in two steps. The first step is to find a benign node xb in the training data that is most similar to the abnormal node x and has the same category as x.</p>
+<p>(2) An attacker with a THREATRACE model. The attacker knows the THREATRACE model, including the trained parameters and hyperparameters. Therefore, the attacker can directly solve the optimization problem based on the model&rsquo;s loss.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/post/provenance_graph/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/media/bg.png" loading="lazy" data-key="" data-hash="/media/bg.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">A Beginner’s Guide to Provenance Graphs</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Graph embedding analysis</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/post/threatrace/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a>  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 43.539k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

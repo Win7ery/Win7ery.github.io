@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" # 1.分析过程 # （1）寻找游戏基础信息存储位置 调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。\n">
+<title>扫雷外挂</title>
+
+<link rel='canonical' href='http://localhost:1313/zh-cn/post/minesweeper/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="扫雷外挂">
+<meta property='og:description' content=" # 1.分析过程 # （1）寻找游戏基础信息存储位置 调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。\n">
+<meta property='og:url' content='http://localhost:1313/zh-cn/post/minesweeper/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2023-11-28T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-28T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/minesweeper/media/bg.png' />
+<meta name="twitter:title" content="扫雷外挂">
+<meta name="twitter:description" content=" # 1.分析过程 # （1）寻找游戏基础信息存储位置 调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/minesweeper/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/zh-cn/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/zh-cn">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/zh-cn/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/post/minesweeper/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1寻找游戏基础信息存储位置">（1）寻找游戏基础信息存储位置</a></li>
+    <li><a href="#2使用ollydbg找到游戏计时指令存储位置">（2）使用ollydbg找到游戏计时指令存储位置</a></li>
+    <li><a href="#3点到雷不结束游戏">（3）点到雷不结束游戏</a></li>
+    <li><a href="#4自动游戏获胜功能1确定雷区真实的内存起始地址">（4）自动游戏获胜功能1——确定雷区真实的内存起始地址</a></li>
+    <li><a href="#5自动游戏获胜功能2确定扫雷游戏格子大小">（5）自动游戏获胜功能2——确定扫雷游戏格子大小</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/zh-cn/post/minesweeper/">
+                <img src="/post/minesweeper/media/bg_hu_f90106b0f310b2eb.png"
+                        srcset="/post/minesweeper/media/bg_hu_f90106b0f310b2eb.png 800w, /post/minesweeper/media/bg_hu_f46f06a5d2bf9a1f.png 1600w"
+                        width="800" 
+                        height="568" 
+                        loading="lazy"
+                        alt="Featured image of post 扫雷外挂" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/zh-cn/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/zh-cn/post/minesweeper/">扫雷外挂</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 28, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 6 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    2524 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/post/minesweeper/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="1分析过程">
+    <a href="#1%e5%88%86%e6%9e%90%e8%bf%87%e7%a8%8b" class="header-anchor">#</a>
+    1.分析过程
+</h1><h2 id="1寻找游戏基础信息存储位置">
+    <a href="#1%e5%af%bb%e6%89%be%e6%b8%b8%e6%88%8f%e5%9f%ba%e7%a1%80%e4%bf%a1%e6%81%af%e5%ad%98%e5%82%a8%e4%bd%8d%e7%bd%ae" class="header-anchor">#</a>
+    （1）寻找游戏基础信息存储位置
+</h2><p>调整扫雷游戏难度等级，使地雷数量发生改变，然后在 CE 界面填写新的地雷数量，单击“再次扫描”按钮。不断重复这样的操作，直至 CE 左侧找到的地址数降为个位数，双击所找到的地址，将其添加到 CE 下方地址列表中。</p>
+<p><img src="/post/minesweeper/media/0313a3dfea260eec41c893bc9fd9b0a8.png"
+	width="1007"
+	height="743"
+	srcset="/post/minesweeper/media/0313a3dfea260eec41c893bc9fd9b0a8_hu_40c19c4dee6854.png 480w, /post/minesweeper/media/0313a3dfea260eec41c893bc9fd9b0a8_hu_67a505051155192.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="325px"
+	
+></p>
+<p><img src="/post/minesweeper/media/e92de96bce3140e130e026b7c8a0a68e.png"
+	width="1142"
+	height="739"
+	srcset="/post/minesweeper/media/e92de96bce3140e130e026b7c8a0a68e_hu_9af4c1db19e2a13.png 480w, /post/minesweeper/media/e92de96bce3140e130e026b7c8a0a68e_hu_afc6e2b1672a4fe9.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="154"
+		data-flex-basis="370px"
+	
+></p>
+<p>存储地雷数量的地址：0x01005194、0x01005330、0x010056A4</p>
+<p>寻找地图高存储位置，将地图高从24修改为20</p>
+<p><img src="/post/minesweeper/media/7da121503276134dfa9adc76807f90c5.png"
+	width="1141"
+	height="733"
+	srcset="/post/minesweeper/media/7da121503276134dfa9adc76807f90c5_hu_82003916f4dfbccc.png 480w, /post/minesweeper/media/7da121503276134dfa9adc76807f90c5_hu_d454548d508eea6a.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="155"
+		data-flex-basis="373px"
+	
+></p>
+<p><img src="/post/minesweeper/media/3c292a4a4a57bb5a55928dda60df4732.png"
+	width="1143"
+	height="735"
+	srcset="/post/minesweeper/media/3c292a4a4a57bb5a55928dda60df4732_hu_accdd339eab366f8.png 480w, /post/minesweeper/media/3c292a4a4a57bb5a55928dda60df4732_hu_51000c048610e593.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="155"
+		data-flex-basis="373px"
+	
+></p>
+<p>存储地图高的地址为：0x01005338和0x010056A8</p>
+<p>寻找地图宽存储位置，将地图宽从30修改为26</p>
+<p><img src="/post/minesweeper/media/dffe2c6326715250e4751075c6b847a6.png"
+	width="1423"
+	height="733"
+	srcset="/post/minesweeper/media/dffe2c6326715250e4751075c6b847a6_hu_2d643684d709e0d2.png 480w, /post/minesweeper/media/dffe2c6326715250e4751075c6b847a6_hu_e028e815610df72b.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="194"
+		data-flex-basis="465px"
+	
+></p>
+<p><img src="/post/minesweeper/media/7d432dbacf7d4211914242e43c7f7bff.png"
+	width="1338"
+	height="736"
+	srcset="/post/minesweeper/media/7d432dbacf7d4211914242e43c7f7bff_hu_afe8ce52561603f0.png 480w, /post/minesweeper/media/7d432dbacf7d4211914242e43c7f7bff_hu_8566935697e88c6e.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="436px"
+	
+></p>
+<p>存储地图宽的地址为：0x01005334和0x010056AC</p>
+<p>寻找存储游戏时间的地址，首次扫描数值为0</p>
+<p><img src="/post/minesweeper/media/2aaff885d1c7a11e1d08292123e4cb11.png"
+	width="1000"
+	height="743"
+	srcset="/post/minesweeper/media/2aaff885d1c7a11e1d08292123e4cb11_hu_d36c9d93dc8ed860.png 480w, /post/minesweeper/media/2aaff885d1c7a11e1d08292123e4cb11_hu_d81225fc6dfbd59d.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="134"
+		data-flex-basis="323px"
+	
+></p>
+<p>开始游戏后，不断扫描增加的值，直至扫描结果地址变为个位数</p>
+<p><img src="/post/minesweeper/media/b48194385b6f140973bc4b5b34e3a07e.png"
+	width="1002"
+	height="736"
+	srcset="/post/minesweeper/media/b48194385b6f140973bc4b5b34e3a07e_hu_2622f76feced2a06.png 480w, /post/minesweeper/media/b48194385b6f140973bc4b5b34e3a07e_hu_ef66fae16339507b.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="136"
+		data-flex-basis="326px"
+	
+></p>
+<p>存储游戏时间的地址为0x0100579C</p>
+<p>寻找已扫数量存储的位置，通过不断增值查找</p>
+<p><img src="/post/minesweeper/media/704fd942513eac4522e52a02d0c8b067.png"
+	width="1424"
+	height="812"
+	srcset="/post/minesweeper/media/704fd942513eac4522e52a02d0c8b067_hu_e589fd5e6ca38ded.png 480w, /post/minesweeper/media/704fd942513eac4522e52a02d0c8b067_hu_6feae659e379de12.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="420px"
+	
+></p>
+<p>存储已扫数量的地址为0x010057A4</p>
+<h2 id="2使用ollydbg找到游戏计时指令存储位置">
+    <a href="#2%e4%bd%bf%e7%94%a8ollydbg%e6%89%be%e5%88%b0%e6%b8%b8%e6%88%8f%e8%ae%a1%e6%97%b6%e6%8c%87%e4%bb%a4%e5%ad%98%e5%82%a8%e4%bd%8d%e7%bd%ae" class="header-anchor">#</a>
+    （2）使用ollydbg找到游戏计时指令存储位置
+</h2><p><img src="/post/minesweeper/media/b82cdb8b93949d5230cb79fdc4c1f8cd.png"
+	width="2561"
+	height="1381"
+	srcset="/post/minesweeper/media/b82cdb8b93949d5230cb79fdc4c1f8cd_hu_ac7cbb8ab4c5caf.png 480w, /post/minesweeper/media/b82cdb8b93949d5230cb79fdc4c1f8cd_hu_762c3724eb895546.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="445px"
+	
+></p>
+<p><img src="/post/minesweeper/media/f93cc613cbe38f80d0432c8dce984bea.png"
+	width="2556"
+	height="1378"
+	srcset="/post/minesweeper/media/f93cc613cbe38f80d0432c8dce984bea_hu_983d604868b47c94.png 480w, /post/minesweeper/media/f93cc613cbe38f80d0432c8dce984bea_hu_9d6f989b8ed616a1.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="445px"
+	
+></p>
+<p>在0x0100579C除设置硬件写入断点，找到计时指令存储位置为0x01003830和0x01002ff5。可在程序中修改这些地址的数据为0x90（nop指令），因此可以在游戏运行时不执行计时递增指令，从而做到游戏计时器停止。</p>
+<h2 id="3点到雷不结束游戏">
+    <a href="#3%e7%82%b9%e5%88%b0%e9%9b%b7%e4%b8%8d%e7%bb%93%e6%9d%9f%e6%b8%b8%e6%88%8f" class="header-anchor">#</a>
+    （3）点到雷不结束游戏
+</h2><p>通过调试发现，程序会将点击位置所在地址的内容与80进行test操作，然后执行je 0x01003595跳转。若点击位置所在地址的内容的若为0x8F，则不执行je跳转；若点击位置所在地址的内容的若为0x0F，则执行je跳转。</p>
+<p>通过对0x01003595的跟踪调试，发现后续执行的是继续游戏的操作，而在不跳转0x01003595则会执行到0x01003593处执行jmp 0x010035AB指令结束游戏。因此可以将内存中0x01003591-0x01003594处的指令修改为nop指令填充，从而满足无条件的游戏继续的跳转（点到雷继续游戏）。</p>
+<p><img src="/post/minesweeper/media/018ca7565b50bb6dc3028fec708a9afc.png"
+	width="706"
+	height="251"
+	srcset="/post/minesweeper/media/018ca7565b50bb6dc3028fec708a9afc_hu_1df3dc09cbbd9d3c.png 480w, /post/minesweeper/media/018ca7565b50bb6dc3028fec708a9afc_hu_12f555abea68f3d0.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="281"
+		data-flex-basis="675px"
+	
+></p>
+<h2 id="4自动游戏获胜功能1确定雷区真实的内存起始地址">
+    <a href="#4%e8%87%aa%e5%8a%a8%e6%b8%b8%e6%88%8f%e8%8e%b7%e8%83%9c%e5%8a%9f%e8%83%bd1%e7%a1%ae%e5%ae%9a%e9%9b%b7%e5%8c%ba%e7%9c%9f%e5%ae%9e%e7%9a%84%e5%86%85%e5%ad%98%e8%b5%b7%e5%a7%8b%e5%9c%b0%e5%9d%80" class="header-anchor">#</a>
+    （4）自动游戏获胜功能1——确定雷区真实的内存起始地址
+</h2><p>在扫描得到的多组地址中，依次通过右键“浏览相关内存区域”，打开地址所对应的内存空间，然后通过开始新一局游戏和点击雷区左上角的操作，确定雷区真实的内存起始地址，以及地雷和非地雷的标识，地址为0x01005361</p>
+<p><img src="/post/minesweeper/media/38e30faf796120008d2a70a65154e989.png"
+	width="1038"
+	height="799"
+	srcset="/post/minesweeper/media/38e30faf796120008d2a70a65154e989_hu_e414d70d47c1b951.png 480w, /post/minesweeper/media/38e30faf796120008d2a70a65154e989_hu_df6f45c78d712ce4.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="129"
+		data-flex-basis="311px"
+	
+></p>
+<p>地雷标识数据为0X8F，非地雷标识数据为0X0F 。</p>
+<p>修改地图宽</p>
+<p><img src="/post/minesweeper/media/bce973ff81c1e6960544cf952ee19506.png"
+	width="1353"
+	height="803"
+	srcset="/post/minesweeper/media/bce973ff81c1e6960544cf952ee19506_hu_9229752e79a93af5.png 480w, /post/minesweeper/media/bce973ff81c1e6960544cf952ee19506_hu_93c5da0a0b8dd96f.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="168"
+		data-flex-basis="404px"
+	
+></p>
+<p>修改地图高</p>
+<p><img src="/post/minesweeper/media/48c2891e749512abc547e6a625366ef2.png"
+	width="1063"
+	height="795"
+	srcset="/post/minesweeper/media/48c2891e749512abc547e6a625366ef2_hu_dd2270d4e4fcfee2.png 480w, /post/minesweeper/media/48c2891e749512abc547e6a625366ef2_hu_c47fb144c1a5c2b.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="320px"
+	
+></p>
+<p>最后通过创建新一局游戏，依次点击第 1、2、3 行最左侧格子的操作确定雷区每行的起始地址，寻找起始地址与雷区行和列之间的对应关系，即确定每行格子的数量为32。</p>
+<h2 id="5自动游戏获胜功能2确定扫雷游戏格子大小">
+    <a href="#5%e8%87%aa%e5%8a%a8%e6%b8%b8%e6%88%8f%e8%8e%b7%e8%83%9c%e5%8a%9f%e8%83%bd2%e7%a1%ae%e5%ae%9a%e6%89%ab%e9%9b%b7%e6%b8%b8%e6%88%8f%e6%a0%bc%e5%ad%90%e5%a4%a7%e5%b0%8f" class="header-anchor">#</a>
+    （5）自动游戏获胜功能2——确定扫雷游戏格子大小
+</h2><p>打开 Spy++，单击“监视&ndash;日志消息”，勾选“隐藏 Spy++选项”，拖动“查找程序工具”至扫雷游戏主界面，如图 8-4 所示，显示的内容包括扫雷窗口类（WNDCLASS）的名称以及标题名。</p>
+<p>切换至Spy++的“消息”窗口，先清除所有消息，然后勾选 “WM_LBUTTONDOWN 和 WM_LBUTTONUP”两个消息，如图 8-5 所示，单击确定后返回 Spy++主界面。</p>
+<p><img src="/post/minesweeper/media/3ec2c65ba66fb76d4ad862c5a0542b1c.png"
+	width="726"
+	height="625"
+	srcset="/post/minesweeper/media/3ec2c65ba66fb76d4ad862c5a0542b1c_hu_9d8a9d5b6884bd8a.png 480w, /post/minesweeper/media/3ec2c65ba66fb76d4ad862c5a0542b1c_hu_91e551a9d9735101.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="116"
+		data-flex-basis="278px"
+	
+></p>
+<p><img src="/post/minesweeper/media/cb392bd1d1c25d049b957b846f6a0f56.png"
+	width="647"
+	height="155"
+	srcset="/post/minesweeper/media/cb392bd1d1c25d049b957b846f6a0f56_hu_22cc2d883527085b.png 480w, /post/minesweeper/media/cb392bd1d1c25d049b957b846f6a0f56_hu_9945cf1f9fa15716.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="417"
+		data-flex-basis="1001px"
+	
+></p>
+<p>返回扫雷游戏界面，依次单击左上角、紧邻左上角右方、紧邻左上角下方的三个格子，查看 Spy++记录的鼠标单击时的 xPos 和 yPos 的值，以此计算每个格子的宽度和高度。</p>
+<p>首个雷区坐标为：</p>
+<p>xPos =14</p>
+<p>yPos =58</p>
+<p>在Spy++界面，右键&ndash;清除消息日志，然后重复上述操作，也可间隔数个格 子单击，以此计算每个格子的平均值，作为每个格子的宽和高度值。格子的宽度为16 ，格子的高度为16 。</p>
+<p>（6）自动游戏获胜功能3——根据雷区存储数据自动游戏</p>
+<p>1）创建控制台项目；</p>
+<p>2）打开扫雷进程，根据雷区的行和列所在内存地址，获取行、列的值；</p>
+<p>3）根据雷区首地址和雷区范围，读取雷区数据；</p>
+<p>4）将扫雷游戏界面置顶，读取雷区第i行第j列的数值，判断是否为地雷，如果不是则模拟鼠标左键单击操作，如果是地雷则模拟鼠标右键单击操作。</p>
+<p>5）根据扫雷游戏界面的客户坐标系，计算第i行第j列的坐标位置，然后将鼠标移动到该位置，执行第3步的鼠标操作。</p>
+<p>6）重复 3-4，直至雷区数据全部被扫描完成。</p>
+<p>程序源码以及可执行文件见附录</p>
+<h1 id="2-使用手册">
+    <a href="#2-%e4%bd%bf%e7%94%a8%e6%89%8b%e5%86%8c" class="header-anchor">#</a>
+    2. 使用手册
+</h1><p>（1）显示游戏运行时基础信息（地图大小、地雷总数等）——输入1</p>
+<p><img src="/post/minesweeper/media/0ee1b06db040358a57448c36646b7ab1.png"
+	width="1112"
+	height="790"
+	srcset="/post/minesweeper/media/0ee1b06db040358a57448c36646b7ab1_hu_c8e5234941abc492.png 480w, /post/minesweeper/media/0ee1b06db040358a57448c36646b7ab1_hu_d2f8d660f3a3dec6.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="140"
+		data-flex-basis="337px"
+	
+></p>
+<p>修改地图信息后重新查看基础信息</p>
+<p><img src="/post/minesweeper/media/1f7503e256075bab1ffcea1ab8676e54.png"
+	width="1112"
+	height="790"
+	srcset="/post/minesweeper/media/1f7503e256075bab1ffcea1ab8676e54_hu_b92206f3780ed299.png 480w, /post/minesweeper/media/1f7503e256075bab1ffcea1ab8676e54_hu_19ffe5b12ddbe87.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="140"
+		data-flex-basis="337px"
+	
+></p>
+<p>游戏运行后重新查看游戏运行时基础信息</p>
+<p><img src="/post/minesweeper/media/60c7be0236746d92626134c5b3b4c3f0.png"
+	width="1112"
+	height="790"
+	srcset="/post/minesweeper/media/60c7be0236746d92626134c5b3b4c3f0_hu_181309eb4e09bc00.png 480w, /post/minesweeper/media/60c7be0236746d92626134c5b3b4c3f0_hu_ead91555ee8304ae.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="140"
+		data-flex-basis="337px"
+	
+></p>
+<p>（2）计时器停止——输入2</p>
+<p><img src="/post/minesweeper/media/3ddaadb10af362f477b63a193470ed9c.png"
+	width="1112"
+	height="790"
+	srcset="/post/minesweeper/media/3ddaadb10af362f477b63a193470ed9c_hu_6c80dbda48c3b6b2.png 480w, /post/minesweeper/media/3ddaadb10af362f477b63a193470ed9c_hu_e8fc132598e38565.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="140"
+		data-flex-basis="337px"
+	
+></p>
+<p>（3）点到雷不会结束游戏——输入3</p>
+<p><img src="/post/minesweeper/media/f3aa799e94923ba617a42a6c7158dae9.png"
+	width="1112"
+	height="790"
+	srcset="/post/minesweeper/media/f3aa799e94923ba617a42a6c7158dae9_hu_da432800a307a30f.png 480w, /post/minesweeper/media/f3aa799e94923ba617a42a6c7158dae9_hu_67b19a177f2f72b5.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="140"
+		data-flex-basis="337px"
+	
+></p>
+<p>（4）自动游戏获胜功能——输入4</p>
+<p><img src="/post/minesweeper/media/774a118d645f894f62f3635dde1fd511.png"
+	width="1112"
+	height="790"
+	srcset="/post/minesweeper/media/774a118d645f894f62f3635dde1fd511_hu_f069605e391587b5.png 480w, /post/minesweeper/media/774a118d645f894f62f3635dde1fd511_hu_c3a0dc662392e368.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="140"
+		data-flex-basis="337px"
+	
+></p>
+<p>（5）退出程序——输入5</p>
+<h1 id="3代码附录">
+    <a href="#3%e4%bb%a3%e7%a0%81%e9%99%84%e5%bd%95" class="header-anchor">#</a>
+    3.代码附录
+</h1><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include&lt;Windows.h&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include&lt;iostream&gt;
+</span></span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">HANDLE</span> <span class="n">handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">HWND</span> <span class="n">hwnd</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">init_minesweeper</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">text</span> <span class="o">=</span> <span class="s">&#34;Minesweeper&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">hwnd</span> <span class="o">=</span> <span class="n">FindWindow</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">text</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">hwnd</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">MessageBox</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;Winmine is not found!&#34;</span><span class="p">),</span> <span class="n">TEXT</span><span class="p">(</span><span class="s">&#34;AutoMineSweeper&#34;</span><span class="p">),</span> <span class="n">MB_ICONSTOP</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DWORD</span> <span class="n">pid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GetWindowThreadProcessId</span><span class="p">(</span><span class="n">hwnd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">handle</span> <span class="o">=</span> <span class="n">OpenProcess</span><span class="p">(</span><span class="n">PROCESS_ALL_ACCESS</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">show_information</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">Mines_num</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">play_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">aleardy_mines</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005330</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">Mines_num</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005334</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005338</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x0100579C</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">play_time</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x010057A4</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">aleardy_mines</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;地图高：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;地图宽：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">width</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;地雷总数：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">Mines_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;已扫数量：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">aleardy_mines</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;游戏运行时间：%d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">play_time</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">stop_timing</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">nop</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x90</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">stop_time</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WriteProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01003830</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nop</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WriteProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01002ff5</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nop</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">Invincible_mode</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span> <span class="n">nop</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mh">0x90</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x90</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WriteProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01003591</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">nop</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">auto_minesweeper</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005334</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005338</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">BYTE</span> <span class="n">data</span><span class="p">[</span><span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ReadProcessMemory</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x01005361</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="mi">32</span> <span class="o">*</span> <span class="n">height</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">ShowWindow</span><span class="p">(</span><span class="n">hwnd</span><span class="p">,</span> <span class="n">SW_RESTORE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SetForegroundWindow</span><span class="p">(</span><span class="n">hwnd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Sleep</span><span class="p">(</span><span class="mi">300</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">width_num</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">x_pos</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">y_pos</span> <span class="o">=</span> <span class="mi">58</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">RECT</span> <span class="n">rc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">BOOL</span> <span class="n">bRet</span> <span class="o">=</span> <span class="n">GetClientRect</span><span class="p">(</span><span class="n">hwnd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="n">height</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">width</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">UINT</span> <span class="n">downMsg</span> <span class="o">=</span> <span class="n">x_pos</span><span class="p">,</span> <span class="n">upMsg</span> <span class="o">=</span> <span class="n">y_pos</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">width_num</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">==</span> <span class="mh">0x10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">[(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">width_num</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">==</span> <span class="mh">0x0F</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">downMsg</span> <span class="o">=</span> <span class="n">MOUSEEVENTF_LEFTDOWN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">upMsg</span> <span class="o">=</span> <span class="n">MOUSEEVENTF_LEFTUP</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">downMsg</span> <span class="o">=</span> <span class="n">MOUSEEVENTF_RIGHTDOWN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">upMsg</span> <span class="o">=</span> <span class="n">MOUSEEVENTF_RIGHTUP</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">POINT</span> <span class="n">curPos</span> <span class="o">=</span> <span class="p">{</span> <span class="n">rc</span><span class="p">.</span><span class="n">left</span> <span class="o">+</span> <span class="n">x_pos</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">16</span><span class="p">,</span> <span class="n">rc</span><span class="p">.</span><span class="n">top</span> <span class="o">+</span> <span class="n">y_pos</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">16</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ClientToScreen</span><span class="p">(</span><span class="n">hwnd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">curPos</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">SetCursorPos</span><span class="p">(</span><span class="n">curPos</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">curPos</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mouse_event</span><span class="p">(</span><span class="n">downMsg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mouse_event</span><span class="p">(</span><span class="n">upMsg</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CloseHandle</span><span class="p">(</span><span class="n">handle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">menu</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">option</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;1.显示游戏运行时基础信息（地图大小、地雷总数等）</span><span class="se">\n</span><span class="s">2.计时器停止</span><span class="se">\n</span><span class="s">3.点到雷不会结束游戏</span><span class="se">\n</span><span class="s">4.自动游戏获胜功能</span><span class="se">\n</span><span class="s">5.退出</span><span class="se">\n</span><span class="s">选择功能：&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">option</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">option</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">switch</span> <span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">show_information</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stop_timing</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="mi">3</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Invincible_mode</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">case</span> <span class="mi">4</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">auto_minesweeper</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">init_minesweeper</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">menu</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;程序结束......&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/zh-cn/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/provenance_graph/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/media/bg.png" loading="lazy" data-key="" data-hash="/media/bg.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">溯源图（Provenance Graph）入门指南</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图嵌入分析</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/zh-cn/post/minesweeper/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 87.66k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

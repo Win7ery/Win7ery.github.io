@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" # 溯源图（Provenance Graph）入门指南 # 什么是溯源图 # 基本定义 溯源图（Provenance Graph），也称为数据来源图或因果图（Causal Graph），是一种有向无环图（DAG）或有向图，用于记录操作系统中实体（entity）之间的信息流和因果关系。它通过捕获系统级事件（如进程创建、文件读写、网络通信等），构建出一张描述&quot;谁对谁做了什么&quot;的全景图。\n">
+<title>溯源图（Provenance Graph）入门指南</title>
+
+<link rel='canonical' href='http://localhost:1313/zh-cn/post/provenance_graph/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="溯源图（Provenance Graph）入门指南">
+<meta property='og:description' content=" # 溯源图（Provenance Graph）入门指南 # 什么是溯源图 # 基本定义 溯源图（Provenance Graph），也称为数据来源图或因果图（Causal Graph），是一种有向无环图（DAG）或有向图，用于记录操作系统中实体（entity）之间的信息流和因果关系。它通过捕获系统级事件（如进程创建、文件读写、网络通信等），构建出一张描述&quot;谁对谁做了什么&quot;的全景图。\n">
+<meta property='og:url' content='http://localhost:1313/zh-cn/post/provenance_graph/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2026-02-20T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-02-20T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/media/bg.png' />
+<meta name="twitter:title" content="溯源图（Provenance Graph）入门指南">
+<meta name="twitter:description" content=" # 溯源图（Provenance Graph）入门指南 # 什么是溯源图 # 基本定义 溯源图（Provenance Graph），也称为数据来源图或因果图（Causal Graph），是一种有向无环图（DAG）或有向图，用于记录操作系统中实体（entity）之间的信息流和因果关系。它通过捕获系统级事件（如进程创建、文件读写、网络通信等），构建出一张描述&quot;谁对谁做了什么&quot;的全景图。\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/zh-cn/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/zh-cn">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/zh-cn/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/post/provenance_graph/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#什么是溯源图">什么是溯源图</a>
+      <ol>
+        <li><a href="#基本定义">基本定义</a></li>
+        <li><a href="#图的基本元素">图的基本元素</a></li>
+        <li><a href="#一个简单的例子">一个简单的例子</a></li>
+        <li><a href="#溯源图的数据来源系统审计日志">溯源图的数据来源：系统审计日志</a></li>
+      </ol>
+    </li>
+    <li><a href="#为什么需要溯源图">为什么需要溯源图</a>
+      <ol>
+        <li><a href="#传统检测方法的局限">传统检测方法的局限</a></li>
+        <li><a href="#溯源图的优势">溯源图的优势</a></li>
+      </ol>
+    </li>
+    <li><a href="#标准数据集">标准数据集</a>
+      <ol>
+        <li><a href="#31-darpa-tctransparent-computing计划">3.1 DARPA TC（Transparent Computing）计划</a>
+          <ol>
+            <li><a href="#darpa-e3engagement-3">DARPA E3（Engagement 3）</a></li>
+            <li><a href="#darpa-e5engagement-5">DARPA E5（Engagement 5）</a></li>
+            <li><a href="#数据获取">数据获取</a></li>
+          </ol>
+        </li>
+        <li><a href="#optcoperationally-transparent-cyber">OpTC（Operationally Transparent Cyber）</a></li>
+        <li><a href="#nodlink">NodLink</a></li>
+        <li><a href="#数据集对比">数据集对比</a></li>
+      </ol>
+    </li>
+    <li><a href="#溯源图的构建与预处理">溯源图的构建与预处理</a>
+      <ol>
+        <li><a href="#从日志到图">从日志到图</a></li>
+        <li><a href="#图压缩与简化">图压缩与简化</a></li>
+        <li><a href="#常用工具">常用工具</a></li>
+      </ol>
+    </li>
+    <li><a href="#检测方法">检测方法</a>
+      <ol>
+        <li><a href="#基于规则和查询的方法">基于规则和查询的方法</a></li>
+        <li><a href="#基于统计和异常检测的方法">基于统计和异常检测的方法</a></li>
+        <li><a href="#基于图神经网络gnn的方法">基于图神经网络（GNN）的方法</a></li>
+        <li><a href="#基于图嵌入和表示学习的方法">基于图嵌入和表示学习的方法</a></li>
+        <li><a href="#基于大语言模型llm的方法前沿方向">基于大语言模型（LLM）的方法（前沿方向）</a></li>
+      </ol>
+    </li>
+    <li><a href="#评估方法与指标">评估方法与指标</a>
+      <ol>
+        <li><a href="#基础评估指标">基础评估指标</a></li>
+        <li><a href="#评估粒度">评估粒度</a></li>
+        <li><a href="#orthrus-评估框架">Orthrus 评估框架</a>
+          <ol>
+            <li><a href="#orthrus-提出的核心问题">Orthrus 提出的核心问题</a></li>
+            <li><a href="#orthrus-的评估维度">Orthrus 的评估维度</a></li>
+            <li><a href="#orthrus-的实践建议">Orthrus 的实践建议</a></li>
+          </ol>
+        </li>
+        <li><a href="#评估中的常见陷阱">评估中的常见陷阱</a></li>
+      </ol>
+    </li>
+    <li><a href="#前沿研究方向">前沿研究方向</a>
+      <ol>
+        <li><a href="#实时在线检测">实时在线检测</a></li>
+        <li><a href="#跨主机攻击检测">跨主机攻击检测</a></li>
+        <li><a href="#对抗鲁棒性">对抗鲁棒性</a></li>
+        <li><a href="#概念漂移适应">概念漂移适应</a></li>
+        <li><a href="#可解释性">可解释性</a></li>
+        <li><a href="#图压缩与高效存储">图压缩与高效存储</a></li>
+      </ol>
+    </li>
+    <li><a href="#推荐阅读路线">推荐阅读路线</a>
+      <ol>
+        <li><a href="#入门论文建议按顺序阅读">入门论文（建议按顺序阅读）</a></li>
+        <li><a href="#数据集实践建议">数据集实践建议</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/zh-cn/post/provenance_graph/">
+                
+                    <img src="/media/bg.png" loading="lazy" alt="Featured image of post 溯源图（Provenance Graph）入门指南" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/zh-cn/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/zh-cn/post/provenance_graph/">溯源图（Provenance Graph）入门指南</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 20, 2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 12 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    5897 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/post/provenance_graph/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="溯源图provenance-graph入门指南">
+    <a href="#%e6%ba%af%e6%ba%90%e5%9b%beprovenance-graph%e5%85%a5%e9%97%a8%e6%8c%87%e5%8d%97" class="header-anchor">#</a>
+    溯源图（Provenance Graph）入门指南
+</h1><hr>
+<h2 id="什么是溯源图">
+    <a href="#%e4%bb%80%e4%b9%88%e6%98%af%e6%ba%af%e6%ba%90%e5%9b%be" class="header-anchor">#</a>
+    什么是溯源图
+</h2><h3 id="基本定义">
+    <a href="#%e5%9f%ba%e6%9c%ac%e5%ae%9a%e4%b9%89" class="header-anchor">#</a>
+    基本定义
+</h3><p>溯源图（Provenance Graph），也称为数据来源图或因果图（Causal Graph），是一种<strong>有向无环图（DAG）或有向图</strong>，用于记录操作系统中实体（entity）之间的信息流和因果关系。它通过捕获系统级事件（如进程创建、文件读写、网络通信等），构建出一张描述&quot;谁对谁做了什么&quot;的全景图。</p>
+<p>在网络安全领域，溯源图被广泛用于**高级持续性威胁（APT）**的检测、攻击调查和取证分析。其核心思想是：通过追踪系统实体之间的因果依赖关系，还原攻击链路，识别恶意行为。</p>
+<h3 id="图的基本元素">
+    <a href="#%e5%9b%be%e7%9a%84%e5%9f%ba%e6%9c%ac%e5%85%83%e7%b4%a0" class="header-anchor">#</a>
+    图的基本元素
+</h3><p>溯源图包含两类核心要素：</p>
+<p><strong>节点（Node）</strong>：代表系统中的实体，通常分为三类：</p>
+<ul>
+<li><strong>进程（Process）</strong>：操作系统中运行的程序实例，通常由 PID、进程名等属性标识。</li>
+<li><strong>文件（File）</strong>：磁盘上的文件对象，由路径标识。</li>
+<li><strong>网络连接（Socket / NetFlow）</strong>：网络通信端点，由 IP 地址和端口标识。</li>
+</ul>
+<p><strong>边（Edge）</strong>：代表实体之间的系统调用或操作，常见的边类型包括：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>边类型</th>
+          <th>源节点</th>
+          <th>目标节点</th>
+          <th>含义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>read</code></td>
+          <td>Process</td>
+          <td>File</td>
+          <td>进程读取文件</td>
+      </tr>
+      <tr>
+          <td><code>write</code></td>
+          <td>Process</td>
+          <td>File</td>
+          <td>进程写入文件</td>
+      </tr>
+      <tr>
+          <td><code>execute</code></td>
+          <td>Process</td>
+          <td>File</td>
+          <td>进程执行文件</td>
+      </tr>
+      <tr>
+          <td><code>fork</code> / <code>clone</code></td>
+          <td>Process</td>
+          <td>Process</td>
+          <td>进程创建子进程</td>
+      </tr>
+      <tr>
+          <td><code>connect</code></td>
+          <td>Process</td>
+          <td>Socket</td>
+          <td>进程发起网络连接</td>
+      </tr>
+      <tr>
+          <td><code>recv</code> / <code>send</code></td>
+          <td>Socket</td>
+          <td>Process / Process → Socket</td>
+          <td>网络数据收发</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="一个简单的例子">
+    <a href="#%e4%b8%80%e4%b8%aa%e7%ae%80%e5%8d%95%e7%9a%84%e4%be%8b%e5%ad%90" class="header-anchor">#</a>
+    一个简单的例子
+</h3><p>假设攻击者通过恶意邮件附件入侵系统，攻击链路在溯源图中可表示为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph LR
+</span></span><span class="line"><span class="cl">    A[&#34;Network:attacker_ip&#34;] --&gt;|recv| B[&#34;Process:outlook.exe&#34;]
+</span></span><span class="line"><span class="cl">    B --&gt;|write| C[&#34;File:malware.exe&#34;]
+</span></span><span class="line"><span class="cl">    C --&gt;|execute| D[&#34;Process:malware.exe&#34;]
+</span></span><span class="line"><span class="cl">    D --&gt;|read| E[&#34;File:passwd&#34;]
+</span></span><span class="line"><span class="cl">    D --&gt;|connect| F[&#34;Network:C2_server&#34;]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>通过溯源图，安全分析师可以从一个已知恶意节点出发，<strong>前向追踪（forward tracking）</strong> 攻击影响范围，或<strong>后向追踪（backward tracking）</strong> 攻击入口点。</p>
+<h3 id="溯源图的数据来源系统审计日志">
+    <a href="#%e6%ba%af%e6%ba%90%e5%9b%be%e7%9a%84%e6%95%b0%e6%8d%ae%e6%9d%a5%e6%ba%90%e7%b3%bb%e7%bb%9f%e5%ae%a1%e8%ae%a1%e6%97%a5%e5%bf%97" class="header-anchor">#</a>
+    溯源图的数据来源：系统审计日志
+</h3><p>溯源图的构建依赖于<strong>系统审计日志（Audit Log）</strong>，常见的审计框架包括：</p>
+<ul>
+<li><strong>Linux Audit（auditd）</strong>：Linux 内核级审计系统，记录系统调用。</li>
+<li><strong>Windows ETW（Event Tracing for Windows）</strong>：Windows 的事件追踪机制。</li>
+<li><strong>CamFlow</strong>：基于 Linux Security Module 的信息流追踪框架。</li>
+</ul>
+<p>审计日志中的每一条记录通常包含：时间戳、操作主体（subject）、操作客体（object）、操作类型（operation）等字段。将这些记录解析后，即可构建溯源图。</p>
+<hr>
+<h2 id="为什么需要溯源图">
+    <a href="#%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e6%ba%af%e6%ba%90%e5%9b%be" class="header-anchor">#</a>
+    为什么需要溯源图
+</h2><h3 id="传统检测方法的局限">
+    <a href="#%e4%bc%a0%e7%bb%9f%e6%a3%80%e6%b5%8b%e6%96%b9%e6%b3%95%e7%9a%84%e5%b1%80%e9%99%90" class="header-anchor">#</a>
+    传统检测方法的局限
+</h3><p>传统的入侵检测系统（IDS）依赖单条日志或单个事件的模式匹配，存在以下问题：</p>
+<ul>
+<li><strong>缺乏上下文</strong>：单条日志无法反映攻击的完整因果链。</li>
+<li><strong>高误报率</strong>：孤立事件难以区分正常行为和恶意行为。</li>
+<li><strong>APT 检测困难</strong>：高级攻击通常分阶段执行（侦察→入侵→横向移动→数据窃取），单一规则难以覆盖。</li>
+</ul>
+<h3 id="溯源图的优势">
+    <a href="#%e6%ba%af%e6%ba%90%e5%9b%be%e7%9a%84%e4%bc%98%e5%8a%bf" class="header-anchor">#</a>
+    溯源图的优势
+</h3><ul>
+<li><strong>因果关联</strong>：将离散事件串联成因果链，提供攻击行为的全局视图。</li>
+<li><strong>攻击还原</strong>：支持对攻击路径的完整重建，便于取证分析。</li>
+<li><strong>异常检测</strong>：通过图结构和语义特征，识别偏离正常行为模式的子图。</li>
+</ul>
+<hr>
+<h2 id="标准数据集">
+    <a href="#%e6%a0%87%e5%87%86%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-anchor">#</a>
+    标准数据集
+</h2><p>研究社区提供了多个公开数据集来推动溯源图检测方法的发展。以下是最常用的四个数据集。</p>
+<h3 id="31-darpa-tctransparent-computing计划">
+    <a href="#31-darpa-tctransparent-computing%e8%ae%a1%e5%88%92" class="header-anchor">#</a>
+    3.1 DARPA TC（Transparent Computing）计划
+</h3><p>DARPA TC 计划是溯源图研究领域最重要的数据来源，由美国国防高级研究计划局（DARPA）资助，旨在开发针对 APT 攻击的检测技术。</p>
+<h4 id="darpa-e3engagement-3">
+    <a href="#darpa-e3engagement-3" class="header-anchor">#</a>
+    DARPA E3（Engagement 3）
+</h4><ul>
+<li><strong>发布时间</strong>：2018 年</li>
+<li><strong>规模</strong>：涵盖数天的操作系统审计日志，包含多个 APT 攻击场景。</li>
+<li><strong>操作系统</strong>：包括 Linux（Ubuntu）、Windows 和 FreeBSD。</li>
+<li><strong>数据格式</strong>：基于 CDM（Common Data Model）的 JSON 格式日志，通过 Kafka 发布。</li>
+<li><strong>攻击场景</strong>：模拟了多种 APT 攻击链，包括鱼叉钓鱼、后门植入、数据窃取等。</li>
+<li><strong>特点</strong>：
+<ul>
+<li>包含正常活动（benign）和攻击活动（malicious）的混合数据。</li>
+<li>提供了 ground truth 标注，便于评估。</li>
+<li>数据量较大，单个主机的日志可达数百万条事件。</li>
+</ul>
+</li>
+</ul>
+<h4 id="darpa-e5engagement-5">
+    <a href="#darpa-e5engagement-5" class="header-anchor">#</a>
+    DARPA E5（Engagement 5）
+</h4><ul>
+<li><strong>发布时间</strong>：2020 年</li>
+<li><strong>改进</strong>：相比 E3，E5 引入了更复杂和隐蔽的攻击场景。</li>
+<li><strong>操作系统</strong>：Linux 和 Windows。</li>
+<li><strong>数据格式</strong>：同样基于 CDM 模型，但做了若干扩展。</li>
+<li><strong>攻击场景</strong>：包含更多的横向移动、权限提升和多阶段攻击。</li>
+<li><strong>特点</strong>：
+<ul>
+<li>攻击更加隐蔽，对检测方法的要求更高。</li>
+<li>正常活动的背景噪声更大。</li>
+<li>被广泛用于评估图神经网络等深度学习方法的有效性。</li>
+</ul>
+</li>
+</ul>
+<h4 id="数据获取">
+    <a href="#%e6%95%b0%e6%8d%ae%e8%8e%b7%e5%8f%96" class="header-anchor">#</a>
+    数据获取
+</h4><p>DARPA TC 数据集可通过以下渠道获取：</p>
+<ul>
+<li>GitHub 仓库（darpa-i2o/Transparent-Computing）中有数据说明和部分样本。</li>
+<li>完整数据集通常需要通过相关研究机构或项目合作获取。</li>
+</ul>
+<h3 id="optcoperationally-transparent-cyber">
+    <a href="#optcoperationally-transparent-cyber" class="header-anchor">#</a>
+    OpTC（Operationally Transparent Cyber）
+</h3><ul>
+<li><strong>发布机构</strong>：DARPA 资助，由 Five Directions 团队收集。</li>
+<li><strong>规模</strong>：大规模企业网络环境，包含约 1000 台主机、数十亿条事件。</li>
+<li><strong>操作系统</strong>：主要为 Windows 环境。</li>
+<li><strong>数据格式</strong>：eCAR（extended Cyber Analytics Repository）格式。</li>
+<li><strong>攻击场景</strong>：模拟了企业网络中的 APT 攻击，包括红队对蓝队的攻防演练。</li>
+<li><strong>特点</strong>：
+<ul>
+<li>数据规模远超 DARPA E3/E5，更接近真实企业环境。</li>
+<li>日志量巨大，对处理效率要求极高。</li>
+<li>提供了红队活动的时间线标注。</li>
+<li>适合评估方法的可扩展性（scalability）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="nodlink">
+    <a href="#nodlink" class="header-anchor">#</a>
+    NodLink
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-apache" data-lang="apache"><span class="line"><span class="cl"><span class="err">Li,</span> <span class="err">S</span>.<span class="err">,</span> <span class="err">Dong,</span> <span class="err">F</span>.<span class="err">,</span> <span class="err">Xiao,</span> <span class="err">X</span>.<span class="err">,</span> <span class="err">Wang,</span> <span class="err">H</span>.<span class="err">,</span> <span class="err">Shao,</span> <span class="err">F</span>.<span class="err">,</span> <span class="err">Chen,</span> <span class="err">J</span>.<span class="err">,</span> ... <span class="err">&amp;</span> <span class="err">Li,</span> <span class="err">D</span>. <span class="err">(2023)</span>. <span class="err">Nodlink:</span> <span class="nb">An</span> online system for fine-grained apt attack detection and investigation. arXiv preprint arXiv:2311.02331.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>来源</strong>：由相关学术机构发布的标注数据集。</li>
+<li><strong>特点</strong>：
+<ul>
+<li>提供了节点级别（node-level）和边级别（edge-level）的标注。</li>
+<li>标注粒度较细，适合评估细粒度检测方法。</li>
+<li>相比 DARPA 数据集，NodLink 在标注质量和覆盖度上做了改进。</li>
+<li>支持对误报进行更精确的分析。</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据集对比">
+    <a href="#%e6%95%b0%e6%8d%ae%e9%9b%86%e5%af%b9%e6%af%94" class="header-anchor">#</a>
+    数据集对比
+</h3><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>DARPA E3</th>
+          <th>DARPA E5</th>
+          <th>OpTC</th>
+          <th>NodLink</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>发布时间</td>
+          <td>2018</td>
+          <td>2020</td>
+          <td>2020</td>
+          <td>2023</td>
+      </tr>
+      <tr>
+          <td>主要操作系统</td>
+          <td>Linux/Windows/FreeBSD</td>
+          <td>Linux/Windows</td>
+          <td>Windows</td>
+          <td>—</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="溯源图的构建与预处理">
+    <a href="#%e6%ba%af%e6%ba%90%e5%9b%be%e7%9a%84%e6%9e%84%e5%bb%ba%e4%b8%8e%e9%a2%84%e5%a4%84%e7%90%86" class="header-anchor">#</a>
+    溯源图的构建与预处理
+</h2><h3 id="从日志到图">
+    <a href="#%e4%bb%8e%e6%97%a5%e5%bf%97%e5%88%b0%e5%9b%be" class="header-anchor">#</a>
+    从日志到图
+</h3><p>原始审计日志到溯源图的构建流程如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">原始日志 → 日志解析 → 实体识别 → 关系抽取 → 图构建 → 图压缩/简化
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>日志解析</strong>：将不同格式的审计日志（CDM、eCAR、auditd 等）解析为统一的结构化表示。</p>
+<p><strong>实体识别</strong>：识别日志中的进程、文件和网络连接实体，建立唯一标识。</p>
+<p><strong>关系抽取</strong>：将系统调用映射为图中的有向边。</p>
+<p><strong>图构建</strong>：将实体和关系组装为有向图，通常使用 NetworkX（Python）、Neo4j 或自定义数据结构。</p>
+<h3 id="图压缩与简化">
+    <a href="#%e5%9b%be%e5%8e%8b%e7%bc%a9%e4%b8%8e%e7%ae%80%e5%8c%96" class="header-anchor">#</a>
+    图压缩与简化
+</h3><p>由于原始溯源图通常非常庞大，需要进行压缩和简化：</p>
+<ul>
+<li><strong>节点合并</strong>：将同一进程的多个版本（如 fork 前后）合并为同一节点。</li>
+<li><strong>边聚合</strong>：将同类型的重复边（如多次读取同一文件）合并为一条带权重的边。</li>
+<li><strong>噪声过滤</strong>：移除与分析无关的系统库加载、临时文件操作等噪声事件。</li>
+<li><strong>时间窗口划分</strong>：将长时间跨度的图切分为多个时间窗口。</li>
+</ul>
+<h3 id="常用工具">
+    <a href="#%e5%b8%b8%e7%94%a8%e5%b7%a5%e5%85%b7" class="header-anchor">#</a>
+    常用工具
+</h3><ul>
+<li><strong>NetworkX</strong>：Python 图分析库，适合小规模溯源图。</li>
+<li><strong>Neo4j</strong>：图数据库，适合大规模图的存储和查询。</li>
+<li><strong>DGL（Deep Graph Library）</strong>：适合与图神经网络配合使用。</li>
+<li><strong>PyG（PyTorch Geometric）</strong>：另一个主流的图神经网络框架。</li>
+</ul>
+<hr>
+<h2 id="检测方法">
+    <a href="#%e6%a3%80%e6%b5%8b%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    检测方法
+</h2><p>溯源图上的威胁检测方法可以按照技术路线大致分为以下几类。</p>
+<h3 id="基于规则和查询的方法">
+    <a href="#%e5%9f%ba%e4%ba%8e%e8%a7%84%e5%88%99%e5%92%8c%e6%9f%a5%e8%af%a2%e7%9a%84%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    基于规则和查询的方法
+</h3><p><strong>核心思想</strong>：定义攻击行为的图模式（graph pattern），在溯源图中进行子图匹配。</p>
+<p><strong>代表工作</strong>：</p>
+<ul>
+<li><strong>SLEUTH</strong>（USENIX Security 2018）：利用基于标签的信息流追踪，在溯源图中识别攻击入口点并进行前向追踪，构建攻击场景图。</li>
+<li><strong>Morse</strong>（S&amp;P 2019）：引入上下文感知的因果关系分析，通过为信息流标记标签和优先级来缓解依赖爆炸问题。</li>
+<li><strong>RapSheet</strong>（S&amp;P 2020）：将多个威胁告警关联到溯源图上的因果链，构建战术级攻击故事（Tactical Provenance Graph）。</li>
+</ul>
+<p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：可解释性强，低误报（如果规则设计合理）。</li>
+<li>缺点：需要先验知识定义规则，难以检测未知攻击，规则维护成本高。</li>
+</ul>
+<h3 id="基于统计和异常检测的方法">
+    <a href="#%e5%9f%ba%e4%ba%8e%e7%bb%9f%e8%ae%a1%e5%92%8c%e5%bc%82%e5%b8%b8%e6%a3%80%e6%b5%8b%e7%9a%84%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    基于统计和异常检测的方法
+</h3><p><strong>核心思想</strong>：建立正常行为的统计模型，将偏离正常模式的行为标记为异常。</p>
+<p><strong>代表工作</strong>：</p>
+<ul>
+<li><strong>StreamSpot</strong>（NDSS 2016）：将溯源图分解为固定大小的 shingling 特征向量，使用聚类算法检测异常图。</li>
+<li><strong>ProvDetector</strong>（NDSS 2020）：提取溯源图中的因果路径（causal path），使用自编码器学习正常路径的表示，检测异常路径。</li>
+<li><strong>Unicorn</strong>（NDSS 2020）：使用图的 sketch（近似直方图）来捕获溯源图的演化特征，基于聚类进行异常检测。</li>
+</ul>
+<p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：无需攻击先验知识，能检测未知攻击。</li>
+<li>缺点：误报率较高，异常不一定等于恶意。</li>
+</ul>
+<h3 id="基于图神经网络gnn的方法">
+    <a href="#%e5%9f%ba%e4%ba%8e%e5%9b%be%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9cgnn%e7%9a%84%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    基于图神经网络（GNN）的方法
+</h3><p><strong>核心思想</strong>：利用图神经网络学习节点或子图的表示，通过分类或异常检测识别恶意行为。</p>
+<p><strong>代表工作</strong>：</p>
+<ul>
+<li><strong>ThreaTrace</strong>（USENIX Security 2022）：在溯源图上使用 GNN 进行节点级分类，将每个系统实体标记为良性或恶意。使用 GraphSAGE 作为骨干网络，支持在线检测。</li>
+<li><strong>MAGIC</strong>（USENIX Security 2024）：提出多粒度（节点级 + 图级）的表示学习框架，利用掩码自编码器（Masked Autoencoder）进行自监督预训练，再进行下游检测任务。</li>
+<li><strong>Kairos</strong>（S&amp;P 2024）：将时序溯源图建模为时序图快照序列，使用时序图神经网络捕获图结构的时间演化特征，实现对 APT 攻击的实时检测和重建。</li>
+<li><strong>Flash</strong>（USENIX Security 2024）：引入概念漂移自适应机制，解决溯源图检测中因系统行为变化导致的模型退化问题。</li>
+</ul>
+<p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：自动学习特征，能捕获复杂的结构和语义模式。</li>
+<li>缺点：训练需要大量标注数据（或精心设计的自监督任务），模型可解释性较差，计算开销较大。</li>
+</ul>
+<h3 id="基于图嵌入和表示学习的方法">
+    <a href="#%e5%9f%ba%e4%ba%8e%e5%9b%be%e5%b5%8c%e5%85%a5%e5%92%8c%e8%a1%a8%e7%a4%ba%e5%ad%a6%e4%b9%a0%e7%9a%84%e6%96%b9%e6%b3%95" class="header-anchor">#</a>
+    基于图嵌入和表示学习的方法
+</h3><p><strong>核心思想</strong>：将溯源图中的节点、边或子图嵌入到低维向量空间，在嵌入空间中进行检测。</p>
+<p><strong>代表工作</strong>：</p>
+<ul>
+<li><strong>Shadewatcher</strong>（CCS 2022）：将溯源图中的系统调用建模为推荐系统中的交互，使用知识图嵌入方法学习表示。</li>
+<li><strong>ProvNinja / DISTDET</strong>：利用分布式图计算框架处理大规模溯源图上的嵌入学习。</li>
+</ul>
+<h3 id="基于大语言模型llm的方法前沿方向">
+    <a href="#%e5%9f%ba%e4%ba%8e%e5%a4%a7%e8%af%ad%e8%a8%80%e6%a8%a1%e5%9e%8bllm%e7%9a%84%e6%96%b9%e6%b3%95%e5%89%8d%e6%b2%bf%e6%96%b9%e5%90%91" class="header-anchor">#</a>
+    基于大语言模型（LLM）的方法（前沿方向）
+</h3><p>近年来，部分研究开始探索利用大语言模型辅助溯源图分析：</p>
+<ul>
+<li>将溯源图的结构化信息转化为自然语言描述，利用 LLM 的推理能力进行攻击识别。</li>
+<li>利用 LLM 生成攻击行为的描述，辅助规则编写和特征设计。</li>
+<li>这一方向仍处于早期探索阶段。</li>
+</ul>
+<h2 id="评估方法与指标">
+    <a href="#%e8%af%84%e4%bc%b0%e6%96%b9%e6%b3%95%e4%b8%8e%e6%8c%87%e6%a0%87" class="header-anchor">#</a>
+    评估方法与指标
+</h2><h3 id="基础评估指标">
+    <a href="#%e5%9f%ba%e7%a1%80%e8%af%84%e4%bc%b0%e6%8c%87%e6%a0%87" class="header-anchor">#</a>
+    基础评估指标
+</h3><p>溯源图检测方法的评估通常采用以下标准指标：</p>
+<ul>
+<li><strong>精确率（Precision）</strong>：P = TP / (TP + FP)，检测结果中正确的比例。</li>
+<li><strong>召回率（Recall）</strong>：R = TP / (TP + FN)，实际攻击中被正确检测的比例。</li>
+<li><strong>F1 值</strong>：F1 = 2PR / (P + R)，精确率和召回率的调和平均。</li>
+<li><strong>误报率（FPR）</strong>：FPR = FP / (FP + TN)，正常行为被错误标记为恶意的比例。</li>
+</ul>
+<h3 id="评估粒度">
+    <a href="#%e8%af%84%e4%bc%b0%e7%b2%92%e5%ba%a6" class="header-anchor">#</a>
+    评估粒度
+</h3><p>评估粒度是溯源图检测评估中一个关键但常被忽视的问题。不同方法可能在不同粒度上进行评估：</p>
+<ul>
+<li><strong>节点级（Node-level）</strong>：评估每个系统实体是否被正确分类为良性/恶意。</li>
+<li><strong>边级（Edge-level）</strong>：评估每条系统调用边是否被正确识别。</li>
+<li><strong>图级（Graph-level）</strong>：评估整个溯源图（或子图）是否被正确分类。</li>
+<li><strong>场景级（Scenario-level）</strong>：评估是否成功识别出完整的攻击场景。</li>
+</ul>
+<p>不同粒度下的评估结果可能差异很大，比较不同方法时需注意粒度的一致性。</p>
+<h3 id="orthrus-评估框架">
+    <a href="#orthrus-%e8%af%84%e4%bc%b0%e6%a1%86%e6%9e%b6" class="header-anchor">#</a>
+    Orthrus 评估框架
+</h3><p><strong>Orthrus</strong> 是近年来提出的一个系统性评估框架，旨在解决溯源图检测领域评估不规范、难以公平比较的问题。</p>
+<h4 id="orthrus-提出的核心问题">
+    <a href="#orthrus-%e6%8f%90%e5%87%ba%e7%9a%84%e6%a0%b8%e5%bf%83%e9%97%ae%e9%a2%98" class="header-anchor">#</a>
+    Orthrus 提出的核心问题
+</h4><ol>
+<li><strong>评估不一致</strong>：不同论文在不同数据集、不同粒度、不同划分方式下评估，结果不可比。</li>
+<li><strong>标注质量</strong>：部分数据集的 ground truth 标注粒度过粗或存在错误，影响评估可靠性。</li>
+<li><strong>数据泄露</strong>：训练集和测试集之间可能存在时序泄露或信息泄露。</li>
+<li><strong>过拟合特定数据集</strong>：方法可能在特定数据集上表现良好但泛化能力差。</li>
+</ol>
+<h4 id="orthrus-的评估维度">
+    <a href="#orthrus-%e7%9a%84%e8%af%84%e4%bc%b0%e7%bb%b4%e5%ba%a6" class="header-anchor">#</a>
+    Orthrus 的评估维度
+</h4><p>Orthrus 从以下维度建立统一的评估框架：</p>
+<ul>
+<li><strong>检测有效性（Effectiveness）</strong>：在统一的数据划分和指标下比较检测性能。</li>
+<li><strong>检测时效性（Timeliness）</strong>：衡量从攻击发生到检测触发的延迟。</li>
+<li><strong>可扩展性（Scalability）</strong>：评估方法在大规模数据上的处理效率。</li>
+<li><strong>鲁棒性（Robustness）</strong>：评估方法对对抗性攻击（adversarial attack）和概念漂移（concept drift）的抵抗能力。</li>
+<li><strong>泛化性（Generalizability）</strong>：在不同数据集和攻击场景之间的迁移能力。</li>
+</ul>
+<h4 id="orthrus-的实践建议">
+    <a href="#orthrus-%e7%9a%84%e5%ae%9e%e8%b7%b5%e5%bb%ba%e8%ae%ae" class="header-anchor">#</a>
+    Orthrus 的实践建议
+</h4><ul>
+<li><strong>统一数据划分</strong>：按时间顺序划分训练集和测试集，避免未来信息泄露。</li>
+<li><strong>多数据集评估</strong>：在至少两个以上数据集上报告结果。</li>
+<li><strong>多粒度报告</strong>：同时报告节点级和图级性能。</li>
+<li><strong>消融实验</strong>：通过消融实验验证各组件的贡献。</li>
+<li><strong>运行效率</strong>：报告训练时间、推理时间和内存占用。</li>
+</ul>
+<h3 id="评估中的常见陷阱">
+    <a href="#%e8%af%84%e4%bc%b0%e4%b8%ad%e7%9a%84%e5%b8%b8%e8%a7%81%e9%99%b7%e9%98%b1" class="header-anchor">#</a>
+    评估中的常见陷阱
+</h3><p><strong>数据不平衡</strong>：溯源图中恶意节点/边远少于良性节点/边，直接使用准确率（Accuracy）会产生误导。应重点关注 Precision、Recall 和 F1。</p>
+<p><strong>时序泄露</strong>：使用未来数据训练模型来检测过去的攻击，导致性能虚高。应严格按时间划分数据。</p>
+<p><strong>Cherry-picking</strong>：只展示表现最好的攻击场景，忽略检测失败的案例。应报告所有场景的平均性能。</p>
+<p><strong>标注不一致</strong>：不同研究对同一数据集使用不同的标注策略，导致结果不可比。应明确说明标注来源和处理方式。</p>
+<hr>
+<h2 id="前沿研究方向">
+    <a href="#%e5%89%8d%e6%b2%bf%e7%a0%94%e7%a9%b6%e6%96%b9%e5%90%91" class="header-anchor">#</a>
+    前沿研究方向
+</h2><h3 id="实时在线检测">
+    <a href="#%e5%ae%9e%e6%97%b6%e5%9c%a8%e7%ba%bf%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
+    实时在线检测
+</h3><p>大多数方法在离线环境下评估，但实际部署需要支持流式日志的实时处理。如何在保持检测精度的同时实现低延迟检测是关键挑战。</p>
+<h3 id="跨主机攻击检测">
+    <a href="#%e8%b7%a8%e4%b8%bb%e6%9c%ba%e6%94%bb%e5%87%bb%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
+    跨主机攻击检测
+</h3><p>APT 攻击通常涉及多台主机的横向移动。如何将多台主机的溯源图融合分析，检测跨主机攻击链，是重要的开放问题。</p>
+<h3 id="对抗鲁棒性">
+    <a href="#%e5%af%b9%e6%8a%97%e9%b2%81%e6%a3%92%e6%80%a7" class="header-anchor">#</a>
+    对抗鲁棒性
+</h3><p>攻击者可能有意规避溯源图检测（如混淆系统调用、注入噪声行为）。如何设计对抗鲁棒的检测方法值得关注。</p>
+<h3 id="概念漂移适应">
+    <a href="#%e6%a6%82%e5%bf%b5%e6%bc%82%e7%a7%bb%e9%80%82%e5%ba%94" class="header-anchor">#</a>
+    概念漂移适应
+</h3><p>系统行为会随软件更新、用户习惯变化等因素而改变。如何让检测模型持续适应新的正常行为模式，避免误报激增，是实际部署中的核心难题。</p>
+<h3 id="可解释性">
+    <a href="#%e5%8f%af%e8%a7%a3%e9%87%8a%e6%80%a7" class="header-anchor">#</a>
+    可解释性
+</h3><p>基于深度学习的方法虽然性能优越，但缺乏可解释性，安全分析师难以理解检测结果。如何生成可解释的检测报告（如标注攻击子图、生成攻击叙述）是活跃的研究方向。</p>
+<h3 id="图压缩与高效存储">
+    <a href="#%e5%9b%be%e5%8e%8b%e7%bc%a9%e4%b8%8e%e9%ab%98%e6%95%88%e5%ad%98%e5%82%a8" class="header-anchor">#</a>
+    图压缩与高效存储
+</h3><p>企业环境中每天产生的审计日志可达 TB 级别，如何高效存储和压缩溯源图，同时保留攻击检测所需的信息，仍有很大研究空间。</p>
+<hr>
+<h2 id="推荐阅读路线">
+    <a href="#%e6%8e%a8%e8%8d%90%e9%98%85%e8%af%bb%e8%b7%af%e7%ba%bf" class="header-anchor">#</a>
+    推荐阅读路线
+</h2><h3 id="入门论文建议按顺序阅读">
+    <a href="#%e5%85%a5%e9%97%a8%e8%ae%ba%e6%96%87%e5%bb%ba%e8%ae%ae%e6%8c%89%e9%a1%ba%e5%ba%8f%e9%98%85%e8%af%bb" class="header-anchor">#</a>
+    入门论文（建议按顺序阅读）
+</h3><ol>
+<li><strong>综述论文</strong>：先阅读一篇溯源图安全分析的综述，建立全局视角。
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-apache" data-lang="apache"><span class="line"><span class="cl"><span class="err">Inam,</span> <span class="err">M</span>. <span class="err">A</span>.<span class="err">,</span> <span class="err">Chen,</span> <span class="err">Y</span>.<span class="err">,</span> <span class="err">Goyal,</span> <span class="err">A</span>.<span class="err">,</span> <span class="err">Liu,</span> <span class="err">J</span>.<span class="err">,</span> <span class="err">Mink,</span> <span class="err">J</span>.<span class="err">,</span> <span class="err">Michael,</span> <span class="err">N</span>.<span class="err">,</span> ... <span class="err">&amp;</span> <span class="err">Hassan,</span> <span class="err">W</span>. <span class="err">U</span>. <span class="err">(2023,</span> <span class="err">May)</span>. <span class="err">Sok:</span> <span class="nb">History</span> is a vast early warning system: Auditing the provenance of system intrusions. In <span class="m">2023</span> IEEE Symposium <span class="k">on</span> Security and Privacy (SP) (pp. <span class="m">2620</span>-2638). IEEE.
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>ThreaTrace</strong>（2022）和<strong>Flash</strong>（2024）：基于节点关键属性（节点类型）重构的检测方法。</li>
+<li><strong>Kairos</strong>（2024）和<strong>MAGIC</strong>（2024）：基于边关键属性重构的检测方法。</li>
+<li><strong>Orthrus（2025）</strong>：理解评估框架和方法比较。</li>
+</ol>
+<h3 id="数据集实践建议">
+    <a href="#%e6%95%b0%e6%8d%ae%e9%9b%86%e5%ae%9e%e8%b7%b5%e5%bb%ba%e8%ae%ae" class="header-anchor">#</a>
+    数据集实践建议
+</h3><ol>
+<li>从 <strong>DARPA E3</strong> 开始实践，数据规模适中，社区支持丰富。</li>
+<li>使用 Python + NetworkX 解析 CDM 日志，构建第一个溯源图。</li>
+<li>可视化溯源图（推荐 Graphviz 或 Gephi），直观理解图结构。</li>
+<li>尝试复现一个基线方法（如 flash、orthrus等），理解完整的实验流程。</li>
+</ol>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/zh-cn/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图嵌入分析</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/zh-cn/post/provenance_graph/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 87.66k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

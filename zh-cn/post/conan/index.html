@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）">
+<title>CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</title>
+
+<link rel='canonical' href='http://localhost:1313/zh-cn/post/conan/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency">
+<meta property='og:description' content="2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）">
+<meta property='og:url' content='http://localhost:1313/zh-cn/post/conan/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-05-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-05-27T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/conan/media/bg.png' />
+<meta name="twitter:title" content="CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency">
+<meta name="twitter:description" content="2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/conan/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/zh-cn/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/zh-cn">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/zh-cn/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/post/conan/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#研究背景">研究背景</a>
+      <ol>
+        <li><a href="#研究问题">研究问题</a></li>
+        <li><a href="#apt检测三阶段模型">APT检测三阶段模型</a></li>
+        <li><a href="#跟踪可疑代码执行">跟踪可疑代码执行</a></li>
+      </ol>
+    </li>
+    <li><a href="#方法概述">方法概述</a>
+      <ol>
+        <li><a href="#语义识别">语义识别</a></li>
+        <li><a href="#数据结构">数据结构</a></li>
+        <li><a href="#状态转移">状态转移</a></li>
+        <li><a href="#恶意状态">恶意状态</a></li>
+        <li><a href="#攻击重建">攻击重建</a></li>
+      </ol>
+    </li>
+    <li><a href="#实验评估">实验评估</a></li>
+    <li><a href="#总结讨论">总结讨论</a></li>
+    <li><a href="#文献对比">文献对比</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/zh-cn/post/conan/">
+                <img src="/post/conan/media/bg_hu_b46da57ab4a3f70b.png"
+                        srcset="/post/conan/media/bg_hu_b46da57ab4a3f70b.png 800w, /post/conan/media/bg_hu_d03a1d68f3785cea.png 1600w"
+                        width="800" 
+                        height="270" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/zh-cn/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/zh-cn/post/conan/">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            2022 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING（TDSC）
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 27, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 22 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    10873 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/post/conan/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="摘要">
+    <a href="#%e6%91%98%e8%a6%81" class="header-anchor">#</a>
+    摘要
+</h2><p>高级持续威胁（APT）攻击已在全球范围内造成严重的安全威胁和经济损失。人们提出了各种结合上下文信息和来源图的实时检测机制来防御 APT 攻击。然而，由于检测模型不准确和来源图规模不断增大，现有的实时 APT 检测机制面临着准确性和效率问题。为了解决准确性问题，我们提出了一种新颖且准确的 APT 检测模型，该模型消除了不必要的阶段，并重点关注具有改进定义的剩余阶段。为了解决效率问题，我们提出了一个基于状态的框架，其中事件作为流使用，每个实体都以类似 FSA 的结构表示，而不存储历史数据。此外，我们通过在数据库中仅存储千分之一的事件来重建攻击场景。最后，我们在 Windows 上实现了我们的设计 CONAN，并在真实场景下进行了全面的实验，以表明 CONAN 可以准确有效地检测我们评估范围内的所有攻击。 CONAN 的内存使用率和 CPU 效率随着时间的推移保持恒定（内存为 1-10 MB，比数据生成速度快数百倍），这使得 CONAN 成为在现实场景中检测已知和未知 APT 攻击的实用设计。</p>
+<h2 id="研究背景">
+    <a href="#%e7%a0%94%e7%a9%b6%e8%83%8c%e6%99%af" class="header-anchor">#</a>
+    研究背景
+</h2><p>传统的入侵检测方法可以分为离线和在线两类。最著名的离线检测方法之一是沙箱方法，将目标程序部署到隔离的环境中进行单独分析。此外，还构建了多个日志记录和来源跟踪系统来监视系统的活动，然后构建来源图来检测或分析攻击。虽然这些方法可以清晰地看到攻击，但考虑到离线检测的滞后性，人们开始使用在线检测方法来实时检测攻击。这些方法包括基于网络流量的分析、软件静态特征检测和钩子技术等。然而，现有的研究主要集中在APT的某一特定阶段，对APT的内在机制和攻击向量仍然知之甚少。</p>
+<p>最近的工作已证明基于上下文的检测是有效的。近年来提出了采用上下文方法的实时检测系统。 StreamSpot 分析流信息流图，通过提取局部图特征并将其矢量化以进行分类来检测异常活动。基于学习的检测方法只能提供恶意分数或分类结果，但无法解释这些结果。此外，这些检测系统无法在没有误报的情况下检测攻击。因此，在实践中，基于学习的方法并不适合企业场景。 Sleuth 随后提出了一种基于来源图的基于标签的检测方法，但该方法主要关注对机密文件的可疑访问，并通过添加域白名单来减少误报。为了更好地理解APT攻击，分析人员将APT生命周期解耦为多个阶段，然后利用每个阶段对应的特征来匹配可疑行为。 APT 攻击分为七个或十一个阶段 。多阶段杀伤链模型方法被许多研究人员采用。Holmes 通过构建基于简单规则检测每个阶段并计算可疑分数的模型，在基于阶段的检测方面取得了实质性进展。然而，这些阶段在 APT 攻击中并不都是必需的（例如凭证访问），其中一些阶段（例如检测远程代码执行漏洞）通常是通过先验知识检测到的，并且往往会随着时间的推移而发生变化。</p>
+<p>此外，实时上下文工作通常在来源图中保留上下文信息。然而，随着时间的推移，图不断增长，APT 可以持续数月甚至数年，使得这些方法在系统长时间运行时不可避免地会遇到效率和内存问题，特别是对于实时检测。因此，大多数检测方法依赖于短时间窗口。</p>
+<p>为了解决这些挑战，特别是准确性和效率方面的挑战，本文提出了一种准确检测 APT 的模型。此外，它提出了一种新颖的基于状态的检测框架，其中每个进程和文件都表示为精心设计的数据结构，用于实时、长期检测。</p>
+<p>为了高精度地检测未知 APT，我们利用控制流（即进程或代码为何被执行）和数据流（即数据如何传递），而不是专注于 APT 攻击中不必要的、不可检测的和易于更改的阶段。对象之间）来解释上下文行为。我们确定了以下三个基本攻击阶段：1）部署并执行攻击者的代码，2）收集敏感信息或造成损害，3）与 C&amp;C 服务器通信或泄露敏感数据。我们主要关注准确检测这些阶段并将它们结合起来以区分恶意行为和良性行为。与更复杂的基于阶段的模块相比，这种方法有利于准确检测未知的 APT。</p>
+<p>为了高效地实时进行上下文检测，我们基于取证分析的思想提出了一种新颖的基于状态的跟踪和检测框架以及相应的数据结构。在此设计中，所有语义都存储为状态，并且框架仅保留所有进程和文件的当前状态以供检测。状态由事件和其他实体的相关状态更新，类似于有限状态自动机（FSA），我们称之为类FSA结构。因此，框架不需要存储历史数据，并且内存使用保持一致。状态会随着时间而变化。一旦进程变为恶意状态，无论攻击持续多久都会被检测到。使用该框架，我们可以长时间监控主机，以高精度和低开销自动检测APT。</p>
+<p>此外，我们基于该框架的检测方法可以检测攻击并提供解释。具体来说，检测结果是通过重构的攻击图生成的，这说明了这些攻击是如何发生的，有利于后续分析。</p>
+<p>主要贡献：</p>
+<ol>
+<li>提出了一种新的 APT 检测模型，该模型专注于 APT 的三个恒定步骤，并且我们提出了一组设计来准确跟踪和检测这些步骤，包括检测基于内存的攻击和可疑进程行为。</li>
+<li>提出了一种新颖且高效的基于状态的检测框架，其中每个进程和文件都表示为类似 FSA 的结构。该框架有助于检测内存使用量恒定且有限（1-10 MB）且效率高（比数据生成快数百倍）的 APT。</li>
+<li>实现为APT攻击检测系统，可以高精度地实时检测未知的高级攻击并快速恢复攻击链。我们在现实世界的数据集上测试了我们的系统，并确定它比以前的方法表现更好，特别是在效率和准确性方面。</li>
+</ol>
+<h3 id="研究问题">
+    <a href="#%e7%a0%94%e7%a9%b6%e9%97%ae%e9%a2%98" class="header-anchor">#</a>
+    研究问题
+</h3><p>APT 中的字母 A 代表这些攻击中使用的先进技术。传统的检测系统包括恶意软件检测、漏洞检测和威胁情报，仅关注APT攻击链的单个阶段，并且这些阶段所使用的攻击技术很容易改变；因此，APT攻击者很容易规避这些传统的检测方法。 MITRE ATT&amp;CK引入了十一阶段APT攻击模型来描述APT攻击中使用的策略、技术和程序（TTP）。</p>
+<p>然而，过于复杂的多相模型只能用于更好地理解 APT，而不能用于检测它们。例如，<a class="link" href="https://wintery.social/post/holmes/"  target="_blank" rel="noopener"
+    >Holmes</a> 的作者开发了一个系统来检测每个策略（阶段）中的技术，并通过信息流（包括数据流和控制流）将这些阶段连接起来作为攻击链。在每个攻击链中，检测到的阶段越多，攻击的可能性就越大。然而，存在三个主要问题。</p>
+<ol>
+<li>每个阶段都会使用数百种技术。该系统必须检测数百种技术，这很难实现并且会导致很高的检测开销。</li>
+<li>仍然考虑传统方法的检测点，如漏洞。为了检测这些阶段，需要先验知识。</li>
+<li>攻击所使用的技术很容易发生变化，因此很难检测到未知的攻击。</li>
+</ol>
+<p>最后，作者认为，虽然他们无法准确检测所有阶段，但作为所有阶段的子集，检测到的阶段足以区分攻击和良性活动。换句话说，没有必要检测所有相位。此外，引入一些常见和不必要的阶段会增加误报率。</p>
+<p>相数多不能表明攻击，相数少不能证明其合法性。例如，新安装的浏览器可以触发 MITRE ATT&amp;CK 十一阶段模型中的 6 个阶段（初始访问、执行、持久性、凭证访问、发现和渗透），并将触发 [22] 的错误警报。与此同时，高级攻击者通过零日漏洞访问机器并下载恶意软件。然后，它使用未知的方法实现持久化（或者在某些情况下不希望持久化，例如在永不关闭的服务器上）。它记录击键并通过命令和控制通道泄露数据，这可能很难检测到。最后，该攻击中唯一可以检测到的阶段是执行和收集，因此它们不能被视为攻击。</p>
+<h3 id="apt检测三阶段模型">
+    <a href="#apt%e6%a3%80%e6%b5%8b%e4%b8%89%e9%98%b6%e6%ae%b5%e6%a8%a1%e5%9e%8b" class="header-anchor">#</a>
+    APT检测三阶段模型
+</h3><p>为了检测未知的APT攻击，我们首先找到它们的不变部分。换句话说，我们试图回答以下问题：是什么导致这些活动“攻击”。在研究了数百种 APT 攻击之后，首先可以观察到攻击者必须首先将其代码部署到受害者身上。不同之处在于，恶意软件可以定制或仅在内存中执行，以逃避传统的基于静态文件的检测系统。第二个观察结果是，多年来攻击者的最终目标保持不变。自 2006 年以来，APT1引入了攻击，从至少 141 个组织窃取数百 TB 的数据。如今，APT38 也专注于类似的任务。这些行为类似于Android中的权限，可能导致隐私泄露或损坏。最终观察到，攻击者将与 C&amp;C 服务器通信并窃取机密数据，并且恶意程序应该始终具有访问网络的能力。</p>
+<ol>
+<li><strong>部署并执行攻击者的代码。</strong> 任何流程行为都是代码执行的结果。攻击者必须首先向受害者部署代码才能实现其目标。为了检测此阶段，我们监视来自外部的数据流，包括网络和便携式设备，我们将其称为不可信数据流。拥有不受信任的数据流是发起攻击的必要条件，无论攻击者使用任何漏洞或技术来部署其代码。这种设计可能会导致更多的误报，但后续章节中介绍的技术将有助于解决此问题。在另一种情况下，攻击者可能会使用合法的进程来达到他的目的。例如，攻击者可以使用预装的Windows SnappingTool来捕获屏幕。在这里，不受信任的控制流可以提供帮助。如果进程或线程是由可疑线程启动的，该进程或线程也被标记为可疑。代码部署始终是必要的，除非攻击者可以通过其他方式（例如，通过使用密码远程登录）获得对受害者的授权访问。这种类型的攻击可以通过IP白名单来预防并通过异常检测来检测，这超出了本文的研究范围。</li>
+</ol>
+<blockquote>
+<p>监视来自外部的数据流？意味着数据来源非仅日志数据？而是流量+日志的形式？</p>
+</blockquote>
+<ol start="2">
+<li>
+<p><strong>收集敏感信息或造成损害。</strong> 攻击者通常试图窃取机密数据或损坏受害者的数据或机器，这就是攻击者实施攻击的原因，也是受害者希望避免这种结果的原因。我们不认为能够接触到受害者但不会导致有害行为的入侵是真正的攻击。通过将来自机密目标的数据流作为机密数据流进行监视，可以检测到从文件中窃取机密数据。<strong>其他可疑行为由作者预定义的签名检测到。</strong></p>
+</li>
+<li>
+<p><strong>与 C&amp;C 服务器通信或泄露敏感数据。</strong> 这两个操作在 APT 中都是必需的，如果没有这些操作，攻击就无法完成。尽管有很多方法可以实现这一点（例如，可移动磁盘），但典型的现实世界攻击方法是通过网络连接。</p>
+</li>
+</ol>
+<p>这三个阶段对于大多数 APT 攻击来说都是简单且必要的。因此，我们尝试检测执行可疑代码以进行恶意行为的进程。此外，我们还提供了额外的功能来说明不同的攻击场景。与之前的工作不同，我们不分配分数或简单的标签；相反，我们使用更详细的描述来描述攻击的组成部分，以便更好地理解和进一步分析，而无需额外的开销。</p>
+<h3 id="跟踪可疑代码执行">
+    <a href="#%e8%b7%9f%e8%b8%aa%e5%8f%af%e7%96%91%e4%bb%a3%e7%a0%81%e6%89%a7%e8%a1%8c" class="header-anchor">#</a>
+    跟踪可疑代码执行
+</h3><p>基于内存的攻击，包括注入和无文件攻击，可以帮助攻击者在良性应用程序的内存中执行代码，这些攻击越来越多地被使用，因为传统的检测系统对它们视而不见。虽然现有的研究将进程视为存储上下文信息的实体，但它们很容易受到基于内存的攻击。基于内存的攻击中使用的检测技术可能会有所帮助，但实现这些攻击的方法有多种，这使得检测变得困难。因此，本节中提出了一种通过跟踪可疑数据流并检查执行调用堆栈来检测可疑代码执行的方法，忽略攻击所使用的技术。</p>
+<p>如果攻击者想要执行恶意行为，他必须1）直接执行恶意代码或2）借助良性进程来实现。检测的主要挑战是确定 <strong>1) 执行了哪些代码，2) 它来自哪里，以及 3) 如何执行。</strong> 尽管污点跟踪在跟踪细粒度数据流时有很大帮助，但由于开销较高，该方法无法实时使用。为了解决第一个挑战，我们采用调用堆栈。调用堆栈是一种堆栈数据结构，用于在生成事件时存储有关活动子例程的信息。调用堆栈中的地址是属于不同代码块（例如图像）的返回地址。如果一个调用堆栈中的所有地址都来自可信代码块，我们称这个线程执行可信代码。由于良性进程很容易被迫执行外部代码，因此我们根据代码执行将进程分成多个子单元（线程）。如图 1 所示，这些执行未知或可疑代码的线程与完全良性的线程是分开的。我们考虑以下场景：</p>
+<p><img src="/media%5cimage-20240527171703536.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="图2：执行未签名代码（红色）的可疑线程（红色）与完全良性的线程分开。此功能对于检测可疑代码执行（包括未签名图像和内存中攻击）非常重要。"
+	
+	
+></p>
+<p>（1）图像加载和内存执行。图像加载是进程将可执行文件加载到其内存中的基本操作。攻击者可以用恶意图像文件替换良性图像文件，或者强制良性应用程序加载恶意图像，然后以良性进程为幌子进行攻击。此外，攻击者可以将恶意代码直接写入另一个进程的内存空间，或者从内存而不是从磁盘加载图像，而不会触发系统事件。前者称为进程注入，常用于攻击，后者是一种称为反射加载的技术，已在最近的高级攻击中使用。我们的系统监视加载图像的动态事件，并存储每个进程分配的内存的基地址和大小。当未签名图像或分配的内存的内存地址出现在调用堆栈中时，则意味着该线程中执行了一些未知的代码；因此，该线程应该与其他线程分开。为了减少解析完整调用堆栈时的开销，我们对每个线程进行低频率的样本检查。</p>
+<p>（2）脚本执行。近年来，基于脚本的攻击变得很常见，因为主机进程完全是良性的，并且进程读取执行代码（例如 PowerShell 和 VBscript），而不是加载它。检测此类攻击具有挑战性。我们的系统枚举了大多数常见的脚本主机，并将它们与正常进程分开处理。</p>
+<p>为了解决第二个挑战，我们通过基于粗粒度数据流的推理来跟踪可疑数据。例如，如果一个进程具有网络连接，则该进程写入的任何文件都可能包含来自网络的数据。</p>
+<p>为了解决第三个挑战，我们跟踪控制流（特别是由可疑线程创建的进程）。尽管它们可能是良性进程，但它们可用于实现攻击者的目标，例如抓取屏幕和泄露敏感数据。</p>
+<h2 id="方法概述">
+    <a href="#%e6%96%b9%e6%b3%95%e6%a6%82%e8%bf%b0" class="header-anchor">#</a>
+    方法概述
+</h2><p><img src="/media%5cbg.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="图1：Conan的概述。数据收集器部署在客户端，它尝试以较低的开销从多层收集痕迹。这些痕迹在客户端进行预处理以减少数据大小，然后发送到服务器端的检测器。检测器构建一个主内存结构，通过预定义的规则维护进程和文件的状态。状态和必要的事件同步到数据库。一旦发出警报，就可以从数据库重建攻击链。"
+	
+	
+></p>
+<p>如图 2 所示，本文在主机上开发了一个快速稳定的多级数据收集器，用于收集审计跟踪、调用堆栈和其他数据。然后，这些数据被发送到检测服务器，作为高级语义提取并作为进程和文件状态存储在内存结构中。同时，所有事件日志都会根据预定义的规则进行处理，以更改进程和文件的状态。这些事件和状态存储在数据库中以供以后的攻击重建。每当进程进入恶意状态时，就会触发警报以及重建的攻击图。我们在这里提出的检测模型使系统能够准确地检测APT，并且基于状态的框架使得高效地检测APT成为可能。</p>
+<p>这里提出的检测模型使系统能够准确地检测APT，并且基于状态的框架使得高效地检测APT成为可能。</p>
+<p>APT中的字母P代表Persistence，这意味着攻击者可以潜伏很长时间，直到得到他想要的东西。这与攻击链模型中引入的同一个词不同，它代表了使恶意软件在操作系统重新启动后自动启动的技术。检测持久性的技术并不实用。一方面，有 59 种已知的持久性技术，检测所有这些技术可能会很昂贵。另一方面，即使检测到某个进程是持久的，也不能将其视为恶意软件。攻击者可以潜伏很长时间而不会出现任何可疑行为。此外，恶意文件可能在下载几天后就被打开。因此，很难根据上下文信息检测攻击。</p>
+<h3 id="语义识别">
+    <a href="#%e8%af%ad%e4%b9%89%e8%af%86%e5%88%ab" class="header-anchor">#</a>
+    语义识别
+</h3><p>语义状态定义受到取证分析的启发；我们自动识别数据流、控制流和流程行为的高级语义。这些语义代表了基于上下文的检测中使用的基本证据。我们将这种语义称为<strong>原子可疑指示器（ASI）</strong> 。</p>
+<p>ASI 包括以下类型的语义之一，并通过相应的迹线检测或推断：</p>
+<ol>
+<li>攻击者为实现其目标而执行的行为。通常由 API 检测或由机密数据流推断。</li>
+<li>可疑代码的来源，换句话说，就是进程能够执行此类行为的原因；由不受信任的数据流推断。</li>
+<li>通过网络活动推断进行外部通信的能力。</li>
+<li>通过不受信任的控制流推断进程执行的原因。</li>
+<li>描述攻击的附加特征。</li>
+</ol>
+<p>每个 ASI 可以描述为一个三元组$&lt;N_o;T_y;D_e&gt;$。每个 ASI 都分配有一个唯一的编号 $N_o$，它表示其在记录状态的位图中的位置。 $T_y$代表类别，包括以下几类： 1）可疑代码源，跟踪潜在的不可信代码执行情况； 2）可疑行为； 3）网络连接； 4) 特征，这是说明不同攻击场景的附加特征。 $D_e$ 表示用于以人类可读语义解释检测结果的描述。</p>
+<p>这些 ASI 通过直接从源数据中提取或通过规则推断来识别。如果满足以下条件，则应声明可以帮助检测 APT 的新 ASI：1) 它具有与现有 ASI 不同的语义，或者 2) 有多种方法可以以不同的精度识别相同的语义。</p>
+<p><img src="/media%5cimage-20240527190243776.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="表1 ASI 精选列表"
+	
+	
+></p>
+<p>第一列是进程(P)或文件(F)的ASI编号。ASI按类型分类：代码源(CS)、行为(Beh.)、特征(Fea.)和网络(Net.)</p>
+<p>不同ASI的组合最终可以描述不同的攻击场景。以下检测步骤基于这些ASI、数据流和控制流。</p>
+<p>某些 ASI 可以轻松检测到或通过基于系统事件日志的推断来生成。尽管攻击者通常执行的行为属于最重要的 ASI，但目前还没有成熟的方法来检测它们。</p>
+<p>为了实时高效地匹配这些拓扑API签名，我们将这些拓扑转换为FSA，以将签名与流数据进行匹配，并且这些API应该在一个窗口中进行匹配减少错误报警，在实际应用中，我们采用6秒的时间窗口。我们不使用系统调用，因为它们的级别太低，无法反映语义。</p>
+<p>API调用通常通过沙箱的API hooking来记录，由于其性能和稳定性较差，无法用于实时检测系统。我们使用 ETW 内核调用堆栈跟踪来恢复 API 调用。 ETW 可以捕获内核事件（包括 SysCallEnter 事件，代表对系统调用的调用）及其调用堆栈。我们有效地从调用堆栈中恢复 API。然而，这个过程不是我们的主要贡献，我们在这里不详细描述它。</p>
+<h3 id="数据结构">
+    <a href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" class="header-anchor">#</a>
+    数据结构
+</h3><p>为了支持实时分析和长期监控，我们提出了一种类似主存FSA的结构来记录可能涉及攻击的每个进程和文件的状态。请注意，我们不需要存储任何历史事件来执行检测，但出于重建攻击的额外目标，我们只保留一小部分使状态更改到数据库的事件。</p>
+<p>如图3所示，当每个进程和文件处于特定状态时，我们将它们的基本信息和状态保存在内存中。</p>
+<p><img src="/media%5cimage-20240527193337712.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="图3 数据结构和操作。标签 P1、P10、P15、F1。 F2是表1中描述的状态。R1、R2和R15是表2中描述的规则。本示例记录了偷渡式下载攻击的过程。"
+	
+	
+></p>
+<p>所有不活动的进程和文件都会从内存中删除到数据库中，以确保内存恒定。仅当文件被另一个进程操作时才会恢复。</p>
+<h3 id="状态转移">
+    <a href="#%e7%8a%b6%e6%80%81%e8%bd%ac%e7%a7%bb" class="header-anchor">#</a>
+    状态转移
+</h3><p>根据所涉及的主体和对象之间的差异，相同类型的事件具有不同的高级语义。例如，读取下载的文件与读取个人目录中存在的文件不同。前者涉及访问未知数据源，可能导致不可信代码执行，而后者涉及访问个人数据，最终可能导致用户数据泄露。这部分的目的是跟踪机密数据流、不可信数据流和不可信控制流。</p>
+<p>为了自动区分这些事件并记录语义，创建了一组预定义规则来为事件分配更详细的语义，表 2 中有一组精选规则。</p>
+<p><img src="/media%5cimage-20240527193717084.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="表2 精选规则列表"
+	
+	
+></p>
+<p>每个规则都是一个六元组：$&lt;N_o;S_s;E_v;S_o;D_i;D_e&gt;$。 $N_o$是规则的序号，用在边中来表示这个操作是如何生成的。 $S_s$ 代表主体的特定状态，主体始终是我们设计中的一个进程。 $S_o$代表对象的特定状态，对象是一个进程、一个文件或一个IP。$E_v$是主体对客体执行的事件。 $D_i$，向前或向后，表示一个实体影响另一个实体的方向。当主体处于某种状态并对客体执行事件时，客体的状态会发生我们所说的正向变化，其中主体和客体分别是源和目的地。相反，如果主体受到客体的影响，我们称之为后向；在这种情况下，主体是目的地。请注意，当 $S_s$ 和 $S_o$ 作为源时，它们都可以是一种或多种状态。 $D_e$是规则目的的描述，用于解释重构的攻击链。</p>
+<p>系统中的每个实体（即主体或客体）就像一个 FSA，可以描述为五元组：$&lt;S;\Sigma;\delta;S_0;F&gt;$。</p>
+<p>S：状态集。 $S_t$中的位组合，表示进程和文件的当前状态。</p>
+<p>$\Sigma$：输入字母表。由系统事件 $E_v$ 组成。</p>
+<p>$\delta$：状态转换函数。</p>
+<p>$S_0$：初始状态。一旦新的进程或文件出现在我们的系统中，我们就会在内存中创建一个相应的实例。 $S_t$ 中的所有位均设置为 false。只有可能包含机密数据的文件才会使用状态 F5 进行初始化。</p>
+<p>F ：最终状态集。一旦进程进入其中一种状态，就会触发警报。</p>
+<p>然而，为了重建攻击以便更好地理解和进一步分析，我们将导致状态更改的事件存储到数据库中。事件存储有四个属性：<strong>规则编号、时间戳、源和目的地</strong> 。规则编号代表状态更改的原因。事件就像起源图中的边，但操作的源和目的地是位图中用于记录状态的位，而不是进程或文件。</p>
+<h3 id="恶意状态">
+    <a href="#%e6%81%b6%e6%84%8f%e7%8a%b6%e6%80%81" class="header-anchor">#</a>
+    恶意状态
+</h3><p>恶意状态是各个状态的各种组合，指示检测所需的上下文信息。ASI 可分为 4 种不同类型：<strong>可疑代码源、网络连接、可疑行为和特征</strong> 。如果一个进程至少包含前三个类别（不包括特征）中的每个类别中的一个 ASI，我们就说它进入了恶意状态。每种恶意状态都说明了不同的攻击场景。例如，如果一个进程加载了从网络下载的未签名图像，执行了恶意行为并连接到网络，我们将其识别为“下载并执行”攻击，并根据其执行的恶意行为了解攻击者的目标。如果未签名的镜像已经存在于主机中，则可以将其识别为“现有恶意软件”。因此，我们不需要假设攻击的所有阶段都发生在 CONAN 开始监控系统之后，我们认为这是 CONAN 对现有工作的一项改进。</p>
+<p>一旦进程进入其中一种恶意状态，我们的系统就会发出警报。换句话说，所有的检测进度都可以通过检查一个进程的状态即可表示。例如，这样的检查可以揭示进程是否正在执行来自网络的未签名代码。我们不需要知道代码的确切来源，因为该信息对检测几乎没有帮助。此外，由于我们的系统仅检查进程状态，因此它的开销比基于图的检测机制低得多，但达到了几乎相同的效果。</p>
+<p>我们还利用多个通用特征来识别不同的攻击场景。例如，“人机交互”特征反映了进程是否自动运行，“无可见窗口”特征表示用户是否可以明显地识别出该进程的存在。特征越多，恶意行为的置信度就越高，代表不同的攻击场景。更多功能的使用将有助于系统管理员分析攻击并减少误报。请注意，除了代码认证之外，我们不使用任何文件、进程或域的白名单。在我们的系统部署之前安装的恶意软件也可以被检测为特殊的攻击场景。</p>
+<h3 id="攻击重建">
+    <a href="#%e6%94%bb%e5%87%bb%e9%87%8d%e5%bb%ba" class="header-anchor">#</a>
+    攻击重建
+</h3><p>来源分析极大地有助于理解和检测攻击。因此，我们不仅检测这些恶意攻击，还尝试用语义重建这些攻击，类似于来源分析的功能。此类重建有助于极大地改善攻击分析，进一步减少误报并帮助保护主机免受未来的攻击。</p>
+<p>由于我们数据结构的特殊性，这些任务可以有效地执行。因为我们将目标进程的所有证据聚合为状态，所以重建攻击的基本思想是解释为什么该进程被归类为恶意进程，具体来说，是通过回溯进程中 ASI 的来源。因为我们的系统将数据库中每个 ASI 的源保留为状态之间的边，所以可以通过边回溯来在线性时间内找到攻击的来源。对于正向分析，由于我们的系统可以立即检测到恶意进程，因此可疑进程几乎不会造成额外影响；因此，前向跟踪不会出现依赖性爆炸。</p>
+<p>在实践中，具有依赖爆炸的重构图对进一步分析的贡献较小。为了获得该图，我们仅重建足够的证据来证明这是一次攻击，而不是尝试重建整个攻击，因为粗粒度数据流的跟踪攻击是一个已研究多年的未解决的研究问题。</p>
+<h2 id="实验评估">
+    <a href="#%e5%ae%9e%e9%aa%8c%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    实验评估
+</h2><p>使用三种不同的环境长时间运行来评估 Windows 上的 CONAN。结果表明，CONAN可以检测多种类型的攻击，且准确率高，开销低。</p>
+<p>由于近 99.9% 的系统事件都与良性活动相关，因此减少不相关数据以保持 CONAN 的效率和准确性非常重要。如上所述，我们使用预定义的规则来识别系统事件的高级语义。表3显示了不同流程步骤之间的事件数量：原始事件（O），匹配规则 (M) 以及导致状态更改并存储在数据库 (R) 中的规则。 M 列中的数字与 O 列中的数字相似，这意味着 CONAN 跟踪了大部分原始事件。 M 列中的数字意味着存储用于重建的数据少于 1%。重复的读取事件被预先过滤。</p>
+<p><img src="/media%5cimage-20240527202838551.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="表3 减少不同流程步骤之间的事件：原始事件（O）、规则匹配的事件（M）以及导致状态改变并存储在数据库中的事件（R）"
+	
+	
+></p>
+<h2 id="总结讨论">
+    <a href="#%e6%80%bb%e7%bb%93%e8%ae%a8%e8%ae%ba" class="header-anchor">#</a>
+    总结讨论
+</h2><p>CONAN 系统的攻击者如何尝试逃避检测机制。</p>
+<p>内存中攻击。调用堆栈中的地址是下一个命令的入口。为了避免调用堆栈中出现可疑地址，恶意代码不能调用任何会导致内核事件（例如读/写文件、系统调用和内存操作）的API。但根据我们的经验，如果没有这些 API，攻击者就无法实现其目标。另一种可能的方法是将恶意代码挂钩或插入到良性图像中；由于内存操作，这些攻击也会在一开始就被记录下来。此外，它描述了一个称为内存认证的研究问题。 CONAN 无法检测到的另一种攻击是 ROP 攻击 。</p>
+<p>系统扩展。实现可疑行为的方法不止一种，这意味着我们应该为每种实现开发相应的签名。例如，现有研究介绍了三种在Windows上进行屏幕截图的方法，还有一些其他方法。但实施总数受到操作系统本身的限制，远小于攻击次数。因此，监控其他行为及其实施是可行且值得的。此外，我们的系统主要依靠跟踪信息流来确定代码执行的原因以及敏感信息的去向。通过添加更多的数据源和相应的规则来覆盖更多的信息流，可以很容易地扩展我们的系统。</p>
+<p>系统恢复。由于我们的检测方法是基于状态的，因此当系统崩溃或重新启动时恢复状态非常重要。由于所有状态都存储在数据库中，因此一旦崩溃就可以从中恢复。当实体的状态发生更改时，它会同步到数据库。当一个实体被删除时，它会被标记为数据库中没有数据。因此，当我们的系统重新启动时，它将从数据库中恢复内存中的状态，并且系统能够继续其工作。</p>
+<p>白名单。我们基于代码认证的白名单机制在 DARPA engagement和我们的实验室中运行良好，即零误报。然而，我们在现实场景中会收到一些误报。为了进一步减少这些误报，我们可以将现有的白名单机制与进程和/或IP白名单机制相结合，这在文献中被证明是有效的。</p>
+<p>图重建。由于 CONAN 仅保留使状态发生变化的第一个事件，因此它会错过对实体具有相同影响的后续事件。因此，重建的图可能不完整。我们认为这种方法是因为我们系统的主要目的是准确有效地检测攻击，而重建的图仅用于理解为什么会产生检测信号。另一种选择是将重复事件插入数据库时删除它们。在这种情况下，重复意味着事件的来源和目的地，并且匹配的规则都相同。为了判断一个事件是否重复，我们必须存储和搜索它，这既需要内存存储，又需要CPU计算。在我们的方法中，我们只需要检查一个实体的状态来决定是否存储该事件。它重量轻得多。</p>
+<h2 id="文献对比">
+    <a href="#%e6%96%87%e7%8c%ae%e5%af%b9%e6%af%94" class="header-anchor">#</a>
+    文献对比
+</h2><p>主机入侵检测技术可分为三种检测器类型：误用、异常或混合。</p>
+<p>误用检测主要依赖于已知的攻击模式；收集到的原始数据被转换成既定的格式，然后传递给检测模块，检测模块将做出决定。不幸的是，误用检测技术很难检测未知攻击（即零日攻击）。基于知识的方法依赖于需要定期更新的攻击特征数据库，而基于机器学习的方法通常缺乏泛化能力。异常检测用于检测未知攻击。良性程序的行为配置文件会被频繁存储和更新。任何偏离配置文件的行为都会被标记为潜在的攻击。基于异常的技术的优点是它们可以检测零日攻击，但这些方法会导致许多误报，因为误用检测和异常检测无法同时考虑误报和误报。考虑到上述两种方法的缺点，提出了混合技术。</p>
+<p>除了结合误用检测和异常检测技术之外，混合技术还涉及特定的策略。基于政策的方法经过精心设计，SLEUTH 和 HOLMES就是例证。 SLEUTH 利用可信标签和机密性标签来定义代码和数据。 HOLMES 构建定制策略来利用 APT 攻击链中每个步骤的语义。上述工作很少讨论攻击生命周期的本质意图，导致一些错误警报或漏报仍然存在。</p>
+<p>Conan与之前的设计有很大不同。本文提出了一个检测模型，总结了 APT 攻击中存在的三个基本阶段。通过该模型，可以揭示整个攻击链并准确检测潜在危险。</p>
+<p>来源跟踪旨在发现复杂上下文中的完整攻击路径。回溯是以前的工作中使用的常见解决方案，其灵感来自于开创性工作 BackTracker 。此后，PriorTracker 优化了中提出的流程，并启用了前向跟踪功能，以进行及时的攻击因果关系分析。在前向/后向搜索过程中，构建起源图来记录系统对象/主题依赖性。研究利用系统调用数据来跟踪信息流。为了提高精度，新的研究收集了细粒度的数据，但盲目增加数据量导致开销增加。 SLEUTH通过使用标签进行有效的事件存储和分析进行创新，但所提出的策略具有固有的局限性。虽然 SLEUTH 维护着一份未标记不受信任来源的内部 IP 地址白名单（DNS 查找等），需要经常维护以减少误报，但基于标记的方法本质上是一种基于图的存储方法，并且长时间的APT攻击难以应对。由于SLEUTH处理大量数据的依赖关系耗时较长，难以保证实时性。数据量与内存消耗成正比，不断增长的数据会导致内存爆炸。</p>
+<p>与之前的工作不同，CONAN 很好地利用了起源图的概念进行实时检测。 CONAN 采用新颖的基于状态的框架，具有恒定的内存使用量和较低的开销。我们的系统是上下文相关的，并引入类似 FSM 的结构来自动传输状态。此外，无论APT攻击持续多久，我们都可以实时分析审计数据、执行状态转换并生成警报。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/zh-cn/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/provenance_graph/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/media/bg.png" loading="lazy" data-key="" data-hash="/media/bg.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">溯源图（Provenance Graph）入门指南</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/threatrace/">
+        
+        
+            <div class="article-image">
+                <img src="/post/threatrace/media/bg.7a5ac6e42a447cfdd3168cef07cc5210_hu_f039300629c06e5.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning"
+                        
+                        data-hash="md5-elrG5CpEfP3TFozvB8xSEA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图嵌入分析</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/zh-cn/post/conan/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 87.66k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

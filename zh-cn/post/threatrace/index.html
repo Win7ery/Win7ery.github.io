@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="TIFS 2022">
+<title>THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</title>
+
+<link rel='canonical' href='http://localhost:1313/zh-cn/post/threatrace/'>
+
+<link rel="stylesheet" href="/scss/style.min.654602d784f522026a14ef3023900f66ee7575fc3775948522c2583e99f3b36c.css"><meta property='og:title' content="THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning">
+<meta property='og:description' content="TIFS 2022">
+<meta property='og:url' content='http://localhost:1313/zh-cn/post/threatrace/'>
+<meta property='og:site_name' content='Wintery'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Notes' /><meta property='article:published_time' content='2024-08-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-08-16T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/threatrace/media/bg.png' />
+<meta name="twitter:title" content="THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning">
+<meta name="twitter:description" content="TIFS 2022"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/threatrace/media/bg.png' />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+<style>
+    :root {
+        --article-font-family: "Noto Serif SC", var(--base-font-family);
+    }
+</style>
+
+<script>
+		(function () {
+		    const customFont = document.createElement('link');
+		    customFont.href = "https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap";
+							   
+		
+		    customFont.type = "text/css";
+		    customFont.rel = "stylesheet";
+		
+		    document.head.appendChild(customFont);
+		}());
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="referrer" content="no-referrer-when-downgrade">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "light");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/zh-cn/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/android-chrome-192x192_hu_d96f00a81f50c9de.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🧐</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/zh-cn">Wintery</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://blog.csdn.net/HUANGliang_'
+                        target="_blank"
+                        title="CSDN"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1712751852840" class="icon" viewBox="0 0 1141 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4420" xmlns:xlink="http://www.w3.org/1999/xlink" width="222.8515625" height="200"><path d="M1141.350889 39.056096l-28.912998 218.474979c-126.144988-19.927998-251.600975-38.376996-377.754963-27.674997-115.459989 9.802999-227.405978 32.180997-309.12497 122.987988C275.539973 519.540049 357.166965 749.305027 583.810943 790.307023c141.114986 25.525998 283.919972 11.784999 425.447958-8.122999-5.451999 112.439989-5.764999 95.302991-10.674999 205.22998-1.074 24.056998 4.277 14.611999-161.648984 31.913996-176.003983 9.003999-351.879966 11.188999-520.549949-52.887994-159.839984-60.717994-285.709972-157.279985-311.20797-335.624968C-21.074998 447.220056 53.979995 299.020071 197.693981 184.687082 413.36896 13.098099 790.802923-47.269895 1141.349889 39.056096z" fill="#5B5C5C" p-id="4421"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://gitee.com/win7ery'
+                        target="_blank"
+                        title="Gitee"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1713795110681" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7555" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M511.317333 0A512 512 0 0 0 0 512a512 512 0 0 0 512 512 512 512 0 0 0 512-512A512 512 0 0 0 512 0a512 512 0 0 0-0.682667 0z m259.84 227.541333c13.994667 0 25.301333 11.349333 25.258667 25.301334v63.232a25.344 25.344 0 0 1-25.301333 25.258666H417.152c-41.898667 0-75.861333 33.962667-75.861333 75.861334v240.213333c0 13.952 11.349333 25.258667 25.301333 25.258667h240.213333c41.898667 0 75.861333-33.962667 75.861334-75.861334v-12.629333a25.301333 25.301333 0 0 0-25.258667-25.301333h-177.066667a25.258667 25.258667 0 0 1-25.258666-25.258667v-63.232a25.301333 25.301333 0 0 1 25.301333-25.258667h290.773333c13.952 0 25.301333 11.306667 25.301334 25.258667v145.408a170.666667 170.666667 0 0 1-170.666667 170.666667H252.842667a25.301333 25.301333 0 0 1-25.301334-25.301334V417.194667a189.610667 189.610667 0 0 1 189.653334-189.610667h353.962666z" p-id="7556"></path></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Win7ery'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://wintery.net/index.xml'
+                        target="_blank"
+                        title="RSS"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/zh-cn/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>文章</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/zh-cn/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                
+                
+                    
+                        
+                    
+                
+                
+                
+                
+                <li id="i18n-switch">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                    <a href="http://localhost:1313/post/threatrace/">
+                        English
+                    </a>
+                </li>
+                
+                
+
+                
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>暗色模式</span>
+                </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#作者">作者</a></li>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#相关工作">相关工作</a>
+      <ol>
+        <li><a href="#基于溯源图的威胁检测"><strong>基于溯源图的威胁检测</strong></a></li>
+        <li><a href="#异常追踪">异常追踪</a></li>
+      </ol>
+    </li>
+    <li><a href="#动机和背景">动机和背景</a>
+      <ol>
+        <li><a href="#graphsage">GraphSAGE</a></li>
+      </ol>
+    </li>
+    <li><a href="#设计">设计</a></li>
+    <li><a href="#模型">模型</a>
+      <ol>
+        <li><a href="#特征提取">特征提取</a></li>
+        <li><a href="#训练阶段">训练阶段</a></li>
+        <li><a href="#告警警报">告警警报</a></li>
+      </ol>
+    </li>
+    <li><a href="#实验评估">实验评估</a>
+      <ol>
+        <li><a href="#streamspot-datasets">streamspot Datasets</a></li>
+        <li><a href="#unicorn-sc-datasets">Unicorn SC Datasets</a></li>
+        <li><a href="#darpa-tc-datasets">DARPA TC Datasets</a></li>
+        <li><a href="#鲁棒性">鲁棒性</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/zh-cn/post/threatrace/">
+                <img src="/post/threatrace/media/bg_hu_8aa7547c84bf8651.png"
+                        srcset="/post/threatrace/media/bg_hu_8aa7547c84bf8651.png 800w, /post/threatrace/media/bg_hu_440ffa0c4131ee7d.png 1600w"
+                        width="800" 
+                        height="261" 
+                        loading="lazy"
+                        alt="Featured image of post THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/zh-cn/categories/note/" style="background-color: #2a9d8f; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/zh-cn/post/threatrace/">THREATRACE: Detecting and Tracing Host-Based Threats in Node Level Through Provenance Graph Learning</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            TIFS 2022
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 16, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 18 分钟
+                </time>
+            </div>
+        
+
+        
+            <div>
+                <?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1716884266484" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7485" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M879.879602 321.590346L701.861162 143.570883c-25.77606-25.77606-67.566862-25.77606-93.342921 0L141.160997 610.928127l0.046049 0.046049c-9.337669 9.383718-15.110139 22.317285-15.11014 36.601616v197.937094c0 28.659737 23.233144 51.892881 51.892881 51.892881h197.937095c14.482853 0 27.572986-5.938246 36.986379-15.506159L879.879602 414.933267c25.77606-25.77606 25.77606-67.566862 0-93.342921z m-682.894182 519.501857c-8.077979 0-14.626115-6.481621-14.626116-14.477736v-84.159771l99.650581 98.637507h-85.024465z m389.41815-223.136009l-21.710464 21.710464-173.789115 173.789115c-12.987802 12.987802-34.045397 12.987802-47.033199 0L209.995735 679.580716c-12.987802-12.987802-12.987802-34.045397 0-47.033199L383.78485 458.758402l21.710464-21.710465 23.5166-23.516599 23.5166 23.516599 133.875056 133.875057 23.5166 23.5166-23.5166 23.5166z m68.743664-68.743664L474.238978 368.304274l45.227064-45.227064 180.908256 180.908256-45.227064 45.227064z m90.453105-90.454128L564.693106 277.850146l66.937528-66.937529c12.987802-12.987802 34.045397-12.987802 47.0332 0l133.875057 133.875057c12.987802 12.987802 12.987802 34.045397 0 47.033199l-66.938552 66.937529z" fill="#231F20" p-id="7486"></path></svg>
+                <time class="article-words">
+                    8602 字
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/post/threatrace/" class="link">English</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="作者">
+    <a href="#%e4%bd%9c%e8%80%85" class="header-anchor">#</a>
+    作者
+</h2><p>•<strong>王之梁</strong>，清华大学网络科学与网络空间研究院长聘副教授、博士生导师。主要研究方向包括网络测试测量与态势感知、互联网体系结构与协议等。</p>
+<p>•流量工程代表作：Boosting Bandwidth Availability Over Inter-DC WAN</p>
+<p>•<strong>清华大学网络管理与测量实验室</strong>：实验室负责人杨家海教授，清华大学信息化技术中心副主任，实验室研究内容包括：互联网管理体系结构的创新基础研究；网络全息测量和网络行为学研究；面向IPv6下一代互联网的网络空间测绘研究；基于测量的网络安全分析研究（暨网络空间安全态势感知研究）；面向网络功能虚拟化的云数据中心资源管理调度研究。</p>
+<p><a class="link" href="https://github.com/threaTrace-detector/threaTrace/"  target="_blank" rel="noopener"
+    >https://github.com/threaTrace-detector/threaTrace/</a></p>
+<h2 id="引言">
+    <a href="#%e5%bc%95%e8%a8%80" class="header-anchor">#</a>
+    引言
+</h2><p>我们介绍的 THREATRACE 是一种基于异常的检测器，它能够在节点级别有效地检测隐蔽和持续的基于主机的威胁。THREATRACE 将数据来源图作为源输入，并定制了一个归纳式图神经网络框架（GraphSAGE）[11]，以学习数据来源图中丰富的上下文信息。GraphSAGE 是一个图神经网络（GNN）。GNN 是一组为各种图相关工作设计的神经网络模型，在许多领域（如计算机视觉 [12]、自然语言处理 [13]、化学和生物学 [14]等）都取得了成功。我们利用其学习节点在出处图中角色的结构信息的能力[11]来进行节点级威胁检测。请注意，THREATRACE 聚合了出处图上的节点邻域信息，这与节点嵌入方法类似。主要区别在于，THREATRACE 的核心是一种深度学习方法，旨在解决端到端异常节点检测任务，而节点嵌入方法旨在提取节点的低维向量表示[15]。</p>
+<p>使用 GraphSAGE 进行威胁检测具有挑战性：1）如何在事先不了解零日攻击模式的情况下训练模型？2) 如何解决数据不平衡问题？</p>
+<p>我们定制了一种基于 GraphSAGE 的新型框架来应对这些挑战。与以往的图级检测方法不同，THREATRACE 可以学习每个良性节点在数据来源图中的角色，从而在事先不了解攻击模式的情况下捕捉隐蔽的异常行为。THREATRACE 是一种半监督异常检测方法，它要求训练数据是良性的。我们设计了一个多模型框架来学习不同类型的良性节点，从而解决了数据不平衡的问题，有效提高了检测性能。THREATRACE 是一个实时系统，可部署在长期运行的系统中，且计算和内存开销可接受。它能够在主机入侵的早期阶段进行检测，并追踪异常行为的位置。我们在五个公共数据集中对 THREATRACE 进行了评估。结果表明，THREATRACE 能以较快的处理速度和可接受的资源开销有效检测基于主机的威胁，而这些威胁在整个系统出处图中所占比例较小。</p>
+<p>我们的论文做出了如下贡献：</p>
+<p>新颖的节点级威胁检测。据我们所知，THREATRACE 是首个将基于主机的威胁检测问题形式化为出处图中异常节点检测和追踪问题的研究成果。我们提出了一种基于 GraphSAGE 的新型多模型框架，用于检测节点级的隐形威胁。</p>
+<p>高检测性能和新功能。我们评估了 THREATRACE 在五个公开数据集中的检测性能，并将其与三种基于主机的先进威胁检测方法进行了比较。在这些数据集中，THREATRACE 的性能均优于它们。我们进一步评估了 THREATRACE 在主机中的威胁追踪能力。结果表明，THREATRACE 能够成功检测并追踪异常元素。</p>
+<h2 id="相关工作">
+    <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c" class="header-anchor">#</a>
+    相关工作
+</h2><h3 id="基于溯源图的威胁检测">
+    <a href="#%e5%9f%ba%e4%ba%8e%e6%ba%af%e6%ba%90%e5%9b%be%e7%9a%84%e5%a8%81%e8%83%81%e6%a3%80%e6%b5%8b" class="header-anchor">#</a>
+    <strong>基于溯源图的威胁检测</strong>
+</h3><ol>
+<li>误用检测：匹配已知的攻击模式（如Poirot, Holmes），对APT/未知攻击检测效果差</li>
+<li>异常检测：度量与正常行为的偏离程度（如StreamSpot, Unicorn, IPG, SHADEWATCHER），对小规模攻击不敏感</li>
+</ol>
+<h3 id="异常追踪">
+    <a href="#%e5%bc%82%e5%b8%b8%e8%bf%bd%e8%b8%aa" class="header-anchor">#</a>
+    异常追踪
+</h3><p>在受监控主机上部署入侵检测系统后，重要的是跟踪异常行为，而不仅仅是发出警报。THREATRACE 利用节点分类框架在检测到异常后直接进行追踪。基于异常的先进检测器 [6], [7] 会在检测到系统的出处图异常时发出警报。但是，它们无法追踪异常的位置。能够追踪异常位置的检测器通常是基于误用的，如 Holmes [3] 和 Poirot [2]。它们需要事先了解异常图模式。Nodoze [10] 是另一种识别来源图中异常路径的方法。与上述检测器不同，Nodoze 是一个二级分流工具，需要其他检测器的警报作为输入。目前基于异常的威胁检测器发出的警报不适合 Nodoze，因为它们是图级的，没有详细信息。RapSheet [9] 是另一种二级分流系统，它使用其他基于 TTP 的 EDR（端点检测与响应）发出的警报作为输入，并在构建的 TPG（战术出处图）中过滤误报。RapSheet 面临的问题与这些基于误用的检测方法相同。SLEUTH [27] 执行基于标签和策略的攻击检测以及基于标签的根本原因和影响分析，以构建场景图。PrioTracker [28] 对每个事件的罕见程度进行量化，以区分异常操作和正常系统事件。PrioTracker 提出了一种前向跟踪技术，用于及时分析攻击因果关系。MORSE [29] 研究了攻击者步骤回溯中的依赖爆炸问题。MORSE 框架的攻击检测部分与 SLEUTH [27] 系统相同。SLEUTH [27] 和 MORSE [29] 的攻击检测部分都是基于误用的。ATLAS [30] 提出了一种基于序列的学习方法，用于检测威胁和构建攻击故事。与基于误用的方法[2]、[3]、[27]、[29]不同，ATLAS 使用攻击训练数据，通过时间排序序列学习攻击步骤的共现。以上介绍的方法都提出要跟踪入侵并构建攻击故事。THREATRACE 可以在没有知识数据库或攻击训练数据作为输入的情况下追踪异常。但是，它无法构建攻击故事。我们计划在今后的工作中研究基于异常的方法与构建攻击故事之间的差距。</p>
+<h2 id="动机和背景">
+    <a href="#%e5%8a%a8%e6%9c%ba%e5%92%8c%e8%83%8c%e6%99%af" class="header-anchor">#</a>
+    动机和背景
+</h2><h3 id="graphsage">
+    <a href="#graphsage" class="header-anchor">#</a>
+    GraphSAGE
+</h3><p><a class="link" href="https://cloud.tencent.com/developer/article/1750378"  target="_blank" rel="noopener"
+    >GNN教程：GraghSAGE算法细节详解！-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
+<p><strong>现有方法的局限性</strong> ：</p>
+<ol>
+<li>规则</li>
+<li>隐蔽攻击</li>
+<li>异常追踪</li>
+<li>扩展性</li>
+</ol>
+<p><strong>我们方法的本质</strong> ：我们的方法背后的核心观点是，即使是试图隐藏其行为的隐蔽式入侵活动，其恶意活动对应的节点仍然与良性节点的行为不同。在图 2 中，异常进程节点 1 /var/log/mail 有数千条连接到远程 IP 节点的连接边，这与良性进程节点 2 /usr/bin/fluxbox 不同。这一现象启发我们将主机入侵检测问题形式化为异常节点检测问题。我们定制了一个基于 GraphSAGE 的框架来完成节点检测任务。图 2 中攻击的检测结果将作为案例在 §VI-C 中展示。该动机示例也用于说明我们的方法设计。</p>
+<h2 id="设计">
+    <a href="#%e8%ae%be%e8%ae%a1" class="header-anchor">#</a>
+    设计
+</h2><p><img src="/media%5cbg.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p><strong>数据溯源生成器</strong> 。该组件以流式模式收集主机的审计数据，并将其转换成出处图，供后续分析使用。</p>
+<p><strong>数据存储</strong> 。该组件负责向磁盘和内存分配数据。我们将整个图存储在磁盘中，以存储历史信息，并在内存中维护一个大小有限的子图，用于训练和检测。这种存储策略保证了 THREATRACE 的可扩展性（P4）和动态检测能力。</p>
+<p><strong>模型</strong> 。这是 THREATRACE 的核心组件。我们使用前两个组件创建和分配的图形数据作为输入和输出异常节点。</p>
+<p>要进行理想的异常节点检测是一项挑战：</p>
+<ol>
+<li>THREATRACE 是一种半监督式异常检测方法，它在训练阶段不需要事先对攻击行为知识。因此，我们不能用传统的二元分类模式来训练模型。</li>
+<li>基于主机的威胁检测面临数据不平衡的挑战[16]。在执行过程中，异常节点在出处图中可能只占很小的比例。因此，更有可能出现误报，从而干扰判断并导致 &ldquo;威胁疲劳问题&rdquo;[32]。</li>
+<li>异常节点和良性节点之间的区别可能不够明显，从而导致假阴性。</li>
+</ol>
+<p>为了应对这些挑战，我们定制了一个基于 GraphSAGE 的多模型框架，以学习无异常数据（P1、C1）的出处图中不同类别的良性节点。然后，我们根据预测节点类型与其实际类型的偏差来检测异常节点。这样，THREATRACE 就能检测到隐蔽入侵活动下出处图中比例较小的异常节点 (P2)，并直接将其定位 (P3)。我们提出了一种基于概率的方法，可减少误报和误判（C2、C3）。</p>
+<p><strong>警报和跟踪</strong> 。我们从上一个组件中获取异常节点，并在此组件中决定是否发出警报和跟踪异常。我们设置等待时间阈值和容忍阈值，以减少误报并决定是否发出警报。由于 THREATRACE 在节点级别检测威胁，因此我们直接跟踪异常节点本地邻居中异常行为的位置。</p>
+<h2 id="模型">
+    <a href="#%e6%a8%a1%e5%9e%8b" class="header-anchor">#</a>
+    模型
+</h2><p>特征提取：在不学习攻击模式 (C1) 的情况下检测异常节点具有挑战性。传统的异常检测任务通常使用良性和异常数据，在监督模式下训练二元分类模型。然而，由于我们假设在训练阶段没有关于攻击模式的先验知识，因此无法使用二进制标记数据来训练模型。GraphSAGE 具有无监督节点分类模式，但不适合用于威胁检测，<strong>因为它假定相邻节点具有相似的类别</strong> 。在出处图中，相邻节点可能具有不同的类别（例如，两个相邻节点可能是一个进程和一个文件）。</p>
+<p>由于 GraphSAGE 的无监督模式不适合威胁检测，因此我们定制了一种特征提取和标签分配方法，使 THREATRACE 能够在无异常数据的情况下以监督模式训练模型，并学习每个良性节点的局部结构信息。我们将节点的标签设定为节点类型，并将其特征提取为与其相关的不同边缘类型的数量分布。GraphSAGE 模型是在有监督的模式下使用标注数据进行训练，从而学习良性节点的不同角色。特征提取方法背后的技术直觉是，节点的行为（或目的）反映在与之相关的边中。以扫描进程、勒索软件进程和远程 shell 进程为例（图 4）。在图 4 (a)中，异常扫描进程 P1 的行为直接表现为 P1 的大量连接边。对于图 4 (b)中的勒索软件进程 P2，它首先读取一些文件并生成加密副本。然后，它会删除（取消链接）原始文件。对于远程 shell 进程 P3（图 4 (c)），它接收来自 IPa 的指令，执行 Fp 以升级权限，并将 Ft 发送到另一个远程地址 IPb。因此，模型利用提取的特征来学习不同节点的隐藏分布。如果一个节点在执行阶段被错误分类，这意味着它的底层分布与训练阶段学习到的良性节点不同。也就是说，它可能是一个异常节点，其恶意任务与良性节点不同。</p>
+<p><img src="/media%5cimage-20240813152411528.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240813152411528"
+	
+	
+></p>
+<h3 id="特征提取">
+    <a href="#%e7%89%b9%e5%be%81%e6%8f%90%e5%8f%96" class="header-anchor">#</a>
+    特征提取
+</h3><p>相连边的类型分布</p>
+<h3 id="训练阶段">
+    <a href="#%e8%ae%ad%e7%bb%83%e9%98%b6%e6%ae%b5" class="header-anchor">#</a>
+    训练阶段
+</h3><p>在训练阶段，我们将整个<strong>训练图分割成多个子图</strong> 。每个子图由一定数量（本文设定为 150,000 个）的随机选取的活动节点、相关节点以及它们之间的边构成。不同子图中的活动节点集是不相连的。然后，按顺序对每个子图 G 进行模型训练。我们只需在内存中存储一个大小有限的子图，而无需使用整个图进行训练，从而保证了模型的可扩展性。</p>
+<p>在隐蔽的入侵活动中，异常节点在出处图中所占的比例可能很小。因此，更有可能出现干扰判断的误报（C2）。根据入侵检测场景的特点，我们定制了一个多模型框架来减少误报。基于主机的入侵检测任务的特点提供了多模型框架的直观性。</p>
+<p>在入侵检测场景中</p>
+<ol>
+<li>节点类型数量不平衡（例如，当主机没有频繁的网络连接时，可能会有成千上万的进程节点和很少的远程 IP 节点）。由于节点类型不平衡，用单一模型挖掘底层表示可能非常困难。</li>
+<li>类型相同的节点可能有不同的任务（如图 2 中的 fluxbox 进程 2 和 bash 进程 3），只使用单一模型就很难将这些节点归为一类。</li>
+</ol>
+<p>我们保存一个列表 X，其中存储了未被正确分类的节点。它的初始化包含训练子图中的所有活动节点。在训练一个子模型后（第 6-13 行），我们将在该模型中验证 X 的节点（第 15-21 行），并从 X 中删除正确分类的节点。</p>
+<h3 id="告警警报">
+    <a href="#%e5%91%8a%e8%ad%a6%e8%ad%a6%e6%8a%a5" class="header-anchor">#</a>
+    告警警报
+</h3><p>我们设置一个时间阈值 T，并动态维护 Q，而不是直接向监控系统发出警报。原因在于，THREATRACE采用流式方式检测异常节点，在早期检测威胁，而在训练阶段则采用全图学习节点的角色，从而学习到丰富的上下文信息。</p>
+<p>因此，一个良性节点可能在到达其最终阶段之前就被检测为异常。我们首先将异常节点存储在 Q 中，并为其到达最终阶段设置等待时间阈值 T。如果它在 T 时间内没有转变为良性节点，我们就将其从 Q 中取出，并将其视为异常节点。在流模式下，一个节点可能会被检测多次。因此，异常节点一开始可能被检测为良性节点，当它开始执行恶意活动时，又会被检测为活动节点。当异常节点的数量超过可容忍阈值 T 时，THREATRACE 就会向系统发出警报，并追踪异常节点的 2 跳祖先和后代的异常情况。</p>
+<h2 id="实验评估">
+    <a href="#%e5%ae%9e%e9%aa%8c%e8%af%84%e4%bc%b0" class="header-anchor">#</a>
+    实验评估
+</h2><p>Q1.与最先进探测器相比的威胁探测性能。(第VI-A、VI-B、VI-C节）</p>
+<p>Q2.参数的影响。(VI-D节）</p>
+<p>Q3.追踪异常行为的能力。(VI-C节）</p>
+<p>Q4.在入侵早期检测异常行为的能力。(§VI-C)</p>
+<p>Q5.运行时和系统资源开销。(§VI-E)</p>
+<p>Q6.对自适应攻击的鲁棒性。(§VI-F)</p>
+<p>Q7.跳数 K 的影响（§VI-G）</p>
+<p>下面我们将介绍数据集、实验设置和对比工作的实现。我们将 THREATRACE 与三种基于异常的主机威胁检测器（Unicorn、ProvDetector 和 StreamSpot）和四种异常日志检测器（Log2vec、DeepLog、LogRobust 和 LogGAN）进行比较。我们使用了五个公共数据集：StreamSpot、独角兽 SC-1 和 SC-2、DARPA TC #3 和 #5 数据集。数据集概览见表二、表四和表六。我们根据日志数量计算边的数量。节点数量通过计算所有日志中不重复实体的数量获得。在 StreamSpot 和 Unicorn 数据集中，正常图和异常图原本是分开的。我们无法划分节点，因为没有提供节点的地面实况。对于 DARPA TC 数据集，我们根据地面实况文件中攻击事件的名称来标注异常数据。对于 StreamSpot、Unicorn 和 LogGAN，我们直接使用开源项目 [34]、[35]、[36]。StreamSpot 和 Unicorn 的结果与原始论文几乎相同。ProvDetector 没有开源。因此，我们在原论文的基础上重新实现了它。我们无法将其性能与 ProvDetector 的原始论文进行比较，因为我们没有该论文的私有数据集来进行评估。对于 DeepLog 和 LogRobust，我们使用了其他研究人员实现的 github 项目 [37], [38]。对于 Log2vec，我们从作者处获得了项目。我们无法与日志级检测器的原始论文 [16]、[21]、[22]、[23] 进行性能比较，因为它们的数据集无法转换为出处格式。我们没有将 THREATRACE 与其他基于误用的最新检测器进行比较，因为它们需要先验的专家知识来构建模型 [2], [3], [9], [30]。</p>
+<p>需要注意的是，THREATRACE 是节点级检测器，而比较方法是在不同粒度（如图级、路径级和日志级）检测异常。我们找不到其他基于异常的先进方法能在节点级检测出处图中的异常。虽然比较方法的检测粒度与 THREATRACE 不同，但这些方法的检测目标相似。因此，我们选择它们作为比较方法，并尽力公平地比较它们的性能。比较原理介绍如下。</p>
+<p>对于图级实验（§VI-A、VI-B），当异常节点的数量超过容忍阈值 ˆ T 时，THREATRACE 就会对图发出警报。StreamSpot 和 Unicorn 可以直接发出图警报，因为它们是图级检测器。作为路径级检测器，provDetector 会在图中的异常路径超过 k p 时发出警报。我们列举了参数 k p，并将 k p 设为 2，以使 ProvDetector 达到更好的效果。我们没有与日志级检测器进行比较，因为图级实验的数据集没有日志数据。</p>
+<p>对于节点级实验（§VI-C），我们没有与 StreamSpot、Unicorn 和 provDetector 进行比较，因为它们的检测粒度比 THREATRACE 更粗。THREATRACE 会在检测到节点异常时发出警报，而日志级检测器则会在检测到与该节点相关的日志异常时发出警报。在图级和节点级实验中，我们根据检测结果与真实情况的比较计算精确度、召回率、准确度、F-score 和误报率 (FPR)。在检测和运行时间实验中，我们会调整比较方法的超参数，并选择最佳结果。</p>
+<p>我们表明，THREATRACE 在这些数据集中可以获得更好的检测性能（Q1）。在 §VI-D 中，我们评估了专门设计的参数如何影响威胁检测性能（Q2）。在 §VI-C 中，我们使用 DARPA TC 数据集进一步评估 THREATRACE 跟踪异常（Q3）和早期检测持续性入侵（Q4）的能力。我们在§VI-E中评估了THREATRACE在执行速度和系统资源开销（Q5）方面的运行性能。我们在§VI-F中评估了针对自适应攻击的鲁棒性（问题6）。在§VI-G中，我们评估了跳数K对检测和运行时性能的影响（问题7）。</p>
+<p>表 1 列出了第 VI-A、VI-B、VI-C 和 VI-F 节中 THREATRACE 的参数。我们根据各分节实验中的检测和运行性能来设置这些参数。每个子模型都有相同的 GraphSAGE 超参数。具体来说，我们将大部分参数设置为默认值。我们将隐藏层的神经元数量设置为 32，这大约是Unicorn SC-2 数据集中特征数量的一半。子模型只有一个隐藏层，因为每个节点汇总来自其 2 跳邻居的信息。我们将在第 VI-D 节中测试参数的影响。</p>
+<h3 id="streamspot-datasets">
+    <a href="#streamspot-datasets" class="header-anchor">#</a>
+    streamspot Datasets
+</h3><ol>
+<li>数据集：StreamSpot 数据集（表二）是 StreamSpot 自建的公开数据集[39]。它包含 6*100 个信息流图，分别来自五个良性场景和一个攻击场景。每个场景使用 Linux SystemTap 日志系统[40]运行 100 次，生成 100 张图。良性场景涉及不同的良性活动：查看 Gmail、浏览 CNN.com、下载文件、观看 YouTube 和玩视频游戏。攻击场景涉及偷渡式下载攻击。受害主机访问一个恶意 URL，该 URL 利用 Flash 漏洞获取受害主机的 root 访问权限。我们使用与 Unicorn 相同的验证策略，将数据集随机拆分为包含 75*5 个良性图形的训练集和包含 25*5 个良性图形和 25 个攻击图形的测试集。我们不与 ProvDetector 进行比较，因为 StreamSpot 数据集中的边没有时间戳属性，而时间戳是 ProvDetector 所必需的。我们重复这一过程并报告平均评估结果。</li>
+</ol>
+<p>（1）为什么 THREATRACE 和 Unicorn 在该数据集上都能取得很好的性能？与其他数据集相比，StreamSpot 数据集的性能相对较弱，这主要体现在两个方面。首先，StreamSpot 数据集的平均节点数量仅为 Unicorn SC 数据集的 3.5%，DARPA TC 数据集的 0.9%。因此，由于良性背景节点较少，StreamSpot 数据集中的异常模式更容易被发现。其次，异常图与良性图明显不同。最明显的证据也是图的大小。良性图的平均边量为 173,857 条，而异常图的平均边量仅为 28,423 条。作为对比，Unicorn SC 数据集良性图和异常图的平均边量分别为 911,153 和 949,887 条，两者并无显著差异。</p>
+<p>（2）为什么Unicorn无法达到 100% 的精确度和召回率？我们对该数据集进行深入分析后发现，攻击场景的 100 个图形一般可分为两类，即 95 个图形和 5 个图形。第二类中的 5 个图形与其他 95 个图形有显著差异。他们与 Youtube 场景图更相似，这意味着第二组威胁更隐蔽。偷渡式下载攻击发生在受害者浏览网站时，这与 Youtube 场景相似。基于图核的方法很难检测到这 5 张图。</p>
+<p><img src="/media%5cimage-20240814135122450.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814135122450"
+	
+	
+></p>
+<h3 id="unicorn-sc-datasets">
+    <a href="#unicorn-sc-datasets" class="header-anchor">#</a>
+    Unicorn SC Datasets
+</h3><p>Unicorn SC 数据集由两个数据集组成：SC-1 和 SC-2 [41]。它们是 Unicorn 自己的数据集 [41]，比 StreamSpot 数据集更复杂。我们用它们来比较 THREATRACE 与 Unicorn 和 ProvDetector 的检测性能。我们不能使用 StreamSpot 进行比较，因为它无法处理大量的边[7]。</p>
+<p>数据集：Unicorn SC 数据集（表 IV）是在受控实验室环境中按照典型的网络杀伤链模型生成的。每个图都由 CamFlow（v0.5.0）捕获，包含一台主机运行三天的全系统出处。良性图和攻击图中都有背景良性活动。我们采用与 Unicorn 相同的 5 倍交叉验证方法：使用 4 组（每组包含 25 个图形）良性图形进行训练，使用第 5 组良性图形和 25 个攻击图形进行验证。我们采用流模式重放验证图并动态检测它们。我们重复这一过程并报告平均评估结果。</p>
+<p>结果如表 V 所示，THREATRACE 使用自己的数据集取得了比 Unicorn 更高的性能。独角兽性能低下的原因在独角兽的论文[7]中有所介绍：攻击者事先了解系统，因此比其他数据集的攻击者行动更隐蔽。我们还发现，在大多数攻击图中，THREATRACE 会对少于 10 个节点发出警报，这证明了该数据集的隐蔽性。该数据集的比较结果进一步证明了我们的动机，即基于图核的方法很难检测到隐蔽威胁。此外，与 Unicorn 和 ProvDetector 相比，THREATRACE 的误报率也更低，这对于缓解 &ldquo;威胁疲劳问题 &ldquo;非常重要。ProvDetector 在该数据集中的表现不佳。这可能与检测粒度有关。ProvDetector 是一种路径级检测器，能够捕获来源图中的异常路径。</p>
+<p><img src="/media%5cimage-20240814135108500.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814135108500"
+	
+	
+></p>
+<h3 id="darpa-tc-datasets">
+    <a href="#darpa-tc-datasets" class="header-anchor">#</a>
+    DARPA TC Datasets
+</h3><p>我们使用 DARPA TC 数据集来评估 THREATRACE 检测和跟踪长期运行入侵的能力。后两个小节中的数据集没有节点的地面实况，因此我们不能用它们来评估 THREATRACE 的异常追踪能力。</p>
+<p>数据集：DARPA TC 数据集（表六）是在 DARPA 透明计算项目的红队与蓝队竞赛中生成的。第三次和第五次竞赛的数据集已公开[31]。因此，我们在本节中使用 DARPA TC #3 和 #5 数据集进行评估。</p>
+<p>没有威胁的文件用于训练模型，有威胁的文件用于评估。当节点被检测为异常时，我们会检查节点的 2 跳祖先和后代以跟踪其位置（§V-D），因此我们定义了如下指标：</p>
+<ol>
+<li>真阳性。被检测为异常的异常节点，或其 <strong>2 跳祖先和后代之一</strong> 被检测为异常的异常节点。这些节点被定义为 &ldquo;真阳性&rdquo;，因为我们可以在警报追踪过程中找到它们。</li>
+<li>假阳性。被检测为异常的良性节点，在其 <strong>2 跳祖先和后代</strong> 中没有异常节点。这些节点被定义为假阳性，因为在对它们进行警报追踪时，我们无法找到任何异常节点。</li>
+<li>真阴性。其他良性结节</li>
+<li>假阴性。其他异常节点。</li>
+</ol>
+<p>我们深入数据集寻找日志级检测器检测结果不理想的原因。我们发现，DARPA TC 数据集中的异常实体日志与良性日志并无明显差异。例如，图 5 中 micro apt 的关联日志是 &ldquo;远程 shell 将名为 micro apt 的文件放入主机&rdquo;，这是主机中的良性文件下载日志。micro apt 的异常行为隐藏在图中的邻居信息中。</p>
+<p><img src="/media%5cimage-20240814141225516.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814141225516"
+	
+	
+></p>
+<p>DeepLog、LogRobust 和 LogGAN 无法检测图中的异常情况。因此，它们很难捕捉到图中的异常上下文信息。Log2vec 使用节点嵌入和聚类方法检测图中的异常日志。它聚合了来自节点邻居的信息，因此能获得比其他日志级检测器更好的结果。Log2vec 将微小的日志归类为良性群组。一种可能的解释是，Log2vec 的节点是日志而不是系统实体。因此，实体的信息在图中是分散的，因为实体的日志在 Log2vec 的图中显示为多个节点，从而导致信息聚合不充分。这也是为什么最近的研究提出出处图是一种更好的数据源</p>
+<p><img src="/media%5cimage-20240814141641743.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20240814141641743"
+	
+	
+></p>
+<h3 id="鲁棒性">
+    <a href="#%e9%b2%81%e6%a3%92%e6%80%a7" class="header-anchor">#</a>
+    鲁棒性
+</h3><p>（1）攻击者拥有训练数据。攻击者拥有训练数据。利用训练数据进行规避攻击可分两步进行。第一步是在训练数据中找到一个良性节点 xb，它与异常节点 x 最为相似，并且与 x 具有相同的类别。</p>
+<p>（2）拥有 THREATRACE 模型的攻击者。攻击者知道 THREATRACE 的模型，包括训练后的参数和超参数。因此，攻击者可以根据模型的损失直接解决优化问题。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/zh-cn/tags/notes/">Notes</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    const renderElement = document.getElementsByClassName("article-content")[0];
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(renderElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/provenance_graph/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/media/bg.png" loading="lazy" data-key="" data-hash="/media/bg.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">溯源图（Provenance Graph）入门指南</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/link_predict/">
+        
+        
+            <div class="article-image">
+                <img src="/post/link_predict/media/BG.be368cb326a9d12233be80fa35332a67_hu_3e7047c8ef07f14f.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linkless Link Prediction via Relational Distillation"
+                        
+                        data-hash="md5-vjaMsyap0SIzvoD6NTMqZw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linkless Link Prediction via Relational Distillation</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/flash/">
+        
+        
+            <div class="article-image">
+                <img src="/post/flash/media/bg.a945b9831135d2a943f2a4e0b290fb39_hu_27593f018b059fa8.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning"
+                        
+                        data-hash="md5-qUW5gxE10qlD8qTgspD7OQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FLASH: A Comprehensive Approach to Intrusion Detection via Provenance Graph Representation Learning</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/graph-embedding/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg" loading="lazy" data-key="" data-hash="https://swarma.org/wp-content/uploads/2019/07/swarma1-1563184208.jpeg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">图嵌入分析</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/zh-cn/post/conan/">
+        
+        
+            <div class="article-image">
+                <img src="/post/conan/media/bg.bd9907fd6eba2ded4b3622a81380aad5_hu_d0f854df06abf51.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency"
+                        
+                        data-hash="md5-vZkH/W66Le1LNiKoE4Cq1Q==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CONAN: A Practical Real-Time APT Detection System With High Accuracy and Efficiency</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src='//unpkg.com/@waline/client@v2/dist/waline.js'></script>
+<link href='//unpkg.com/@waline/client@v2/dist/waline.css' rel='stylesheet'/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+        --waline-font-size: var(--article-font-size);
+    }
+    .waline-container .wl-count {
+        color: var(--card-text-color-main);
+    }
+</style><script>
+    
+    Waline.init({"dark":"html[data-scheme=\"dark\"]","el":"#waline","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo","https://cdn.jsdelivr.net/gh/walinejs/emojis@1.0.0/qq"],"lang":"zh-CN","locale":{"admin":"博主","placeholder":"登录认证后评论，更容易被博主回复..."},"path":"/zh-cn/post/threatrace/","requiredMeta":["name","mail","url"],"serverURL":"https://waline.wintery.net","visitor":true});
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2026 Wintery
+    </section>
+    
+    <section class="powerby">
+        
+		 
+		使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">hugo</a> 构建  🖤
+		<a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="%s">Stack</a><br />
+		
+		版权声明：<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">Licensed under CC BY-NC-SA 4.0「署名-非商业性使用-相同方式共享 4.0 国际」</a>
+		
+		<section class="copyright">
+		<div class="busuanzi-footer">
+		  <span id="busuanzi_container_site_pv">
+			浏览量：<span id="busuanzi_value_site_pv"></span> 👀 | 
+		  </span>
+		  <span id="busuanzi_container_site_uv">
+			访客数：<span id="busuanzi_value_site_uv"></span> 👦
+		  </span>
+		</div>
+		<span id="runtime_span"></span> 
+			<script type="text/javascript">function show_runtime(){window.setTimeout("show_runtime()",1000);
+			X=new Date("4/1/2024 00:00:00");
+			Y=new Date();
+			T=(Y.getTime()-X.getTime());
+			M=24*60*60*1000;
+			a=T/M;
+			A=Math.floor(a);
+			b=(a-A)*24;
+			B=Math.floor(b);
+			c=(b-B)*60;
+			C=Math.floor((b-B)*60);
+			D=Math.floor((c-C)*60);
+			runtime_span.innerHTML="本站已运行 "+A+" 天 "+B+" 小时 "+C+" 分 "+D+" 秒 "}show_runtime();</script>
+		
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+		
+		<br>
+			已经发表了 17 篇文章 · 共 87.66k 字
+		</br>
+    </section>
+	
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

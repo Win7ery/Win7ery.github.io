@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>论文 on Wintery</title>
+        <link>http://localhost:1313/zh-cn/categories/paper/</link>
+        <description>Recent content in 论文 on Wintery</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Wintery</copyright>
+        <lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/zh-cn/categories/paper/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Autumn: An Unsupervised APT Detection via Detailed Process-Level Analysis</title>
+        <link>http://localhost:1313/zh-cn/post/autimn/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/post/autimn/</guid>
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;Authors&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;Zehui Wang, Yunxiang Wang, Wenhao Yan, Yinhao Qi, Tian Tian, Bo Jiang, Zhigang Lu&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Institution&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Institute of Information Engineering, Chinese Academy of Sciences; School of Cyber Security, University of Chinese Academy of Sciences&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;
+    &lt;a href=&#34;#abstract&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Abstract
+&lt;/h2&gt;&lt;p&gt;Advanced Persistent Threats (APTs) are exceptionally challenging to detect due to their high stealthiness. Audit logs, which provide detailed process-level information and record all activities before and after an APT attack, are crucial for detecting such threats. However, the sheer volume of data in audit logs also poses a significant challenge. Current methods suffer from the following issues: 1) difficulty in extracting information from the complex contextual relationships within audit logs, 2) reliance on prior knowledge for detecting APT attacks, and 3) coarse-grained detection signals.&lt;/p&gt;
+&lt;p&gt;In this paper, we introduce Autumn, an APT detection method focused on processes as the primary research object. Autumn is an unsupervised learning model that does not rely on prior knowledge, making it more suitable for real-world APT detection scenarios. Autumn can swiftly identify critical information from vast audit logs and provides fine-grained detection signals by focusing on processes. We begin by constructing a graph from audit logs, segmenting it into subgraphs based on time, and applying strategies to reduce data volume. We then learn the characteristics of processes. By converting process information into input vectors using word2vec and calculating the reconstruction error for each subgraph through the encoding and decoding process of a transformer autoencoder, we train the model by associating the processes&amp;rsquo; IDF scores. Finally, we train the model on benign data and test it on a separate set of subgraphs containing attack events. Compared to other unsupervised learning methods, Autumn shows significant improvement in detection performance.&lt;/p&gt;
+&lt;h2 id=&#34;download&#34;&gt;
+    &lt;a href=&#34;#download&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Download
+&lt;/h2&gt;&lt;p&gt;📄 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/papers/Autumn_An_Unsupervised_APT_Detection_via_Detailed_Process-Level_Analysis.pdf&#34; &gt;Download PDF&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;citation&#34;&gt;
+    &lt;a href=&#34;#citation&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Citation
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bibtex&#34; data-lang=&#34;bibtex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nc&#34;&gt;@article&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;wang2026autumn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Autumn: An Unsupervised APT Detection via Detailed Process-Level Analysis}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Wang, Zehui and Wang, Yunxiang and Yan, Wenhao and Qi, Yinhao and Tian, Tian and Jiang, Bo and Lu, Zhigang}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{2026}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>Brewing Vodka: Distilling Pure Knowledge for Lightweight Threat Detection in Audit Logs</title>
+        <link>http://localhost:1313/zh-cn/post/vodka/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/post/vodka/</guid>
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;Authors&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;Weiheng Wu, Wei Qiao, Wenhao Yan, Bo Jiang, Yuling Liu, Baoxu Liu, Zhigang Lu, Junrong Liu&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Venue&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;WWW 2025 (The Web Conference, April 28 - May 2, 2025, Sydney, Australia)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Institution&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Institute of Information Engineering, Chinese Academy of Sciences; School of Cyber Security, University of Chinese Academy of Sciences&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;
+    &lt;a href=&#34;#abstract&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Abstract
+&lt;/h2&gt;&lt;p&gt;Advanced Persistent Threats (APTs) are continuously evolving, leveraging their stealthiness and persistence to put increasing pressure on current provenance-based Intrusion Detection Systems (IDS). This evolution exposes several critical issues: (1) The dense interaction between malicious and benign nodes within provenance graphs introduces neighbor noise, hindering effective detection; (2) The complex prediction mechanisms of existing APTs detection models lead to the insufficient utilization of prior knowledge embedded in the data; (3) The high computational cost makes detection impractical.&lt;/p&gt;
+&lt;p&gt;To address these challenges, we propose Vodka, a lightweight threat detection system built on a knowledge distillation framework, capable of node-level detection within audit log provenance graphs. Specifically, Vodka applies graph Laplacian regularization to reduce neighbor noise, obtaining smoothed and denoised graph signals. Subsequently, Vodka employs a teacher model based on GNNs to extract knowledge, which is then distilled into a lightweight student model. The student model is designed as a combination of a feature transformation module and a personalized PageRank random walk, enabling efficient inference without neighbor aggregation overhead.&lt;/p&gt;
+&lt;h2 id=&#34;download&#34;&gt;
+    &lt;a href=&#34;#download&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Download
+&lt;/h2&gt;&lt;p&gt;📄 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/papers/Vodka.pdf&#34; &gt;Download PDF&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;citation&#34;&gt;
+    &lt;a href=&#34;#citation&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Citation
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bibtex&#34; data-lang=&#34;bibtex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nc&#34;&gt;@inproceedings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;wu2025vodka&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Brewing Vodka: Distilling Pure Knowledge for Lightweight Threat Detection in Audit Logs}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Wu, Weiheng and Qiao, Wei and Yan, Wenhao and Jiang, Bo and Liu, Yuling and Liu, Baoxu and Lu, Zhigang and Liu, Junrong}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;booktitle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Proceedings of the ACM Web Conference 2025 (WWW &amp;#39;25)}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{2025}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;doi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{10.1145/3696410.3714563}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>MPKAN: APT Attack Detection on Audit Logs via Graph Semantic Enhancement</title>
+        <link>http://localhost:1313/zh-cn/post/mpkan/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/post/mpkan/</guid>
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;Authors&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;Zehui Wang, Dan Du, Yinhao Qi, Wenhao Yan, Xiaobo Yang, Bo Jiang, Zhigang Lu&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Institution&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Institute of Information Engineering, Chinese Academy of Sciences; School of Cyber Security, University of Chinese Academy of Sciences&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;
+    &lt;a href=&#34;#abstract&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Abstract
+&lt;/h2&gt;&lt;p&gt;As cloud computing and mobile work blur traditional network boundaries, security measures like static firewalls and signature-based systems are becoming inadequate. Audit logs contain fine-grained OS-level information, but due to their vast volume and the complex relationships between entities, processing and analyzing them remains a significant challenge.&lt;/p&gt;
+&lt;p&gt;In this paper, we introduce MPKAN, a new method for detecting APT attacks, which enhances the information input of nodes and edges, integrates node-level and edge-level information, and improves graph-level semantics. It uses meta-path random walks to enhance semantic connections between nodes, merges multiple edges in the provenance graph into a single edge while retaining the original edge information and operation sequence relationships, and by associating heterogeneous graph neighbors, utilizing the message passing mechanism to iteratively update states based on neighbor node information, and using a knowledge association network to integrate node-level and edge-level information, we can effectively capture local and global structural information in the graph. MPKAN&amp;rsquo;s evaluations on the ATLAS and DARPA datasets demonstrate its excellent performance in complex attack scenarios, achieving an average accuracy of 0.9899 and an F1 score of 0.9853, confirming its effectiveness and efficiency.&lt;/p&gt;
+&lt;h2 id=&#34;download&#34;&gt;
+    &lt;a href=&#34;#download&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Download
+&lt;/h2&gt;&lt;p&gt;📄 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/papers/MPKAN_APT_Attack_Detection_on_Audit_Logs_via_Graph_Semantic_Enhancement.pdf&#34; &gt;Download PDF&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;citation&#34;&gt;
+    &lt;a href=&#34;#citation&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Citation
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bibtex&#34; data-lang=&#34;bibtex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nc&#34;&gt;@article&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;wang2026mpkan&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{MPKAN: APT Attack Detection on Audit Logs via Graph Semantic Enhancement}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Wang, Zehui and Du, Dan and Qi, Yinhao and Yan, Wenhao and Yang, Xiaobo and Jiang, Bo and Lu, Zhigang}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{2026}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>PanThreat: Global Resource-Based Anomaly Detection for APTs</title>
+        <link>http://localhost:1313/zh-cn/post/panthreat/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/post/panthreat/</guid>
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;Authors&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;Wenhao Yan, Weiheng Wu, Bingsheng Bi, Wei Qiao, Bo Jiang, Yuling Liu, Junrong Liu&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Institution&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Institute of Information Engineering, Chinese Academy of Sciences; School of Cyber Security, University of Chinese Academy of Sciences&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;
+    &lt;a href=&#34;#abstract&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Abstract
+&lt;/h2&gt;&lt;p&gt;Advanced Persistent Threats (APTs), due to their stealthiness and complexity, have become a significant security challenge for modern enterprises, often causing severe economic losses. To address these threats, researchers have proposed using provenance graphs to model system entities and their dependencies, aiming to capture the complex scenarios of APT attacks. However, existing Provenance-based Intrusion Detection Systems (PIDS) still suffer from the following challenges: (1) Historical interaction information loss due to the truncation of long-term interaction scenarios; (2) The difficulty in capturing long-distance dependencies leads to the loss of crucial contextual information; (3) Existing methods struggle to balance detection efficiency and granularity.&lt;/p&gt;
+&lt;p&gt;We introduce PanThreat, an online detection system that performs fine-grained, real-time analysis of host system logs to identify malicious activities. PanThreat combines attributes encoding through Word2Vec and position encoding using Laplacian feature matrices, while retaining long-term interaction histories and effectively modeling long-range dependencies within provenance graphs. This integrated approach significantly enhances detection accuracy. Additionally, PanThreat leverages the parallel processing capabilities of Graph Transformers to improve detection efficiency. Evaluations on the DARPA E3 dataset and StreamSpot database demonstrate PanThreat&amp;rsquo;s effectiveness in detecting complex APT attacks, outperforming four state-of-the-art methods while maintaining an average processing speed of 58,140 events per second.&lt;/p&gt;
+&lt;h2 id=&#34;download&#34;&gt;
+    &lt;a href=&#34;#download&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Download
+&lt;/h2&gt;&lt;p&gt;📄 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/papers/PanThreat_Global_Resource-Based_Anomaly_Detection_for_APTs.pdf&#34; &gt;Download PDF&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;citation&#34;&gt;
+    &lt;a href=&#34;#citation&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Citation
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bibtex&#34; data-lang=&#34;bibtex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nc&#34;&gt;@article&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;yan2026panthreat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{PanThreat: Global Resource-Based Anomaly Detection for APTs}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Yan, Wenhao and Wu, Weiheng and Bi, Bingsheng and Qiao, Wei and Jiang, Bo and Liu, Yuling and Liu, Junrong}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{2026}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>Sentient: Detecting APTs Via Capturing Indirect Dependencies and Behavioral Logic</title>
+        <link>http://localhost:1313/zh-cn/post/sentient/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/post/sentient/</guid>
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;Authors&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;Wenhao Yan, Ning An, Wei Qiao, Weiheng Wu, Zhigang Lu, Bo Jiang, Baoxu Liu, Junrong Liu&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Venue&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;AAAI 2026&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Institution&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Institute of Information Engineering, Chinese Academy of Sciences; School of Cyber Security, University of Chinese Academy of Sciences&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;
+    &lt;a href=&#34;#abstract&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Abstract
+&lt;/h2&gt;&lt;p&gt;Advanced Persistent Threats (APTs) are difficult to detect due to their complexity and stealthiness. To mitigate such attacks, many approaches model entities and their relationship using provenance graphs to detect the stealthy and persistent characteristics of APTs. However, existing detection methods suffer from the flaws of missing indirect dependencies, noisy complex scenarios, and missing behavioral logical associations, which make it difficult to detect complex scenarios and effectively identify stealthy threats. In this paper, we propose Sentient, an APT detection method that combines pre-training and intent analysis. It employs a graph transformer to learn structural and semantic information from provenance graphs to avoid missing indirect dependencies. We mitigate scenario noise by combining global and local information. Additionally, we design an Intent Analysis Module (IAM) to associate logical relationships between behaviors. Sentient is trained solely on easily obtainable benign data to detect malicious behaviors that deviate from benign behavioral patterns. We evaluated Sentient on three widely-used datasets covering real-world attacks and simulated attacks. Notably, compared to six state-of-the-art methods, Sentient achieved an average reduction of 44% in false positive rate (FPR) for detection, with 96% accuracy and 99% recall.&lt;/p&gt;
+&lt;h2 id=&#34;download&#34;&gt;
+    &lt;a href=&#34;#download&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Download
+&lt;/h2&gt;&lt;p&gt;📄 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/papers/Sentient_CarmeraReady.pdf&#34; &gt;Download PDF&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;citation&#34;&gt;
+    &lt;a href=&#34;#citation&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Citation
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bibtex&#34; data-lang=&#34;bibtex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nc&#34;&gt;@inproceedings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;yan2026sentient&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Sentient: Detecting APTs Via Capturing Indirect Dependencies and Behavioral Logic}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Yan, Wenhao and An, Ning and Qiao, Wei and Wu, Weiheng and Lu, Zhigang and Jiang, Bo and Liu, Baoxu and Liu, Junrong}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;booktitle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Proceedings of the AAAI Conference on Artificial Intelligence}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{2026}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

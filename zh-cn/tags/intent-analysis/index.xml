@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Intent Analysis on Wintery</title>
+        <link>http://localhost:1313/zh-cn/tags/intent-analysis/</link>
+        <description>Recent content in Intent Analysis on Wintery</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Wintery</copyright>
+        <lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/zh-cn/tags/intent-analysis/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Sentient: Detecting APTs Via Capturing Indirect Dependencies and Behavioral Logic</title>
+        <link>http://localhost:1313/zh-cn/post/sentient/</link>
+        <pubDate>Fri, 13 Feb 2026 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/zh-cn/post/sentient/</guid>
+        <description>&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;&lt;strong&gt;Authors&lt;/strong&gt;&lt;/th&gt;
+          &lt;th&gt;Wenhao Yan, Ning An, Wei Qiao, Weiheng Wu, Zhigang Lu, Bo Jiang, Baoxu Liu, Junrong Liu&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Venue&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;AAAI 2026&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;Institution&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Institute of Information Engineering, Chinese Academy of Sciences; School of Cyber Security, University of Chinese Academy of Sciences&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;abstract&#34;&gt;
+    &lt;a href=&#34;#abstract&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Abstract
+&lt;/h2&gt;&lt;p&gt;Advanced Persistent Threats (APTs) are difficult to detect due to their complexity and stealthiness. To mitigate such attacks, many approaches model entities and their relationship using provenance graphs to detect the stealthy and persistent characteristics of APTs. However, existing detection methods suffer from the flaws of missing indirect dependencies, noisy complex scenarios, and missing behavioral logical associations, which make it difficult to detect complex scenarios and effectively identify stealthy threats. In this paper, we propose Sentient, an APT detection method that combines pre-training and intent analysis. It employs a graph transformer to learn structural and semantic information from provenance graphs to avoid missing indirect dependencies. We mitigate scenario noise by combining global and local information. Additionally, we design an Intent Analysis Module (IAM) to associate logical relationships between behaviors. Sentient is trained solely on easily obtainable benign data to detect malicious behaviors that deviate from benign behavioral patterns. We evaluated Sentient on three widely-used datasets covering real-world attacks and simulated attacks. Notably, compared to six state-of-the-art methods, Sentient achieved an average reduction of 44% in false positive rate (FPR) for detection, with 96% accuracy and 99% recall.&lt;/p&gt;
+&lt;h2 id=&#34;download&#34;&gt;
+    &lt;a href=&#34;#download&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Download
+&lt;/h2&gt;&lt;p&gt;📄 &lt;strong&gt;&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/papers/Sentient_CarmeraReady.pdf&#34; &gt;Download PDF&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;citation&#34;&gt;
+    &lt;a href=&#34;#citation&#34; class=&#34;header-anchor&#34;&gt;#&lt;/a&gt;
+    Citation
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bibtex&#34; data-lang=&#34;bibtex&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nc&#34;&gt;@inproceedings&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;nl&#34;&gt;yan2026sentient&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;title&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Sentient: Detecting APTs Via Capturing Indirect Dependencies and Behavioral Logic}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;author&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Yan, Wenhao and An, Ning and Qiao, Wei and Wu, Weiheng and Lu, Zhigang and Jiang, Bo and Liu, Baoxu and Liu, Junrong}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;booktitle&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{Proceedings of the AAAI Conference on Artificial Intelligence}&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;na&#34;&gt;year&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;{2026}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>
